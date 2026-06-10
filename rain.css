@@ -936,12 +936,16 @@ html.js .console-row {
   display: grid;
   grid-template-columns: 0.92fr 1.08fr;
   gap: 24px;
-  align-items: start;
+  align-items: stretch; /* both columns share one bottom edge */
   max-width: var(--maxw);
   margin: 0 auto;
 }
 
-.caps__list { display: grid; gap: 12px; }
+.caps__list {
+  display: grid;
+  gap: 12px;
+  grid-auto-rows: 1fr; /* buttons split the full column height equally */
+}
 
 .cap-btn {
   display: flex;
@@ -1007,20 +1011,28 @@ html.js .console-row {
 .cap-btn.is-active .cap-btn__arrow { opacity: 1; transform: none; }
 
 /* single-layer card — gradient hairline directly on the panel, no mat */
+.caps__panels { height: 100%; }
 .cap-panel {
   display: none;
+  height: 100%;
   padding: 0;
-  border-radius: 24px;
+  border-radius: 20px;
   box-shadow: var(--shadow-premium);
 }
-.cap-panel.is-active { display: block; }
+.cap-panel.is-active { display: flex; flex-direction: column; }
 html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
 @keyframes panel-in {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
 
-.cap-panel__inner { padding: 30px; }
+.cap-panel__inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+}
+.cap-panel__fix { flex: 1; } /* outcome band pins to the shared bottom edge */
 
 .cap-panel__head { display: flex; align-items: center; gap: 15px; }
 .cap-panel__head h3 { font-size: 20px; }
@@ -1107,7 +1119,7 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 26px;
-  align-items: start;
+  align-items: stretch; /* both demos share one bottom edge */
 }
 
 .demo__item {
@@ -1117,6 +1129,8 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   margin: 0;
   min-width: 0;
 }
+.demo__item .chat,
+.demo__item .report { flex: 1; } /* cards fill to equal height, captions level */
 .demo__item figcaption {
   display: flex;
   align-items: center;
@@ -1131,7 +1145,6 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 24px 54px -18px rgba(0, 0, 0, 0.65);
 }
-.demo .chat__body { height: 252px; }
 
 /* --- morning report (assembles itself) --- */
 .report {
@@ -1180,8 +1193,10 @@ html.js .cap-panel.is-active .cap-panel__outcome {
 .report__badge.is-done { background: rgba(16, 185, 129, 0.18); color: var(--emerald-400); }
 
 .report__rows {
+  flex: 1;
   display: grid;
   gap: 11px;
+  align-content: center; /* extra height distributes around the numbers */
   padding: 15px 16px 6px;
 }
 .report__rows li {
@@ -1327,6 +1342,8 @@ html.js .report.is-live .report__sent {
 
 /* --- auto-playing Telegram chat --- */
 .chat {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--line-light);
   border-radius: 16px;
@@ -1369,7 +1386,8 @@ html.js .report.is-live .report__sent {
   flex-direction: column;
   justify-content: flex-end;
   gap: 7px;
-  height: 232px;
+  flex: 1;
+  min-height: 212px;
   padding: 12px 12px 9px;
   overflow: hidden;
 }
