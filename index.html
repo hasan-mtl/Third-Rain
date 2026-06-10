@@ -3,345 +3,621 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Rain refreshes businesses for the AI era — real implementation of AI automation, websites, branding, software, mobile apps, and connected systems. Less AI hype, more working systems." />
-<meta name="theme-color" content="#05070A" />
-<meta name="color-scheme" content="dark" />
-<title>Rain · Refresh Your Business for the AI Era</title>
+<meta name="description" content="Rain is an AI implementation studio. We design, build, and run the systems modern companies run on — websites, branding, software, mobile apps, and AI automation that does real work inside your business." />
+<meta name="theme-color" content="#05080f" />
+<meta name="color-scheme" content="dark light" />
+<meta property="og:title" content="Rain — Refresh Your Business for the AI Era" />
+<meta property="og:description" content="An AI implementation studio. We design, build, and run websites, brands, software, mobile apps, and AI automations — one connected system that works while you sleep." />
+<meta property="og:type" content="website" />
+<title>Rain — Refresh Your Business for the AI Era</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="preload" as="image" href="assets/system-basin.webp" media="(max-width: 760px)" fetchpriority="high" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="rain.css" />
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- INTRO CURTAIN — births the cyan "current" -->
-<div class="intro" aria-hidden="true">
-  <div class="intro__inner">
-    <svg class="intro__mark" viewBox="0 0 48 64" aria-hidden="true"><path d="M24 4s-16 18-16 31C8 44 15 51 24 51s16-7 16-16C40 22 24 4 24 4Z"/></svg>
-    <div class="intro__word">rain<span class="dot">.</span></div>
-    <div class="intro__bar"><i></i></div>
-    <div class="intro__tag">Refresh Your Business</div>
-  </div>
-</div>
+<!-- ============ HEADER ============ -->
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="brand" href="#hero" aria-label="Rain — home">
+      <span class="brand__tile" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+      </span>
+      <span class="brand__word">rain<span class="brand__dot">.</span></span>
+    </a>
 
-<canvas class="rain-canvas" aria-hidden="true"></canvas>
-<div class="grain" aria-hidden="true"></div>
-<div class="scroll-thread" aria-hidden="true"><i></i></div>
+    <nav class="pill-nav" aria-label="Primary">
+      <a href="#services" data-nav>Services</a>
+      <a href="#shift" data-nav>The Shift</a>
+      <a href="#process" data-nav>Process</a>
+      <a href="#platform" data-nav>Platform</a>
+      <a href="#contact" data-nav>Contact</a>
+    </nav>
 
-<!-- HEADER -->
-<header class="site-header">
-  <a class="brand" href="#hero" aria-label="Rain — home">
-    <svg class="brand__mark" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 3s9 11 9 18a9 9 0 0 1-18 0c0-7 9-18 9-18Z"/></svg>
-    <span class="brand__word">rain<span class="dot">.</span></span>
-  </a>
-  <nav class="desktop-nav" aria-label="Primary">
-    <a href="#eras" data-target="eras">The Arc</a>
-    <a href="#opportunity" data-target="opportunity">Opportunity</a>
-    <a href="#process" data-target="process">Process</a>
-    <a href="#system" data-target="system">System</a>
-    <a href="#contact" data-target="contact">Contact</a>
-  </nav>
-  <div class="header-actions">
-    <a class="button button-primary header-cta" href="#contact">Start the Refresh</a>
-    <button class="mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14"/></svg>
-    </button>
+    <div class="site-header__actions">
+      <a class="btn btn--primary btn--sm header-cta" href="#contact">Start the refresh</a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" data-menu-toggle>
+        <svg class="menu-toggle__open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"/></svg>
+        <svg class="menu-toggle__close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"/></svg>
+      </button>
+    </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <a href="#eras">The Arc</a>
-    <a href="#opportunity">Opportunity</a>
-    <a href="#process">Process</a>
-    <a href="#system">System</a>
-    <a href="#contact">Contact</a>
-    <a class="button button-primary" href="#contact">Start the Refresh</a>
+
+  <nav class="drawer" id="drawer" aria-label="Mobile" data-drawer>
+    <a href="#services" data-drawer-link>Services</a>
+    <a href="#shift" data-drawer-link>The Shift</a>
+    <a href="#process" data-drawer-link>Process</a>
+    <a href="#platform" data-drawer-link>Platform</a>
+    <a href="#contact" data-drawer-link>Contact</a>
+    <a class="btn btn--primary btn--lg drawer__cta" href="#contact" data-drawer-link>Start the refresh</a>
+    <p class="drawer__meta">hello@rain.studio</p>
   </nav>
 </header>
 
 <main id="main" tabindex="-1">
 
-<!-- HERO -->
-<section class="hero" id="hero" aria-labelledby="hero-title">
-  <div class="media hero__media" aria-hidden="true">
-    <video class="media__el" loop muted playsinline preload="none" poster="assets/system-basin.webp" tabindex="-1">
-      <source src="assets/canal-water-flow.mp4" type="video/mp4" />
-    </video>
-    <div class="media__tint"></div>
-    <div class="media__vignette"></div>
-    <div class="media__scrim hero__scrim"></div>
-  </div>
+<!-- ============ HERO ============ -->
+<section class="hero dark-section noise" id="hero" aria-labelledby="hero-title">
+  <div class="circuit-grid" aria-hidden="true"></div>
+  <div class="hero__streaks" aria-hidden="true"><i></i><i></i><i></i></div>
+
   <div class="hero__inner">
-    <p class="eyebrow" data-reveal>Less AI hype <b>·</b> More real implementation</p>
-    <h1 id="hero-title" data-reveal="clip">Refresh Your Business<br /><span class="accent-italic">for the AI Era.</span></h1>
-    <p class="hero__sub" data-reveal style="--i:1">We modernize your digital presence and put real AI to work inside the operations you run every day.</p>
-    <div class="hero__rotator" data-reveal style="--i:2">
-      <span class="hero__rotator-label">Now building</span>
-      <span class="rotator" aria-hidden="true">
-        <span class="rotator__word is-active">AI Automation</span>
-        <span class="rotator__word">Branding</span>
-        <span class="rotator__word">Websites</span>
-        <span class="rotator__word">Software Development</span>
-        <span class="rotator__word">Mobile Apps</span>
-      </span>
-      <span class="sr-only">We build AI automation, branding, websites, software development, and mobile apps.</span>
+    <div class="hero__copy">
+      <p class="hero__badge" data-reveal>
+        <span class="live-dot" aria-hidden="true"></span>
+        AI implementation studio&nbsp;&nbsp;·&nbsp;&nbsp;Less hype, more working systems
+      </p>
+
+      <h1 id="hero-title" data-reveal style="--i:1">
+        Refresh your business
+        <span class="serif-grad">for the AI&nbsp;era.</span>
+      </h1>
+
+      <p class="hero__sub" data-reveal style="--i:2">
+        Rain designs, builds, and <em>runs</em> the systems modern companies run on —
+        websites, branding, software, mobile apps, and AI automation that does real
+        work inside your business every day.
+      </p>
+
+      <div class="hero__actions" data-reveal style="--i:3">
+        <a class="btn btn--primary btn--lg" href="#contact">
+          Start the refresh
+          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+        </a>
+        <a class="btn btn--outline btn--lg" href="#services">See what we build</a>
+      </div>
+
+      <dl class="hero__stats" data-reveal style="--i:4">
+        <div>
+          <dt><span data-count="312">0</span></dt>
+          <dd>tasks automated for clients, monthly</dd>
+        </div>
+        <div>
+          <dt>0</dt>
+          <dd>missed or dropped — every run watched</dd>
+        </div>
+        <div>
+          <dt>24/7</dt>
+          <dd>built, monitored &amp; improved by Rain</dd>
+        </div>
+      </dl>
     </div>
-    <div class="hero__actions" data-reveal style="--i:3">
-      <a class="button button-primary" href="#contact">Start the Refresh <span class="button__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
-      <a class="button button-ghost" href="#contact">Book a Consultation <span class="button__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3"/></svg></span></a>
+
+    <!-- The Refresh Console — proof artifact -->
+    <div class="hero__panel" data-reveal style="--i:2">
+      <div class="console-glow" aria-hidden="true"></div>
+      <div class="gradient-frame console">
+        <div class="console__inner">
+          <div class="console__head">
+            <span class="console__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="console__title">rain · client refresh</p>
+            <span class="pill pill--live"><span class="live-dot live-dot--sm" aria-hidden="true"></span>Running</span>
+          </div>
+
+          <ul class="console__rows">
+            <li class="console-row" style="--d:.15s">
+              <span class="icon-tile icon-tile--sky" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              </span>
+              <span class="console-row__text">
+                <strong>Website rebuilt</strong>
+                <small>Loads in 0.8s · search-ready</small>
+              </span>
+              <span class="console-row__state console-row__state--done">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+                Shipped
+              </span>
+            </li>
+            <li class="console-row" style="--d:.3s">
+              <span class="icon-tile icon-tile--amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
+              </span>
+              <span class="console-row__text">
+                <strong>Brand refreshed</strong>
+                <small>Identity, voice &amp; design system</small>
+              </span>
+              <span class="console-row__state console-row__state--done">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+                Shipped
+              </span>
+            </li>
+            <li class="console-row" style="--d:.45s">
+              <span class="icon-tile icon-tile--blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="2.5"/><path d="M12 9V5.5"/><circle cx="12" cy="4" r="1.4"/><path d="M9 14.5h.01M15 14.5h.01"/></svg>
+              </span>
+              <span class="console-row__text">
+                <strong>AI agent live</strong>
+                <small>Content, replies &amp; follow-up on autopilot</small>
+              </span>
+              <span class="console-row__state">
+                <span class="live-dot live-dot--sm" aria-hidden="true"></span>
+                Active
+              </span>
+            </li>
+            <li class="console-row" style="--d:.6s">
+              <span class="icon-tile icon-tile--violet" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg>
+              </span>
+              <span class="console-row__text">
+                <strong>Daily report</strong>
+                <small>Sales, traffic &amp; stock — 8:00 AM</small>
+              </span>
+              <span class="console-row__state">
+                <span class="live-dot live-dot--sm" aria-hidden="true"></span>
+                Active
+              </span>
+            </li>
+          </ul>
+
+          <div class="console__band">
+            <span>This month, Rain handled</span>
+            <strong class="serif">312 tasks&nbsp;·&nbsp;0 missed</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-chip float-chip--report" aria-hidden="true">
+        <span class="float-chip__icon float-chip__icon--emerald">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+        </span>
+        <span class="float-chip__text"><strong>Weekly report sent</strong><small>Today · 8:00 AM</small></span>
+      </div>
+      <div class="float-chip float-chip--growth" aria-hidden="true">
+        <span class="float-chip__icon float-chip__icon--blue">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.5l3.6-3.6 2.4 2.4 5-5.5"/><path d="M10 4.8h3.5v3.5"/></svg>
+        </span>
+        <span class="float-chip__text"><strong>+38% organic traffic</strong><small>First 90 days</small></span>
+      </div>
     </div>
   </div>
-  <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue__drop"></span>Scroll</div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track" data-ticker>
+      <span>AI Automation</span><span>Websites</span><span>Branding</span><span>Software Development</span><span>Mobile Apps</span><span>AI Agents</span><span>Connected Systems</span><span>Smart Dashboards</span><span>Lead Capture</span><span>E-commerce</span><span>Analytics</span><span>Content Engines</span>
+    </div>
+  </div>
 </section>
 
-<!-- ERAS — the arc of business -->
-<section class="eras" id="eras" aria-labelledby="eras-title">
+<!-- ============ SERVICES ============ -->
+<section class="services warm-grid" id="services" aria-labelledby="services-title">
   <div class="section-head">
-    <p class="eyebrow center" data-reveal>The Arc of Business</p>
-    <h2 id="eras-title" data-reveal style="--i:1">Five shifts. <span class="accent">You're living the fifth.</span></h2>
-    <p class="lede center" data-reveal style="--i:2">Every era rewired how companies operate — paper, computer, internet, mobile. The next one is already here, and it rewards whoever implements first.</p>
+    <p class="eyebrow" data-reveal>What we build</p>
+    <h2 id="services-title" data-reveal style="--i:1">Every surface of your business, <span class="serif-grad serif-grad--light">made current.</span></h2>
+    <p class="lede" data-reveal style="--i:2">Not five vendors and a pile of logins. One studio that designs the front of your business and wires the intelligence behind it.</p>
   </div>
-  <ol class="rail" aria-label="Business eras">
+
+  <div class="services__grid">
+    <article class="service-card" data-reveal>
+      <span class="icon-tile icon-tile--lg icon-tile--blue" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5h6l-1 8L18 10.5h-6l1-8Z"/></svg>
+      </span>
+      <h3>AI Automation</h3>
+      <p>Agents and workflows that write your content, answer your customers, chase your leads, and report your numbers — wired into the tools you already use.</p>
+      <span class="service-card__meta">Content · Replies · Reports · Ops</span>
+    </article>
+
+    <article class="service-card" data-reveal style="--i:1">
+      <span class="icon-tile icon-tile--lg icon-tile--sky" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </span>
+      <h3>Websites</h3>
+      <p>Fast, search-ready sites engineered to convert — and built from day one to be operated by AI, not just admired in a portfolio.</p>
+      <span class="service-card__meta">Design · SEO · Performance</span>
+    </article>
+
+    <article class="service-card" data-reveal style="--i:2">
+      <span class="icon-tile icon-tile--lg icon-tile--amber" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
+      </span>
+      <h3>Branding</h3>
+      <p>Identity, voice, and a design system that makes you look like the company you're becoming — consistent everywhere your customers meet you.</p>
+      <span class="service-card__meta">Identity · Voice · Systems</span>
+    </article>
+
+    <article class="service-card" data-reveal style="--i:3">
+      <span class="icon-tile icon-tile--lg icon-tile--violet" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
+      </span>
+      <h3>Software Development</h3>
+      <p>Custom dashboards, portals, and internal tools shaped around how your business actually operates — not how a template thinks it should.</p>
+      <span class="service-card__meta">Dashboards · Portals · Tools</span>
+    </article>
+
+    <article class="service-card" data-reveal style="--i:4">
+      <span class="icon-tile icon-tile--lg icon-tile--emerald" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>
+      </span>
+      <h3>Mobile Apps</h3>
+      <p>Customer and team apps that put your business in everyone's pocket — connected to the same system as everything else we build.</p>
+      <span class="service-card__meta">iOS · Android · Team apps</span>
+    </article>
+
+    <article class="service-card" data-reveal style="--i:5">
+      <span class="icon-tile icon-tile--lg icon-tile--ink" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M7 11l10-4.5M7 13l10 4.5"/></svg>
+      </span>
+      <h3>Connected Systems</h3>
+      <p>CRM, store, analytics, inbox, socials — we wire your whole stack into one coordinated system, so nothing depends on copy-paste again.</p>
+      <span class="service-card__meta">CRM · Store · Analytics · Inbox</span>
+    </article>
+  </div>
+</section>
+
+<!-- ============ THE SHIFT ============ -->
+<section class="shift" id="shift" aria-labelledby="shift-title">
+  <div class="section-head">
+    <p class="eyebrow" data-reveal>The shift</p>
+    <h2 id="shift-title" data-reveal style="--i:1">Five eras of business. <span class="serif-grad serif-grad--light">You're living the fifth.</span></h2>
+    <p class="lede" data-reveal style="--i:2">Paper gave way to computers, computers to the internet, the internet to mobile. Each shift rewarded the companies that moved first — and this one is moving faster than all of them.</p>
+  </div>
+
+  <ol class="rail" data-rail aria-label="The five eras of business">
     <span class="rail__track" aria-hidden="true"><i class="rail__fill"></i></span>
-    <li class="rail__node" data-reveal style="--i:0"><span class="rail__num" data-count="1">01</span><span class="rail__name">Paper</span><span class="rail__state">Manual</span></li>
-    <li class="rail__node" data-reveal style="--i:1"><span class="rail__num" data-count="2">02</span><span class="rail__name">Computer</span><span class="rail__state">Organized</span></li>
-    <li class="rail__node" data-reveal style="--i:2"><span class="rail__num" data-count="3">03</span><span class="rail__name">Internet</span><span class="rail__state">Connected</span></li>
-    <li class="rail__node" data-reveal style="--i:3"><span class="rail__num" data-count="4">04</span><span class="rail__name">Mobile</span><span class="rail__state">On-demand</span></li>
-    <li class="rail__node rail__node--now" data-reveal style="--i:4">
-      <span class="rail__here">You are here</span>
-      <span class="rail__num" data-count="5">05</span><span class="rail__name">AI Era</span><span class="rail__state">Intelligent</span>
+    <li class="rail__node">
+      <span class="rail__num">01</span>
+      <span class="rail__dot" aria-hidden="true"></span>
+      <span class="rail__name">Paper</span>
+      <span class="rail__state">Manual</span>
+    </li>
+    <li class="rail__node">
+      <span class="rail__num">02</span>
+      <span class="rail__dot" aria-hidden="true"></span>
+      <span class="rail__name">Computer</span>
+      <span class="rail__state">Organized</span>
+    </li>
+    <li class="rail__node">
+      <span class="rail__num">03</span>
+      <span class="rail__dot" aria-hidden="true"></span>
+      <span class="rail__name">Internet</span>
+      <span class="rail__state">Connected</span>
+    </li>
+    <li class="rail__node">
+      <span class="rail__num">04</span>
+      <span class="rail__dot" aria-hidden="true"></span>
+      <span class="rail__name">Mobile</span>
+      <span class="rail__state">On-demand</span>
+    </li>
+    <li class="rail__node rail__node--now">
+      <span class="rail__here"><span class="live-dot live-dot--sm" aria-hidden="true"></span>You are here</span>
+      <span class="rail__num">05</span>
+      <span class="rail__dot" aria-hidden="true"></span>
+      <span class="rail__name">AI Era</span>
+      <span class="rail__state">Intelligent</span>
     </li>
   </ol>
 </section>
 
-<!-- OPPORTUNITY / THE GAP — the spine of the story -->
-<section class="gap" id="opportunity" aria-labelledby="opportunity-title">
-  <div class="media gap__media" aria-hidden="true">
-    <video class="media__el" loop muted playsinline preload="none" poster="assets/river-story.webp" tabindex="-1">
-      <source src="assets/main-waterfall.mp4" type="video/mp4" />
-    </video>
-    <div class="media__tint"></div>
-    <div class="media__vignette"></div>
-    <div class="media__scrim gap__scrim"></div>
-  </div>
-
-  <div class="thesis">
-    <p class="eyebrow center" data-reveal>The Real Opportunity</p>
-    <h2 id="opportunity-title" class="thesis__h" data-reveal style="--i:1">
-      <span class="thesis__a">The opportunity isn't AI.</span>
-      <span class="thesis__b" data-thesis>It's implementation.</span>
-    </h2>
-    <p class="lede center" data-reveal style="--i:2">Most businesses already know AI matters. The hard part is connecting it to the real work — leads, sales, support, follow-up, reporting, and the decisions that move the business.</p>
-  </div>
-
-  <figure class="quote" data-reveal>
-    <blockquote>The real opportunity isn't only learning AI — it's learning how to implement it inside companies, especially the small and mid-sized businesses without in-house AI experts.</blockquote>
-    <figcaption><span class="quote__rule"></span>Mark Cuban's argument, via <span>Business Insider, 2026</span></figcaption>
-  </figure>
-
-  <p class="gap__bridge" data-reveal>Rain exists for that gap. We don't just show you the tools — <span class="accent">we build the system, connect the workflow, and make AI useful inside your business.</span></p>
-
-  <div class="gap__grid">
-    <div class="gap-card gap-card--today" data-reveal>
-      <span class="gap-card__tag">Today</span>
-      <h3>What businesses have</h3>
-      <ul>
-        <li>ChatGPT account</li>
-        <li>An old website</li>
-        <li>Manual follow-up</li>
-        <li>Disconnected tools</li>
-        <li>Slow admin work</li>
-        <li>No AI strategy</li>
-      </ul>
+<!-- ============ THE GAP ============ -->
+<section class="gap dark-section noise" id="gap" aria-labelledby="gap-title">
+  <div class="dot-grid" aria-hidden="true"></div>
+  <div class="gap__inner">
+    <div class="section-head">
+      <p class="eyebrow eyebrow--dark" data-reveal>The real opportunity</p>
+      <h2 id="gap-title" data-reveal style="--i:1">The opportunity isn't AI. <span class="serif-grad">It's implementation.</span></h2>
+      <p class="lede lede--dark" data-reveal style="--i:2">Most businesses already believe AI matters. The hard part is connecting it to the real work — leads, sales, support, follow-up, reporting, and the decisions that move the business.</p>
     </div>
-    <div class="gap__bridgeline" aria-hidden="true">
-      <span class="gap__bridgeline-label">the gap</span>
-      <span class="gap__bridgeline-rail"><i></i></span>
-      <svg width="42" height="12" viewBox="0 0 42 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 6h34M31 2l5 4-5 4"/></svg>
-    </div>
-    <div class="gap-card gap-card--rain" data-reveal style="--i:1">
-      <span class="gap-card__tag gap-card__tag--rain">With Rain</span>
-      <h3>What businesses need</h3>
-      <ul class="ticks">
-        <li><i class="tick"></i>AI workflows</li>
-        <li><i class="tick"></i>Automated lead handling</li>
-        <li><i class="tick"></i>Search visibility</li>
-        <li><i class="tick"></i>Connected CRM</li>
-        <li><i class="tick"></i>Smart dashboards</li>
-        <li><i class="tick"></i>Custom business systems</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
-<!-- PROCESS — the single pinned scene -->
-<section class="process" id="process" aria-labelledby="process-title">
-  <div class="process__intro">
-    <p class="eyebrow center" data-reveal>The Process</p>
-    <h2 id="process-title" data-reveal style="--i:1">From scattered <span class="accent">to streamlined.</span></h2>
-    <p class="lede center" data-reveal style="--i:2">Five deliberate moves. No mystery, no lock-in — just the current finding its way through your business.</p>
-  </div>
-  <div class="process__sticky">
-    <div class="media process__media" aria-hidden="true">
-      <video class="media__el" loop muted playsinline preload="none" poster="assets/river-story.webp" tabindex="-1">
-        <source src="assets/canal-water-flow.mp4" type="video/mp4" />
-      </video>
-      <div class="media__tint"></div>
-      <div class="media__vignette"></div>
-      <div class="media__scrim"></div>
-    </div>
-    <div class="process__spine" aria-hidden="true"><i class="process__fill"></i><span class="process__drop"></span></div>
-    <ol class="process__steps">
-      <li class="process-step process-step--left" style="--top:14%">
-        <span class="process-step__num">01</span>
-        <span class="process-step__icon"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9.5" cy="9.5" r="6.5"/><path d="M14.5 14.5 19 19"/></svg></span>
-        <h3>Audit</h3>
-        <p>We map every tool, site and workflow you run — and exactly where AI can remove the manual work.</p>
-      </li>
-      <li class="process-step process-step--right" style="--top:32%">
-        <span class="process-step__num">02</span>
-        <span class="process-step__icon"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="3" width="14" height="16" rx="2"/><path d="M7 7h8M7 11h8M7 15h5"/></svg></span>
-        <h3>Blueprint</h3>
-        <p>A clear plan for the connected system your business actually needs.</p>
-      </li>
-      <li class="process-step process-step--left" style="--top:50%">
-        <span class="process-step__num">03</span>
-        <span class="process-step__icon"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 14l7-7 4 4-7 7-4 1z"/><path d="M13 4l5 5"/></svg></span>
-        <h3>Build</h3>
-        <p>Websites, automations and AI workflows, built to fit the way your business really works.</p>
-      </li>
-      <li class="process-step process-step--right" style="--top:68%">
-        <span class="process-step__num">04</span>
-        <span class="process-step__icon"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 2c4 2 6 6 6 10l-3 3-3-2-3 2-3-3C5 8 7 4 11 2z"/><path d="M11 19v1"/></svg></span>
-        <h3>Launch</h3>
-        <p>We go live with care, then watch the first currents start to move.</p>
-      </li>
-      <li class="process-step process-step--left" style="--top:86%">
-        <span class="process-step__num">05</span>
-        <span class="process-step__icon"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 15l5-5 4 3 7-8"/><path d="M16 2h4v4"/></svg></span>
-        <h3>Optimize</h3>
-        <p>We tune the system as data arrives, compounding results long after launch.</p>
-      </li>
-    </ol>
-  </div>
-</section>
+    <figure class="quote" data-reveal>
+      <blockquote class="serif">
+        &ldquo;The real opportunity isn't only learning AI — it's learning how to
+        <em>implement</em> it inside companies, especially the small and mid-sized
+        businesses without in-house AI experts.&rdquo;
+      </blockquote>
+      <figcaption>Mark Cuban's argument&nbsp;&nbsp;·&nbsp;&nbsp;Business Insider, 2026</figcaption>
+    </figure>
 
-<!-- SYSTEM — one connected system -->
-<section class="system" id="system" aria-labelledby="system-title">
-  <div class="media system__media" aria-hidden="true">
-    <picture>
-      <source type="image/avif" srcset="assets/system-basin.avif" />
-      <source type="image/webp" srcset="assets/system-basin.webp" />
-      <img class="media__el" src="assets/system-basin.jpg" alt="" loading="lazy" decoding="async" />
-    </picture>
-    <div class="media__tint"></div>
-    <div class="media__vignette"></div>
-    <div class="media__scrim"></div>
-  </div>
-  <div class="system__inner">
-    <p class="eyebrow center" data-reveal>One Connected System</p>
-    <h2 id="system-title" data-reveal style="--i:1">One living system, <span class="accent">not five tools.</span></h2>
-    <p class="lede center" data-reveal style="--i:2">Web, search, automation and AI — connected around the way your business actually works, not bolted on beside it.</p>
-
-    <div class="orbit" data-reveal style="--i:3">
-      <svg class="orbit__lines" viewBox="0 0 100 64" preserveAspectRatio="none" aria-hidden="true">
-        <path id="ol1" d="M50 32C34 22 20 15 8 12" />
-        <path id="ol2" d="M50 32C36 32 24 32 8 32" />
-        <path id="ol3" d="M50 32C34 42 20 49 8 52" />
-        <path id="ol4" d="M50 32C66 26 80 22 92 20" />
-        <path id="ol5" d="M50 32C66 38 80 42 92 44" />
-        <g class="orbit__pulses"></g>
-      </svg>
-      <div class="orbit__core">
-        <svg class="orbit__core-mark" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3s9 11 9 18a9 9 0 0 1-18 0c0-7 9-18 9-18Z"/></svg>
-        <strong>rain<span class="dot">.</span></strong>
-        <span>One Connected System</span>
+    <div class="gap__grid">
+      <div class="gap-card gap-card--today" data-reveal>
+        <span class="gap-card__tag">Most businesses today</span>
+        <ul>
+          <li>A ChatGPT account nobody quite uses</li>
+          <li>A website from two eras ago</li>
+          <li>Manual follow-up, when there's time</li>
+          <li>Five tools that don't talk to each other</li>
+          <li>Admin work that eats the week</li>
+          <li>No actual AI strategy</li>
+        </ul>
       </div>
-      <a class="orbit__node orbit__node--l" style="--y:18%" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="5" width="10" height="8" rx="2"/><path d="M8 5V3M6 9h.01M10 9h.01"/></svg>AI Automation</a>
-      <a class="orbit__node orbit__node--l" style="--y:50%" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="3" width="12" height="8" rx="1.5"/><path d="M6 14h4M8 11v3"/></svg>Website</a>
-      <a class="orbit__node orbit__node--l" style="--y:82%" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="5" y="2" width="6" height="12" rx="1.5"/><path d="M7.5 12h1"/></svg>Mobile Apps</a>
-      <a class="orbit__node orbit__node--r" style="--y:32%" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 2l1.3 3.4L13 7l-3.7 1.3L8 12l-1.3-3.7L3 7l3.7-1.3z"/></svg>Branding</a>
-      <a class="orbit__node orbit__node--r" style="--y:68%" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 5 3 8l3 3M10 5l3 3-3 3"/></svg>Software Development</a>
-    </div>
 
-    <div class="system__chips" data-reveal style="--i:4">
-      <span>Faster follow-up</span><span>Cleaner operations</span><span>Visible growth</span>
+      <div class="gap__bridge" aria-hidden="true">
+        <span class="gap__bridge-label">the gap</span>
+        <span class="gap__bridge-line"><i></i></span>
+        <svg viewBox="0 0 42 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h34M31 2l5 4-5 4"/></svg>
+      </div>
+
+      <div class="gap-card gap-card--rain" data-reveal style="--i:1">
+        <span class="gap-card__tag gap-card__tag--rain">With Rain</span>
+        <ul class="ticks">
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>AI workflows doing real daily work</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Every lead answered in minutes</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>A site built to be found and to convert</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>CRM, store &amp; inbox in one system</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Dashboards that answer, not ask</li>
+          <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Software shaped to your business</li>
+        </ul>
+        <p class="gap-card__band">We build the system. You run the business.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FLOW — marquee breath -->
-<section class="flow" id="flow" aria-labelledby="flow-title">
+<!-- ============ PROCESS ============ -->
+<section class="process" id="process" aria-labelledby="process-title">
   <div class="section-head">
-    <p class="eyebrow center" data-reveal>What we pour into</p>
-    <h2 id="flow-title" data-reveal style="--i:1">Everything your business touches online.</h2>
+    <p class="eyebrow" data-reveal>How we work</p>
+    <h2 id="process-title" data-reveal style="--i:1">A studio that ships — <span class="serif-grad serif-grad--light">then stays.</span></h2>
+    <p class="lede" data-reveal style="--i:2">You get a senior team and a managed system, not a PDF of recommendations. Five deliberate moves, no mystery, no lock-in.</p>
   </div>
-  <div class="marquee" aria-hidden="true"><div class="marquee__track"><span>AI Automation</span><span>Branding</span><span>Website</span><span>Software Development</span><span>Mobile Apps</span><span>AI Agents</span><span>Workflow Automation</span></div></div>
-  <div class="marquee marquee--rev" aria-hidden="true"><div class="marquee__track"><span>Integrations</span><span>Analytics</span><span>Content</span><span>E-commerce</span><span>Lead Capture</span><span>Smart Dashboards</span><span>Growth</span></div></div>
+
+  <div class="process__row">
+    <span class="process__line" aria-hidden="true"></span>
+
+    <div class="process-step" data-reveal>
+      <span class="process-step__tile icon-tile--blue" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+      </span>
+      <span class="process-step__num">Step 01</span>
+      <h3>Audit</h3>
+      <p>We map every tool, site, and workflow you run — and find exactly where hours and leads are leaking.</p>
+    </div>
+
+    <div class="process-step" data-reveal style="--i:1">
+      <span class="process-step__tile icon-tile--sky" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5L14.5 3Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+      </span>
+      <span class="process-step__num">Step 02</span>
+      <h3>Blueprint</h3>
+      <p>A clear plan for the connected system your business needs — sequenced by impact, priced before we build.</p>
+    </div>
+
+    <div class="process-step" data-reveal style="--i:2">
+      <span class="process-step__tile icon-tile--violet" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
+      </span>
+      <span class="process-step__num">Step 03</span>
+      <h3>Build</h3>
+      <p>Websites, brands, software, and AI workflows — built to fit the way your business really works.</p>
+    </div>
+
+    <div class="process-step" data-reveal style="--i:3">
+      <span class="process-step__tile icon-tile--amber" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.5 1.8 5.5 5.3 5.5 9l-2.8 2.8-2.7-1.8-2.7 1.8-2.8-2.8c0-3.7 2-7.2 5.5-9Z"/><path d="M12 13.5v3M8.5 18.5c-1 .8-1.5 3-1.5 3s2.2-.5 3-1.5M15.5 18.5c1 .8 1.5 3 1.5 3s-2.2-.5-3-1.5"/></svg>
+      </span>
+      <span class="process-step__num">Step 04</span>
+      <h3>Launch</h3>
+      <p>We go live with care — migrations handled, nothing dropped, your team trained on day one.</p>
+    </div>
+
+    <div class="process-step" data-reveal style="--i:4">
+      <span class="process-step__tile icon-tile--emerald" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 19a9.5 9.5 0 1 1 17 0"/><path d="M12 15l3.5-5.5"/></svg>
+      </span>
+      <span class="process-step__num">Step 05</span>
+      <h3>Run &amp; improve</h3>
+      <p>We monitor every run, report results in plain language, and keep tuning as your business grows.</p>
+    </div>
+  </div>
+
+  <div class="process__note gradient-frame" data-reveal>
+    <span class="icon-tile icon-tile--blue" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 14.5a2 2 0 0 1-2 2H8l-4.5 3.5V5.5a2 2 0 0 1 2-2H19a2 2 0 0 1 2 2v9Z"/></svg>
+    </span>
+    <div>
+      <h3>And it answers whenever you ask</h3>
+      <p>Your system is reachable in plain language — message it on Telegram to request a report, trigger a task, or check a number. No dashboards required at 11pm.</p>
+    </div>
+  </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact" aria-labelledby="contact-title">
-  <div class="media contact__media" aria-hidden="true">
-    <picture>
-      <source type="image/avif" srcset="assets/cta-clearing.avif" />
-      <source type="image/webp" srcset="assets/cta-clearing.webp" />
-      <img class="media__el" src="assets/cta-clearing.jpg" alt="" loading="lazy" decoding="async" />
-    </picture>
-    <div class="media__tint"></div>
-    <div class="media__vignette"></div>
-    <div class="media__scrim contact__scrim"></div>
-    <div class="contact__floor"></div>
+<!-- ============ PLATFORM ============ -->
+<section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
+  <div class="circuit-grid" aria-hidden="true"></div>
+  <div class="platform__inner">
+    <div class="platform__copy">
+      <p class="eyebrow eyebrow--dark" data-reveal>Our platform</p>
+      <h2 id="platform-title" data-reveal style="--i:1">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
+      <p class="lede lede--dark lede--left" data-reveal style="--i:2">
+        Rain Agent is the managed AI platform we built and operate ourselves. Every client
+        gets a dedicated agent wired to their tools — it drafts, publishes, replies, and
+        reports, while our team watches every single run.
+      </p>
+
+      <ul class="platform__list" data-reveal style="--i:3">
+        <li>
+          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
+          A dedicated agent per business — it learns your voice, audience, and rules
+        </li>
+        <li>
+          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
+          Content, reporting, replies &amp; ops handled end to end
+        </li>
+        <li>
+          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
+          Ask in plain language from Telegram or the dashboard
+        </li>
+        <li>
+          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
+          Human review on everything that ships — nothing publishes unwatched
+        </li>
+      </ul>
+
+      <div class="platform__actions" data-reveal style="--i:4">
+        <a class="btn btn--primary" href="#contact">
+          Get your agent
+          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+        </a>
+        <a class="btn btn--outline" href="https://rain-agent.vercel.app" target="_blank" rel="noopener">
+          Explore Rain Agent
+          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6.5 4.5h5v5"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="platform__viz" data-reveal style="--i:2">
+      <div class="circuit">
+        <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true">
+          <path class="trace" d="M260 220 H360 V72 H424"/>
+          <path class="trace" d="M260 220 H160 V72 H96"/>
+          <path class="trace" d="M260 220 H456"/>
+          <path class="trace" d="M260 220 H64"/>
+          <path class="trace" d="M260 220 H360 V368 H424"/>
+          <path class="trace" d="M260 220 H160 V368 H96"/>
+          <g class="circuit__pulses">
+            <circle class="pulse" r="3.2"><animateMotion dur="3s" repeatCount="indefinite" path="M260 220 H360 V72 H424"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M260 220 H160 V72 H96"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.4s" begin="1.1s" repeatCount="indefinite" path="M260 220 H456"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.6s" begin="0.3s" repeatCount="indefinite" path="M260 220 H64"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite" path="M260 220 H360 V368 H424"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3s" begin="0.9s" repeatCount="indefinite" path="M260 220 H160 V368 H96"/></circle>
+          </g>
+        </svg>
+
+        <div class="circuit__core" aria-hidden="true">
+          <span class="circuit__core-tile">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+          </span>
+          <strong>rain agent</strong>
+          <small>core</small>
+        </div>
+
+        <span class="circuit__node" style="--x:81.5%;--y:16%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5L14.5 3Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></i>Blog
+        </span>
+        <span class="circuit__node" style="--x:18.5%;--y:16%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg></i>Analytics
+        </span>
+        <span class="circuit__node" style="--x:88%;--y:50%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="5.5" r="2.2"/><circle cx="18" cy="18.5" r="2.2"/><path d="M8 11l8-4.5M8 13l8 4.5"/></svg></i>Social
+        </span>
+        <span class="circuit__node" style="--x:12%;--y:50%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7.5 9 6 9-6"/></svg></i>Email
+        </span>
+        <span class="circuit__node" style="--x:81.5%;--y:84%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5a3.2 3.2 0 0 1 0 6.3M17.5 14.6a5.5 5.5 0 0 1 3 5.4"/></svg></i>CRM
+        </span>
+        <span class="circuit__node" style="--x:18.5%;--y:84%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z"/><path d="M12 11.5 3.5 8.5M12 11.5l8.5-3M12 11.5V20"/></svg></i>Inventory
+        </span>
+      </div>
+
+      <div class="runlog glass">
+        <div class="runlog__head">
+          <span class="live-dot live-dot--sm" aria-hidden="true"></span>
+          <span>Live run log</span>
+          <span class="runlog__day">today</span>
+        </div>
+        <ul class="runlog__lines" data-runlog aria-live="off">
+          <li><span>08:00</span>Morning report sent to 3 clients</li>
+          <li><span>09:12</span>Blog draft ready → waiting for review</li>
+          <li><span>11:30</span>12 customer replies drafted</li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <dl class="platform__stats" data-reveal>
+    <div><dt><span data-count="312">0</span></dt><dd>tasks / month</dd></div>
+    <div><dt>0</dt><dd>missed or dropped</dd></div>
+    <div><dt>24/7</dt><dd>monitored runs</dd></div>
+    <div><dt>1</dt><dd>connected system</dd></div>
+  </dl>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact dark-section noise" id="contact" aria-labelledby="contact-title">
+  <div class="dot-grid" aria-hidden="true"></div>
   <div class="contact__inner">
     <div class="contact__copy">
-      <p class="eyebrow" data-reveal>Begin</p>
-      <h2 id="contact-title" data-reveal style="--i:1" data-assemble>Refresh your business before your competitors do.</h2>
-      <p class="lede" data-reveal style="--i:2">Tell us where the manual work piles up. We'll map the AI system that clears it — and the digital refresh that gets you ready for the AI era.</p>
-      <a class="mail" href="mailto:hello@rain.studio" data-reveal style="--i:3">hello@rain.studio</a>
+      <p class="eyebrow eyebrow--dark" data-reveal>Begin</p>
+      <h2 id="contact-title" data-reveal style="--i:1">Refresh your business <span class="serif-grad">before your competitors do.</span></h2>
+      <p class="lede lede--dark lede--left" data-reveal style="--i:2">
+        Tell us where the manual work piles up. We'll map the system that clears it —
+        and the digital refresh that gets you ready for the AI era.
+      </p>
+
+      <a class="contact__mail" href="mailto:hello@rain.studio" data-reveal style="--i:3">hello@rain.studio</a>
+
+      <p class="contact__reply" data-reveal style="--i:4">
+        <span class="live-dot live-dot--sm" aria-hidden="true"></span>
+        We reply within one business day
+      </p>
       <p class="contact__ceo" data-reveal style="--i:4">Founded &amp; led by <strong>Michael Cassella</strong>, CEO</p>
     </div>
-    <form class="contact-form" data-reveal style="--i:2" novalidate>
+
+    <form class="contact-form" data-reveal style="--i:2" novalidate data-form>
+      <p class="contact-form__title">Start the refresh</p>
       <div class="field">
         <label for="f-name">Name</label>
-        <input id="f-name" type="text" name="name" placeholder="Your name" autocomplete="name" aria-describedby="form-note" />
-        <span class="field__line" aria-hidden="true"></span>
+        <input id="f-name" type="text" name="name" placeholder="Your name" autocomplete="name" />
       </div>
       <div class="field">
-        <label for="f-email">Email</label>
-        <input id="f-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" aria-describedby="form-note" />
-        <span class="field__line" aria-hidden="true"></span>
+        <label for="f-email">Work email</label>
+        <input id="f-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" />
       </div>
       <div class="field">
-        <label for="f-msg">Where does it feel scattered?</label>
-        <textarea id="f-msg" name="message" placeholder="A sentence or two about your business…" aria-describedby="form-note"></textarea>
-        <span class="field__line" aria-hidden="true"></span>
+        <label for="f-msg">Where does the manual work pile up?</label>
+        <textarea id="f-msg" name="message" rows="4" placeholder="A sentence or two about your business…"></textarea>
       </div>
-      <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
-      <button type="submit" class="button button-primary">Send the first drop <span class="button__icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></button>
-      <span class="form-drop" aria-hidden="true"></span>
+      <button type="submit" class="btn btn--primary btn--lg contact-form__submit">
+        Send the first drop
+        <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+      </button>
+      <p class="contact-form__note" role="status" aria-live="polite" data-form-note></p>
     </form>
   </div>
 </section>
 
 </main>
 
-<!-- FOOTER -->
+<!-- ============ FOOTER ============ -->
 <footer class="site-footer">
-  <a class="brand" href="#hero" aria-label="Rain — home">
-    <svg class="brand__mark" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 3s9 11 9 18a9 9 0 0 1-18 0c0-7 9-18 9-18Z"/></svg>
-    <span class="brand__word">rain<span class="dot">.</span></span>
-  </a>
-  <nav aria-label="Footer">
-    <a href="#eras">The Arc</a>
-    <a href="#opportunity">Opportunity</a>
-    <a href="#process">Process</a>
-    <a href="#system">System</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <div class="site-footer__meta">© 2026 Rain · The business refresh for the AI era.<br />Led by Michael Cassella, CEO · hello@rain.studio</div>
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a class="brand" href="#hero" aria-label="Rain — home">
+        <span class="brand__tile" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+        </span>
+        <span class="brand__word">rain<span class="brand__dot">.</span></span>
+      </a>
+      <p>The business refresh for the AI era.</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="#services">Services</a>
+      <a href="#shift">The Shift</a>
+      <a href="#process">Process</a>
+      <a href="#platform">Platform</a>
+      <a href="#contact">Contact</a>
+      <a href="https://rain-agent.vercel.app" target="_blank" rel="noopener">Rain Agent ↗</a>
+    </nav>
+    <p class="site-footer__meta">
+      © <span data-year>2026</span> Rain · Led by Michael Cassella, CEO<br />
+      <a href="mailto:hello@rain.studio">hello@rain.studio</a>
+    </p>
+  </div>
 </footer>
 
 <script src="rain.js"></script>
