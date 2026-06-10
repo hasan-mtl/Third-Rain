@@ -1,11 +1,13 @@
-# Rain — Refresh Your Business
+# Rain — Refresh Your Business for the AI Era
 
-A cinematic single-page marketing site for **Rain**, a studio that modernizes
-businesses for the AI era (AI automation, websites, branding, apps, CRM
-workflows, connected digital systems).
+A cinematic single-page marketing site for **Rain**, a studio that implements
+real AI inside businesses (AI automation, websites, branding, software, mobile
+apps, connected systems).
 
-Implemented from a Claude Design handoff. It's a self-contained static site —
-no build step, no dependencies to install.
+Design direction: **"Liquid Midnight — Still Water"** — a deep ink-black canvas
+with a single rationed cyan→indigo "current" as the only accent, glassmorphism,
+color-graded water footage, and one recurring light-droplet motif that threads
+the whole page. Self-contained static site — no build step, no dependencies.
 
 ## Run it locally
 
@@ -16,38 +18,55 @@ python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-Or just open `Rain.html` directly in a browser (`open Rain.html` on macOS).
-
 ## Project layout
 
 ```
-Rain.html        — the page (canonical source)
-index.html       — entry point for static hosts; redirects to Rain.html
-rain.css         — design tokens + all section styles
-rain.js          — interactions (rain canvas, scroll reveals, river scene, orbit, etc.)
-favicon.svg      — site icon
-assets/          — images + video used by the site
-design-source/   — original design-process artifacts (concepts, screenshots, uploads)
-HANDOFF.md       — the original Claude Design handoff notes
+index.html       — the page (canonical entry point)
+rain.css         — design tokens + all section styles (Liquid Midnight system)
+rain.js          — interactions (rain canvas, scroll reveals, era rail, kinetic
+                   thesis, pinned Process scene, orbit, marquee, contact form)
+favicon.svg      — site icon (cyan raindrop)
+assets/          — graded media (see below)
+design-source/   — original Claude Design artifacts (concepts, screenshots)
+Rain.html        — LEGACY: the previous green/forest design. Not used by the
+                   live site; kept for reference only. index.html is canonical.
 ```
 
-## Notes
+## Type & color
 
-- **Hero video** is a Vimeo background embed (the design's choice). A local
-  `assets/rain-video-first.mp4` is included if you ever want to self-host it.
-- **Process section** plays a self-hosted background video
-  (`assets/canal-water-flow.mp4`) of water flowing through a meadow, with
-  `river-story.png` as the poster fallback. It autoplays muted and is paused
-  (held on the poster frame) for visitors who prefer reduced motion.
-- **Fonts** (Cormorant Garamond, Schibsted Grotesk) load from Google Fonts, so
-  the page needs network access to render typography exactly as designed.
-- **Accessibility**: honors `prefers-reduced-motion` — animations and the rain
-  canvas are disabled for users who request reduced motion.
-- Several images in `assets/` (clouds, gates, hero-rainforest, etc.) belong to
-  earlier design scenes and are not referenced by the current page; they're kept
-  for reference and can be pruned to slim the folder.
+- **Fonts:** Fraunces (display serif) + Inter Tight (UI), loaded from Google Fonts.
+- **Palette:** ink `#05070A` ground, mist `#E8F4FF` text, accent `#38E1FF → #7C8CFF`.
+- Permanently dark, high-contrast theme; `theme-color` is `#05070A`.
+
+## Media
+
+Nature footage is color-graded to the midnight palette **at runtime** (CSS
+`grayscale` + a `mix-blend-mode: color` cyan/indigo tint + vignette + scrim) —
+no offline grading pipeline needed.
+
+- **Hero / Process** background: `canal-water-flow.mp4` (graded).
+- **Opportunity** texture: `main-waterfall.mp4` (graded, low opacity).
+- **System / Contact** backgrounds: graded stills (`system-basin`, `cta-clearing`).
+- Background stills ship as optimized **AVIF / WebP** with a JPEG fallback
+  (the multi-MB `.png` originals remain in `assets/` but are no longer served).
+- Videos are gated off on mobile / `Save-Data` / reduced-motion, where the graded
+  poster still is shown instead.
+
+## Accessibility & performance
+
+- Honors `prefers-reduced-motion` as a first-class static state (intro, rain
+  canvas, marquee, pinned Process, kinetic type and counters all resolve to their
+  final state).
+- WCAG AA contrast, full keyboard support (skip link, focus-visible, mobile-drawer
+  focus trap), semantic landmarks, labelled form with live validation messaging.
+- One shared throttled rAF dispatcher; DPR-capped rain canvas paused when the tab
+  is hidden; responsive 320px → ultrawide.
 
 ## Deploy
 
 Drop the folder on any static host (Vercel, Netlify, GitHub Pages, S3). No
 configuration needed — `index.html` is the entry point.
+
+> **Note:** the local `.vercel/` link in this folder currently points at the
+> `second-rain` Vercel project. Re-link this folder to its own (Third Rain)
+> project before deploying, or a `vercel deploy` here will overwrite Second Rain.
