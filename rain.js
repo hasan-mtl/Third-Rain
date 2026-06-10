@@ -1,7 +1,8 @@
 /* ============================================================
-   RAIN — "Ink & Current" interactions
+   RAIN — "Ink & Current" interactions · v2
    Header state · drawer w/ focus trap · scroll reveals · count-ups
-   era rail · live run log · ticker loop · contact form
+   headline word cascade · console tilt · era rail · live run log
+   ticker loop · contact form
    Reduced-motion is a first-class static state throughout.
    ============================================================ */
 (function () {
@@ -26,6 +27,67 @@
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  /* ---------- headline word cascade ---------- */
+  // Wrap each hero headline word in a span so CSS can stagger them in.
+  // Skipped under reduced motion — the unsplit headline renders statically.
+  var splitTarget = qs("[data-split]");
+  if (splitTarget && !reduce) {
+    var wi = 0;
+    Array.prototype.slice.call(splitTarget.childNodes).forEach(function (node) {
+      if (node.nodeType === 3) {
+        if (!node.textContent.trim()) return;
+        var frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function (tok) {
+          if (!tok) return;
+          if (/^\s+$/.test(tok)) {
+            frag.appendChild(document.createTextNode(tok));
+            return;
+          }
+          var s = document.createElement("span");
+          s.className = "w";
+          s.style.setProperty("--wi", String(wi++));
+          s.textContent = tok;
+          frag.appendChild(s);
+        });
+        splitTarget.replaceChild(frag, node);
+      } else if (node.nodeType === 1) {
+        node.classList.add("w");
+        node.style.setProperty("--wi", String(wi++));
+      }
+    });
+  }
+
+  /* ---------- console tilt (fine pointers only) ---------- */
+  var tiltEl = qs("[data-tilt]");
+  if (tiltEl && window.matchMedia("(pointer: fine)").matches) {
+    var tiltZone = tiltEl.closest(".hero__panel") || tiltEl.parentElement;
+    var tiltRaf = null;
+    var tx = 0;
+    var ty = 0;
+
+    var applyTilt = function () {
+      tiltRaf = null;
+      tiltEl.style.transform =
+        "rotateX(" + (-ty * 4).toFixed(2) + "deg) rotateY(" + (tx * 5).toFixed(2) + "deg)";
+    };
+
+    tiltZone.addEventListener("mousemove", function (e) {
+      if (reduce) return;
+      var r = tiltZone.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - 0.5;
+      ty = (e.clientY - r.top) / r.height - 0.5;
+      if (tiltRaf === null) tiltRaf = requestAnimationFrame(applyTilt);
+    });
+
+    tiltZone.addEventListener("mouseleave", function () {
+      if (tiltRaf !== null) {
+        cancelAnimationFrame(tiltRaf);
+        tiltRaf = null;
+      }
+      tiltEl.style.transform = "";
+    });
+  }
 
   /* ---------- mobile drawer (focus trapped) ---------- */
   var toggle = qs("[data-menu-toggle]");
@@ -65,7 +127,6 @@
         return;
       }
       if (e.key !== "Tab") return;
-      // trap: toggle button -> drawer links -> back to toggle
       var f = [toggle].concat(focusables(drawer));
       if (!f.length) return;
       var first = f[0];
@@ -79,7 +140,6 @@
       }
     });
 
-    // leaving mobile widths closes the drawer
     var deskMq = window.matchMedia("(min-width: 1081px)");
     var onDesk = function (e) { if (e.matches && drawerOpen) setDrawer(false); };
     if (deskMq.addEventListener) deskMq.addEventListener("change", onDesk);
@@ -240,8 +300,6 @@
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) stopLog();
       else if (!("IntersectionObserver" in window)) startLog();
-      // when IO is available it re-fires on visibility return via scroll;
-      // restart conservatively if the log is on screen
       else {
         var r = runlog.getBoundingClientRect();
         if (r.top < window.innerHeight && r.bottom > 0) startLog();

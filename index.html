@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Rain is an AI implementation studio. We design, build, and run the systems modern companies run on — websites, branding, software, mobile apps, and AI automation that does real work inside your business." />
+<meta name="description" content="Rain is an AI implementation studio led by Michael Cassella (20+ years). We design, build, and run the systems modern companies run on — websites, branding, software, mobile apps, and AI automation that does real work inside your business." />
 <meta name="theme-color" content="#05080f" />
 <meta name="color-scheme" content="dark light" />
 <meta property="og:title" content="Rain — Refresh Your Business for the AI Era" />
-<meta property="og:description" content="An AI implementation studio. We design, build, and run websites, brands, software, mobile apps, and AI automations — one connected system that works while you sleep." />
+<meta property="og:description" content="An AI implementation studio led by 20+ years of building. Websites, brands, software, mobile apps, and AI automations — one connected system that works while you sleep." />
 <meta property="og:type" content="website" />
 <title>Rain — Refresh Your Business for the AI Era</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -32,7 +32,7 @@
 
     <nav class="pill-nav" aria-label="Primary">
       <a href="#services" data-nav>Services</a>
-      <a href="#shift" data-nav>The Shift</a>
+      <a href="#founder" data-nav>Founder</a>
       <a href="#process" data-nav>Process</a>
       <a href="#platform" data-nav>Platform</a>
       <a href="#contact" data-nav>Contact</a>
@@ -50,6 +50,7 @@
   <nav class="drawer" id="drawer" aria-label="Mobile" data-drawer>
     <a href="#services" data-drawer-link>Services</a>
     <a href="#shift" data-drawer-link>The Shift</a>
+    <a href="#founder" data-drawer-link>Founder</a>
     <a href="#process" data-drawer-link>Process</a>
     <a href="#platform" data-drawer-link>Platform</a>
     <a href="#contact" data-drawer-link>Contact</a>
@@ -72,7 +73,7 @@
         AI implementation studio&nbsp;&nbsp;·&nbsp;&nbsp;Less hype, more working systems
       </p>
 
-      <h1 id="hero-title" data-reveal style="--i:1">
+      <h1 id="hero-title" data-split>
         Refresh your business
         <span class="serif-grad">for the AI&nbsp;era.</span>
       </h1>
@@ -83,7 +84,12 @@
         work inside your business every day.
       </p>
 
-      <div class="hero__actions" data-reveal style="--i:3">
+      <p class="hero__founder" data-reveal style="--i:3">
+        <span class="mc-tile" aria-hidden="true">MC</span>
+        <span>Led by <strong>Michael Cassella</strong> — 20+ years building digital systems.</span>
+      </p>
+
+      <div class="hero__actions" data-reveal style="--i:4">
         <a class="btn btn--primary btn--lg" href="#contact">
           Start the refresh
           <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
@@ -91,7 +97,7 @@
         <a class="btn btn--outline btn--lg" href="#services">See what we build</a>
       </div>
 
-      <dl class="hero__stats" data-reveal style="--i:4">
+      <dl class="hero__stats" data-reveal style="--i:5">
         <div>
           <dt><span data-count="312">0</span></dt>
           <dd>tasks automated for clients, monthly</dd>
@@ -109,88 +115,91 @@
 
     <!-- The Refresh Console — proof artifact -->
     <div class="hero__panel" data-reveal style="--i:2">
+      <div class="ripples" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="console-glow" aria-hidden="true"></div>
-      <div class="gradient-frame console">
-        <div class="console__inner">
-          <div class="console__head">
-            <span class="console__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <p class="console__title">rain · client refresh</p>
-            <span class="pill pill--live"><span class="live-dot live-dot--sm" aria-hidden="true"></span>Running</span>
-          </div>
+      <div class="tilt" data-tilt>
+        <div class="gradient-frame console">
+          <div class="console__inner">
+            <div class="console__head">
+              <span class="console__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <p class="console__title">rain · client refresh</p>
+              <span class="pill pill--live"><span class="live-dot live-dot--sm" aria-hidden="true"></span>Running</span>
+            </div>
 
-          <ul class="console__rows">
-            <li class="console-row" style="--d:.15s">
-              <span class="icon-tile icon-tile--sky" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-              </span>
-              <span class="console-row__text">
-                <strong>Website rebuilt</strong>
-                <small>Loads in 0.8s · search-ready</small>
-              </span>
-              <span class="console-row__state console-row__state--done">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
-                Shipped
-              </span>
-            </li>
-            <li class="console-row" style="--d:.3s">
-              <span class="icon-tile icon-tile--amber" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
-              </span>
-              <span class="console-row__text">
-                <strong>Brand refreshed</strong>
-                <small>Identity, voice &amp; design system</small>
-              </span>
-              <span class="console-row__state console-row__state--done">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
-                Shipped
-              </span>
-            </li>
-            <li class="console-row" style="--d:.45s">
-              <span class="icon-tile icon-tile--blue" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="2.5"/><path d="M12 9V5.5"/><circle cx="12" cy="4" r="1.4"/><path d="M9 14.5h.01M15 14.5h.01"/></svg>
-              </span>
-              <span class="console-row__text">
-                <strong>AI agent live</strong>
-                <small>Content, replies &amp; follow-up on autopilot</small>
-              </span>
-              <span class="console-row__state">
-                <span class="live-dot live-dot--sm" aria-hidden="true"></span>
-                Active
-              </span>
-            </li>
-            <li class="console-row" style="--d:.6s">
-              <span class="icon-tile icon-tile--violet" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg>
-              </span>
-              <span class="console-row__text">
-                <strong>Daily report</strong>
-                <small>Sales, traffic &amp; stock — 8:00 AM</small>
-              </span>
-              <span class="console-row__state">
-                <span class="live-dot live-dot--sm" aria-hidden="true"></span>
-                Active
-              </span>
-            </li>
-          </ul>
+            <ul class="console__rows">
+              <li class="console-row" style="--d:.45s">
+                <span class="icon-tile icon-tile--sky" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </span>
+                <span class="console-row__text">
+                  <strong>Website rebuilt</strong>
+                  <small>Loads in 0.8s · search-ready</small>
+                </span>
+                <span class="console-row__state console-row__state--done">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+                  Shipped
+                </span>
+              </li>
+              <li class="console-row" style="--d:.6s">
+                <span class="icon-tile icon-tile--amber" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
+                </span>
+                <span class="console-row__text">
+                  <strong>Brand refreshed</strong>
+                  <small>Identity, voice &amp; design system</small>
+                </span>
+                <span class="console-row__state console-row__state--done">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+                  Shipped
+                </span>
+              </li>
+              <li class="console-row" style="--d:.75s">
+                <span class="icon-tile icon-tile--blue" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="2.5"/><path d="M12 9V5.5"/><circle cx="12" cy="4" r="1.4"/><path d="M9 14.5h.01M15 14.5h.01"/></svg>
+                </span>
+                <span class="console-row__text">
+                  <strong>AI agent live</strong>
+                  <small>Content, replies &amp; follow-up on autopilot</small>
+                </span>
+                <span class="console-row__state">
+                  <span class="live-dot live-dot--sm" aria-hidden="true"></span>
+                  Active
+                </span>
+              </li>
+              <li class="console-row" style="--d:.9s">
+                <span class="icon-tile icon-tile--violet" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg>
+                </span>
+                <span class="console-row__text">
+                  <strong>Daily report</strong>
+                  <small>Sales, traffic &amp; stock — 8:00 AM</small>
+                </span>
+                <span class="console-row__state">
+                  <span class="live-dot live-dot--sm" aria-hidden="true"></span>
+                  Active
+                </span>
+              </li>
+            </ul>
 
-          <div class="console__band">
-            <span>This month, Rain handled</span>
-            <strong class="serif">312 tasks&nbsp;·&nbsp;0 missed</strong>
+            <div class="console__band">
+              <span>This month, Rain handled</span>
+              <strong class="serif">312 tasks&nbsp;·&nbsp;0 missed</strong>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="float-chip float-chip--report" aria-hidden="true">
-        <span class="float-chip__icon float-chip__icon--emerald">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
-        </span>
-        <span class="float-chip__text"><strong>Weekly report sent</strong><small>Today · 8:00 AM</small></span>
-      </div>
-      <div class="float-chip float-chip--growth" aria-hidden="true">
-        <span class="float-chip__icon float-chip__icon--blue">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.5l3.6-3.6 2.4 2.4 5-5.5"/><path d="M10 4.8h3.5v3.5"/></svg>
-        </span>
-        <span class="float-chip__text"><strong>+38% organic traffic</strong><small>First 90 days</small></span>
+        <div class="float-chip float-chip--report" aria-hidden="true">
+          <span class="float-chip__icon float-chip__icon--emerald">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+          </span>
+          <span class="float-chip__text"><strong>Weekly report sent</strong><small>Today · 8:00 AM</small></span>
+        </div>
+        <div class="float-chip float-chip--growth" aria-hidden="true">
+          <span class="float-chip__icon float-chip__icon--blue">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.5l3.6-3.6 2.4 2.4 5-5.5"/><path d="M10 4.8h3.5v3.5"/></svg>
+          </span>
+          <span class="float-chip__text"><strong>+38% organic traffic</strong><small>First 90 days</small></span>
+        </div>
       </div>
     </div>
   </div>
@@ -204,14 +213,25 @@
 
 <!-- ============ SERVICES ============ -->
 <section class="services warm-grid" id="services" aria-labelledby="services-title">
-  <div class="section-head">
-    <p class="eyebrow" data-reveal>What we build</p>
-    <h2 id="services-title" data-reveal style="--i:1">Every surface of your business, <span class="serif-grad serif-grad--light">made current.</span></h2>
-    <p class="lede" data-reveal style="--i:2">Not five vendors and a pile of logins. One studio that designs the front of your business and wires the intelligence behind it.</p>
-  </div>
+  <header class="sec-head">
+    <div class="sec-head__rule" data-reveal>
+      <span class="sec-head__no">№ 01</span>
+      <span class="sec-head__label">What we build</span>
+      <span class="sec-head__line" aria-hidden="true"></span>
+      <span class="sec-head__tail" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+        rain.ceo
+      </span>
+    </div>
+    <div class="sec-head__grid">
+      <h2 id="services-title" data-reveal style="--i:1">Every surface of your business, <span class="serif-grad serif-grad--light">made current.</span></h2>
+      <p class="lede" data-reveal style="--i:2">Not five vendors and a pile of logins. One studio that designs the front of your business and wires the intelligence behind it.</p>
+    </div>
+  </header>
 
   <div class="services__grid">
     <article class="service-card" data-reveal>
+      <span class="service-card__no serif" aria-hidden="true">01</span>
       <span class="icon-tile icon-tile--lg icon-tile--blue" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5h6l-1 8L18 10.5h-6l1-8Z"/></svg>
       </span>
@@ -221,6 +241,7 @@
     </article>
 
     <article class="service-card" data-reveal style="--i:1">
+      <span class="service-card__no serif" aria-hidden="true">02</span>
       <span class="icon-tile icon-tile--lg icon-tile--sky" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       </span>
@@ -230,6 +251,7 @@
     </article>
 
     <article class="service-card" data-reveal style="--i:2">
+      <span class="service-card__no serif" aria-hidden="true">03</span>
       <span class="icon-tile icon-tile--lg icon-tile--amber" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
       </span>
@@ -239,6 +261,7 @@
     </article>
 
     <article class="service-card" data-reveal style="--i:3">
+      <span class="service-card__no serif" aria-hidden="true">04</span>
       <span class="icon-tile icon-tile--lg icon-tile--violet" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
       </span>
@@ -248,6 +271,7 @@
     </article>
 
     <article class="service-card" data-reveal style="--i:4">
+      <span class="service-card__no serif" aria-hidden="true">05</span>
       <span class="icon-tile icon-tile--lg icon-tile--emerald" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>
       </span>
@@ -257,6 +281,7 @@
     </article>
 
     <article class="service-card" data-reveal style="--i:5">
+      <span class="service-card__no serif" aria-hidden="true">06</span>
       <span class="icon-tile icon-tile--lg icon-tile--ink" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M7 11l10-4.5M7 13l10 4.5"/></svg>
       </span>
@@ -269,11 +294,21 @@
 
 <!-- ============ THE SHIFT ============ -->
 <section class="shift" id="shift" aria-labelledby="shift-title">
-  <div class="section-head">
-    <p class="eyebrow" data-reveal>The shift</p>
-    <h2 id="shift-title" data-reveal style="--i:1">Five eras of business. <span class="serif-grad serif-grad--light">You're living the fifth.</span></h2>
-    <p class="lede" data-reveal style="--i:2">Paper gave way to computers, computers to the internet, the internet to mobile. Each shift rewarded the companies that moved first — and this one is moving faster than all of them.</p>
-  </div>
+  <header class="sec-head">
+    <div class="sec-head__rule" data-reveal>
+      <span class="sec-head__no">№ 02</span>
+      <span class="sec-head__label">The shift</span>
+      <span class="sec-head__line" aria-hidden="true"></span>
+      <span class="sec-head__tail" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+        est. five eras
+      </span>
+    </div>
+    <div class="sec-head__grid">
+      <h2 id="shift-title" data-reveal style="--i:1">Five eras of business. <span class="serif-grad serif-grad--light">You're living the fifth.</span></h2>
+      <p class="lede" data-reveal style="--i:2">Paper gave way to computers, computers to the internet, the internet to mobile. Each shift rewarded the companies that moved first — and this one is moving faster than all of them.</p>
+    </div>
+  </header>
 
   <ol class="rail" data-rail aria-label="The five eras of business">
     <span class="rail__track" aria-hidden="true"><i class="rail__fill"></i></span>
@@ -315,17 +350,27 @@
 <section class="gap dark-section noise" id="gap" aria-labelledby="gap-title">
   <div class="dot-grid" aria-hidden="true"></div>
   <div class="gap__inner">
-    <div class="section-head">
-      <p class="eyebrow eyebrow--dark" data-reveal>The real opportunity</p>
-      <h2 id="gap-title" data-reveal style="--i:1">The opportunity isn't AI. <span class="serif-grad">It's implementation.</span></h2>
-      <p class="lede lede--dark" data-reveal style="--i:2">Most businesses already believe AI matters. The hard part is connecting it to the real work — leads, sales, support, follow-up, reporting, and the decisions that move the business.</p>
-    </div>
+    <header class="sec-head sec-head--dark">
+      <div class="sec-head__rule" data-reveal>
+        <span class="sec-head__no">№ 03</span>
+        <span class="sec-head__label">The real opportunity</span>
+        <span class="sec-head__line" aria-hidden="true"></span>
+        <span class="sec-head__tail" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+          mind the gap
+        </span>
+      </div>
+      <div class="sec-head__grid">
+        <h2 id="gap-title" data-reveal style="--i:1">The opportunity isn't AI. <span class="serif-grad">It's implementation.</span></h2>
+        <p class="lede lede--dark" data-reveal style="--i:2">Most businesses already believe AI matters. The hard part is connecting it to the real work — leads, sales, support, follow-up, reporting, and the decisions that move the business.</p>
+      </div>
+    </header>
 
     <figure class="quote" data-reveal>
       <blockquote class="serif">
-        &ldquo;The real opportunity isn't only learning AI — it's learning how to
+        The real opportunity isn't only learning AI — it's learning how to
         <em>implement</em> it inside companies, especially the small and mid-sized
-        businesses without in-house AI experts.&rdquo;
+        businesses without in-house AI experts.
       </blockquote>
       <figcaption>Mark Cuban's argument&nbsp;&nbsp;·&nbsp;&nbsp;Business Insider, 2026</figcaption>
     </figure>
@@ -365,13 +410,88 @@
   </div>
 </section>
 
-<!-- ============ PROCESS ============ -->
-<section class="process" id="process" aria-labelledby="process-title">
-  <div class="section-head">
-    <p class="eyebrow" data-reveal>How we work</p>
-    <h2 id="process-title" data-reveal style="--i:1">A studio that ships — <span class="serif-grad serif-grad--light">then stays.</span></h2>
-    <p class="lede" data-reveal style="--i:2">You get a senior team and a managed system, not a PDF of recommendations. Five deliberate moves, no mystery, no lock-in.</p>
+<!-- ============ FOUNDER ============ -->
+<section class="founder" id="founder" aria-labelledby="founder-title">
+  <header class="sec-head">
+    <div class="sec-head__rule" data-reveal>
+      <span class="sec-head__no">№ 04</span>
+      <span class="sec-head__label">The operator</span>
+      <span class="sec-head__line" aria-hidden="true"></span>
+      <span class="sec-head__tail" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+        since the early web
+      </span>
+    </div>
+  </header>
+
+  <div class="founder__grid">
+    <div class="founder__copy">
+      <h2 id="founder-title" data-reveal>Twenty-plus years of shifts. <span class="serif-grad serif-grad--light">One steady hand.</span></h2>
+      <p class="founder__lede" data-reveal style="--i:1">
+        Rain is led by <strong>Michael Cassella</strong>, who has spent more than two
+        decades building digital systems for businesses — through the web, through
+        mobile, and now through AI. Not a trend-chaser with a subscription and a
+        slide deck: an operator who has shipped through every shift that mattered.
+      </p>
+      <blockquote class="founder__pull serif" data-reveal style="--i:2">
+        Every era had winners who simply moved first.
+        <em>AI is no different — it's just faster.</em>
+      </blockquote>
+      <p class="founder__sig" data-reveal style="--i:3">
+        <span class="founder__sig-name serif">Michael Cassella</span>
+        <span class="founder__sig-role">Founder &amp; CEO, Rain</span>
+      </p>
+    </div>
+
+    <aside class="founder-plate gradient-frame" data-reveal style="--i:2" aria-label="Founder credentials">
+      <div class="founder-plate__inner">
+        <div class="founder-plate__head">
+          <span class="mc-tile mc-tile--lg" aria-hidden="true">MC</span>
+          <div>
+            <p class="founder-plate__name">Michael Cassella</p>
+            <p class="founder-plate__role">Founder &amp; CEO — Rain</p>
+          </div>
+        </div>
+        <dl class="founder-plate__stats">
+          <div>
+            <dt class="serif">20<i>+</i></dt>
+            <dd>years building digital systems for real businesses</dd>
+          </div>
+          <div>
+            <dt class="serif">05</dt>
+            <dd>disciplines under one roof — design to deployment</dd>
+          </div>
+          <div>
+            <dt class="serif">01</dt>
+            <dd>promise: working systems, not presentations</dd>
+          </div>
+        </dl>
+        <a class="founder-plate__cta" href="#contact">
+          Work with Mike
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+        </a>
+      </div>
+    </aside>
   </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="process warm-grid" id="process" aria-labelledby="process-title">
+  <header class="sec-head">
+    <div class="sec-head__rule" data-reveal>
+      <span class="sec-head__no">№ 05</span>
+      <span class="sec-head__label">How we work</span>
+      <span class="sec-head__line" aria-hidden="true"></span>
+      <span class="sec-head__tail" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+        no lock-in
+      </span>
+    </div>
+    <div class="sec-head__grid">
+      <h2 id="process-title" data-reveal style="--i:1">A studio that ships — <span class="serif-grad serif-grad--light">then stays.</span></h2>
+      <p class="lede" data-reveal style="--i:2">You get a senior team and a managed system, not a PDF of recommendations. Five deliberate moves, no mystery, no lock-in.</p>
+    </div>
+  </header>
 
   <div class="process__row">
     <span class="process__line" aria-hidden="true"></span>
@@ -380,7 +500,7 @@
       <span class="process-step__tile icon-tile--blue" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
       </span>
-      <span class="process-step__num">Step 01</span>
+      <span class="process-step__num serif" aria-hidden="true">01</span>
       <h3>Audit</h3>
       <p>We map every tool, site, and workflow you run — and find exactly where hours and leads are leaking.</p>
     </div>
@@ -389,7 +509,7 @@
       <span class="process-step__tile icon-tile--sky" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5L14.5 3Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
       </span>
-      <span class="process-step__num">Step 02</span>
+      <span class="process-step__num serif" aria-hidden="true">02</span>
       <h3>Blueprint</h3>
       <p>A clear plan for the connected system your business needs — sequenced by impact, priced before we build.</p>
     </div>
@@ -398,7 +518,7 @@
       <span class="process-step__tile icon-tile--violet" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
       </span>
-      <span class="process-step__num">Step 03</span>
+      <span class="process-step__num serif" aria-hidden="true">03</span>
       <h3>Build</h3>
       <p>Websites, brands, software, and AI workflows — built to fit the way your business really works.</p>
     </div>
@@ -407,7 +527,7 @@
       <span class="process-step__tile icon-tile--amber" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.5 1.8 5.5 5.3 5.5 9l-2.8 2.8-2.7-1.8-2.7 1.8-2.8-2.8c0-3.7 2-7.2 5.5-9Z"/><path d="M12 13.5v3M8.5 18.5c-1 .8-1.5 3-1.5 3s2.2-.5 3-1.5M15.5 18.5c1 .8 1.5 3 1.5 3s-2.2-.5-3-1.5"/></svg>
       </span>
-      <span class="process-step__num">Step 04</span>
+      <span class="process-step__num serif" aria-hidden="true">04</span>
       <h3>Launch</h3>
       <p>We go live with care — migrations handled, nothing dropped, your team trained on day one.</p>
     </div>
@@ -416,7 +536,7 @@
       <span class="process-step__tile icon-tile--emerald" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 19a9.5 9.5 0 1 1 17 0"/><path d="M12 15l3.5-5.5"/></svg>
       </span>
-      <span class="process-step__num">Step 05</span>
+      <span class="process-step__num serif" aria-hidden="true">05</span>
       <h3>Run &amp; improve</h3>
       <p>We monitor every run, report results in plain language, and keep tuning as your business grows.</p>
     </div>
@@ -424,7 +544,7 @@
 
   <div class="process__note gradient-frame" data-reveal>
     <span class="icon-tile icon-tile--blue" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 14.5a2 2 0 0 1-2 2H8l-4.5 3.5V5.5a2 2 0 0 1 2-2H19a2 2 0 0 1 2 2v9Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 14.5a2 2 0 0 1-2 2H8l-5 4V5.5a2 2 0 0 1 2-2H19a2 2 0 0 1 2 2v9Z"/></svg>
     </span>
     <div>
       <h3>And it answers whenever you ask</h3>
@@ -436,17 +556,29 @@
 <!-- ============ PLATFORM ============ -->
 <section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
   <div class="circuit-grid" aria-hidden="true"></div>
+
+  <header class="sec-head sec-head--dark sec-head--solo">
+    <div class="sec-head__rule" data-reveal>
+      <span class="sec-head__no">№ 06</span>
+      <span class="sec-head__label">Our platform</span>
+      <span class="sec-head__line" aria-hidden="true"></span>
+      <span class="sec-head__tail" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+        rain agent
+      </span>
+    </div>
+  </header>
+
   <div class="platform__inner">
     <div class="platform__copy">
-      <p class="eyebrow eyebrow--dark" data-reveal>Our platform</p>
-      <h2 id="platform-title" data-reveal style="--i:1">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
-      <p class="lede lede--dark lede--left" data-reveal style="--i:2">
+      <h2 id="platform-title" data-reveal>We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
+      <p class="lede lede--dark lede--left" data-reveal style="--i:1">
         Rain Agent is the managed AI platform we built and operate ourselves. Every client
         gets a dedicated agent wired to their tools — it drafts, publishes, replies, and
         reports, while our team watches every single run.
       </p>
 
-      <ul class="platform__list" data-reveal style="--i:3">
+      <ul class="platform__list" data-reveal style="--i:2">
         <li>
           <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
           A dedicated agent per business — it learns your voice, audience, and rules
@@ -465,7 +597,7 @@
         </li>
       </ul>
 
-      <div class="platform__actions" data-reveal style="--i:4">
+      <div class="platform__actions" data-reveal style="--i:3">
         <a class="btn btn--primary" href="#contact">
           Get your agent
           <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
@@ -479,6 +611,8 @@
 
     <div class="platform__viz" data-reveal style="--i:2">
       <div class="circuit">
+        <span class="circuit__halo" aria-hidden="true"></span>
+        <span class="circuit__ring" aria-hidden="true"></span>
         <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true">
           <path class="trace" d="M260 220 H360 V72 H424"/>
           <path class="trace" d="M260 220 H160 V72 H96"/>
@@ -552,7 +686,7 @@
   <div class="dot-grid" aria-hidden="true"></div>
   <div class="contact__inner">
     <div class="contact__copy">
-      <p class="eyebrow eyebrow--dark" data-reveal>Begin</p>
+      <p class="eyebrow eyebrow--dark" data-reveal>№ 07 — Begin</p>
       <h2 id="contact-title" data-reveal style="--i:1">Refresh your business <span class="serif-grad">before your competitors do.</span></h2>
       <p class="lede lede--dark lede--left" data-reveal style="--i:2">
         Tell us where the manual work piles up. We'll map the system that clears it —
@@ -561,11 +695,18 @@
 
       <a class="contact__mail" href="mailto:hello@rain.studio" data-reveal style="--i:3">hello@rain.studio</a>
 
-      <p class="contact__reply" data-reveal style="--i:4">
+      <div class="contact__founder glass" data-reveal style="--i:4">
+        <span class="mc-tile" aria-hidden="true">MC</span>
+        <div>
+          <p><strong>Michael Cassella</strong> — Founder &amp; CEO</p>
+          <p>20+ years building digital systems. Your first call is with him.</p>
+        </div>
+      </div>
+
+      <p class="contact__reply" data-reveal style="--i:5">
         <span class="live-dot live-dot--sm" aria-hidden="true"></span>
         We reply within one business day
       </p>
-      <p class="contact__ceo" data-reveal style="--i:4">Founded &amp; led by <strong>Michael Cassella</strong>, CEO</p>
     </div>
 
     <form class="contact-form" data-reveal style="--i:2" novalidate data-form>
@@ -595,6 +736,19 @@
 
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
+  <span class="site-footer__watermark serif" aria-hidden="true">rain.</span>
+
+  <div class="site-footer__cta">
+    <p class="site-footer__line serif">The refresh begins <em>with a single drop.</em></p>
+    <div class="site-footer__cta-actions">
+      <a class="btn btn--primary btn--lg" href="#contact">
+        Start the refresh
+        <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+      </a>
+      <a class="btn btn--outline btn--lg" href="mailto:hello@rain.studio">hello@rain.studio</a>
+    </div>
+  </div>
+
   <div class="site-footer__inner">
     <div class="site-footer__brand">
       <a class="brand" href="#hero" aria-label="Rain — home">
@@ -603,18 +757,19 @@
         </span>
         <span class="brand__word">rain<span class="brand__dot">.</span></span>
       </a>
-      <p>The business refresh for the AI era.</p>
+      <p>The business refresh for the AI era.<br />Led by Michael Cassella — 20+ years of working systems.</p>
     </div>
     <nav class="site-footer__nav" aria-label="Footer">
       <a href="#services">Services</a>
       <a href="#shift">The Shift</a>
+      <a href="#founder">Founder</a>
       <a href="#process">Process</a>
       <a href="#platform">Platform</a>
       <a href="#contact">Contact</a>
       <a href="https://rain-agent.vercel.app" target="_blank" rel="noopener">Rain Agent ↗</a>
     </nav>
     <p class="site-footer__meta">
-      © <span data-year>2026</span> Rain · Led by Michael Cassella, CEO<br />
+      © <span data-year>2026</span> Rain · All systems running<br />
       <a href="mailto:hello@rain.studio">hello@rain.studio</a>
     </p>
   </div>
