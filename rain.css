@@ -588,9 +588,28 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 /* ==========================================================================
    HERO
    ========================================================================== */
-.hero {
-  padding-top: var(--header-h);
-  /* inset vignette grounds the edges into ink */
+.hero { padding-top: var(--header-h); }
+
+/* graded video backdrop */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.42) saturate(0.85) contrast(1.06);
+}
+.hero__media-tint {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1100px 480px at 80% -10%, rgba(45, 212, 191, 0.16), transparent 60%),
+    radial-gradient(900px 500px at 5% 110%, rgba(59, 130, 246, 0.2), transparent 55%),
+    linear-gradient(140deg, rgba(7, 13, 28, 0.8) 0%, rgba(13, 28, 62, 0.66) 55%, rgba(10, 31, 44, 0.8) 100%);
   box-shadow:
     inset 0 -120px 160px -80px rgba(3, 5, 10, 0.55),
     inset 0 80px 120px -60px rgba(3, 5, 10, 0.3);
@@ -1131,11 +1150,81 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   padding: 0 24px;
 }
 
+.demo .section-head { margin-bottom: 30px; }
+
+/* task chips — the "multiple options" bar */
+.demo__chips {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 38px;
+}
+.demo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--td-body);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s var(--ease);
+}
+.demo-chip svg { width: 15px; height: 15px; color: var(--sky-300); transition: color 0.18s ease; }
+.demo-chip:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.demo-chip.is-active {
+  background: linear-gradient(to bottom, var(--blue-500), var(--blue-600));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px -6px rgba(37, 99, 235, 0.6);
+}
+.demo-chip.is-active svg { color: #fff; }
+
 .demo__grid {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 26px;
   align-items: stretch; /* both demos share one bottom edge */
+}
+
+/* data pulse travelling chat → result when a task fires */
+.demo__link {
+  position: absolute;
+  top: 46%;
+  left: calc(50% - 49px);
+  width: 98px;
+  height: 2px;
+  z-index: 2;
+  background: repeating-linear-gradient(90deg, rgba(125, 211, 252, 0.28) 0 6px, transparent 6px 12px);
+}
+.demo__pulse {
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 999px;
+  background: var(--teal-300);
+  box-shadow: 0 0 10px rgba(94, 234, 212, 0.9);
+  opacity: 0;
+}
+.demo__pulse.is-firing { animation: pulse-run 0.85s var(--ease) forwards; }
+@keyframes pulse-run {
+  0%   { opacity: 0; left: -4px; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; left: calc(100% - 5px); }
 }
 
 .demo__item {
@@ -1146,7 +1235,27 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   min-width: 0;
 }
 .demo__item .chat,
-.demo__item .report { flex: 1; } /* cards fill to equal height, captions level */
+.demo__item .result { flex: 1; } /* cards fill to equal height, captions level */
+
+/* result views stack in one cell; tallest sets the height */
+.result { position: relative; display: grid; }
+.result__view {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.985);
+  transition:
+    opacity 0.4s var(--ease),
+    transform 0.4s var(--ease),
+    visibility 0s linear 0.4s;
+}
+.result__view.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  z-index: 1;
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
 .demo__item figcaption {
   display: flex;
   align-items: center;
@@ -1157,7 +1266,7 @@ html.js .cap-panel.is-active .cap-panel__outcome {
 }
 
 .demo .chat,
-.demo .report {
+.demo .result__view {
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: var(--shadow-deep);
 }
@@ -1295,6 +1404,141 @@ html.js .report.is-live .report__sent {
   transform: none;
   transition: opacity 0.4s var(--ease) 1.35s, transform 0.4s var(--ease) 1.35s;
 }
+
+/* --- result cards (post / order / inbox) — same chrome as the report --- */
+.rcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line-light);
+  border-radius: 16px;
+  background: #fff;
+}
+.rcard__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 15px;
+}
+
+.rcard__thumb {
+  display: grid;
+  place-items: center;
+  height: 96px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(135deg, var(--ink-800), var(--blue-600) 60%, var(--teal-400));
+}
+.rcard__thumb svg { width: 22px; height: 22px; }
+.rcard__title { margin-top: 12px; font-size: 14.5px; font-weight: 600; color: var(--t-strong); }
+.rcard__meta { margin-top: 3px; font-size: 12px; color: var(--t-faint); }
+.rcard__steps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 14px; }
+.rcard__steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #047857;
+  background: #ecfdf5;
+  border-radius: 999px;
+}
+.rcard__steps .tick { width: 16px; height: 16px; margin-top: 0; }
+.rcard__steps .tick svg { width: 9px; height: 9px; }
+
+.rcard__rows {
+  flex: 1;
+  display: grid;
+  gap: 13px;
+  align-content: center;
+}
+.rcard__rows li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--t-body);
+}
+.rcard__rows li strong {
+  font-size: 15.5px;
+  font-weight: 650;
+  color: var(--t-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.rcard__mails {
+  flex: 1;
+  display: grid;
+  gap: 9px;
+  align-content: center;
+}
+.rcard__mails li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 11px;
+  font-size: 12.5px;
+  color: var(--t-body);
+  background: #fafaf9;
+  border: 1px solid #f0eeea;
+  border-radius: 11px;
+}
+.rcard__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--c1, #3b82f6), var(--c2, #6366f1));
+  flex-shrink: 0;
+}
+.rcard__mails span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rcard__mails em { font-style: normal; font-size: 11px; font-weight: 600; color: var(--emerald-600); }
+
+.rcard__band {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #047857;
+  background: #ecfdf5;
+  border-radius: 10px;
+}
+.rcard__band svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* rcard assembles when it goes live */
+html.js .rcard .rcard__thumb,
+html.js .rcard .rcard__title,
+html.js .rcard .rcard__meta,
+html.js .rcard .rcard__steps li,
+html.js .rcard .rcard__rows li,
+html.js .rcard .rcard__mails li,
+html.js .rcard .rcard__band {
+  opacity: 0;
+  transform: translateY(6px);
+}
+html.js .rcard.is-live .rcard__thumb { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.08s; }
+html.js .rcard.is-live .rcard__title { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.22s; }
+html.js .rcard.is-live .rcard__meta { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.32s; }
+html.js .rcard.is-live .rcard__steps li:nth-child(1) { opacity: 1; transform: none; transition: all 0.35s var(--ease) 0.5s; }
+html.js .rcard.is-live .rcard__steps li:nth-child(2) { opacity: 1; transform: none; transition: all 0.35s var(--ease) 0.66s; }
+html.js .rcard.is-live .rcard__steps li:nth-child(3) { opacity: 1; transform: none; transition: all 0.35s var(--ease) 0.82s; }
+html.js .rcard.is-live .rcard__rows li:nth-child(1),
+html.js .rcard.is-live .rcard__mails li:nth-child(1) { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.12s; }
+html.js .rcard.is-live .rcard__rows li:nth-child(2),
+html.js .rcard.is-live .rcard__mails li:nth-child(2) { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.3s; }
+html.js .rcard.is-live .rcard__rows li:nth-child(3),
+html.js .rcard.is-live .rcard__mails li:nth-child(3) { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.48s; }
+html.js .rcard.is-live .rcard__band { opacity: 1; transform: none; transition: all 0.4s var(--ease) 0.72s; }
 
 /* ==========================================================================
    PROCESS
@@ -1967,6 +2211,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
   .demo__grid { grid-template-columns: 1fr; gap: 36px; }
   .demo__item { max-width: 440px; width: 100%; margin: 0 auto; }
+  .demo__link { display: none; }
 
   .platform__stats { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; }
 
@@ -2088,9 +2333,20 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
   html.js .report__rows li,
   html.js .report__chart i,
-  html.js .report__sent {
+  html.js .report__sent,
+  html.js .rcard .rcard__thumb,
+  html.js .rcard .rcard__title,
+  html.js .rcard .rcard__meta,
+  html.js .rcard .rcard__steps li,
+  html.js .rcard .rcard__rows li,
+  html.js .rcard .rcard__mails li,
+  html.js .rcard .rcard__band {
     opacity: 1;
     transform: none;
     transition: none;
   }
+
+  .demo__pulse.is-firing { animation: none; }
+  .result__view { transition: none; }
+  .hero__video { display: none; }
 }

@@ -7,3 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .vercel
+
+# original heavy footage (compressed copy lives in assets/)
+Rain CEO BG.mp4

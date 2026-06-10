@@ -115,6 +115,35 @@
     }, 3000);
   }
 
+  /* ---------- hero video: gated, graded, battery-friendly ---------- */
+  var heroVideo = qs(".hero__video");
+  if (heroVideo) {
+    var saveData = !!(navigator.connection && navigator.connection.saveData);
+    if (reduce || saveData || window.matchMedia("(max-width: 760px)").matches) {
+      heroVideo.remove(); // the tint + gradients remain as the backdrop
+    } else {
+      var playVideo = function () {
+        var p = heroVideo.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      var videoZone = heroVideo.parentNode;
+      playVideo();
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !document.hidden) playVideo();
+            else heroVideo.pause();
+          });
+        }, { threshold: 0.05 }).observe(videoZone);
+      }
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { heroVideo.pause(); return; }
+        var r = videoZone.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) playVideo();
+      });
+    }
+  }
+
   /* ---------- hero parallax (console drifts against the scroll) ---------- */
   var heroPanel = qs(".hero__panel");
   if (heroPanel) {
@@ -334,15 +363,40 @@
     });
   }
 
-  /* ---------- auto-playing Telegram chat demo ---------- */
-  var chatRoot = qs("[data-chat]");
-  if (chatRoot) {
-    var chatBody = qs("[data-chat-body]", chatRoot);
-    var CHAT_TURNS = [
-      ["Write a blog on cold brew — publish Monday 7am ☕", "Done ✅ Drafted, image ready, scheduled for Mon 7:00 AM."],
-      ["Clicks last week vs last month?", "📈 4,820 last week — up 18%. Top page: /cold-brew-guide."],
-      ["Low on oat milk — reorder it.", "🛒 Reordered 48 units from your supplier. ETA Thursday."]
-    ];
+  /* ---------- "You ask. It's done." — scenario engine ---------- */
+  // One engine drives the chips, the chat, the connector pulse, and the
+  // result card so the whole section plays as a single demonstration.
+  var demoGrid = qs(".demo__grid");
+  if (demoGrid) {
+    var chatBody = qs("[data-chat-body]", demoGrid);
+    var chips = qsa("[data-scenario]");
+    var views = qsa("[data-view]", demoGrid);
+    var pulseEl = qs("[data-pulse]", demoGrid);
+    var reportNums = qsa("[data-report-num]", demoGrid);
+    var reportBadge = qs("[data-report-badge]", demoGrid);
+
+    var SCENARIOS = {
+      numbers: { user: "Clicks last week vs last month?", reply: "\ud83d\udcc8 4,820 \u2014 up 18%. Full report, right here \u2192", view: "report" },
+      content: { user: "Write a blog on cold brew \u2014 publish Monday 7am \u2615", reply: "Done \u2705 Drafted, image ready, scheduled Mon 7:00.", view: "post" },
+      restock: { user: "Low on oat milk \u2014 reorder it.", reply: "\ud83d\uded2 48 units ordered from your supplier. ETA Thursday.", view: "order" },
+      replies: { user: "Handle today's customer emails.", reply: "\u2709\ufe0f 12 replies drafted in your tone \u2014 2 flagged for you.", view: "inbox" }
+    };
+    var SCN_ORDER = ["numbers", "content", "restock", "replies"];
+
+    var scnTimers = [];
+    var scnTyping = null;
+    var scnTouched = false;
+    var scnStarted = false;
+    var scnIdx = 0;
+    var scnAuto = null;
+
+    var scnWait = function (fn, ms) { scnTimers.push(window.setTimeout(fn, ms)); };
+    var scnClear = function () {
+      scnTimers.forEach(window.clearTimeout);
+      scnTimers = [];
+      if (scnTyping && scnTyping.parentNode) scnTyping.parentNode.removeChild(scnTyping);
+      scnTyping = null;
+    };
 
     var chatMsg = function (role, text) {
       var el = document.createElement("p");
@@ -352,66 +406,139 @@
       while (chatBody.children.length > 5) chatBody.removeChild(chatBody.firstElementChild);
     };
 
-    if (reduce) {
-      CHAT_TURNS.slice(0, 2).forEach(function (t) {
-        chatMsg("user", t[0]);
-        chatMsg("agent", t[1]);
+    var setReportNum = function (el, value) {
+      var prefix = el.getAttribute("data-report-prefix") || "";
+      el.textContent = prefix + value.toLocaleString("en-US");
+    };
+
+    var assembleReport = function (instant) {
+      if (!reportBadge) return;
+      if (instant) {
+        reportNums.forEach(function (el) { setReportNum(el, parseInt(el.getAttribute("data-report-num"), 10)); });
+        reportBadge.textContent = "Delivered \u2713";
+        reportBadge.classList.add("is-done");
+        return;
+      }
+      reportBadge.textContent = "Preparing\u2026";
+      reportBadge.classList.remove("is-done");
+      reportNums.forEach(function (el) { setReportNum(el, 0); });
+      scnWait(function () {
+        reportNums.forEach(function (el) {
+          var target = parseInt(el.getAttribute("data-report-num"), 10);
+          var start = null;
+          var tick = function (ts) {
+            if (start === null) start = ts;
+            var p = Math.min((ts - start) / 1000, 1);
+            setReportNum(el, Math.round(target * (1 - Math.pow(1 - p, 3))));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      }, 200);
+      scnWait(function () {
+        reportBadge.textContent = "Delivered \u2713";
+        reportBadge.classList.add("is-done");
+      }, 1600);
+    };
+
+    var showView = function (key, instant) {
+      var target = null;
+      views.forEach(function (v) {
+        var on = v.getAttribute("data-view") === key;
+        v.classList.toggle("is-active", on);
+        if (on) target = v;
+        else v.classList.remove("is-live");
       });
+      if (!target) return;
+      target.classList.remove("is-live");
+      void target.offsetWidth; // restart the assemble transitions
+      target.classList.add("is-live");
+      if (key === "report") assembleReport(instant);
+    };
+
+    var setChip = function (key) {
+      chips.forEach(function (c) {
+        var on = c.getAttribute("data-scenario") === key;
+        c.classList.toggle("is-active", on);
+        c.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    };
+
+    var runScenario = function (key) {
+      var t = SCENARIOS[key];
+      if (!t) return;
+      scnClear();
+      setChip(key);
+      if (reduce) {
+        chatMsg("user", t.user);
+        chatMsg("agent", t.reply);
+        showView(t.view, true);
+        return;
+      }
+      chatMsg("user", t.user);
+      if (pulseEl) {
+        pulseEl.classList.remove("is-firing");
+        void pulseEl.offsetWidth;
+        pulseEl.classList.add("is-firing");
+      }
+      scnWait(function () {
+        scnTyping = document.createElement("div");
+        scnTyping.className = "chat__typing";
+        scnTyping.innerHTML = "<i></i><i></i><i></i>";
+        chatBody.appendChild(scnTyping);
+      }, 380);
+      scnWait(function () {
+        if (scnTyping && scnTyping.parentNode) scnTyping.parentNode.removeChild(scnTyping);
+        scnTyping = null;
+        chatMsg("agent", t.reply);
+        showView(t.view, false);
+      }, 1500);
+    };
+
+    var scnStop = function () {
+      if (scnAuto !== null) { window.clearInterval(scnAuto); scnAuto = null; }
+    };
+    var scnPlay = function () {
+      if (scnAuto !== null || scnTouched || reduce || document.hidden) return;
+      if (!scnStarted) {
+        scnStarted = true;
+        scnWait(function () { runScenario(SCN_ORDER[0]); }, 500);
+      }
+      scnAuto = window.setInterval(function () {
+        scnIdx = (scnIdx + 1) % SCN_ORDER.length;
+        runScenario(SCN_ORDER[scnIdx]);
+      }, 7800);
+    };
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        scnTouched = true;
+        scnStop();
+        scnIdx = SCN_ORDER.indexOf(chip.getAttribute("data-scenario"));
+        runScenario(chip.getAttribute("data-scenario"));
+      });
+    });
+
+    if (reduce) {
+      runScenario("numbers");
     } else {
-      var chatTimers = [];
-      var chatRunning = false;
-      var chatTurn = 0;
-      var typingEl = null;
-      var chatWait = function (fn, ms) { chatTimers.push(window.setTimeout(fn, ms)); };
-
-      var chatStep = function () {
-        if (!chatRunning) return;
-        var t = CHAT_TURNS[chatTurn % CHAT_TURNS.length];
-        chatTurn += 1;
-        chatMsg("user", t[0]);
-        chatWait(function () {
-          if (!chatRunning) return;
-          typingEl = document.createElement("div");
-          typingEl.className = "chat__typing";
-          typingEl.innerHTML = "<i></i><i></i><i></i>";
-          chatBody.appendChild(typingEl);
-          chatWait(function () {
-            if (!chatRunning) return;
-            if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
-            typingEl = null;
-            chatMsg("agent", t[1]);
-            chatWait(chatStep, 2600);
-          }, 1300);
-        }, 900);
-      };
-
-      var chatStart = function () {
-        if (chatRunning) return;
-        chatRunning = true;
-        chatStep();
-      };
-      var chatStop = function () {
-        chatRunning = false;
-        chatTimers.forEach(window.clearTimeout);
-        chatTimers = [];
-        if (typingEl && typingEl.parentNode) { typingEl.parentNode.removeChild(typingEl); typingEl = null; }
-      };
-
+      demoGrid.addEventListener("mouseenter", scnStop);
+      demoGrid.addEventListener("mouseleave", scnPlay);
       if ("IntersectionObserver" in window) {
-        var chatIO = new IntersectionObserver(function (entries) {
+        var scnIO = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting && !document.hidden) chatStart();
-            else chatStop();
+            if (entry.isIntersecting && !document.hidden) scnPlay();
+            else scnStop();
           });
-        }, { threshold: 0.3 });
-        chatIO.observe(chatRoot);
+        }, { threshold: 0.25 });
+        scnIO.observe(demoGrid);
       } else {
-        chatStart();
+        scnPlay();
       }
       document.addEventListener("visibilitychange", function () {
-        if (document.hidden) { chatStop(); return; }
-        var r = chatRoot.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) chatStart();
+        if (document.hidden) { scnStop(); return; }
+        var r = demoGrid.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) scnPlay();
       });
     }
   }
@@ -510,101 +637,6 @@
         if (r.top < window.innerHeight && r.bottom > 0) startLog();
       }
     });
-  }
-
-  /* ---------- morning report assembles itself ---------- */
-  var report = qs("[data-report]");
-  if (report) {
-    var reportNums = qsa("[data-report-num]", report);
-    var reportBadge = qs("[data-report-badge]", report);
-
-    var setReportNum = function (el, value) {
-      var prefix = el.getAttribute("data-report-prefix") || "";
-      el.textContent = prefix + value.toLocaleString("en-US");
-    };
-
-    var countReportNums = function () {
-      reportNums.forEach(function (el) {
-        var target = parseInt(el.getAttribute("data-report-num"), 10);
-        var start = null;
-        var dur = 1000;
-        var tick = function (ts) {
-          if (start === null) start = ts;
-          var p = Math.min((ts - start) / dur, 1);
-          setReportNum(el, Math.round(target * (1 - Math.pow(1 - p, 3))));
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      });
-    };
-
-    var reportFinal = function () {
-      report.classList.add("is-live");
-      reportNums.forEach(function (el) {
-        setReportNum(el, parseInt(el.getAttribute("data-report-num"), 10));
-      });
-      if (reportBadge) {
-        reportBadge.textContent = "Delivered ✓";
-        reportBadge.classList.add("is-done");
-      }
-    };
-
-    if (reduce) {
-      reportFinal();
-    } else {
-      var reportTimers = [];
-      var reportRunning = false;
-      var reportWait = function (fn, ms) { reportTimers.push(window.setTimeout(fn, ms)); };
-
-      var reportCycle = function () {
-        if (!reportRunning) return;
-        report.classList.add("is-live");
-        if (reportBadge) {
-          reportBadge.textContent = "Preparing…";
-          reportBadge.classList.remove("is-done");
-        }
-        reportWait(countReportNums, 150);
-        reportWait(function () {
-          if (!reportRunning || !reportBadge) return;
-          reportBadge.textContent = "Delivered ✓";
-          reportBadge.classList.add("is-done");
-        }, 1700);
-        reportWait(function () {
-          if (!reportRunning) return;
-          report.classList.remove("is-live");
-          reportNums.forEach(function (el) { setReportNum(el, 0); });
-          reportWait(reportCycle, 750);
-        }, 6400);
-      };
-
-      var reportStart = function () {
-        if (reportRunning) return;
-        reportRunning = true;
-        reportCycle();
-      };
-      var reportStop = function () {
-        reportRunning = false;
-        reportTimers.forEach(window.clearTimeout);
-        reportTimers = [];
-      };
-
-      if ("IntersectionObserver" in window) {
-        var reportIO = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting && !document.hidden) reportStart();
-            else reportStop();
-          });
-        }, { threshold: 0.3 });
-        reportIO.observe(report);
-      } else {
-        reportStart();
-      }
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) { reportStop(); return; }
-        var r = report.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) reportStart();
-      });
-    }
   }
 
   /* ---------- contact form ---------- */

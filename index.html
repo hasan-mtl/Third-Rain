@@ -60,6 +60,10 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero dark-section noise" id="hero" aria-labelledby="hero-title">
+  <div class="hero__media" aria-hidden="true">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" src="assets/rain-bg.mp4"></video>
+    <div class="hero__media-tint"></div>
+  </div>
   <div class="circuit-grid" aria-hidden="true"></div>
   <div class="hero__streaks" aria-hidden="true"><i></i><i></i><i></i></div>
 
@@ -457,8 +461,27 @@
     <header class="section-head">
       <p class="eyebrow eyebrow--dark" data-reveal>See it work</p>
       <h2 id="demo-title" data-reveal style="--i:1">You ask. <span class="serif-grad">It's done.</span></h2>
-      <p class="lede lede--dark" data-reveal style="--i:2">No dashboards to learn. Your business answers like a person — and reports like clockwork.</p>
+      <p class="lede lede--dark" data-reveal style="--i:2">No dashboards to learn. Tap a task — watch it get done.</p>
     </header>
+
+    <div class="demo__chips" role="tablist" aria-label="Pick a task" data-reveal>
+      <button class="demo-chip is-active" type="button" data-scenario="numbers" aria-pressed="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg>
+        My numbers
+      </button>
+      <button class="demo-chip" type="button" data-scenario="content" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5L14.5 3Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+        Post my blog
+      </button>
+      <button class="demo-chip" type="button" data-scenario="restock" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z"/><path d="M12 11.5 3.5 8.5M12 11.5l8.5-3M12 11.5V20"/></svg>
+        Restock
+      </button>
+      <button class="demo-chip" type="button" data-scenario="replies" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7.5 9 6 9-6"/></svg>
+        Customer replies
+      </button>
+    </div>
 
     <div class="demo__grid">
       <figure class="demo__item" data-reveal>
@@ -479,47 +502,126 @@
             <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 11 13M21.5 2.5l-6.8 19-3.7-8.5-8.5-3.7 19-6.8Z"/></svg></i>
           </div>
         </div>
-        <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>Text it anything — it gets done</figcaption>
+        <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>Text it — or tap a task above</figcaption>
       </figure>
 
+      <span class="demo__link" aria-hidden="true"><i class="demo__pulse" data-pulse></i></span>
+
       <figure class="demo__item" data-reveal style="--i:1">
-        <div class="report" data-report>
-          <div class="report__head">
-            <span class="report__tile" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
-            </span>
-            <div class="report__id">
-              <strong>Morning report</strong>
-              <small>Tuesday · 8:00 AM</small>
+        <div class="result" data-result>
+
+          <div class="report result__view is-active" data-view="report" data-report>
+            <div class="report__head">
+              <span class="report__tile" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+              </span>
+              <div class="report__id">
+                <strong>Morning report</strong>
+                <small>Tuesday · 8:00 AM</small>
+              </div>
+              <span class="report__badge" data-report-badge>Preparing…</span>
             </div>
-            <span class="report__badge" data-report-badge>Preparing…</span>
+            <ul class="report__rows">
+              <li>
+                <span>Revenue yesterday</span>
+                <strong data-report-num="4820" data-report-prefix="$">$0</strong>
+                <em>▲ 12%</em>
+              </li>
+              <li>
+                <span>New customers</span>
+                <strong data-report-num="18">0</strong>
+                <em>▲ 3</em>
+              </li>
+              <li>
+                <span>Replies sent for you</span>
+                <strong data-report-num="12">0</strong>
+                <em>all answered</em>
+              </li>
+            </ul>
+            <div class="report__chart" aria-hidden="true">
+              <i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:74%"></i><i style="--h:88%"></i>
+            </div>
+            <p class="report__sent">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+              Sent to your phone — nothing to log into
+            </p>
           </div>
-          <ul class="report__rows">
-            <li>
-              <span>Revenue yesterday</span>
-              <strong data-report-num="4820" data-report-prefix="$">$0</strong>
-              <em>▲ 12%</em>
-            </li>
-            <li>
-              <span>New customers</span>
-              <strong data-report-num="18">0</strong>
-              <em>▲ 3</em>
-            </li>
-            <li>
-              <span>Replies sent for you</span>
-              <strong data-report-num="12">0</strong>
-              <em>all answered</em>
-            </li>
-          </ul>
-          <div class="report__chart" aria-hidden="true">
-            <i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:74%"></i><i style="--h:88%"></i>
+
+          <div class="rcard result__view" data-view="post">
+            <div class="report__head">
+              <span class="report__tile" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+              </span>
+              <div class="report__id">
+                <strong>Blog post</strong>
+                <small>Monday · 7:00 AM</small>
+              </div>
+              <span class="report__badge is-done">Scheduled ✓</span>
+            </div>
+            <div class="rcard__body">
+              <div class="rcard__thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+              </div>
+              <p class="rcard__title">Cold Brew at Home — the 5-minute method</p>
+              <p class="rcard__meta">800 words · image generated · SEO ready</p>
+              <ul class="rcard__steps" aria-hidden="true">
+                <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Drafted</li>
+                <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Image</li>
+                <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Scheduled</li>
+              </ul>
+            </div>
           </div>
-          <p class="report__sent">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
-            Sent to your phone — nothing to log into
-          </p>
+
+          <div class="rcard result__view" data-view="order">
+            <div class="report__head">
+              <span class="report__tile" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+              </span>
+              <div class="report__id">
+                <strong>Purchase order</strong>
+                <small>Sent to your supplier</small>
+              </div>
+              <span class="report__badge is-done">Ordered ✓</span>
+            </div>
+            <div class="rcard__body">
+              <ul class="rcard__rows">
+                <li><span>Oat milk (1L)</span><strong>× 48</strong></li>
+                <li><span>Supplier</span><strong>Your usual</strong></li>
+                <li><span>Delivery</span><strong>Thursday</strong></li>
+              </ul>
+              <p class="rcard__band">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+                Confirmed — invoice on your phone
+              </p>
+            </div>
+          </div>
+
+          <div class="rcard result__view" data-view="inbox">
+            <div class="report__head">
+              <span class="report__tile" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+              </span>
+              <div class="report__id">
+                <strong>Inbox</strong>
+                <small>Today</small>
+              </div>
+              <span class="report__badge is-done">Cleared ✓</span>
+            </div>
+            <div class="rcard__body">
+              <ul class="rcard__mails">
+                <li><i class="rcard__dot" style="--c1:#3b82f6;--c2:#6366f1" aria-hidden="true"></i><span>"Where's my order?"</span><em>replied ✓</em></li>
+                <li><i class="rcard__dot" style="--c1:#f59e0b;--c2:#f97316" aria-hidden="true"></i><span>"Do you ship to Penang?"</span><em>replied ✓</em></li>
+                <li><i class="rcard__dot" style="--c1:#10b981;--c2:#14b8a6" aria-hidden="true"></i><span>"Can I change my booking?"</span><em>replied ✓</em></li>
+              </ul>
+              <p class="rcard__band">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+                12 answered · 2 waiting for your OK
+              </p>
+            </div>
+          </div>
+
         </div>
-        <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>Your numbers, every morning at 8:00</figcaption>
+        <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>The result, built in front of you</figcaption>
       </figure>
     </div>
   </div>
