@@ -290,7 +290,7 @@ html.js [data-split] .serif-grad.is-cycling.is-swapping {
 }
 .eyebrow--dark { color: var(--sky-300); }
 
-h1, h2, h3 { line-height: 1.1; letter-spacing: -0.022em; font-weight: 600; }
+h1, h2, h3 { line-height: 1.1; letter-spacing: -0.024em; font-weight: 600; }
 
 h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 
@@ -314,7 +314,7 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 /* tracked uppercase centers optically off — nudge by one tracking unit */
 .section-head .eyebrow { display: block; padding-left: 0.14em; }
 .section-head h2 { margin-top: 14px; font-size: clamp(1.95rem, 3.4vw, 2.6rem); }
-.section-head .lede { margin-top: 14px; }
+.section-head .lede { margin-top: 16px; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -657,6 +657,7 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
   margin-top: 24px;
   font-size: 18px;
   line-height: 1.66;
+  letter-spacing: -0.004em;
   color: var(--td-body);
 }
 .hero__sub em { font-style: normal; color: var(--teal-300); }
@@ -693,6 +694,7 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
   font-size: 2.15rem;
   line-height: 1;
   color: #fff;
+  font-variant-numeric: tabular-nums; /* steady width while counting up */
 }
 .hero__stats dd {
   margin-top: 8px;
@@ -1690,6 +1692,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   font-size: 2.5rem;
   line-height: 1;
   color: #fff;
+  font-variant-numeric: tabular-nums;
 }
 .platform__stats dd { margin-top: 9px; font-size: 13px; color: var(--td-faint); }
 
