@@ -931,11 +931,11 @@ html.js .console-row {
   align-items: center;
   gap: 14px;
   width: 100%;
-  padding: 14px 16px;
+  padding: 13px 15px;
   text-align: left;
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid var(--line-light);
-  border-radius: 18px;
+  border-radius: 16px;
   transition:
     border-color 0.18s ease,
     background-color 0.18s ease,
@@ -989,7 +989,13 @@ html.js .console-row {
 .cap-btn:hover .cap-btn__arrow { opacity: 0.55; transform: none; }
 .cap-btn.is-active .cap-btn__arrow { opacity: 1; transform: none; }
 
-.cap-panel { display: none; padding: 8px; box-shadow: var(--shadow-premium); }
+/* single-layer card — gradient hairline directly on the panel, no mat */
+.cap-panel {
+  display: none;
+  padding: 0;
+  border-radius: 24px;
+  box-shadow: var(--shadow-premium);
+}
 .cap-panel.is-active { display: block; }
 html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
 @keyframes panel-in {
@@ -997,11 +1003,7 @@ html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
   to   { opacity: 1; transform: none; }
 }
 
-.cap-panel__inner {
-  background: #fff;
-  border-radius: 1.4rem;
-  padding: 28px;
-}
+.cap-panel__inner { padding: 30px; }
 
 .cap-panel__head { display: flex; align-items: center; gap: 15px; }
 .cap-panel__head h3 { font-size: 20px; }
@@ -1109,16 +1111,16 @@ html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
 .process__row {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 28px;
-  max-width: var(--maxw);
-  margin: 12px auto 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 980px;
+  margin: 16px auto 0;
 }
 .process__line {
   position: absolute;
-  top: 27px;
-  left: 7%;
-  right: 7%;
+  top: 32px;
+  left: 11%;
+  right: 11%;
   height: 1px;
   background: linear-gradient(to right, transparent, #d6d3d1 18%, #d6d3d1 82%, transparent);
 }
@@ -1133,70 +1135,81 @@ html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
 .process-step__tile {
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--blue-500), var(--indigo-500));
   color: #fff;
-  box-shadow: 0 0 0 5px var(--paper), 0 10px 22px -8px rgba(16, 26, 48, 0.4);
+  box-shadow:
+    0 0 0 4px var(--paper),
+    0 12px 26px -8px rgba(59, 130, 246, 0.45);
 }
-.process-step__tile svg { width: 24px; height: 24px; }
-.process-step__num {
+.process-step__tile svg { width: 26px; height: 26px; }
+.process-step__label {
   margin-top: 20px;
-  font-size: 1.9rem;
-  font-style: italic;
-  line-height: 1;
-  background: linear-gradient(100deg, var(--blue-600), var(--teal-500));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-600);
 }
-.process-step h3 { margin-top: 8px; font-size: 18.5px; }
+.process-step h3 { margin-top: 8px; font-size: 20px; }
 .process-step p {
-  max-width: 220px;
+  max-width: 280px;
   margin-top: 8px;
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.62;
   color: var(--t-body);
 }
 
+/* dark band, styled like the product's Telegram section */
 .process__note {
+  position: relative;
+  overflow: hidden;
   max-width: 960px;
-  margin: 64px auto 0;
-  padding: 8px;
-  border-radius: 1.75rem;
-  box-shadow: var(--shadow-premium);
+  margin: 72px auto 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  background:
+    radial-gradient(520px 300px at 85% 15%, rgba(45, 212, 191, 0.16), transparent 60%),
+    radial-gradient(420px 280px at 8% 95%, rgba(59, 130, 246, 0.18), transparent 60%),
+    linear-gradient(140deg, #0a1226 0%, #0d1730 55%, #0a1f2c 100%);
+  box-shadow: 0 28px 64px -26px rgba(8, 13, 26, 0.5);
 }
 .process__note-inner {
   display: grid;
   grid-template-columns: 1fr 350px;
-  gap: 34px;
+  gap: 40px;
   align-items: center;
-  background: #fff;
-  border-radius: 1.4rem;
-  padding: 28px 32px;
+  padding: 34px 38px;
 }
-.process__note-copy h3 { margin-top: 16px; font-size: 17.5px; }
+.process__note-copy h3 { margin-top: 18px; font-size: 19px; color: #fff; }
 .process__note-copy p {
-  margin-top: 7px;
+  margin-top: 8px;
   font-size: 14px;
   line-height: 1.62;
-  color: var(--t-body);
+  color: var(--td-body);
 }
 .process__note-copy p.process__note-hint {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 20px;
   font-size: 12.5px;
   font-weight: 500;
-  color: var(--emerald-600);
+  color: var(--teal-300);
+}
+.process__note .chat {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 54px -18px rgba(0, 0, 0, 0.65);
 }
 
 /* --- auto-playing Telegram chat --- */
 .chat {
   overflow: hidden;
   border: 1px solid var(--line-light);
-  border-radius: 18px;
+  border-radius: 16px;
   background: #eef2f5;
   box-shadow: 0 14px 34px -14px rgba(16, 26, 48, 0.28);
 }
@@ -1783,8 +1796,6 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .contact__inner { grid-template-columns: 1fr; gap: 56px; }
   .contact-form { max-width: 560px; }
 
-  .process__row { grid-template-columns: repeat(3, 1fr); gap: 44px 24px; }
-  .process__line { display: none; }
 }
 
 @media (min-width: 1081px) {
@@ -1838,6 +1849,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .cap-panel__inner { padding: 20px; }
 
   .process__row { grid-template-columns: 1fr; gap: 40px; }
+  .process__line { display: none; }
   .process-step p { max-width: 320px; }
   .process__note { flex-direction: column; }
 
