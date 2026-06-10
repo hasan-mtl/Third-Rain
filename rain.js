@@ -89,6 +89,58 @@
     });
   }
 
+  /* ---------- hero parallax (console drifts against the scroll) ---------- */
+  var heroPanel = qs(".hero__panel");
+  if (heroPanel) {
+    var parRaf = null;
+    var applyParallax = function () {
+      parRaf = null;
+      if (reduce) { heroPanel.style.translate = ""; return; }
+      var y = Math.min(window.scrollY, 800);
+      heroPanel.style.translate = "0 " + (y * -0.045).toFixed(1) + "px";
+    };
+    window.addEventListener("scroll", function () {
+      if (parRaf === null) parRaf = requestAnimationFrame(applyParallax);
+    }, { passive: true });
+  }
+
+  /* ---------- magnetic primary buttons (fine pointers) ---------- */
+  if (window.matchMedia("(pointer: fine)").matches) {
+    qsa(".btn--primary").forEach(function (btn) {
+      var magRaf = null;
+      var mx = 0;
+      var my = 0;
+      var applyMag = function () {
+        magRaf = null;
+        btn.style.translate = mx.toFixed(1) + "px " + my.toFixed(1) + "px";
+      };
+      btn.addEventListener("mousemove", function (e) {
+        if (reduce) return;
+        var r = btn.getBoundingClientRect();
+        mx = Math.max(-4, Math.min(4, (e.clientX - (r.left + r.width / 2)) * 0.12));
+        my = Math.max(-3, Math.min(3, (e.clientY - (r.top + r.height / 2)) * 0.22));
+        if (magRaf === null) magRaf = requestAnimationFrame(applyMag);
+      });
+      btn.addEventListener("mouseleave", function () {
+        if (magRaf !== null) { cancelAnimationFrame(magRaf); magRaf = null; }
+        btn.style.translate = "";
+      });
+    });
+  }
+
+  /* ---------- console rows pulse like live jobs ---------- */
+  var pingRows = qsa(".console-row");
+  if (pingRows.length && !reduce) {
+    var pingIdx = 0;
+    window.setInterval(function () {
+      if (document.hidden) return;
+      var row = pingRows[pingIdx % pingRows.length];
+      pingIdx += 1;
+      row.classList.add("is-ping");
+      window.setTimeout(function () { row.classList.remove("is-ping"); }, 1200);
+    }, 5200);
+  }
+
   /* ---------- mobile drawer (focus trapped) ---------- */
   var toggle = qs("[data-menu-toggle]");
   var drawer = qs("[data-drawer]");
@@ -193,11 +245,17 @@
     countEls.forEach(function (el) { countIO.observe(el); });
   }
 
-  /* ---------- services: pick a problem ---------- */
+  /* ---------- services: pick a problem (self-demoing) ---------- */
   var capBtns = qsa("[data-cap]");
   var capPanels = qsa("[data-cap-panel]");
   if (capBtns.length && capPanels.length) {
+    var capKeys = capBtns.map(function (b) { return b.getAttribute("data-cap"); });
+    var capIdx = 0;
+    var capTimer = null;
+    var capTouched = false; // once the visitor clicks, the demo stops for good
+
     var setCap = function (key) {
+      capIdx = Math.max(0, capKeys.indexOf(key));
       capBtns.forEach(function (btn) {
         var on = btn.getAttribute("data-cap") === key;
         btn.classList.toggle("is-active", on);
@@ -207,11 +265,129 @@
         panel.classList.toggle("is-active", panel.getAttribute("data-cap-panel") === key);
       });
     };
+
+    var capStop = function () {
+      if (capTimer !== null) { window.clearInterval(capTimer); capTimer = null; }
+    };
+    var capPlay = function () {
+      if (capTimer !== null || capTouched || reduce || document.hidden) return;
+      capTimer = window.setInterval(function () {
+        setCap(capKeys[(capIdx + 1) % capKeys.length]);
+      }, 4500);
+    };
+
     capBtns.forEach(function (btn) {
       btn.addEventListener("click", function () {
+        capTouched = true;
+        capStop();
         setCap(btn.getAttribute("data-cap"));
       });
     });
+
+    var capZone = qs(".caps__grid");
+    if (capZone) {
+      capZone.addEventListener("mouseenter", capStop);
+      capZone.addEventListener("mouseleave", capPlay);
+      if ("IntersectionObserver" in window) {
+        var capIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) capPlay();
+            else capStop();
+          });
+        }, { threshold: 0.35 });
+        capIO.observe(capZone);
+      } else {
+        capPlay();
+      }
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { capStop(); return; }
+      if (!capZone) return;
+      var r = capZone.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) capPlay();
+    });
+  }
+
+  /* ---------- auto-playing Telegram chat demo ---------- */
+  var chatRoot = qs("[data-chat]");
+  if (chatRoot) {
+    var chatBody = qs("[data-chat-body]", chatRoot);
+    var CHAT_TURNS = [
+      ["Write a blog on cold brew — publish Monday 7am ☕", "Done ✅ Drafted, image ready, scheduled for Mon 7:00 AM."],
+      ["Clicks last week vs last month?", "📈 4,820 last week — up 18%. Top page: /cold-brew-guide."],
+      ["Low on oat milk — reorder it.", "🛒 Reordered 48 units from your supplier. ETA Thursday."]
+    ];
+
+    var chatMsg = function (role, text) {
+      var el = document.createElement("p");
+      el.className = "chat__msg chat__msg--" + role;
+      el.textContent = text;
+      chatBody.appendChild(el);
+      while (chatBody.children.length > 5) chatBody.removeChild(chatBody.firstElementChild);
+    };
+
+    if (reduce) {
+      CHAT_TURNS.slice(0, 2).forEach(function (t) {
+        chatMsg("user", t[0]);
+        chatMsg("agent", t[1]);
+      });
+    } else {
+      var chatTimers = [];
+      var chatRunning = false;
+      var chatTurn = 0;
+      var typingEl = null;
+      var chatWait = function (fn, ms) { chatTimers.push(window.setTimeout(fn, ms)); };
+
+      var chatStep = function () {
+        if (!chatRunning) return;
+        var t = CHAT_TURNS[chatTurn % CHAT_TURNS.length];
+        chatTurn += 1;
+        chatMsg("user", t[0]);
+        chatWait(function () {
+          if (!chatRunning) return;
+          typingEl = document.createElement("div");
+          typingEl.className = "chat__typing";
+          typingEl.innerHTML = "<i></i><i></i><i></i>";
+          chatBody.appendChild(typingEl);
+          chatWait(function () {
+            if (!chatRunning) return;
+            if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+            typingEl = null;
+            chatMsg("agent", t[1]);
+            chatWait(chatStep, 2600);
+          }, 1300);
+        }, 900);
+      };
+
+      var chatStart = function () {
+        if (chatRunning) return;
+        chatRunning = true;
+        chatStep();
+      };
+      var chatStop = function () {
+        chatRunning = false;
+        chatTimers.forEach(window.clearTimeout);
+        chatTimers = [];
+        if (typingEl && typingEl.parentNode) { typingEl.parentNode.removeChild(typingEl); typingEl = null; }
+      };
+
+      if ("IntersectionObserver" in window) {
+        var chatIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !document.hidden) chatStart();
+            else chatStop();
+          });
+        }, { threshold: 0.3 });
+        chatIO.observe(chatRoot);
+      } else {
+        chatStart();
+      }
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { chatStop(); return; }
+        var r = chatRoot.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) chatStart();
+      });
+    }
   }
 
   /* ---------- active nav link ---------- */
