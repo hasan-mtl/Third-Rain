@@ -42,11 +42,13 @@ Rain.html        — LEGACY: an older green/forest design. Not used.
 
 ## Sections
 
-Hero (dark, refresh console artifact) → capability ticker → Services
-(interactive "pick a problem" selector + detail panel) → Implementation
-(compact thesis + Cuban quote) → Process (5 steps) → Platform (Rain Agent
-circuit + live run log + stats) → Contact (white form card on ink) → footer.
-Copy is deliberately short throughout — the client hates text-heavy pages.
+Hero (cycling "while you slept" outcomes + refresh console) → ticker →
+Services (self-demoing "pick a problem" selector; fixes check off one by
+one) → See it work (auto-playing Telegram chat + self-assembling morning
+report) → Process (3 product-style steps) → Platform (Rain Agent circuit +
+live run log + stats) → Contact (white form card on ink) → footer.
+Show-don't-tell throughout: every section demonstrates, copy stays minimal —
+the client's rule is "people hate text, people love action and solution."
 
 ## Accessibility & performance
 

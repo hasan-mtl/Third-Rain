@@ -89,6 +89,32 @@
     });
   }
 
+  /* ---------- hero outcome line cycles through results ---------- */
+  var cycleEl = qs("[data-cycle]");
+  if (cycleEl && !reduce) {
+    var PHRASES = [
+      "every customer got a reply.",
+      "your report arrived at 8:00.",
+      "your low stock got reordered.",
+      "your blog posted itself."
+    ];
+    var cycleIdx = 0;
+    var doCycle = function () {
+      cycleEl.classList.add("is-cycling", "is-swapping");
+      window.setTimeout(function () {
+        cycleEl.textContent = PHRASES[cycleIdx % PHRASES.length];
+        cycleIdx += 1;
+        cycleEl.classList.remove("is-swapping");
+      }, 330);
+    };
+    // let the entrance cascade land before the first swap
+    window.setTimeout(function () {
+      window.setInterval(function () {
+        if (!document.hidden) doCycle();
+      }, 3600);
+    }, 3000);
+  }
+
   /* ---------- hero parallax (console drifts against the scroll) ---------- */
   var heroPanel = qs(".hero__panel");
   if (heroPanel) {
@@ -484,6 +510,101 @@
         if (r.top < window.innerHeight && r.bottom > 0) startLog();
       }
     });
+  }
+
+  /* ---------- morning report assembles itself ---------- */
+  var report = qs("[data-report]");
+  if (report) {
+    var reportNums = qsa("[data-report-num]", report);
+    var reportBadge = qs("[data-report-badge]", report);
+
+    var setReportNum = function (el, value) {
+      var prefix = el.getAttribute("data-report-prefix") || "";
+      el.textContent = prefix + value.toLocaleString("en-US");
+    };
+
+    var countReportNums = function () {
+      reportNums.forEach(function (el) {
+        var target = parseInt(el.getAttribute("data-report-num"), 10);
+        var start = null;
+        var dur = 1000;
+        var tick = function (ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          setReportNum(el, Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    };
+
+    var reportFinal = function () {
+      report.classList.add("is-live");
+      reportNums.forEach(function (el) {
+        setReportNum(el, parseInt(el.getAttribute("data-report-num"), 10));
+      });
+      if (reportBadge) {
+        reportBadge.textContent = "Delivered ✓";
+        reportBadge.classList.add("is-done");
+      }
+    };
+
+    if (reduce) {
+      reportFinal();
+    } else {
+      var reportTimers = [];
+      var reportRunning = false;
+      var reportWait = function (fn, ms) { reportTimers.push(window.setTimeout(fn, ms)); };
+
+      var reportCycle = function () {
+        if (!reportRunning) return;
+        report.classList.add("is-live");
+        if (reportBadge) {
+          reportBadge.textContent = "Preparing…";
+          reportBadge.classList.remove("is-done");
+        }
+        reportWait(countReportNums, 150);
+        reportWait(function () {
+          if (!reportRunning || !reportBadge) return;
+          reportBadge.textContent = "Delivered ✓";
+          reportBadge.classList.add("is-done");
+        }, 1700);
+        reportWait(function () {
+          if (!reportRunning) return;
+          report.classList.remove("is-live");
+          reportNums.forEach(function (el) { setReportNum(el, 0); });
+          reportWait(reportCycle, 750);
+        }, 6400);
+      };
+
+      var reportStart = function () {
+        if (reportRunning) return;
+        reportRunning = true;
+        reportCycle();
+      };
+      var reportStop = function () {
+        reportRunning = false;
+        reportTimers.forEach(window.clearTimeout);
+        reportTimers = [];
+      };
+
+      if ("IntersectionObserver" in window) {
+        var reportIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !document.hidden) reportStart();
+            else reportStop();
+          });
+        }, { threshold: 0.3 });
+        reportIO.observe(report);
+      } else {
+        reportStart();
+      }
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { reportStop(); return; }
+        var r = report.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) reportStart();
+      });
+    }
   }
 
   /* ---------- contact form ---------- */

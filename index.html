@@ -71,13 +71,13 @@
       </p>
 
       <h1 id="hero-title" data-split>
-        Refresh your business
-        <span class="serif-grad">for the AI&nbsp;era.</span>
+        While you slept,
+        <span class="serif-grad" data-cycle>your blog posted itself.</span>
       </h1>
 
       <p class="hero__sub" data-reveal style="--i:2">
-        We design, build, and <em>run</em> the systems your business runs on —
-        websites, brand, software, mobile apps, and AI that does real work every day.
+        Rain builds the websites, apps &amp; AI agents that do your busywork —
+        then <em>runs</em> them for you.
       </p>
 
       <p class="hero__founder" data-reveal style="--i:3">
@@ -90,7 +90,7 @@
           Start the refresh
           <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
         </a>
-        <a class="btn btn--outline btn--lg" href="#services">See what we fix</a>
+        <a class="btn btn--outline btn--lg" href="#demo">Watch it work</a>
       </div>
 
       <dl class="hero__stats" data-reveal style="--i:5">
@@ -450,23 +450,78 @@
   </div>
 </section>
 
-<!-- ============ IMPLEMENTATION ============ -->
-<section class="gap dark-section noise" id="gap" aria-labelledby="gap-title">
+<!-- ============ SEE IT WORK ============ -->
+<section class="demo dark-section noise" id="demo" aria-labelledby="demo-title">
   <div class="dot-grid" aria-hidden="true"></div>
-  <div class="gap__inner">
+  <div class="demo__inner">
     <header class="section-head">
-      <p class="eyebrow eyebrow--dark" data-reveal>The real opportunity</p>
-      <h2 id="gap-title" data-reveal style="--i:1">The opportunity isn't AI. <span class="serif-grad">It's implementation.</span></h2>
-      <p class="lede lede--dark" data-reveal style="--i:2">Everyone has the tools. Almost nobody has them working. That gap is where Rain lives.</p>
+      <p class="eyebrow eyebrow--dark" data-reveal>See it work</p>
+      <h2 id="demo-title" data-reveal style="--i:1">You ask. <span class="serif-grad">It's done.</span></h2>
+      <p class="lede lede--dark" data-reveal style="--i:2">No dashboards to learn. Your business answers like a person — and reports like clockwork.</p>
     </header>
 
-    <figure class="quote" data-reveal>
-      <blockquote class="serif">
-        The real opportunity isn't only learning AI — it's learning how to
-        <em>implement</em> it inside companies.
-      </blockquote>
-      <figcaption>Mark Cuban's argument&nbsp;&nbsp;·&nbsp;&nbsp;Business Insider, 2026</figcaption>
-    </figure>
+    <div class="demo__grid">
+      <figure class="demo__item" data-reveal>
+        <div class="chat" data-chat>
+          <div class="chat__head">
+            <span class="chat__avatar" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+            </span>
+            <div class="chat__id">
+              <strong>rain agent</strong>
+              <small><span class="live-dot live-dot--sm" aria-hidden="true"></span>online · replies instantly</small>
+            </div>
+            <svg class="chat__plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 11 13M21.5 2.5l-6.8 19-3.7-8.5-8.5-3.7 19-6.8Z"/></svg>
+          </div>
+          <div class="chat__body" data-chat-body></div>
+          <div class="chat__bar" aria-hidden="true">
+            <span>Message rain…</span>
+            <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 11 13M21.5 2.5l-6.8 19-3.7-8.5-8.5-3.7 19-6.8Z"/></svg></i>
+          </div>
+        </div>
+        <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>Text it anything — it gets done</figcaption>
+      </figure>
+
+      <figure class="demo__item" data-reveal style="--i:1">
+        <div class="report" data-report>
+          <div class="report__head">
+            <span class="report__tile" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+            </span>
+            <div class="report__id">
+              <strong>Morning report</strong>
+              <small>Tuesday · 8:00 AM</small>
+            </div>
+            <span class="report__badge" data-report-badge>Preparing…</span>
+          </div>
+          <ul class="report__rows">
+            <li>
+              <span>Revenue yesterday</span>
+              <strong data-report-num="4820" data-report-prefix="$">$0</strong>
+              <em>▲ 12%</em>
+            </li>
+            <li>
+              <span>New customers</span>
+              <strong data-report-num="18">0</strong>
+              <em>▲ 3</em>
+            </li>
+            <li>
+              <span>Replies sent for you</span>
+              <strong data-report-num="12">0</strong>
+              <em>all answered</em>
+            </li>
+          </ul>
+          <div class="report__chart" aria-hidden="true">
+            <i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:74%"></i><i style="--h:88%"></i>
+          </div>
+          <p class="report__sent">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+            Sent to your phone — nothing to log into
+          </p>
+        </div>
+        <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>Your numbers, every morning at 8:00</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -509,39 +564,6 @@
     </div>
   </div>
 
-  <div class="process__note" data-reveal>
-    <div class="process__note-inner">
-      <div class="process__note-copy">
-        <span class="icon-tile icon-tile--blue" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 14.5a2 2 0 0 1-2 2H8l-5 4V5.5a2 2 0 0 1 2-2H19a2 2 0 0 1 2 2v9Z"/></svg>
-        </span>
-        <h3>And it answers whenever you ask</h3>
-        <p>Message your system on Telegram — a report, a task, a number. Done.</p>
-        <p class="process__note-hint">
-          <span class="live-dot live-dot--sm" aria-hidden="true"></span>
-          Live demo — this is how clients talk to Rain
-        </p>
-      </div>
-
-      <div class="chat" data-chat>
-        <div class="chat__head">
-          <span class="chat__avatar" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
-          </span>
-          <div class="chat__id">
-            <strong>rain agent</strong>
-            <small><span class="live-dot live-dot--sm" aria-hidden="true"></span>online · replies instantly</small>
-          </div>
-          <svg class="chat__plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 11 13M21.5 2.5l-6.8 19-3.7-8.5-8.5-3.7 19-6.8Z"/></svg>
-        </div>
-        <div class="chat__body" data-chat-body></div>
-        <div class="chat__bar" aria-hidden="true">
-          <span>Message rain…</span>
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 11 13M21.5 2.5l-6.8 19-3.7-8.5-8.5-3.7 19-6.8Z"/></svg></i>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- ============ PLATFORM ============ -->
