@@ -193,22 +193,25 @@
     countEls.forEach(function (el) { countIO.observe(el); });
   }
 
-  /* ---------- era rail ---------- */
-  var rail = qs("[data-rail]");
-  if (rail) {
-    if (reduce || !("IntersectionObserver" in window)) {
-      rail.classList.add("is-lit");
-    } else {
-      var railIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            rail.classList.add("is-lit");
-            railIO.disconnect();
-          }
-        });
-      }, { threshold: 0.35 });
-      railIO.observe(rail);
-    }
+  /* ---------- services: pick a problem ---------- */
+  var capBtns = qsa("[data-cap]");
+  var capPanels = qsa("[data-cap-panel]");
+  if (capBtns.length && capPanels.length) {
+    var setCap = function (key) {
+      capBtns.forEach(function (btn) {
+        var on = btn.getAttribute("data-cap") === key;
+        btn.classList.toggle("is-active", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      capPanels.forEach(function (panel) {
+        panel.classList.toggle("is-active", panel.getAttribute("data-cap-panel") === key);
+      });
+    };
+    capBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setCap(btn.getAttribute("data-cap"));
+      });
+    });
   }
 
   /* ---------- active nav link ---------- */

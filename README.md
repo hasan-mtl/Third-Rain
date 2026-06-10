@@ -42,10 +42,11 @@ Rain.html        — LEGACY: an older green/forest design. Not used.
 
 ## Sections
 
-Hero (dark, refresh console artifact) → capability ticker → Services (6 cards)
-→ The Shift (five-era rail) → The Gap (Mark Cuban quote + today/with-Rain
-comparison) → Process (5 steps) → Platform (Rain Agent circuit + live run log
-+ stats) → Contact (white form card on ink) → footer.
+Hero (dark, refresh console artifact) → capability ticker → Services
+(interactive "pick a problem" selector + detail panel) → Implementation
+(compact thesis + Cuban quote) → Process (5 steps) → Platform (Rain Agent
+circuit + live run log + stats) → Contact (white form card on ink) → footer.
+Copy is deliberately short throughout — the client hates text-heavy pages.
 
 ## Accessibility & performance
 
