@@ -867,6 +867,10 @@
         var yb = (Math.sin(bTime * 0.8 + i * 1.9) * 0.8 + Math.sin(bTime * 0.53 + i) * 0.4) * bobA + (1 - aW) * 14;
         var fRot = Math.sin(bTime * 0.7 + i * 2.1) * 0.04;
         var fPitch = 1 + Math.sin(bTime * 0.8 + i * 1.9 + 0.7) * 0.025;
+        /* engineered hover: ease toward the lift, never snap */
+        var hTgt = bFloatHover === i ? 1 : 0;
+        fs.h = (fs.h || 0) + (hTgt - (fs.h || 0)) * Math.min(1, 9 * dt);
+        fontPx2 *= 1 + fs.h * 0.05;
         bctx.save();
         bctx.translate(fx2, fy + yb);
         bctx.rotate(fRot);
@@ -875,21 +879,21 @@
         bctx.textAlign = "center";
         var fw = bctx.measureText(fs.label).width;
         /* the water seats the hull */
-        bctx.fillStyle = "rgba(120, 220, 255," + ((0.05 + 0.03 * Math.sin(bTime * 1.4 + i)) * aW).toFixed(3) + ")";
+        bctx.fillStyle = "rgba(120, 220, 255," + ((0.05 + 0.03 * Math.sin(bTime * 1.4 + i) + fs.h * 0.05) * aW).toFixed(3) + ")";
         bctx.beginPath();
         bctx.ellipse(0, 4, fw * 0.6, fontPx2 * 0.26, 0, 0, Math.PI * 2);
         bctx.fill();
         /* crisp serif over a soft cyan halo — no blur, no mirror */
-        bctx.fillStyle = "rgba(120, 225, 255," + (0.15 * aW).toFixed(3) + ")";
+        bctx.fillStyle = "rgba(120, 225, 255," + ((0.15 + fs.h * 0.13) * aW).toFixed(3) + ")";
         bctx.save();
         bctx.scale(1.045, 1.08);
         bctx.fillText(fs.label, 0, 0.6);
         bctx.restore();
-        bctx.fillStyle = "rgba(240, 250, 255," + (0.95 * aW).toFixed(3) + ")";
+        bctx.fillStyle = "rgba(240, 250, 255," + (Math.min(1, 0.95 + fs.h * 0.05) * aW).toFixed(3) + ")";
         bctx.fillText(fs.label, 0, 0);
         bctx.restore();
         if (aW > 0.5) {
-          bFloatHits.push({ x: fx2 - fw / 2 - 10, y: fy + yb - fontPx2 - 5, w: fw + 20, h: fontPx2 + 14 });
+          bFloatHits.push({ idx: i, x: fx2 - fw / 2 - 10, y: fy + yb - fontPx2 - 5, w: fw + 20, h: fontPx2 + 14 });
         }
       }
 
@@ -1020,27 +1024,31 @@
       });
     }
 
+    var bFloatHover = -1;
     var floatHitAt = function (x, y) {
       for (var fh = 0; fh < bFloatHits.length; fh++) {
         var hr = bFloatHits[fh];
-        if (x >= hr.x && x <= hr.x + hr.w && y >= hr.y && y <= hr.y + hr.h) return true;
+        if (x >= hr.x && x <= hr.x + hr.w && y >= hr.y && y <= hr.y + hr.h) return hr.idx;
       }
-      return false;
+      return -1;
     };
     sceneEl.addEventListener("mousemove", function (e) {
       var r = basinCanvas.getBoundingClientRect();
       bMX = e.clientX - r.left;
       bMY = e.clientY - r.top;
-      sceneEl.style.cursor = floatHitAt(bMX, bMY) ? "pointer" : "";
+      bFloatHover = floatHitAt(bMX, bMY);
+      sceneEl.style.cursor = bFloatHover >= 0 ? "pointer" : "";
     });
     sceneEl.addEventListener("mouseleave", function () {
       bMX = -9999;
       bMY = -9999;
+      bFloatHover = -1;
+      sceneEl.style.cursor = "";
     });
     sceneEl.addEventListener("pointerdown", function (e) {
       if (e.target.closest("a, button")) return;
       var r = basinCanvas.getBoundingClientRect();
-      if (floatHitAt(e.clientX - r.left, e.clientY - r.top)) {
+      if (floatHitAt(e.clientX - r.left, e.clientY - r.top) >= 0) {
         var svc = document.getElementById("services");
         if (svc) svc.scrollIntoView({ behavior: "smooth", block: "start" });
       }
