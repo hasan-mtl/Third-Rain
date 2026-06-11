@@ -1170,7 +1170,7 @@ html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
   color: #b45309;
 }
@@ -1182,7 +1182,7 @@ html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
   color: #047857;
 }
@@ -1964,7 +1964,7 @@ html.js .chat__msg { animation: msg-in 0.35s var(--ease); }
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
   color: var(--td-body);
 }
