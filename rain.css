@@ -2173,23 +2173,13 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   pointer-events: none;
 }
 
-/* real waterfall footage, graded and screen-blended into the ink —
-   dark pixels vanish, only the living white water remains */
-.falls {
+.sea {
   position: absolute;
-  top: 56.5%;
-  left: 50%;
+  inset: 0;
   z-index: 0;
-  width: min(74%, 920px);
-  height: 46%;
-  transform: translateX(-50%);
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  filter: brightness(0.58) contrast(1.18) saturate(0.65);
-  mix-blend-mode: screen;
-  opacity: 0.95;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 97%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 97%);
 }
 
 /* static fallback wordmark — replaced live by the particle engine */
@@ -2419,7 +2409,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
   .rain-fx,
   .motes,
-  .falls,
+  .sea,
   .basin { display: none; }
 
   html.js .chat__msg { animation: none; }
