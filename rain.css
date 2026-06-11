@@ -1208,7 +1208,7 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   padding: 0 24px;
 }
 
-.demo .section-head { margin-bottom: 30px; }
+.demo .section-head { margin-bottom: 38px; } /* 38 + chips offset = the 56px optical gap every section shares */
 
 /* task chips — the "multiple options" bar */
 .demo__chips {
@@ -2162,7 +2162,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 /* ==========================================================================
    THE FLOW — rain becomes every stream (promoted from the footer)
    ========================================================================== */
-.flow { padding: 84px 0 0; }
+.flow { padding: 116px 0 0; }
 .flow .section-head { margin-bottom: 6px; }
 
 .water-scene {
