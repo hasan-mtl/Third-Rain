@@ -1577,8 +1577,12 @@
         var link = sectionsById[entry.target.id];
         if (!link) return;
         if (entry.isIntersecting) {
-          navLinks.forEach(function (l) { l.classList.remove("is-active"); });
+          navLinks.forEach(function (l) {
+            l.classList.remove("is-active");
+            l.removeAttribute("aria-current");
+          });
           link.classList.add("is-active");
+          link.setAttribute("aria-current", "true");
         }
       });
     }, { rootMargin: "-40% 0px -55% 0px" });
