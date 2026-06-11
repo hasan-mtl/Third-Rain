@@ -754,6 +754,7 @@
       bLast = ts;
       bTime += dt;
       updIdle();
+      var bBreath = 0.82 + 0.18 * Math.sin(bTime * 0.23); // one breath, shared
       bctx.clearRect(0, 0, bW, bH);
 
       var i;
@@ -850,7 +851,7 @@
         if (Math.abs(p.y - p.ty) < 40) {
           var ry = (bWy + bPar) + ((bWy + bPar) - p.y) * 0.36;
           var rx = p.x + Math.sin(bTime * 1.6 + p.ty * 0.05) * 2.0;
-          bctx.fillStyle = "rgba(140, 225, 240, 0.10)";
+          bctx.fillStyle = "rgba(140, 225, 240," + (0.07 + 0.05 * bBreath).toFixed(3) + ")";
           bctx.fillRect(rx, ry, 1.9, 1.6);
         }
       }
@@ -938,7 +939,7 @@
           continue;
         }
         if (d.x > bW + 30) d.x -= bW + 60;
-        bctx.strokeStyle = "rgba(158, 222, 255," + (d.alpha * (0.82 + 0.18 * Math.sin(bTime * 0.23))).toFixed(3) + ")";
+        bctx.strokeStyle = "rgba(158, 222, 255," + (d.alpha * bBreath).toFixed(3) + ")";
         bctx.lineWidth = 1;
         bctx.beginPath();
         bctx.moveTo(d.x, d.y);
