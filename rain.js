@@ -367,7 +367,7 @@
     var bChips = [];
     // the services anchor in WORLD space (lateral lane wx, depth z0) and the
     // camera dolly carries them past the viewer like buoys
-    var FLOAT_POS = [[-14, 40], [17, 55], [-10, 320], [28, 130], [-25, 170], [-2, 90]];
+    var FLOAT_POS = [[-14, 48], [17, 60], [-10, 320], [28, 130], [-25, 170], [-2, 90]];
     var bFloat = [];
     var bFloatHits = [];
     var bFloatAge = 0;
@@ -496,6 +496,11 @@
       "",
       "  /* the open ocean, full width, current running home */",
       "  float z = (uCamH * uFocal) / max(dy, 2.0);",
+      "  /* the fold: the surface rolls over a soft radius and away from view */",
+      "  float foldStart = uRes.y * 0.85;",
+      "  float foldT = clamp((px.y - foldStart) / max(uRes.y - foldStart, 1.0), 0.0, 1.0);",
+      "  float roll = foldT * foldT;",
+      "  z *= 1.0 + roll * 2.5;",
       "  float wx = (px.x - uRes.x * 0.5) * z / uFocal;",
       "  vec2 wp = vec2(wx + uCamX, z) * uScale;",
       "",
@@ -537,6 +542,13 @@
       "  float waterMist = exp(-dy * 0.045);",
       "  col = mix(col, vec3(0.5, 0.65, 0.77), clamp(waterMist, 0.0, 1.0) * 0.7);",
       "  float alpha = 0.92;",
+      "",
+      "  /* the surface tilts from the light as it rolls; glass catches a sheen at the apex */",
+      "  col *= 1.0 - roll * 0.16;",
+      "  float apexY = foldStart + (uRes.y - foldStart) * 0.22;",
+      "  float sheenS = (uRes.y - foldStart) * 0.34;",
+      "  float sheen = exp(-(px.y - apexY) * (px.y - apexY) / (2.0 * sheenS * sheenS));",
+      "  col += vec3(0.8, 0.88, 0.94) * sheen * foldT * 0.17 * (0.85 + 0.15 * vnoise(wp * 2.0 + vec2(uTime * 0.3, 0.0)));",
       "",
       "  /* the shore, minimal: one breathing dissolve + a hint of a waterline.",
       "     the END is pinned above the canvas edge — the bottom row is always",
@@ -844,6 +856,9 @@
         /* slow drift along its own path — a few units per minute */
         var wxd = fs.wx + Math.sin(bTime * 0.026 + i * 1.7) * (2 + fs.z0 * 0.012);
         var zd = fs.z0 + Math.sin(bTime * 0.019 + i * 2.3) * (4 + fs.z0 * 0.04);
+        /* never drift into the fold: clamp depth so the keel stays above the bend */
+        var minZ = (CAM_H * fFocal) / Math.max(bH * 0.85 - bWy - bPar - 34, 60);
+        if (zd < minZ) zd = minZ;
         var dyW = (CAM_H * fFocal) / zd;
         var fy = bWy + bPar + dyW;
         var fx2 = bW / 2 + (wxd - bCamX) * fFocal / zd;
