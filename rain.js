@@ -1257,6 +1257,16 @@
     revealEls.forEach(function (el) { revealIO.observe(el); });
   }
 
+  /* ---------- decorative animations sleep off-screen ---------- */
+  if ("IntersectionObserver" in window) {
+    var gateIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        en.target.classList.toggle("is-offstage", !en.isIntersecting);
+      });
+    }, { rootMargin: "14% 0px" });
+    qsa("section, .ticker").forEach(function (sec) { gateIO.observe(sec); });
+  }
+
   /* ---------- count-up numerals ---------- */
   function runCount(el) {
     var target = parseInt(el.getAttribute("data-count"), 10);

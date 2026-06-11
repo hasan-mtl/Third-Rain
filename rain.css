@@ -209,6 +209,17 @@ html.js [data-split] .serif-grad.is-cycling.is-swapping {
     linear-gradient(140deg, #070d1c 0%, #0d1c3e 55%, #0a1f2c 100%);
 }
 
+/* decorative loops sleep while their section is off-screen */
+.is-offstage .motes i,
+.is-offstage .ripples i,
+.is-offstage .float-chip,
+.is-offstage .ticker__track,
+.is-offstage .trace,
+.is-offstage .circuit__core::before,
+.is-offstage.dark-section::before {
+  animation-play-state: paused !important;
+}
+
 /* slow aurora drift behind dark sections */
 .dark-section::before {
   content: "";
