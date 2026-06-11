@@ -596,20 +596,38 @@
       "      col = belly;",
       "      alpha = 0.92 - fc * 0.08;",
       "    } else {",
-      "      /* the glide: one long laminar sheet sliding from high to low */",
+      "      /* the fall, from inside: straight down, layered, turbulent, aerating */",
       "      float g = dropRaw - curlH;",
       "      float gh = max(uRes.y - lipY - curlH, 40.0);",
       "      float gf = clamp(g / gh, 0.0, 1.0);",
-      "      float gx = (px.x - uRes.x * 0.5) * (1.0 + g * 0.0011) + uRes.x * 0.5;",
-      "      float accel = 1.0 + g * 0.012;",
-      "      float s1 = vnoise(vec2(gx * 0.11, (px.y / accel) * 0.006 - uTime * (4.0 + uSpill * 3.5 + uDesc * 6.0)));",
-      "      float s2 = vnoise(vec2(gx * 0.21 + 7.0, (px.y / accel) * 0.012 - uTime * (5.4 + uSpill * 4.4 + uDesc * 7.5)));",
-      "      float lam = clamp(s1 * 0.72 + s2 * 0.46, 0.0, 1.0);",
-      "      col = mix(vec3(0.07, 0.2, 0.33), vec3(0.55, 0.85, 0.97), lam * 0.8);",
-      "      col += vec3(0.85, 0.97, 1.0) * exp(-g * 0.05) * 0.32;",
-      "      float glint = step(0.986, hash21(floor(vec2(gx * 0.6, px.y * 0.05 - uTime * 30.0))));",
-      "      col += vec3(1.0) * glint * (1.0 - gf * 0.6) * 0.45;",
-      "      alpha = lam * (0.3 + uSpill * 0.42 + uDesc * 0.3) * (1.0 - gf * (0.5 - uDesc * 0.3)) + exp(-g * 0.07) * 0.22 * (1.0 - uDesc * 0.5);",
+      "      float cxp = uRes.x * 0.5;",
+      "      float gx = (px.x - cxp) * (1.0 + g * 0.00022) + cxp;",
+      "      float wob = (vnoise(vec2(gx * 0.013, px.y * 0.0026 - uTime * 0.7)) - 0.5) * (14.0 + 60.0 * gf);",
+      "      float xx = gx + wob;",
+      "      float spd = 1.0 + uDesc * 0.9;",
+      "      float yA = px.y * 0.0045 - uTime * 3.2 * spd;",
+      "      float yB = px.y * 0.0036 - uTime * 2.1 * spd;",
+      "      float yC = px.y * 0.0028 - uTime * 1.3 * spd;",
+      "      float a1 = vnoise(vec2(xx * 0.165, yA));",
+      "      float a2 = vnoise(vec2(xx * 0.34 + 13.0, yA * 1.7));",
+      "      float layerA = pow(clamp(a1 * 0.55 + a2 * 0.65 - 0.25, 0.0, 1.0), 3.0);",
+      "      float b1 = vnoise(vec2(xx * 0.085 + 31.0, yB));",
+      "      float b2 = vnoise(vec2(xx * 0.21 + 7.0, yB * 1.6));",
+      "      float layerB = pow(clamp(b1 * 0.6 + b2 * 0.6 - 0.28, 0.0, 1.0), 2.6);",
+      "      float layerC = vnoise(vec2(xx * 0.05 + 57.0, yC)) * 0.5 + vnoise(vec2(xx * 0.11 + 91.0, yC * 1.5)) * 0.3;",
+      "      float aer = 0.25 + 0.75 * gf;",
+      "      col = mix(vec3(0.04, 0.13, 0.24), vec3(0.35, 0.62, 0.74), clamp(layerC, 0.0, 1.0));",
+      "      col = mix(col, vec3(0.62, 0.82, 0.92), clamp(layerB, 0.0, 1.0) * 0.75);",
+      "      col = mix(col, vec3(0.93, 0.99, 1.0), clamp(layerA, 0.0, 1.0) * (0.55 + 0.35 * aer));",
+      "      float dropS = step(0.992, hash21(floor(vec2(xx * 0.9, px.y * 0.5 - uTime * (640.0 + uDesc * 420.0)) / 2.0)));",
+      "      col += vec3(1.0) * dropS * (0.25 + 0.45 * gf);",
+      "      col += vec3(0.8, 0.95, 1.0) * exp(-g * 0.05) * 0.3;",
+      "      float haze = vnoise(vec2(xx * 0.02 + 4.0, px.y * 0.008 - uTime * 0.9));",
+      "      col = mix(col, vec3(0.75, 0.87, 0.94), clamp(haze - 0.45, 0.0, 1.0) * 0.3 * (0.4 + gf));",
+      "      float body = clamp(layerB * 0.8 + layerA * 0.9 + layerC * 0.45, 0.0, 1.0);",
+      "      alpha = (0.22 + body * 0.6 + aer * 0.18) * (0.55 + uSpill * 0.25 + uDesc * 0.3);",
+      "      alpha *= 1.0 - gf * (0.35 - uDesc * 0.25);",
+      "      alpha += exp(-g * 0.07) * 0.2;",
       "    }",
       "  }",
       "",
@@ -823,7 +841,9 @@
       var i;
       var p;
 
-      /* sky: drifting code glyphs */
+      /* sky: drifting code glyphs (the sky leaves with the horizon) */
+      bctx.save();
+      bctx.globalAlpha = Math.max(0, 1 - bDesc * 1.5);
       bctx.textBaseline = "middle";
       for (i = 0; i < bGlyphs.length; i++) {
         var g = bGlyphs[i];
@@ -897,6 +917,7 @@
           bctx.stroke();
         }
       }
+      bctx.restore();
 
       /* the ocean — WebGL, or the 2D stand-in until it loads */
       if (seaReady) {
@@ -988,7 +1009,7 @@
       /* arrival glow where the overflow feeds each service */
       for (i = 0; i < bChips.length; i++) {
         var chg = bChips[i];
-        var chPulse = (0.14 + 0.09 * Math.sin(bTime * 3 + i)) * (0.5 + bSpill * 0.7);
+        var chPulse = (0.14 + 0.09 * Math.sin(bTime * 3 + i)) * (0.5 + bSpill * 0.7) * Math.max(0, 1 - bDesc * 2);
         bctx.fillStyle = "rgba(125, 230, 255," + chPulse.toFixed(3) + ")";
         bctx.beginPath();
         bctx.ellipse(chg.x, chg.top - 8, 12, 4.2, 0, 0, Math.PI * 2);
@@ -1108,7 +1129,7 @@
           : "rgba(128, 240, 218," + Math.max(0.24, tw).toFixed(3) + ")";
         bctx.fillRect(
           p.x + p.ox + Math.sin(bTime * 1.8 + p.ph) * 0.7 - 1.2,
-          p.y + p.oy + Math.cos(bTime * 1.5 + p.ph) * 0.7 - 1.2 + bPar * 0.5,
+          p.y + p.oy + Math.cos(bTime * 1.5 + p.ph) * 0.7 - 1.2 + bPar * (0.5 + bDesc * 0.5),
           2.4,
           2.4
         );
@@ -1184,6 +1205,7 @@
       if (bOn) return;
       bOn = true;
       bLast = performance.now();
+      sceneEl.classList.add("basin--live"); // hide the chips BEFORE measuring
       if (!bParts.length) basinBuild();
       if (!seaLoadStarted) {
         seaLoadStarted = true;
@@ -1192,7 +1214,6 @@
           .catch(function () { /* fallback stays */ });
       }
       sceneEl.classList.add("has-basin");
-      sceneEl.classList.add("basin--live");
       if (bRaf === null) bRaf = requestAnimationFrame(basinStep);
     };
     var basinStop = function () {
