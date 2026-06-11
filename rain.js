@@ -357,6 +357,17 @@
   if (basinCanvas && seaCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
     var sceneEl = basinCanvas.closest("[data-scene]");
     var bctx = basinCanvas.getContext("2d");
+
+    // warm the module cache at idle — the ocean starts instantly when reached
+    var warmThree = function () {
+      var warm = document.createElement("link");
+      warm.rel = "modulepreload";
+      warm.href = "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.min.js";
+      warm.crossOrigin = "anonymous";
+      document.head.appendChild(warm);
+    };
+    if (window.requestIdleCallback) window.requestIdleCallback(warmThree, { timeout: 4000 });
+    else window.setTimeout(warmThree, 1200);
     var bW = 0;
     var bH = 0;
     var bWy = 0;
