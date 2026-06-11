@@ -156,6 +156,40 @@
     var rainLast = 0;
     var rainOn = false;
     var rainCount = window.matchMedia("(max-width: 760px)").matches ? 48 : 110;
+    var rainMX = -9999;
+    var rainMY = -9999;
+    var rainSpray = [];
+    var rainRings = [];
+    var heroForRain = rainCanvas.closest(".hero");
+
+    // the rain answers the visitor: drops part around the cursor,
+    // and a click lands like a stone — spray + shockwave ring
+    if (heroForRain) {
+      heroForRain.addEventListener("mousemove", function (e) {
+        var r = rainCanvas.getBoundingClientRect();
+        rainMX = e.clientX - r.left;
+        rainMY = e.clientY - r.top;
+      });
+      heroForRain.addEventListener("mouseleave", function () { rainMX = -9999; });
+      heroForRain.addEventListener("pointerdown", function (e) {
+        if (e.target.closest("a, button, input, textarea, select")) return;
+        var r = rainCanvas.getBoundingClientRect();
+        var bx = e.clientX - r.left;
+        var by = e.clientY - r.top;
+        rainRings.push({ x: bx, y: by, r: 2, max: 64, a: 0.5 });
+        for (var s = 0; s < 12 && rainSpray.length < 60; s++) {
+          var sprayAng = -Math.PI * (0.15 + Math.random() * 0.7);
+          var spraySpd = 140 + Math.random() * 260;
+          rainSpray.push({
+            x: bx,
+            y: by,
+            vx: Math.cos(sprayAng) * spraySpd,
+            vy: Math.sin(sprayAng) * spraySpd,
+            life: 0.55 + Math.random() * 0.3
+          });
+        }
+      });
+    }
 
     var rainSize = function () {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -206,6 +240,14 @@
           continue;
         }
         if (d.x > rainW + 40) d.x -= rainW + 80;
+        if (rainMX > -999) {
+          var ddx = d.x - rainMX;
+          var ddy = d.y - rainMY;
+          var dq = ddx * ddx + ddy * ddy;
+          if (dq < 12100) { // cursor force field, 110px radius
+            d.x += (ddx >= 0 ? 1 : -1) * (1 - Math.sqrt(dq) / 110) * 260 * dt;
+          }
+        }
         var ang = d.drift / d.speed;
         rctx.strokeStyle = "rgba(158, 222, 255," + d.alpha.toFixed(3) + ")";
         rctx.lineWidth = d.width;
@@ -227,6 +269,29 @@
         rctx.lineWidth = 1;
         rctx.beginPath();
         rctx.ellipse(sp.x, sp.y, sp.r, sp.r * 0.3, 0, 0, Math.PI * 2);
+        rctx.stroke();
+      }
+
+      for (var k = rainSpray.length - 1; k >= 0; k--) {
+        var sw = rainSpray[k];
+        sw.life -= dt;
+        if (sw.life <= 0) { rainSpray.splice(k, 1); continue; }
+        sw.vy += 980 * dt; // gravity arcs
+        sw.x += sw.vx * dt;
+        sw.y += sw.vy * dt;
+        rctx.fillStyle = "rgba(170, 230, 255," + Math.min(0.8, sw.life * 1.4).toFixed(3) + ")";
+        rctx.fillRect(sw.x - 1, sw.y - 1, 2, 2.6);
+      }
+
+      for (var q = rainRings.length - 1; q >= 0; q--) {
+        var rg = rainRings[q];
+        rg.r += 150 * dt;
+        rg.a -= 0.9 * dt;
+        if (rg.a <= 0 || rg.r >= rg.max) { rainRings.splice(q, 1); continue; }
+        rctx.strokeStyle = "rgba(140, 235, 255," + rg.a.toFixed(3) + ")";
+        rctx.lineWidth = 1.4;
+        rctx.beginPath();
+        rctx.ellipse(rg.x, rg.y, rg.r, rg.r * 0.42, 0, 0, Math.PI * 2);
         rctx.stroke();
       }
 
@@ -283,6 +348,166 @@
         wrap.appendChild(dot);
       }
       section.appendChild(wrap);
+    });
+  }
+
+  /* ---------- footer finale: the rain assembles the wordmark ---------- */
+  var logoCanvas = qs("[data-logorain]");
+  if (logoCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
+    var footerEl = logoCanvas.closest(".site-footer");
+    var lctx = logoCanvas.getContext("2d");
+    var lW = 0;
+    var lH = 0;
+    var lParts = [];
+    var lRaf = null;
+    var lOn = false;
+    var lLast = 0;
+    var lTime = 0;
+    var lMX = -9999;
+    var lMY = -9999;
+
+    var logoSize = function () {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      lW = logoCanvas.clientWidth;
+      lH = logoCanvas.clientHeight;
+      logoCanvas.width = Math.round(lW * dpr);
+      logoCanvas.height = Math.round(lH * dpr);
+      lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    var logoBuild = function () {
+      logoSize();
+      lParts = [];
+      var fontPx = Math.min(lW * 0.34, 300);
+      var off = document.createElement("canvas");
+      off.width = lW;
+      off.height = lH;
+      var octx = off.getContext("2d");
+      octx.font = "italic 600 " + Math.round(fontPx) + "px 'Cormorant Garamond', Georgia, serif";
+      octx.textBaseline = "alphabetic";
+      var word = "rain.";
+      var met = octx.measureText(word);
+      octx.fillStyle = "#fff";
+      octx.fillText(word, lW - met.width - lW * 0.04, lH - fontPx * 0.18);
+      var img = octx.getImageData(0, 0, lW, lH).data;
+      var step = 5;
+      for (var yy = 0; yy < lH; yy += step) {
+        for (var xx = 0; xx < lW; xx += step) {
+          if (img[(yy * lW + xx) * 4 + 3] > 128) {
+            lParts.push({
+              tx: xx,
+              ty: yy,
+              x: Math.random() * lW,
+              y: -Math.random() * lH * 1.5,
+              fall: 260 + Math.random() * 320,
+              hue: Math.random(),
+              ph: Math.random() * 6.283,
+              ox: 0,
+              oy: 0
+            });
+            if (lParts.length >= 1500) { yy = lH; break; }
+          }
+        }
+      }
+    };
+
+    var logoStep = function (ts) {
+      lRaf = null;
+      if (!lOn) return;
+      var dt = Math.min((ts - lLast) / 1000 || 0.016, 0.05);
+      lLast = ts;
+      lTime += dt;
+      lctx.clearRect(0, 0, lW, lH);
+
+      for (var i = 0; i < lParts.length; i++) {
+        var p = lParts[i];
+        if (p.y < p.ty - 120) {
+          p.y += p.fall * dt; // still raining down
+          p.x += (p.tx - p.x) * Math.min(1, 1.6 * dt);
+        } else {
+          p.x += (p.tx - p.x) * Math.min(1, 7 * dt); // magnetize into the glyph
+          p.y += (p.ty - p.y) * Math.min(1, 7 * dt);
+        }
+
+        // the cursor sweeps drops out of the word; they spring back
+        var dx = (p.x + p.ox) - lMX;
+        var dy = (p.y + p.oy) - lMY;
+        var d2 = dx * dx + dy * dy;
+        if (d2 < 4900) {
+          var dd = Math.sqrt(d2) || 1;
+          var f = (70 - dd) / 70;
+          p.ox += (dx / dd) * f * 900 * dt;
+          p.oy += (dy / dd) * f * 900 * dt;
+        }
+        p.ox += -p.ox * Math.min(1, 5 * dt);
+        p.oy += -p.oy * Math.min(1, 5 * dt);
+
+        var jx = Math.sin(lTime * 1.8 + p.ph) * 0.7;
+        var jy = Math.cos(lTime * 1.5 + p.ph) * 0.7;
+        var tw = 0.38 + 0.34 * Math.sin(lTime * 2.2 + p.ph * 2);
+        lctx.fillStyle = p.hue < 0.5
+          ? "rgba(148, 213, 255," + Math.max(0.16, tw).toFixed(3) + ")"
+          : "rgba(122, 235, 214," + Math.max(0.16, tw).toFixed(3) + ")";
+        lctx.fillRect(p.x + p.ox + jx - 0.9, p.y + p.oy + jy - 0.9, 1.8, 1.8);
+      }
+
+      lRaf = requestAnimationFrame(logoStep);
+    };
+
+    var logoStart = function () {
+      if (lOn) return;
+      lOn = true;
+      lLast = performance.now();
+      if (!lParts.length) logoBuild();
+      footerEl.classList.add("has-logorain");
+      if (lRaf === null) lRaf = requestAnimationFrame(logoStep);
+    };
+    var logoStop = function () {
+      lOn = false;
+      if (lRaf !== null) { cancelAnimationFrame(lRaf); lRaf = null; }
+    };
+
+    // resample once the real serif arrives so drops trace true glyphs
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        lParts = [];
+        if (lOn) logoBuild();
+      });
+    }
+
+    footerEl.addEventListener("mousemove", function (e) {
+      var r = logoCanvas.getBoundingClientRect();
+      lMX = e.clientX - r.left;
+      lMY = e.clientY - r.top;
+    });
+    footerEl.addEventListener("mouseleave", function () {
+      lMX = -9999;
+      lMY = -9999;
+    });
+
+    var logoResizeT;
+    window.addEventListener("resize", function () {
+      window.clearTimeout(logoResizeT);
+      logoResizeT = window.setTimeout(function () {
+        lParts = [];
+        if (lOn) logoBuild();
+      }, 200);
+    });
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !document.hidden) logoStart();
+          else logoStop();
+        });
+      }, { threshold: 0.15 }).observe(footerEl);
+    } else {
+      logoStart();
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { logoStop(); return; }
+      var r = footerEl.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) logoStart();
     });
   }
 
