@@ -187,14 +187,15 @@ html.js [data-split] .serif-grad.is-cycling {
   transform: none;
   filter: none;
   transition:
-    opacity 0.32s var(--ease),
-    transform 0.32s var(--ease),
-    filter 0.32s var(--ease);
+    opacity 0.4s var(--ease),
+    transform 0.4s var(--ease),
+    filter 0.4s var(--ease);
 }
 html.js [data-split] .serif-grad.is-cycling.is-swapping {
   opacity: 0;
   transform: translateY(12px);
   filter: blur(7px);
+  transition-duration: 0.26s; /* exits quick, returns considered */
 }
 
 /* ---------- Shared utilities ---------- */

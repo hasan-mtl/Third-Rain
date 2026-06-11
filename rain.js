@@ -105,12 +105,14 @@
         cycleEl.textContent = PHRASES[cycleIdx % PHRASES.length];
         cycleIdx += 1;
         cycleEl.classList.remove("is-swapping");
-      }, 330);
+      }, 270);
     };
     // let the entrance cascade land before the first swap
     window.setTimeout(function () {
+      var cycleHome = cycleEl.closest("section");
       window.setInterval(function () {
-        if (!document.hidden) doCycle();
+        /* swap only when the tab AND the hero are actually visible */
+        if (!document.hidden && !(cycleHome && cycleHome.classList.contains("is-offstage"))) doCycle();
       }, 3600);
     }, 3000);
   }
