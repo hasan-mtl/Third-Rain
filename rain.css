@@ -2165,6 +2165,20 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 }
 .field textarea { resize: vertical; min-height: 104px; }
 
+/* the head-shake "no" on rejected fields */
+@keyframes field-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  55% { transform: translateX(4px); }
+  80% { transform: translateX(-2px); }
+}
+.field input.is-shake,
+.field textarea.is-shake { animation: field-shake 0.3s var(--ease); }
+@media (prefers-reduced-motion: reduce) {
+  .field input.is-shake,
+  .field textarea.is-shake { animation: none; }
+}
+
 .contact-form__submit { width: 100%; margin-top: 6px; }
 .contact-form__submit.is-sent {
   background: linear-gradient(to bottom, var(--emerald-500), var(--emerald-600));

@@ -1676,8 +1676,15 @@
     function markInvalid(input, invalid) {
       if (!input) return;
       input.classList.toggle("is-invalid", invalid);
-      if (invalid) input.setAttribute("aria-invalid", "true");
-      else input.removeAttribute("aria-invalid");
+      if (invalid) {
+        input.setAttribute("aria-invalid", "true");
+        input.classList.remove("is-shake");
+        void input.offsetWidth; // restart the shake even on repeat rejections
+        input.classList.add("is-shake");
+      } else {
+        input.removeAttribute("aria-invalid");
+        input.classList.remove("is-shake");
+      }
     }
 
     [nameInput, emailInput, msgInput].forEach(function (input) {
