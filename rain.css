@@ -278,6 +278,10 @@ html.js [data-split] .serif-grad.is-cycling.is-swapping {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* Cormorant's italic swashes overhang the box — clip-text slices any ink
+     outside the painted area, so widen it and cancel with negative margins */
+  padding: 0.12em 0.16em 0.16em;
+  margin: -0.12em -0.16em -0.16em;
 }
 .serif-grad--light {
   background: linear-gradient(100deg, var(--blue-600) 0%, var(--indigo-500) 45%, var(--teal-500) 100%);
@@ -679,7 +683,11 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
   letter-spacing: -0.028em;
   text-wrap: balance;
 }
-.hero h1 .serif-grad { display: block; margin-top: 6px; }
+.hero h1 .serif-grad {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.14; /* room for Garamond ascenders/descenders across two lines */
+}
 
 .hero__sub {
   max-width: 560px;
@@ -1999,7 +2007,9 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   background-clip: text;
   color: transparent;
   border-bottom: 1px solid rgba(94, 234, 212, 0.35);
-  padding-bottom: 2px;
+  padding: 0.08em 0.12em 4px;
+  margin-left: -0.12em;
+  margin-right: -0.12em;
   transition: border-color 0.15s ease;
 }
 .contact__mail:hover { border-color: var(--teal-300); }
@@ -2144,6 +2154,8 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  padding: 0.1em 0.14em 0.14em;
+  margin: -0.1em -0.14em -0.14em;
 }
 .site-footer__cta-actions {
   display: flex;
