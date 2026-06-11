@@ -355,7 +355,6 @@
   var basinCanvas = qs("[data-basin]");
   if (basinCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
     var sceneEl = basinCanvas.closest("[data-scene]");
-    var basinFooter = basinCanvas.closest(".site-footer");
     var bctx = basinCanvas.getContext("2d");
     var bW = 0;
     var bH = 0;
@@ -618,7 +617,7 @@
       bOn = true;
       bLast = performance.now();
       if (!bParts.length) basinBuild();
-      basinFooter.classList.add("has-basin");
+      sceneEl.classList.add("has-basin");
       if (bRaf === null) bRaf = requestAnimationFrame(basinStep);
     };
     var basinStop = function () {
@@ -880,6 +879,24 @@
       });
     }, { threshold: 0.6 });
     countEls.forEach(function (el) { countIO.observe(el); });
+  }
+
+  /* ---------- formation entrance for the selector ---------- */
+  var assembleEl = qs("[data-assemble]");
+  if (assembleEl) {
+    if (reduce || !("IntersectionObserver" in window)) {
+      assembleEl.classList.add("is-assembled");
+    } else {
+      var asmIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            assembleEl.classList.add("is-assembled");
+            asmIO.disconnect();
+          }
+        });
+      }, { threshold: 0.22 });
+      asmIO.observe(assembleEl);
+    }
   }
 
   /* ---------- services: pick a problem (self-demoing) ---------- */

@@ -1002,6 +1002,36 @@ html.js .console-row {
   grid-auto-rows: 1fr; /* buttons split the full column height equally */
 }
 
+/* formation entrance: pieces fly in from scattered vectors and snap to grid */
+html.js [data-assemble]:not(.is-assembled) .cap-btn,
+html.js [data-assemble]:not(.is-assembled) .caps__panels { opacity: 0; }
+
+html.js [data-assemble].is-assembled .cap-btn,
+html.js [data-assemble].is-assembled .caps__panels {
+  animation: fly-in 0.85s cubic-bezier(0.3, 1.35, 0.45, 1) both;
+  animation-delay: var(--fd, 0s);
+}
+html.js [data-assemble].is-assembled .cap-btn:nth-child(1) { --fx: -130px; --fy: -44px; --fr: -5deg; --fd: 0.05s; }
+html.js [data-assemble].is-assembled .cap-btn:nth-child(2) { --fx: -180px; --fy: 14px;  --fr: 3deg;  --fd: 0.12s; }
+html.js [data-assemble].is-assembled .cap-btn:nth-child(3) { --fx: -120px; --fy: 54px;  --fr: -3deg; --fd: 0.19s; }
+html.js [data-assemble].is-assembled .cap-btn:nth-child(4) { --fx: -190px; --fy: -24px; --fr: 4deg;  --fd: 0.26s; }
+html.js [data-assemble].is-assembled .cap-btn:nth-child(5) { --fx: -140px; --fy: 34px;  --fr: -4deg; --fd: 0.33s; }
+html.js [data-assemble].is-assembled .cap-btn:nth-child(6) { --fx: -170px; --fy: 64px;  --fr: 3deg;  --fd: 0.4s; }
+html.js [data-assemble].is-assembled .caps__panels { --fx: 150px; --fy: 38px; --fr: 2.5deg; --fd: 0.18s; }
+
+@keyframes fly-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--fx, -140px), var(--fy, 0)) rotate(var(--fr, 0deg)) scale(0.96);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
 .cap-btn {
   display: flex;
   align-items: center;
@@ -2121,12 +2151,20 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   color: var(--td-faint);
 }
 
-/* --- the basin: rain → water surface → waterfalls → services --- */
-.site-footer__scene {
+/* ==========================================================================
+   THE FLOW — rain becomes every stream (promoted from the footer)
+   ========================================================================== */
+.flow {
+  padding: 92px 0 0;
+  border-top: 1px solid var(--line-dark);
+}
+.flow .section-head { margin-bottom: 6px; }
+
+.water-scene {
   position: relative;
-  height: clamp(420px, 42vw, 560px);
+  z-index: 1;
+  height: clamp(420px, 40vw, 540px);
   overflow: hidden;
-  border-bottom: 1px solid var(--line-dark);
 }
 
 .basin {
@@ -2139,7 +2177,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 }
 
 /* static fallback wordmark — replaced live by the particle engine */
-.site-footer__scene .site-footer__watermark {
+.water-scene__mark {
   position: absolute;
   top: 34%;
   left: 50%;
@@ -2155,7 +2193,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   pointer-events: none;
   user-select: none;
 }
-.site-footer.has-basin .site-footer__watermark { opacity: 0; }
+.water-scene.has-basin .water-scene__mark { opacity: 0; }
 
 .basin-chips {
   position: absolute;
@@ -2273,7 +2311,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .site-footer__brand p { text-align: center; }
   .site-footer__meta { text-align: center; }
 
-  .site-footer__scene { height: 400px; }
+  .water-scene { height: 400px; }
   .basin-chips {
     flex-wrap: wrap;
     justify-content: center;
@@ -2315,7 +2353,8 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .console__inner { padding: 16px; }
   .console-row__text small { white-space: normal; }
 
-  .site-footer__scene { height: 360px; }
+  .water-scene { height: 360px; }
+  .flow { padding-top: 76px; }
 }
 
 @media (max-width: 560px) {
@@ -2385,6 +2424,11 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .circuit__pulses { display: none; }
 
   .tilt { transition: none; }
+
+  html.js [data-assemble]:not(.is-assembled) .cap-btn,
+  html.js [data-assemble]:not(.is-assembled) .caps__panels { opacity: 1; }
+  html.js [data-assemble].is-assembled .cap-btn,
+  html.js [data-assemble].is-assembled .caps__panels { animation: none; }
 
   html.js .cap-panel.is-active { animation: none; }
   html.js .cap-panel.is-active .cap-panel__fix li,
