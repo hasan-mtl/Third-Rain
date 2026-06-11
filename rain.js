@@ -351,163 +351,346 @@
     });
   }
 
-  /* ---------- footer finale: the rain assembles the wordmark ---------- */
-  var logoCanvas = qs("[data-logorain]");
-  if (logoCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
-    var footerEl = logoCanvas.closest(".site-footer");
-    var lctx = logoCanvas.getContext("2d");
-    var lW = 0;
-    var lH = 0;
-    var lParts = [];
-    var lRaf = null;
-    var lOn = false;
-    var lLast = 0;
-    var lTime = 0;
-    var lMX = -9999;
-    var lMY = -9999;
+  /* ---------- the basin: rain -> water surface -> waterfalls -> services ---------- */
+  var basinCanvas = qs("[data-basin]");
+  if (basinCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
+    var sceneEl = basinCanvas.closest("[data-scene]");
+    var basinFooter = basinCanvas.closest(".site-footer");
+    var bctx = basinCanvas.getContext("2d");
+    var bW = 0;
+    var bH = 0;
+    var bWy = 0;
+    var bParts = [];
+    var bDrops = [];
+    var bRips = [];
+    var bSprays = [];
+    var bChips = [];
+    var bRaf = null;
+    var bOn = false;
+    var bLast = 0;
+    var bTime = 0;
+    var bMX = -9999;
+    var bMY = -9999;
+    var bDragT = 0;
 
-    var logoSize = function () {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      lW = logoCanvas.clientWidth;
-      lH = logoCanvas.clientHeight;
-      logoCanvas.width = Math.round(lW * dpr);
-      logoCanvas.height = Math.round(lH * dpr);
-      lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var surfaceY = function (x) {
+      return bWy + Math.sin(x * 0.013 + bTime * 1.4) * 3 + Math.sin(x * 0.029 - bTime * 0.9) * 2.2;
     };
 
-    var logoBuild = function () {
-      logoSize();
-      lParts = [];
-      var fontPx = Math.min(lW * 0.34, 300);
+    var basinSeedDrop = function (d, fromTop) {
+      d.speed = 340 + Math.random() * 420;
+      d.drift = d.speed * 0.14;
+      d.len = 9 + Math.random() * 13;
+      d.alpha = 0.12 + Math.random() * 0.3;
+      d.x = Math.random() * (bW * 1.15) - bW * 0.05;
+      d.y = fromTop ? -d.len - Math.random() * bH * 0.4 : Math.random() * bWy;
+      return d;
+    };
+
+    var basinBuild = function () {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      bW = basinCanvas.clientWidth;
+      bH = basinCanvas.clientHeight;
+      basinCanvas.width = Math.round(bW * dpr);
+      basinCanvas.height = Math.round(bH * dpr);
+      bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      bWy = bH * 0.6;
+
+      // sample the wordmark, centered above the waterline
+      bParts = [];
+      var fontPx = Math.min(bW * 0.3, 330);
       var off = document.createElement("canvas");
-      off.width = lW;
-      off.height = lH;
+      off.width = bW;
+      off.height = bH;
       var octx = off.getContext("2d");
       octx.font = "italic 600 " + Math.round(fontPx) + "px 'Cormorant Garamond', Georgia, serif";
       octx.textBaseline = "alphabetic";
-      var word = "rain.";
-      var met = octx.measureText(word);
+      var met = octx.measureText("rain.");
       octx.fillStyle = "#fff";
-      octx.fillText(word, lW - met.width - lW * 0.04, lH - fontPx * 0.18);
-      var img = octx.getImageData(0, 0, lW, lH).data;
-      var step = 5;
-      for (var yy = 0; yy < lH; yy += step) {
-        for (var xx = 0; xx < lW; xx += step) {
-          if (img[(yy * lW + xx) * 4 + 3] > 128) {
-            lParts.push({
+      octx.fillText("rain.", (bW - met.width) / 2, bWy - 16);
+      var img = octx.getImageData(0, 0, bW, bH).data;
+      for (var yy = 0; yy < bH; yy += 4) {
+        for (var xx = 0; xx < bW; xx += 4) {
+          if (img[(yy * bW + xx) * 4 + 3] > 128) {
+            bParts.push({
               tx: xx,
               ty: yy,
-              x: Math.random() * lW,
-              y: -Math.random() * lH * 1.5,
-              fall: 260 + Math.random() * 320,
+              x: Math.random() * bW,
+              y: -Math.random() * bH * 1.6,
+              fall: 280 + Math.random() * 340,
               hue: Math.random(),
               ph: Math.random() * 6.283,
               ox: 0,
               oy: 0
             });
-            if (lParts.length >= 1500) { yy = lH; break; }
+            if (bParts.length >= 2400) { yy = bH; break; }
           }
         }
       }
+
+      // where each waterfall lands — measured from the live chips
+      bChips = [];
+      var crect = basinCanvas.getBoundingClientRect();
+      qsa(".basin-chip").forEach(function (chip) {
+        var r = chip.getBoundingClientRect();
+        bChips.push({ x: r.left + r.width / 2 - crect.left, top: r.top - crect.top });
+      });
+
+      if (!bDrops.length) {
+        for (var bd = 0; bd < 70; bd++) bDrops.push(basinSeedDrop({}, false));
+      }
     };
 
-    var logoStep = function (ts) {
-      lRaf = null;
-      if (!lOn) return;
-      var dt = Math.min((ts - lLast) / 1000 || 0.016, 0.05);
-      lLast = ts;
-      lTime += dt;
-      lctx.clearRect(0, 0, lW, lH);
+    var basinStep = function (ts) {
+      bRaf = null;
+      if (!bOn) return;
+      var dt = Math.min((ts - bLast) / 1000 || 0.016, 0.05);
+      bLast = ts;
+      bTime += dt;
+      bctx.clearRect(0, 0, bW, bH);
 
-      for (var i = 0; i < lParts.length; i++) {
-        var p = lParts[i];
+      var i;
+      var p;
+
+      // shimmering reflection of the wordmark in the water
+      for (i = 0; i < bParts.length; i += 3) {
+        p = bParts[i];
+        if (Math.abs(p.y - p.ty) < 40) {
+          var ry = bWy + (bWy - p.y) * 0.42;
+          var rx = p.x + Math.sin(bTime * 2 + p.ty * 0.06) * 2.2;
+          bctx.fillStyle = "rgba(122, 225, 235, 0.13)";
+          bctx.fillRect(rx, ry, 1.8, 1.8);
+        }
+      }
+
+      // the water body with a living crest
+      bctx.beginPath();
+      bctx.moveTo(0, surfaceY(0));
+      for (var sx = 10; sx <= bW; sx += 10) bctx.lineTo(sx, surfaceY(sx));
+      bctx.lineTo(bW, bH);
+      bctx.lineTo(0, bH);
+      bctx.closePath();
+      var grad = bctx.createLinearGradient(0, bWy, 0, bH);
+      grad.addColorStop(0, "rgba(56, 130, 246, 0.13)");
+      grad.addColorStop(1, "rgba(13, 28, 62, 0.34)");
+      bctx.fillStyle = grad;
+      bctx.fill();
+      bctx.beginPath();
+      bctx.moveTo(0, surfaceY(0));
+      for (var cx = 10; cx <= bW; cx += 10) bctx.lineTo(cx, surfaceY(cx));
+      bctx.strokeStyle = "rgba(125, 230, 255, 0.5)";
+      bctx.lineWidth = 1.5;
+      bctx.stroke();
+
+      // waterfalls pouring from the basin into each service
+      for (i = 0; i < bChips.length; i++) {
+        var ch = bChips[i];
+        var topY = surfaceY(ch.x) + 2;
+        var botY = ch.top - 8;
+        if (botY > topY) {
+          bctx.strokeStyle = "rgba(56, 189, 248, 0.1)";
+          bctx.lineWidth = 5;
+          bctx.beginPath();
+          bctx.moveTo(ch.x, topY);
+          bctx.lineTo(ch.x, botY);
+          bctx.stroke();
+          bctx.setLineDash([5, 12]);
+          bctx.lineDashOffset = -(bTime * 64) + i * 7;
+          bctx.strokeStyle = "rgba(125, 230, 255, 0.5)";
+          bctx.lineWidth = 1.8;
+          bctx.beginPath();
+          bctx.moveTo(ch.x, topY);
+          bctx.lineTo(ch.x, botY);
+          bctx.stroke();
+          bctx.setLineDash([]);
+          var pulse = 0.14 + 0.08 * Math.sin(bTime * 3 + i);
+          bctx.fillStyle = "rgba(125, 230, 255," + pulse.toFixed(3) + ")";
+          bctx.beginPath();
+          bctx.ellipse(ch.x, botY, 11, 4, 0, 0, Math.PI * 2);
+          bctx.fill();
+          bctx.beginPath();
+          bctx.ellipse(ch.x, topY, 7, 2.6, 0, 0, Math.PI * 2);
+          bctx.fill();
+        }
+      }
+
+      // rain feeding the basin
+      bctx.lineCap = "round";
+      for (i = 0; i < bDrops.length; i++) {
+        var d = bDrops[i];
+        d.y += d.speed * dt;
+        d.x += d.drift * dt;
+        var sy = surfaceY(d.x);
+        if (d.y >= sy) {
+          if (bRips.length < 26) bRips.push({ x: d.x, y: sy, r: 1, max: 11 + Math.random() * 12, a: 0.5 });
+          if (bSprays.length < 90) {
+            for (var s2 = 0; s2 < 2; s2++) {
+              bSprays.push({
+                x: d.x,
+                y: sy,
+                vx: (Math.random() - 0.5) * 130,
+                vy: -(70 + Math.random() * 150),
+                life: 0.4 + Math.random() * 0.3
+              });
+            }
+          }
+          basinSeedDrop(d, true);
+          continue;
+        }
+        if (d.x > bW + 30) d.x -= bW + 60;
+        bctx.strokeStyle = "rgba(158, 222, 255," + d.alpha.toFixed(3) + ")";
+        bctx.lineWidth = 1;
+        bctx.beginPath();
+        bctx.moveTo(d.x, d.y);
+        bctx.lineTo(d.x - (d.drift / d.speed) * d.len, d.y - d.len);
+        bctx.stroke();
+      }
+
+      // splash spray
+      for (i = bSprays.length - 1; i >= 0; i--) {
+        var sw = bSprays[i];
+        sw.life -= dt;
+        if (sw.life <= 0) { bSprays.splice(i, 1); continue; }
+        sw.vy += 980 * dt;
+        sw.x += sw.vx * dt;
+        sw.y += sw.vy * dt;
+        bctx.fillStyle = "rgba(170, 230, 255," + Math.min(0.75, sw.life * 1.6).toFixed(3) + ")";
+        bctx.fillRect(sw.x - 1, sw.y - 1, 2, 2.4);
+      }
+
+      // ripples on the surface
+      for (i = bRips.length - 1; i >= 0; i--) {
+        var rp = bRips[i];
+        rp.r += 48 * dt * (1 + rp.r / rp.max);
+        rp.a -= 1.05 * dt;
+        if (rp.a <= 0 || rp.r >= rp.max) { bRips.splice(i, 1); continue; }
+        bctx.strokeStyle = "rgba(125, 230, 255," + rp.a.toFixed(3) + ")";
+        bctx.lineWidth = 1;
+        bctx.beginPath();
+        bctx.ellipse(rp.x, rp.y, rp.r, rp.r * 0.3, 0, 0, Math.PI * 2);
+        bctx.stroke();
+      }
+
+      // dragging the cursor through the water leaves a wake
+      if (bMX > -999 && bMY > bWy - 14 && bTime - bDragT > 0.09 && bRips.length < 26) {
+        bRips.push({ x: bMX, y: surfaceY(bMX), r: 1, max: 16, a: 0.45 });
+        bDragT = bTime;
+      }
+
+      // the wordmark, assembled drop by drop
+      for (i = 0; i < bParts.length; i++) {
+        p = bParts[i];
         if (p.y < p.ty - 120) {
-          p.y += p.fall * dt; // still raining down
+          p.y += p.fall * dt;
           p.x += (p.tx - p.x) * Math.min(1, 1.6 * dt);
         } else {
-          p.x += (p.tx - p.x) * Math.min(1, 7 * dt); // magnetize into the glyph
+          p.x += (p.tx - p.x) * Math.min(1, 7 * dt);
           p.y += (p.ty - p.y) * Math.min(1, 7 * dt);
         }
-
-        // the cursor sweeps drops out of the word; they spring back
-        var dx = (p.x + p.ox) - lMX;
-        var dy = (p.y + p.oy) - lMY;
+        var dx = (p.x + p.ox) - bMX;
+        var dy = (p.y + p.oy) - bMY;
         var d2 = dx * dx + dy * dy;
-        if (d2 < 4900) {
+        if (d2 < 6400) {
           var dd = Math.sqrt(d2) || 1;
-          var f = (70 - dd) / 70;
-          p.ox += (dx / dd) * f * 900 * dt;
-          p.oy += (dy / dd) * f * 900 * dt;
+          var f = (80 - dd) / 80;
+          p.ox += (dx / dd) * f * 1000 * dt;
+          p.oy += (dy / dd) * f * 1000 * dt;
         }
         p.ox += -p.ox * Math.min(1, 5 * dt);
         p.oy += -p.oy * Math.min(1, 5 * dt);
-
-        var jx = Math.sin(lTime * 1.8 + p.ph) * 0.7;
-        var jy = Math.cos(lTime * 1.5 + p.ph) * 0.7;
-        var tw = 0.38 + 0.34 * Math.sin(lTime * 2.2 + p.ph * 2);
-        lctx.fillStyle = p.hue < 0.5
-          ? "rgba(148, 213, 255," + Math.max(0.16, tw).toFixed(3) + ")"
-          : "rgba(122, 235, 214," + Math.max(0.16, tw).toFixed(3) + ")";
-        lctx.fillRect(p.x + p.ox + jx - 0.9, p.y + p.oy + jy - 0.9, 1.8, 1.8);
+        var tw = 0.52 + 0.38 * Math.sin(bTime * 2.2 + p.ph * 2);
+        bctx.fillStyle = p.hue < 0.5
+          ? "rgba(158, 218, 255," + Math.max(0.24, tw).toFixed(3) + ")"
+          : "rgba(128, 240, 218," + Math.max(0.24, tw).toFixed(3) + ")";
+        bctx.fillRect(
+          p.x + p.ox + Math.sin(bTime * 1.8 + p.ph) * 0.7 - 1.2,
+          p.y + p.oy + Math.cos(bTime * 1.5 + p.ph) * 0.7 - 1.2,
+          2.4,
+          2.4
+        );
       }
 
-      lRaf = requestAnimationFrame(logoStep);
+      bRaf = requestAnimationFrame(basinStep);
     };
 
-    var logoStart = function () {
-      if (lOn) return;
-      lOn = true;
-      lLast = performance.now();
-      if (!lParts.length) logoBuild();
-      footerEl.classList.add("has-logorain");
-      if (lRaf === null) lRaf = requestAnimationFrame(logoStep);
+    var basinStart = function () {
+      if (bOn) return;
+      bOn = true;
+      bLast = performance.now();
+      if (!bParts.length) basinBuild();
+      basinFooter.classList.add("has-basin");
+      if (bRaf === null) bRaf = requestAnimationFrame(basinStep);
     };
-    var logoStop = function () {
-      lOn = false;
-      if (lRaf !== null) { cancelAnimationFrame(lRaf); lRaf = null; }
+    var basinStop = function () {
+      bOn = false;
+      if (bRaf !== null) { cancelAnimationFrame(bRaf); bRaf = null; }
     };
 
-    // resample once the real serif arrives so drops trace true glyphs
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function () {
-        lParts = [];
-        if (lOn) logoBuild();
+        bParts = [];
+        if (bOn) basinBuild();
       });
     }
 
-    footerEl.addEventListener("mousemove", function (e) {
-      var r = logoCanvas.getBoundingClientRect();
-      lMX = e.clientX - r.left;
-      lMY = e.clientY - r.top;
+    sceneEl.addEventListener("mousemove", function (e) {
+      var r = basinCanvas.getBoundingClientRect();
+      bMX = e.clientX - r.left;
+      bMY = e.clientY - r.top;
     });
-    footerEl.addEventListener("mouseleave", function () {
-      lMX = -9999;
-      lMY = -9999;
+    sceneEl.addEventListener("mouseleave", function () {
+      bMX = -9999;
+      bMY = -9999;
+    });
+    sceneEl.addEventListener("pointerdown", function (e) {
+      if (e.target.closest("a, button")) return;
+      var r = basinCanvas.getBoundingClientRect();
+      var bx = e.clientX - r.left;
+      var by = e.clientY - r.top;
+      bRips.push({ x: bx, y: Math.max(by, surfaceY(bx)), r: 2, max: 70, a: 0.5 });
+      for (var s3 = 0; s3 < 12 && bSprays.length < 90; s3++) {
+        var a3 = -Math.PI * (0.15 + Math.random() * 0.7);
+        var v3 = 150 + Math.random() * 260;
+        bSprays.push({ x: bx, y: by, vx: Math.cos(a3) * v3, vy: Math.sin(a3) * v3, life: 0.5 + Math.random() * 0.3 });
+      }
+      for (var pi = 0; pi < bParts.length; pi++) {
+        var pp = bParts[pi];
+        var pdx = pp.x - bx;
+        var pdy = pp.y - by;
+        var pd2 = pdx * pdx + pdy * pdy;
+        if (pd2 < 19600) {
+          var pdd = Math.sqrt(pd2) || 1;
+          var pf = (140 - pdd) / 140;
+          pp.ox += (pdx / pdd) * pf * 90;
+          pp.oy += (pdy / pdd) * pf * 90;
+        }
+      }
     });
 
-    var logoResizeT;
+    var basinResizeT;
     window.addEventListener("resize", function () {
-      window.clearTimeout(logoResizeT);
-      logoResizeT = window.setTimeout(function () {
-        lParts = [];
-        if (lOn) logoBuild();
+      window.clearTimeout(basinResizeT);
+      basinResizeT = window.setTimeout(function () {
+        bParts = [];
+        bDrops = [];
+        if (bOn) basinBuild();
       }, 200);
     });
 
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting && !document.hidden) logoStart();
-          else logoStop();
+          if (entry.isIntersecting && !document.hidden) basinStart();
+          else basinStop();
         });
-      }, { threshold: 0.15 }).observe(footerEl);
+      }, { threshold: 0.12 }).observe(sceneEl);
     } else {
-      logoStart();
+      basinStart();
     }
     document.addEventListener("visibilitychange", function () {
-      if (document.hidden) { logoStop(); return; }
-      var r = footerEl.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) logoStart();
+      if (document.hidden) { basinStop(); return; }
+      var r = sceneEl.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) basinStart();
     });
   }
 

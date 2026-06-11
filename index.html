@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=11" />
+<link rel="stylesheet" href="rain.css?v=12" />
 </head>
 <body>
 
@@ -838,18 +838,18 @@
 
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
-  <span class="site-footer__watermark serif" aria-hidden="true">rain.</span>
-  <canvas class="logo-rain" data-logorain aria-hidden="true"></canvas>
-
-  <div class="site-footer__cta">
-    <p class="site-footer__line serif">The refresh begins <em>with a single drop.</em></p>
-    <div class="site-footer__cta-actions">
-      <a class="btn btn--primary btn--lg" href="#contact">
-        Start the refresh
-        <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </a>
-      <a class="btn btn--outline btn--lg" href="mailto:hello@rain.studio">hello@rain.studio</a>
-    </div>
+  <!-- The basin — rain collects into water and pours into everything we build -->
+  <div class="site-footer__scene" data-scene>
+    <canvas class="basin" data-basin aria-hidden="true"></canvas>
+    <span class="site-footer__watermark serif" aria-hidden="true">rain.</span>
+    <nav class="basin-chips" aria-label="Where the rain flows">
+      <a class="basin-chip" href="#services">AI Automation</a>
+      <a class="basin-chip" href="#services">Websites</a>
+      <a class="basin-chip" href="#services">Branding</a>
+      <a class="basin-chip" href="#services">Software</a>
+      <a class="basin-chip" href="#services">Mobile Apps</a>
+      <a class="basin-chip" href="#services">Connected Systems</a>
+    </nav>
   </div>
 
   <div class="site-footer__inner">
@@ -876,6 +876,6 @@
   </div>
 </footer>
 
-<script src="rain.js?v=11"></script>
+<script src="rain.js?v=12"></script>
 </body>
 </html>

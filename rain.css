@@ -2121,7 +2121,15 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   color: var(--td-faint);
 }
 
-.logo-rain {
+/* --- the basin: rain → water surface → waterfalls → services --- */
+.site-footer__scene {
+  position: relative;
+  height: clamp(420px, 42vw, 560px);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.basin {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -2130,59 +2138,58 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   pointer-events: none;
 }
 
-.site-footer__watermark {
+/* static fallback wordmark — replaced live by the particle engine */
+.site-footer__scene .site-footer__watermark {
   position: absolute;
-  right: -24px;
-  bottom: -88px;
+  top: 34%;
+  left: 50%;
   z-index: 0;
+  transform: translate(-50%, -50%);
   transition: opacity 0.8s ease;
-  font-size: clamp(9rem, 24vw, 20rem);
+  font-size: clamp(5.5rem, 16vw, 13rem);
   font-weight: 600;
   font-style: italic;
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
   pointer-events: none;
   user-select: none;
 }
+.site-footer.has-basin .site-footer__watermark { opacity: 0; }
 
-/* once the particle engine takes over, the static wordmark yields */
-.site-footer.has-logorain .site-footer__watermark { opacity: 0; }
-
-.site-footer__cta {
-  position: relative;
-  z-index: 1;
+.basin-chips {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 88px 24px 68px;
-  border-bottom: 1px solid var(--line-dark);
-}
-.site-footer__line {
-  max-width: 620px;
-  font-size: clamp(2.2rem, 4.8vw, 3.6rem);
-  font-weight: 500;
-  line-height: 1.1;
-  color: #fff;
-  text-wrap: balance;
-}
-.site-footer__line em {
-  font-style: italic;
-  background: linear-gradient(100deg, var(--sky-300), var(--teal-300));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding: 0.1em 0.14em 0.14em;
-  margin: -0.1em -0.14em -0.14em;
-}
-.site-footer__cta-actions {
-  display: flex;
-  flex-wrap: wrap;
   gap: 12px;
+}
+.basin-chip {
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--td-body);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+.basin-chip:hover {
+  color: #fff;
+  border-color: rgba(125, 211, 252, 0.45);
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 6px 22px -8px rgba(56, 189, 248, 0.5);
+  transform: translateY(-2px);
 }
 
 .site-footer__inner {
@@ -2265,8 +2272,16 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .site-footer__brand { display: grid; justify-items: center; }
   .site-footer__brand p { text-align: center; }
   .site-footer__meta { text-align: center; }
-  .site-footer__cta { justify-content: center; text-align: center; }
-  .site-footer__line { max-width: none; }
+
+  .site-footer__scene { height: 400px; }
+  .basin-chips {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: calc(100% - 32px);
+    gap: 8px;
+    bottom: 18px;
+  }
+  .basin-chip { padding: 7px 13px; font-size: 12px; }
 }
 
 @media (max-width: 760px) {
@@ -2300,8 +2315,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .console__inner { padding: 16px; }
   .console-row__text small { white-space: normal; }
 
-  .site-footer__cta { padding: 68px 20px 56px; }
-  .site-footer__watermark { bottom: -36px; right: -12px; }
+  .site-footer__scene { height: 360px; }
 }
 
 @media (max-width: 560px) {
@@ -2350,7 +2364,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
   .rain-fx,
   .motes,
-  .logo-rain { display: none; }
+  .basin { display: none; }
 
   html.js .chat__msg { animation: none; }
 
