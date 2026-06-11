@@ -52,7 +52,7 @@
 
   /* Type */
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
 
   /* Rhythm */
@@ -265,13 +265,14 @@ html.js [data-split] .serif-grad.is-cycling.is-swapping {
     linear-gradient(140deg, rgba(37, 99, 235, 0.4), rgba(45, 212, 191, 0.3) 40%, rgba(16, 26, 48, 0.08)) border-box;
 }
 
-.serif { font-family: var(--font-serif); font-weight: 400; }
+/* Cormorant Garamond runs light — carry it at 500/600 so it holds its own */
+.serif { font-family: var(--font-serif); font-weight: 500; }
 
 .serif-grad {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: 1.08em;
+  font-weight: 600;
+  font-size: 1.12em;
   letter-spacing: 0;
   background: linear-gradient(100deg, var(--sky-300) 0%, var(--blue-300) 45%, var(--teal-300) 100%);
   -webkit-background-clip: text;
@@ -719,7 +720,8 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 }
 .hero__stats dt {
   font-family: var(--font-serif);
-  font-size: 2.15rem;
+  font-size: 2.3rem;
+  font-weight: 500;
   line-height: 1;
   color: #fff;
   font-variant-numeric: tabular-nums; /* steady width while counting up */
@@ -947,7 +949,8 @@ html.js .console-row {
 .ticker__track span {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 17.5px;
+  font-size: 19px;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: #b6c5d8;
 }
@@ -1947,7 +1950,8 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 }
 .platform__stats dt {
   font-family: var(--font-serif);
-  font-size: 2.5rem;
+  font-size: 2.7rem;
+  font-weight: 500;
   line-height: 1;
   color: #fff;
   font-variant-numeric: tabular-nums;
@@ -1988,7 +1992,8 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   margin-top: 32px;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 2.7vw, 2.05rem);
   background: linear-gradient(100deg, var(--sky-300), var(--teal-300));
   -webkit-background-clip: text;
   background-clip: text;
@@ -2103,6 +2108,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   bottom: -88px;
   z-index: 0;
   font-size: clamp(9rem, 24vw, 20rem);
+  font-weight: 600;
   font-style: italic;
   line-height: 1;
   color: transparent;
@@ -2125,9 +2131,10 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   border-bottom: 1px solid var(--line-dark);
 }
 .site-footer__line {
-  max-width: 580px;
-  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
-  line-height: 1.12;
+  max-width: 620px;
+  font-size: clamp(2.2rem, 4.8vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.1;
   color: #fff;
   text-wrap: balance;
 }

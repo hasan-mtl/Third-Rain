@@ -9,7 +9,7 @@ platform (agent-hub), so the studio and its product read as one premium brand:
 
 - Deep navy **ink** dark sections with radial teal/blue glows, film grain, and
   circuit grids; warm **paper** light sections in between.
-- **Geist** (UI) + **Instrument Serif** (italic gradient accents inside
+- **Geist** (UI) + **Cormorant Garamond** (italic gradient accents inside
   headlines, serif numerals) + **Geist Mono** (eyebrows, micro-labels).
 - Product-style proof artifacts instead of stock footage: a live "client
   refresh" console in the hero, an animated agent circuit + run log in the
