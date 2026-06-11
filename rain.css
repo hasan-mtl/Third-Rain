@@ -2160,17 +2160,12 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 .water-scene {
   position: relative;
   z-index: 1;
-  height: clamp(560px, 54vw, 760px);
+  height: clamp(560px, 88vh, 900px);
   overflow: hidden;
 }
 
 /* once the engine is live, the services float on the water instead */
 .water-scene.basin--live .basin-chips { display: none; }
-
-/* lenis smooth-scroll cooperation */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-stopped { overflow: hidden; }
 
 .basin {
   position: absolute;
