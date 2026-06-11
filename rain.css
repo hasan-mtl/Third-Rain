@@ -2167,6 +2167,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   overflow: hidden;
 }
 
+.sea,
 .basin {
   position: absolute;
   inset: 0;
@@ -2403,6 +2404,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
   .rain-fx,
   .motes,
+  .sea,
   .basin { display: none; }
 
   html.js .chat__msg { animation: none; }

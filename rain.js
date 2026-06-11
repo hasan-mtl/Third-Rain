@@ -351,9 +351,10 @@
     });
   }
 
-  /* ---------- the basin: a living sea — sky fx, swells, underwater world ---------- */
+  /* ---------- the basin: three.js shader sea + 2D life overlay ---------- */
   var basinCanvas = qs("[data-basin]");
-  if (basinCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
+  var seaCanvas = qs("[data-sea]");
+  if (basinCanvas && seaCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
     var sceneEl = basinCanvas.closest("[data-scene]");
     var bctx = basinCanvas.getContext("2d");
     var bW = 0;
@@ -365,8 +366,6 @@
     var bSprays = [];
     var bChips = [];
     var bBubbles = [];
-    var bSpecks = [];
-    var bFoam = [];
     var bGlyphs = [];
     var bClusters = [];
     var bStreak = null;
@@ -377,19 +376,152 @@
     var bTime = 0;
     var bMX = -9999;
     var bMY = -9999;
-    var bDragT = 0;
+    var bTrailT = 0;
+
+    /* --- the WebGL sea (three.js, lazy-loaded) --- */
+    var seaLoadStarted = false;
+    var seaReady = false;
+    var seaRenderer = null;
+    var seaSceneGl = null;
+    var seaCam = null;
+    var seaMat = null;
+    var seaRipIdx = 0;
+
+    var SEA_VERT = [
+      "varying vec2 vUv;",
+      "void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }"
+    ].join("\n");
+
+    var SEA_FRAG = [
+      "precision highp float;",
+      "varying vec2 vUv;",
+      "uniform float uTime;",
+      "uniform vec2 uRes;",
+      "uniform float uWaterY;",
+      "uniform vec2 uMouse;",
+      "uniform vec4 uRipples[8];",
+      "float surf(float x){",
+      "  return uWaterY",
+      "    + sin(x*0.008 + uTime*0.9)*5.0",
+      "    + sin(x*0.018 - uTime*1.5)*3.0",
+      "    + sin(x*0.041 + uTime*2.6)*1.6;",
+      "}",
+      "float hash21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }",
+      "float vnoise(vec2 p){",
+      "  vec2 i = floor(p); vec2 f = fract(p);",
+      "  f = f*f*(3.0-2.0*f);",
+      "  return mix(mix(hash21(i), hash21(i+vec2(1.0,0.0)), f.x),",
+      "             mix(hash21(i+vec2(0.0,1.0)), hash21(i+vec2(1.0,1.0)), f.x), f.y);",
+      "}",
+      "void main(){",
+      "  vec2 px = vec2(vUv.x * uRes.x, (1.0 - vUv.y) * uRes.y);",
+      "  float sy = surf(px.x);",
+      "  float rip = 0.0;",
+      "  for (int i = 0; i < 8; i++) {",
+      "    vec4 R = uRipples[i];",
+      "    float age = uTime - R.z;",
+      "    if (R.w > 0.0 && age > 0.0 && age < 1.6) {",
+      "      float rad = age * 150.0;",
+      "      vec2 dp = vec2(px.x - R.x, (px.y - R.y) * 2.4);",
+      "      rip += exp(-abs(length(dp) - rad) * 0.085) * exp(-age * 2.0) * R.w;",
+      "    }",
+      "  }",
+      "  float below = px.y - (sy - rip * 6.0);",
+      "  if (below < -14.0) { gl_FragColor = vec4(0.0); return; }",
+      "  float span = max(uRes.y - uWaterY, 1.0);",
+      "  float depth = clamp(below / span, 0.0, 1.0);",
+      "  vec2 w = px;",
+      "  w.x += sin(px.y * 0.045 + uTime * 1.2) * (2.0 + 7.0 * depth) + rip * 9.0;",
+      "  w.y += cos(px.x * 0.038 - uTime * 0.8) * (1.5 + 5.0 * depth);",
+      "  vec3 shallow = vec3(0.13, 0.32, 0.58);",
+      "  vec3 deep = vec3(0.012, 0.045, 0.11);",
+      "  vec3 col = mix(shallow, deep, pow(depth, 0.75));",
+      "  float alpha = 0.94 * smoothstep(-0.02, 0.85, depth);",
+      "  float ca = sin(w.x * 0.052 + uTime * 1.1) * sin(w.x * 0.029 - uTime * 0.7 + w.y * 0.055);",
+      "  float cb = sin((w.x + w.y * 0.6) * 0.041 - uTime * 1.35);",
+      "  float caustic = pow(clamp(ca * cb * 1.5, 0.0, 1.0), 2.4) * pow(1.0 - depth, 2.0);",
+      "  col += vec3(0.30, 0.72, 0.88) * caustic * 0.55;",
+      "  vec2 sun = vec2(uRes.x * 0.5, uWaterY - 260.0);",
+      "  vec2 sd = px - sun;",
+      "  float ang = atan(sd.x, sd.y);",
+      "  float shaft = vnoise(vec2(ang * 6.5 + uTime * 0.1, 0.5));",
+      "  shaft = smoothstep(0.52, 0.95, shaft);",
+      "  shaft *= exp(-depth * 2.4) * smoothstep(8.0, 90.0, below);",
+      "  col += vec3(0.4, 0.78, 0.92) * shaft * 0.2;",
+      "  float crest = exp(-abs(below) * 0.3);",
+      "  col += vec3(0.62, 0.93, 1.0) * crest * (0.55 + rip * 0.9);",
+      "  alpha = max(alpha, crest * 0.9);",
+      "  float slope = (surf(px.x + 6.0) - surf(px.x - 6.0)) / 12.0;",
+      "  float tw = hash21(vec2(floor(px.x / 6.0), floor(uTime * 9.0)));",
+      "  float glint = smoothstep(0.1, 0.34, -slope) * (1.0 - smoothstep(0.0, 3.0, abs(below))) * (0.35 + 0.65 * tw);",
+      "  col += vec3(0.95, 1.0, 1.0) * glint * 0.85;",
+      "  alpha = max(alpha, glint * 0.9);",
+      "  if (uMouse.x > -999.0 && below > 0.0) {",
+      "    float md = distance(px, uMouse);",
+      "    col += vec3(0.28, 0.66, 0.84) * exp(-md * 0.014) * 0.4;",
+      "  }",
+      "  col *= 1.0 - 0.22 * smoothstep(0.7, 1.0, depth);",
+      "  gl_FragColor = vec4(col, alpha);",
+      "}"
+    ].join("\n");
 
     var GLYPH_SET = ["</>", "{}", "01", "=>", "::", "ai"];
 
-    // three swell octaves — a real rolling surface, not a hairline
     var surfaceY = function (x) {
       return bWy
         + Math.sin(x * 0.008 + bTime * 0.9) * 5
         + Math.sin(x * 0.018 - bTime * 1.5) * 3
         + Math.sin(x * 0.041 + bTime * 2.6) * 1.6;
     };
-    var surfaceSlope = function (x) {
-      return (surfaceY(x + 6) - surfaceY(x - 6)) / 12;
+
+    var pushSeaRipple = function (x, y, strength) {
+      if (!seaReady) return;
+      var slot = seaMat.uniforms.uRipples.value[seaRipIdx % 8];
+      slot.set(x, y, bTime, strength);
+      seaRipIdx += 1;
+    };
+
+    var seaResize = function (THREE_NS) {
+      if (!seaRenderer) return;
+      seaRenderer.setSize(bW, bH, false);
+      seaMat.uniforms.uRes.value.set(bW, bH);
+      seaMat.uniforms.uWaterY.value = bWy;
+    };
+
+    var seaInit = function (THREE) {
+      try {
+        seaRenderer = new THREE.WebGLRenderer({
+          canvas: seaCanvas,
+          alpha: true,
+          antialias: false,
+          premultipliedAlpha: false
+        });
+        seaRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        seaRenderer.setClearColor(0x000000, 0);
+        seaSceneGl = new THREE.Scene();
+        seaCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        var ripples = [];
+        for (var ri = 0; ri < 8; ri++) ripples.push(new THREE.Vector4(0, 0, -10, 0));
+        seaMat = new THREE.ShaderMaterial({
+          transparent: true,
+          depthTest: false,
+          depthWrite: false,
+          uniforms: {
+            uTime: { value: 0 },
+            uRes: { value: new THREE.Vector2(1, 1) },
+            uWaterY: { value: 0 },
+            uMouse: { value: new THREE.Vector2(-9999, -9999) },
+            uRipples: { value: ripples }
+          },
+          vertexShader: SEA_VERT,
+          fragmentShader: SEA_FRAG
+        });
+        seaSceneGl.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), seaMat));
+        seaResize();
+        seaReady = true;
+      } catch (err) {
+        seaReady = false; // 2D fallback water keeps the scene whole
+      }
     };
 
     var basinSeedDrop = function (d, fromTop) {
@@ -410,8 +542,8 @@
       basinCanvas.height = Math.round(bH * dpr);
       bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       bWy = bH * 0.58;
+      if (seaReady) seaResize();
 
-      // wordmark targets
       bParts = [];
       var fontPx = Math.min(bW * 0.3, 330);
       var off = document.createElement("canvas");
@@ -443,7 +575,6 @@
         }
       }
 
-      // waterfall landing points, measured from the live chips
       bChips = [];
       var crect = basinCanvas.getBoundingClientRect();
       qsa(".basin-chip").forEach(function (chip) {
@@ -455,7 +586,6 @@
         for (var bd = 0; bd < 70; bd++) bDrops.push(basinSeedDrop({}, false));
       }
 
-      // underwater life
       bBubbles = [];
       for (var bb = 0; bb < 18; bb++) {
         bBubbles.push({
@@ -466,31 +596,11 @@
           ph: Math.random() * 6.283
         });
       }
-      bSpecks = [];
-      for (var sk = 0; sk < 26; sk++) {
-        bSpecks.push({
-          x: Math.random() * bW,
-          y: bWy + 16 + Math.random() * (bH - bWy - 26),
-          vx: (Math.random() - 0.5) * 7,
-          a: 0.05 + Math.random() * 0.09,
-          ph: Math.random() * 6.283
-        });
-      }
-      bFoam = [];
-      for (var fm = 0; fm < 30; fm++) {
-        bFoam.push({
-          x: Math.random() * bW,
-          vx: (Math.random() - 0.5) * 16,
-          life: Math.random() * 4,
-          max: 2.5 + Math.random() * 3
-        });
-      }
 
-      // sky fx — code glyphs + node constellations
       bGlyphs = [];
-      for (var gl = 0; gl < 10; gl++) {
+      for (var gl2 = 0; gl2 < 10; gl2++) {
         bGlyphs.push({
-          t: GLYPH_SET[gl % GLYPH_SET.length],
+          t: GLYPH_SET[gl2 % GLYPH_SET.length],
           x: Math.random() * bW,
           y: Math.random() * (bWy - 60) + 16,
           vx: (Math.random() - 0.5) * 10,
@@ -516,6 +626,27 @@
       }
     };
 
+    // until three.js arrives (or if WebGL fails) the water stays 2D
+    var drawFallbackWater = function () {
+      bctx.beginPath();
+      bctx.moveTo(0, surfaceY(0));
+      for (var sx = 8; sx <= bW; sx += 8) bctx.lineTo(sx, surfaceY(sx));
+      bctx.lineTo(bW, bH);
+      bctx.lineTo(0, bH);
+      bctx.closePath();
+      var grad = bctx.createLinearGradient(0, bWy - 8, 0, bH);
+      grad.addColorStop(0, "rgba(52, 120, 220, 0.16)");
+      grad.addColorStop(1, "rgba(6, 18, 38, 0.5)");
+      bctx.fillStyle = grad;
+      bctx.fill();
+      bctx.strokeStyle = "rgba(170, 235, 255, 0.5)";
+      bctx.lineWidth = 1.5;
+      bctx.beginPath();
+      bctx.moveTo(0, surfaceY(0));
+      for (var cx2 = 8; cx2 <= bW; cx2 += 8) bctx.lineTo(cx2, surfaceY(cx2));
+      bctx.stroke();
+    };
+
     var basinStep = function (ts) {
       bRaf = null;
       if (!bOn) return;
@@ -527,7 +658,7 @@
       var i;
       var p;
 
-      /* --- sky: drifting code glyphs --- */
+      /* sky: drifting code glyphs */
       bctx.textBaseline = "middle";
       for (i = 0; i < bGlyphs.length; i++) {
         var g = bGlyphs[i];
@@ -543,7 +674,7 @@
         bctx.fillText(g.t, g.x, g.y);
       }
 
-      /* --- sky: node constellations --- */
+      /* sky: node constellations */
       for (i = 0; i < bClusters.length; i++) {
         var cluster = bClusters[i];
         cluster.x += cluster.vx * dt;
@@ -573,7 +704,7 @@
         }
       }
 
-      /* --- sky: occasional data streak --- */
+      /* sky: occasional data streak */
       bStreakAt -= dt;
       if (bStreakAt <= 0 && !bStreak) {
         bStreak = {
@@ -602,7 +733,7 @@
         }
       }
 
-      /* --- wordmark reflection, bent by the swells --- */
+      /* wordmark reflection, bent by the swells */
       for (i = 0; i < bParts.length; i += 3) {
         p = bParts[i];
         if (Math.abs(p.y - p.ty) < 40) {
@@ -614,87 +745,16 @@
         }
       }
 
-      /* --- the water body --- */
-      bctx.beginPath();
-      bctx.moveTo(0, surfaceY(0));
-      for (var sx = 8; sx <= bW; sx += 8) bctx.lineTo(sx, surfaceY(sx));
-      bctx.lineTo(bW, bH);
-      bctx.lineTo(0, bH);
-      bctx.closePath();
-      var grad = bctx.createLinearGradient(0, bWy - 8, 0, bH);
-      grad.addColorStop(0, "rgba(64, 145, 255, 0.16)");
-      grad.addColorStop(0.45, "rgba(28, 70, 145, 0.22)");
-      grad.addColorStop(1, "rgba(6, 18, 38, 0.5)");
-      bctx.fillStyle = grad;
-      bctx.fill();
-
-      /* --- underwater: god rays + caustics (light, additive) --- */
-      bctx.save();
-      bctx.clip(); // stay inside the water body path
-      bctx.globalCompositeOperation = "screen";
-      for (i = 0; i < 5; i++) {
-        var rayX = bW * (0.12 + i * 0.18) + Math.sin(bTime * 0.4 + i * 1.3) * 16;
-        var rayTop = surfaceY(rayX);
-        var rayW = 34 + i * 9;
-        var rayGrad = bctx.createLinearGradient(0, rayTop, 0, bH);
-        rayGrad.addColorStop(0, "rgba(150, 215, 255, 0.085)");
-        rayGrad.addColorStop(1, "rgba(150, 215, 255, 0)");
-        bctx.fillStyle = rayGrad;
-        bctx.beginPath();
-        bctx.moveTo(rayX, rayTop);
-        bctx.lineTo(rayX + rayW, rayTop);
-        bctx.lineTo(rayX + rayW + 70, bH);
-        bctx.lineTo(rayX + 70, bH);
-        bctx.closePath();
-        bctx.fill();
-      }
-      for (i = 0; i < 12; i++) {
-        var cax = (i / 12) * bW + Math.sin(bTime * 1.1 + i * 1.7) * 30;
-        var cay = bWy + 16 + (i % 3) * 9 + Math.sin(bTime * 1.7 + i) * 3;
-        var caa = 0.05 + 0.04 * Math.sin(bTime * 2 + i * 2.2);
-        if (caa > 0.02) {
-          bctx.strokeStyle = "rgba(160, 225, 255," + caa.toFixed(3) + ")";
-          bctx.lineWidth = 1;
-          bctx.beginPath();
-          bctx.ellipse(cax, cay, 24, 6.5, 0, 0, Math.PI * 2);
-          bctx.stroke();
-        }
-      }
-      bctx.restore();
-
-      /* --- underwater: drifting specks --- */
-      for (i = 0; i < bSpecks.length; i++) {
-        var spk = bSpecks[i];
-        spk.x += spk.vx * dt;
-        if (spk.x < -5) spk.x = bW + 5;
-        if (spk.x > bW + 5) spk.x = -5;
-        var spy = spk.y + Math.sin(bTime * 0.8 + spk.ph) * 4;
-        bctx.fillStyle = "rgba(150, 215, 255," + spk.a.toFixed(3) + ")";
-        bctx.fillRect(spk.x, spy, 1.4, 1.4);
+      /* the sea itself — WebGL shader, or the 2D stand-in until it loads */
+      if (seaReady) {
+        seaMat.uniforms.uTime.value = bTime;
+        seaMat.uniforms.uMouse.value.set(bMX, bMY);
+        seaRenderer.render(seaSceneGl, seaCam);
+      } else {
+        drawFallbackWater();
       }
 
-      /* --- underwater: bubbles rising to the surface --- */
-      for (i = 0; i < bBubbles.length; i++) {
-        var bub = bBubbles[i];
-        bub.y -= bub.vy * dt;
-        var bx2 = bub.x + Math.sin(bTime * 2 + bub.ph) * 7;
-        var bsy = surfaceY(bx2);
-        if (bub.y <= bsy + 4) {
-          if (bRips.length < 26) bRips.push({ x: bx2, y: bsy, r: 1, max: 7, a: 0.35 });
-          bub.y = bH - 8 - Math.random() * 30;
-          bub.x = Math.random() * bW;
-          continue;
-        }
-        bctx.strokeStyle = "rgba(170, 225, 255, 0.28)";
-        bctx.lineWidth = 0.9;
-        bctx.beginPath();
-        bctx.arc(bx2, bub.y, bub.r, 0, Math.PI * 2);
-        bctx.stroke();
-        bctx.fillStyle = "rgba(220, 245, 255, 0.35)";
-        bctx.fillRect(bx2 - bub.r * 0.35, bub.y - bub.r * 0.55, 1, 1);
-      }
-
-      /* --- waterfalls pouring into each service --- */
+      /* waterfalls pouring into each service */
       for (i = 0; i < bChips.length; i++) {
         var ch = bChips[i];
         var topY = surfaceY(ch.x) + 2;
@@ -729,53 +789,7 @@
         }
       }
 
-      /* --- surface: lit crest band, specular glints, foam --- */
-      var band = bctx.createLinearGradient(0, bWy - 10, 0, bWy + 12);
-      band.addColorStop(0, "rgba(170, 235, 255, 0)");
-      band.addColorStop(0.5, "rgba(170, 235, 255, 0.3)");
-      band.addColorStop(1, "rgba(120, 200, 255, 0.02)");
-      bctx.strokeStyle = "rgba(170, 235, 255, 0.55)";
-      bctx.lineWidth = 1.6;
-      bctx.beginPath();
-      bctx.moveTo(0, surfaceY(0));
-      for (var cx2 = 8; cx2 <= bW; cx2 += 8) bctx.lineTo(cx2, surfaceY(cx2));
-      bctx.stroke();
-      bctx.fillStyle = band;
-      bctx.beginPath();
-      bctx.moveTo(0, surfaceY(0) - 1.5);
-      for (var bx3 = 8; bx3 <= bW; bx3 += 8) bctx.lineTo(bx3, surfaceY(bx3) - 1.5);
-      for (var bx4 = bW; bx4 >= 0; bx4 -= 8) bctx.lineTo(bx4, surfaceY(bx4) + 7);
-      bctx.closePath();
-      bctx.fill();
-      for (var gx = 0; gx <= bW; gx += 9) {
-        var slope = surfaceSlope(gx);
-        if (slope < -0.18) {
-          var ga = Math.min(0.5, -slope * 0.9);
-          bctx.strokeStyle = "rgba(220, 248, 255," + ga.toFixed(3) + ")";
-          bctx.lineWidth = 1.1;
-          bctx.beginPath();
-          bctx.moveTo(gx - 3, surfaceY(gx - 3) - 0.5);
-          bctx.lineTo(gx + 3, surfaceY(gx + 3) - 0.5);
-          bctx.stroke();
-        }
-      }
-      for (i = 0; i < bFoam.length; i++) {
-        var fmp = bFoam[i];
-        fmp.life += dt;
-        fmp.x += fmp.vx * dt;
-        if (fmp.life > fmp.max || fmp.x < -4 || fmp.x > bW + 4) {
-          fmp.x = Math.random() * bW;
-          fmp.vx = (Math.random() - 0.5) * 16;
-          fmp.life = 0;
-          fmp.max = 2.5 + Math.random() * 3;
-        }
-        var ff = fmp.life / fmp.max;
-        var fa = 0.22 * (ff < 0.2 ? ff / 0.2 : 1 - (ff - 0.2) / 0.8);
-        bctx.fillStyle = "rgba(225, 248, 255," + fa.toFixed(3) + ")";
-        bctx.fillRect(fmp.x, surfaceY(fmp.x) - 1.4, 2.2, 1.2);
-      }
-
-      /* --- rain feeding the sea --- */
+      /* rain feeding the sea */
       bctx.lineCap = "round";
       for (i = 0; i < bDrops.length; i++) {
         var d = bDrops[i];
@@ -807,7 +821,7 @@
         bctx.stroke();
       }
 
-      /* --- splash spray --- */
+      /* splash spray */
       for (i = bSprays.length - 1; i >= 0; i--) {
         var sw = bSprays[i];
         sw.life -= dt;
@@ -819,7 +833,7 @@
         bctx.fillRect(sw.x - 1, sw.y - 1, 2, 2.4);
       }
 
-      /* --- surface ripples --- */
+      /* surface ripples (crisp echoes over the shader water) */
       for (i = bRips.length - 1; i >= 0; i--) {
         var rp = bRips[i];
         rp.r += 48 * dt * (1 + rp.r / rp.max);
@@ -832,13 +846,34 @@
         bctx.stroke();
       }
 
-      /* --- the cursor leaves a wake in the water --- */
-      if (bMX > -999 && bMY > bWy - 16 && bTime - bDragT > 0.09 && bRips.length < 26) {
-        bRips.push({ x: bMX, y: surfaceY(bMX), r: 1, max: 16, a: 0.45 });
-        bDragT = bTime;
+      /* bubbles rising to the surface */
+      for (i = 0; i < bBubbles.length; i++) {
+        var bub = bBubbles[i];
+        bub.y -= bub.vy * dt;
+        var bx2 = bub.x + Math.sin(bTime * 2 + bub.ph) * 7;
+        var bsy = surfaceY(bx2);
+        if (bub.y <= bsy + 4) {
+          if (bRips.length < 26) bRips.push({ x: bx2, y: bsy, r: 1, max: 7, a: 0.35 });
+          bub.y = bH - 8 - Math.random() * 30;
+          bub.x = Math.random() * bW;
+          continue;
+        }
+        bctx.strokeStyle = "rgba(170, 225, 255, 0.28)";
+        bctx.lineWidth = 0.9;
+        bctx.beginPath();
+        bctx.arc(bx2, bub.y, bub.r, 0, Math.PI * 2);
+        bctx.stroke();
+        bctx.fillStyle = "rgba(220, 245, 255, 0.35)";
+        bctx.fillRect(bx2 - bub.r * 0.35, bub.y - bub.r * 0.55, 1, 1);
       }
 
-      /* --- the wordmark, assembled drop by drop --- */
+      /* the cursor trails ripples through the shader water */
+      if (bMX > -999 && bMY > bWy - 16 && bTime - bTrailT > 0.12) {
+        pushSeaRipple(bMX, surfaceY(bMX), 0.45);
+        bTrailT = bTime;
+      }
+
+      /* the wordmark, assembled drop by drop */
       for (i = 0; i < bParts.length; i++) {
         p = bParts[i];
         if (p.y < p.ty - 120) {
@@ -879,6 +914,12 @@
       bOn = true;
       bLast = performance.now();
       if (!bParts.length) basinBuild();
+      if (!seaLoadStarted) {
+        seaLoadStarted = true;
+        import("https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.min.js")
+          .then(function (THREE) { seaInit(THREE); })
+          .catch(function () { /* fallback water stays */ });
+      }
       sceneEl.classList.add("has-basin");
       if (bRaf === null) bRaf = requestAnimationFrame(basinStep);
     };
@@ -908,6 +949,7 @@
       var r = basinCanvas.getBoundingClientRect();
       var bx = e.clientX - r.left;
       var by = e.clientY - r.top;
+      pushSeaRipple(bx, Math.max(by, surfaceY(bx)), 1.0);
       bRips.push({ x: bx, y: Math.max(by, surfaceY(bx)), r: 2, max: 70, a: 0.5 });
       for (var s3 = 0; s3 < 12 && bSprays.length < 90; s3++) {
         var a3 = -Math.PI * (0.15 + Math.random() * 0.7);
