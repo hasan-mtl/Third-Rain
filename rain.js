@@ -410,91 +410,81 @@
       "",
       "void main(){",
       "  vec2 px = vec2(vUv.x * uRes.x, (1.0 - vUv.y) * uRes.y);",
+      "  float L = uChips[0] - 70.0;",
+      "  float R = uChips[5] + 70.0;",
+      "  float sx = smoothstep(L - 70.0, L + 40.0, px.x) * (1.0 - smoothstep(R - 40.0, R + 70.0, px.x));",
       "  float lip = uHy + sin(px.x * 0.012 + uTime * 0.8) * 1.2;",
       "  float dy = px.y - lip;",
       "",
-      "  // above the ledge: just the glowing lip",
+      "  // above the edge: only the smooth tongue of water bending over, inside the fall's span",
       "  if (dy <= 0.0) {",
-      "    float g = exp(-abs(dy) * 0.4);",
-      "    float foamT = 0.5 + 0.5 * vnoise(vec2(px.x * 0.12, uTime * 2.0));",
-      "    gl_FragColor = vec4(vec3(0.5, 0.86, 0.96) * g * 0.3 * foamT, g * 0.4 * foamT);",
+      "    float g = exp(-abs(dy) * 0.3) * sx;",
+      "    gl_FragColor = vec4(vec3(0.45, 0.8, 0.92) * g * 0.4, g * 0.45);",
       "    return;",
       "  }",
       "",
       "  float span = max(uRes.y - uHy, 1.0);",
       "  float prog = clamp(dy / span, 0.0, 1.0);",
       "",
-      "  // curtain density: six bright cascades over a soft sheet",
       "  float colM = 0.0;",
-      "  float sheetL = uChips[0] - 80.0;",
-      "  float sheetR = uChips[5] + 80.0;",
       "  for (int i = 0; i < 6; i++) {",
-      "    colM += exp(-abs(px.x - uChips[i]) * 0.028);",
+      "    colM += exp(-abs(px.x - uChips[i]) * 0.022);",
       "  }",
-      "  colM = min(colM, 1.4);",
-      "  float sheet = smoothstep(sheetL - 60.0, sheetL + 40.0, px.x) * (1.0 - smoothstep(sheetR - 40.0, sheetR + 60.0, px.x));",
-      "  float curtain = clamp(sheet * 0.30 + colM * 0.85, 0.0, 1.25);",
+      "  colM = min(colM, 1.2);",
+      "  float curtain = sx * (0.4 + 0.6 * clamp(colM, 0.0, 1.0));",
       "",
-      "  // the cursor parts the curtain like a hand in the fall",
+      "  // a hand parts the fall",
       "  float xx = px.x;",
       "  float cut = 0.0;",
       "  if (uMouse.z > 0.5) {",
       "    float mdx = px.x - uMouse.x;",
-      "    float ybell = exp(-pow((px.y - uMouse.y) / 110.0, 2.0));",
-      "    float part = exp(-pow(mdx / 60.0, 2.0)) * ybell;",
-      "    xx += sign(mdx) * part * 38.0;",
-      "    cut += part * 0.75;",
+      "    float ybell = exp(-pow((px.y - uMouse.y) / 120.0, 2.0));",
+      "    float part = exp(-pow(mdx / 62.0, 2.0)) * ybell;",
+      "    xx += sign(mdx) * part * 40.0;",
+      "    cut += part * 0.8;",
       "  }",
       "",
-      "  // clicks send pressure waves through the fall",
+      "  // clicks pulse pressure waves through the fall",
       "  float waveGlow = 0.0;",
       "  for (int i = 0; i < 8; i++) {",
-      "    vec4 R = uRipples[i];",
-      "    float age = uTime - R.z;",
-      "    if (R.w > 0.0 && age > 0.0 && age < 1.8) {",
-      "      float d = distance(px, R.xy);",
-      "      float ring = exp(-abs(d - age * 300.0) * 0.022) * exp(-age * 2.1) * R.w;",
+      "    vec4 Rp = uRipples[i];",
+      "    float age = uTime - Rp.z;",
+      "    if (Rp.w > 0.0 && age > 0.0 && age < 1.8) {",
+      "      float d = distance(px, Rp.xy);",
+      "      float ring = exp(-abs(d - age * 300.0) * 0.022) * exp(-age * 2.1) * Rp.w;",
       "      waveGlow += ring;",
-      "      xx += sin(d * 0.07 - age * 11.0) * ring * 14.0;",
+      "      xx += sin(d * 0.06 - age * 10.0) * ring * 12.0;",
       "    }",
       "  }",
       "",
-      "  // falling streak field — accelerates with the drop",
-      "  float fallV = 1.6 + prog * 3.4;",
-      "  float n1 = vnoise(vec2(xx * 0.05, px.y * 0.011 - uTime * fallV));",
-      "  float n2 = vnoise(vec2(xx * 0.13 + 7.0, px.y * 0.028 - uTime * (fallV * 1.6)));",
-      "  float streak = pow(clamp(n1 * 0.62 + n2 * 0.58, 0.0, 1.0), 2.1);",
+      "  // long coherent filaments — two parallax layers, stretching as they fall",
+      "  float stretch = 1.0 + prog * 1.8;",
+      "  float yc = px.y / stretch;",
+      "  float l1 = vnoise(vec2(xx * 0.085, yc * 0.0045 - uTime * 1.55));",
+      "  float l1b = vnoise(vec2(xx * 0.085 + 57.0, yc * 0.0045 - uTime * 1.85));",
+      "  float l2 = vnoise(vec2(xx * 0.16 + 13.0, yc * 0.009 - uTime * 2.9));",
+      "  float bright = pow(clamp(l1 * 0.55 + l1b * 0.4 + l2 * 0.45, 0.0, 1.0), 1.7);",
       "",
-      "  float density = curtain * (0.40 + streak * 1.0) - cut;",
+      "  float topGlow = exp(-dy * 0.045);",
+      "  float density = curtain * (0.28 + bright * 0.6) + curtain * topGlow * 0.35 - cut;",
       "  density = max(density, 0.0);",
+      "  float alpha = clamp(density, 0.0, 0.82) * smoothstep(0.0, 20.0, dy);",
       "",
-      "  vec3 deepCol = vec3(0.045, 0.13, 0.24);",
-      "  vec3 brightCol = vec3(0.62, 0.88, 0.98);",
-      "  vec3 col = mix(deepCol, brightCol, clamp(streak * 1.15, 0.0, 1.0) * (0.3 + 0.7 * clamp(colM, 0.0, 1.0)));",
-      "",
-      "  // glitter in the fall",
-      "  float tw = hash21(floor(vec2(xx * 0.45, px.y * 0.45 - uTime * 240.0) / 3.0));",
-      "  col += vec3(0.95, 1.0, 1.0) * step(0.986, tw) * curtain * 0.8;",
+      "  vec3 col = mix(vec3(0.07, 0.19, 0.33), vec3(0.72, 0.91, 1.0), clamp(bright * 0.85 + topGlow * 0.35, 0.0, 1.0));",
       "  col += vec3(0.5, 0.85, 0.95) * waveGlow * 0.5;",
+      "  float tw = hash21(floor(vec2(xx * 0.45, px.y * 0.45 - uTime * 230.0) / 3.0));",
+      "  col += vec3(0.95, 1.0, 1.0) * step(0.992, tw) * curtain * 0.6;",
       "",
-      "  float alpha = clamp(density, 0.0, 0.92) * smoothstep(0.0, 26.0, dy);",
+      "  // the base dissolves into mist, and the mist dissolves into the page",
+      "  float baseZone = smoothstep(uRes.y - 170.0, uRes.y - 46.0, px.y) * (1.0 - smoothstep(uRes.y - 44.0, uRes.y - 8.0, px.y));",
+      "  float m = vnoise(vec2(px.x * 0.012 + uTime * 0.05, px.y * 0.028 + uTime * 0.5)) * 0.6",
+      "          + vnoise(vec2(px.x * 0.028 - uTime * 0.07, px.y * 0.05 + uTime * 0.75)) * 0.45;",
+      "  float mist = baseZone * clamp(m, 0.0, 1.0) * clamp(sx * 1.4, 0.0, 1.0);",
+      "  col = mix(col, vec3(0.6, 0.8, 0.9), clamp(mist, 0.0, 1.0) * 0.5);",
+      "  alpha = max(alpha, mist * 0.45);",
       "",
-      "  // mist boiling up from the base",
-      "  float mistZone = smoothstep(uRes.y - 130.0, uRes.y - 16.0, px.y);",
-      "  float m = vnoise(vec2(px.x * 0.013 + uTime * 0.06, px.y * 0.03 + uTime * 0.55));",
-      "  float m2 = vnoise(vec2(px.x * 0.03 - uTime * 0.04, px.y * 0.05 + uTime * 0.8));",
-      "  float mist = mistZone * clamp(0.25 + m * 0.5 + m2 * 0.35, 0.0, 1.0) * clamp(sheet + 0.25, 0.0, 1.0);",
-      "  col = mix(col, vec3(0.55, 0.78, 0.88), clamp(mist, 0.0, 1.0) * 0.55);",
-      "  alpha = max(alpha, mist * 0.55);",
-      "",
-      "  // the pool at the very bottom",
-      "  float pool = smoothstep(uRes.y - 44.0, uRes.y - 30.0, px.y);",
-      "  if (pool > 0.0) {",
-      "    float pr = 0.5 + 0.5 * sin(px.x * 0.07 + uTime * 2.2 + vnoise(vec2(px.x * 0.02, uTime * 0.4)) * 5.0);",
-      "    vec3 poolCol = mix(vec3(0.02, 0.07, 0.14), vec3(0.2, 0.5, 0.65), pr * 0.35 + colM * 0.22);",
-      "    col = mix(col, poolCol, pool);",
-      "    alpha = max(alpha, pool * 0.9);",
-      "  }",
+      "  // hard guarantee: nothing paints at the very bottom edge",
+      "  alpha *= 1.0 - smoothstep(uRes.y - 26.0, uRes.y - 2.0, px.y);",
       "",
       "  gl_FragColor = vec4(col, alpha);",
       "}"
@@ -786,29 +776,40 @@
         bctx.fill();
       }
 
-      /* rain feeding the ledge */
+      /* rain: inside the fall's span it lands on the lip; elsewhere it fades into the dark */
+      var spanL = bChips.length === 6 ? bChips[0].x - 70 : 0;
+      var spanR = bChips.length === 6 ? bChips[5].x + 70 : bW;
       bctx.lineCap = "round";
       for (i = 0; i < bDrops.length; i++) {
         var d = bDrops[i];
         d.y += d.speed * dt;
         d.x += d.drift * dt;
         var sy = surfaceY(d.x);
-        if (d.y >= sy) {
-          if (bRips.length < 26) bRips.push({ x: d.x, y: sy, r: 1, max: 8 + Math.random() * 7, a: 0.4 });
-          if (bSprays.length < 90) {
+        var inSpan = d.x >= spanL && d.x <= spanR;
+        if (inSpan && d.y >= sy) {
+          if (bRips.length < 22) bRips.push({ x: d.x, y: sy, r: 1, max: 6 + Math.random() * 5, a: 0.35 });
+          if (bSprays.length < 80) {
             bSprays.push({
               x: d.x,
               y: sy,
-              vx: (Math.random() - 0.5) * 110,
-              vy: -(55 + Math.random() * 110),
-              life: 0.35 + Math.random() * 0.25
+              vx: (Math.random() - 0.5) * 100,
+              vy: -(50 + Math.random() * 100),
+              life: 0.3 + Math.random() * 0.22
             });
           }
           basinSeedDrop(d, true);
           continue;
         }
+        var fade = 1;
+        if (!inSpan && d.y > sy) {
+          fade = 1 - (d.y - sy) / 90;
+          if (fade <= 0) {
+            basinSeedDrop(d, true);
+            continue;
+          }
+        }
         if (d.x > bW + 30) d.x -= bW + 60;
-        bctx.strokeStyle = "rgba(158, 222, 255," + d.alpha.toFixed(3) + ")";
+        bctx.strokeStyle = "rgba(158, 222, 255," + (d.alpha * fade).toFixed(3) + ")";
         bctx.lineWidth = 1;
         bctx.beginPath();
         bctx.moveTo(d.x, d.y);

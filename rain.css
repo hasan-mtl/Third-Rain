@@ -2154,10 +2154,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 /* ==========================================================================
    THE FLOW — rain becomes every stream (promoted from the footer)
    ========================================================================== */
-.flow {
-  padding: 92px 0 0;
-  border-top: 1px solid var(--line-dark);
-}
+.flow { padding: 84px 0 0; }
 .flow .section-head { margin-bottom: 6px; }
 
 .water-scene {
