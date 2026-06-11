@@ -321,8 +321,16 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 }
 /* tracked uppercase centers optically off — nudge by one tracking unit */
 .section-head .eyebrow { display: block; padding-left: 0.14em; }
-.section-head h2 { margin-top: 14px; font-size: clamp(1.95rem, 3.4vw, 2.6rem); }
-.section-head .lede { margin-top: 16px; }
+.section-head h2 {
+  margin-top: 14px;
+  font-size: clamp(1.95rem, 3.4vw, 2.6rem);
+  text-wrap: balance; /* two-line headings break evenly, never a widow */
+}
+.section-head .lede {
+  margin-top: 16px;
+  max-width: 48ch; /* a true ~64-char reading measure (Geist ch runs wide) */
+  margin-inline: auto;
+}
 
 /* ---------- Buttons ---------- */
 .btn {
