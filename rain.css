@@ -2173,6 +2173,24 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   height: clamp(560px, 88vh, 900px);
   overflow: hidden;
 }
+/* below the engine gate the scene is static — paint the ocean in CSS:
+   night sky, a brighter horizon band at 52%, water graying to the page */
+@media (max-width: 900px) {
+  .water-scene {
+    background:
+      linear-gradient(
+        180deg,
+        #0a1626 0%,
+        #102236 44%,
+        #2a4d66 51.5%,
+        #1c3850 52.5%,
+        #16314a 62%,
+        #102538 80%,
+        #0d1f30 92%,
+        #0d1f30 100%
+      );
+  }
+}
 
 /* once the engine is live, the services float on the water instead —
    but the chips STAY in the tab order: invisible until keyboard focus
