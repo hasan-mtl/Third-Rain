@@ -144,6 +144,180 @@
     }
   }
 
+  /* ---------- rain engine: layered drops + landing ripples ---------- */
+  var rainCanvas = qs("[data-rain]");
+  if (rainCanvas && !reduce) {
+    var rctx = rainCanvas.getContext("2d");
+    var rainDrops = [];
+    var rainSplashes = [];
+    var rainW = 0;
+    var rainH = 0;
+    var rainRaf = null;
+    var rainLast = 0;
+    var rainOn = false;
+    var rainCount = window.matchMedia("(max-width: 760px)").matches ? 48 : 110;
+
+    var rainSize = function () {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      rainW = rainCanvas.clientWidth;
+      rainH = rainCanvas.clientHeight;
+      rainCanvas.width = Math.round(rainW * dpr);
+      rainCanvas.height = Math.round(rainH * dpr);
+      rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    var rainSeed = function (d, fromTop) {
+      var layer = Math.random(); // 0 = far, 1 = near
+      d.layer = layer;
+      d.speed = 320 + layer * 520;
+      d.drift = d.speed * 0.16; // wind
+      d.len = 9 + layer * 16;
+      d.alpha = 0.1 + layer * 0.36;
+      d.width = 0.7 + layer * 0.9;
+      d.x = Math.random() * (rainW * 1.2) - rainW * 0.1;
+      d.y = fromTop ? -d.len - Math.random() * rainH * 0.3 : Math.random() * rainH;
+      return d;
+    };
+
+    var rainStep = function (ts) {
+      rainRaf = null;
+      if (!rainOn) return;
+      var dt = Math.min((ts - rainLast) / 1000 || 0.016, 0.05);
+      rainLast = ts;
+      rctx.clearRect(0, 0, rainW, rainH);
+      rctx.lineCap = "round";
+
+      for (var i = 0; i < rainDrops.length; i++) {
+        var d = rainDrops[i];
+        d.y += d.speed * dt;
+        d.x += d.drift * dt;
+        if (d.y > rainH * 0.965) {
+          // near-layer drops land as a small water ripple
+          if (d.layer > 0.62 && rainSplashes.length < 14) {
+            rainSplashes.push({
+              x: d.x,
+              y: rainH * (0.955 + Math.random() * 0.035),
+              r: 1,
+              max: 13 + d.layer * 14,
+              a: 0.5
+            });
+          }
+          rainSeed(d, true);
+          continue;
+        }
+        if (d.x > rainW + 40) d.x -= rainW + 80;
+        var ang = d.drift / d.speed;
+        rctx.strokeStyle = "rgba(158, 222, 255," + d.alpha.toFixed(3) + ")";
+        rctx.lineWidth = d.width;
+        rctx.beginPath();
+        rctx.moveTo(d.x, d.y);
+        rctx.lineTo(d.x - ang * d.len, d.y - d.len);
+        rctx.stroke();
+      }
+
+      for (var j = rainSplashes.length - 1; j >= 0; j--) {
+        var sp = rainSplashes[j];
+        sp.r += 46 * dt * (1 + sp.r / sp.max);
+        sp.a -= 1.15 * dt;
+        if (sp.a <= 0 || sp.r >= sp.max) {
+          rainSplashes.splice(j, 1);
+          continue;
+        }
+        rctx.strokeStyle = "rgba(125, 230, 255," + sp.a.toFixed(3) + ")";
+        rctx.lineWidth = 1;
+        rctx.beginPath();
+        rctx.ellipse(sp.x, sp.y, sp.r, sp.r * 0.3, 0, 0, Math.PI * 2);
+        rctx.stroke();
+      }
+
+      rainRaf = requestAnimationFrame(rainStep);
+    };
+
+    var rainStart = function () {
+      if (rainOn) return;
+      rainOn = true;
+      rainLast = performance.now();
+      rainSize();
+      if (rainRaf === null) rainRaf = requestAnimationFrame(rainStep);
+    };
+    var rainStop = function () {
+      rainOn = false;
+      if (rainRaf !== null) { cancelAnimationFrame(rainRaf); rainRaf = null; }
+    };
+
+    for (var di = 0; di < rainCount; di++) rainDrops.push(rainSeed({}, false));
+
+    window.addEventListener("resize", function () { if (rainOn) rainSize(); });
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !document.hidden) rainStart();
+          else rainStop();
+        });
+      }, { threshold: 0.02 }).observe(rainCanvas);
+    } else {
+      rainStart();
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { rainStop(); return; }
+      var r = rainCanvas.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) rainStart();
+    });
+  }
+
+  /* ---------- ambient motes: droplets drifting through dark sections ---------- */
+  if (!reduce) {
+    qsa(".demo, .platform, .contact").forEach(function (section) {
+      var wrap = document.createElement("div");
+      wrap.className = "motes";
+      wrap.setAttribute("aria-hidden", "true");
+      for (var mi = 0; mi < 9; mi++) {
+        var dot = document.createElement("i");
+        dot.style.setProperty("--mx", (4 + Math.random() * 92).toFixed(1) + "%");
+        dot.style.setProperty("--mt", (8 + Math.random() * 84).toFixed(1) + "%");
+        dot.style.setProperty("--md", (9 + Math.random() * 12).toFixed(1) + "s");
+        dot.style.setProperty("--mdel", (-Math.random() * 18).toFixed(1) + "s");
+        dot.style.setProperty("--ms", (2 + Math.random() * 3).toFixed(1) + "px");
+        dot.style.setProperty("--mdx", ((Math.random() - 0.5) * 70).toFixed(0) + "px");
+        wrap.appendChild(dot);
+      }
+      section.appendChild(wrap);
+    });
+  }
+
+  /* ---------- hero depth: background layers follow the pointer ---------- */
+  var heroSec = qs(".hero");
+  if (heroSec && window.matchMedia("(pointer: fine)").matches) {
+    var depthMedia = qs(".hero__media", heroSec);
+    var depthGrid = qs(".circuit-grid", heroSec);
+    var depthRaf = null;
+    var dpx = 0;
+    var dpy = 0;
+    var applyDepth = function () {
+      depthRaf = null;
+      if (depthMedia) {
+        depthMedia.style.transform =
+          "translate3d(" + (dpx * -10).toFixed(1) + "px," + (dpy * -7).toFixed(1) + "px,0) scale(1.05)";
+      }
+      if (depthGrid) {
+        depthGrid.style.transform =
+          "translate3d(" + (dpx * 16).toFixed(1) + "px," + (dpy * 11).toFixed(1) + "px,0)";
+      }
+    };
+    heroSec.addEventListener("mousemove", function (e) {
+      if (reduce) return;
+      var r = heroSec.getBoundingClientRect();
+      dpx = (e.clientX - r.left) / r.width - 0.5;
+      dpy = (e.clientY - r.top) / r.height - 0.5;
+      if (depthRaf === null) depthRaf = requestAnimationFrame(applyDepth);
+    });
+    heroSec.addEventListener("mouseleave", function () {
+      if (depthMedia) depthMedia.style.transform = "";
+      if (depthGrid) depthGrid.style.transform = "";
+    });
+  }
+
   /* ---------- hero parallax (console drifts against the scroll) ---------- */
   var heroPanel = qs(".hero__panel");
   if (heroPanel) {
