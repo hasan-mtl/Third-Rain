@@ -938,7 +938,7 @@
           continue;
         }
         if (d.x > bW + 30) d.x -= bW + 60;
-        bctx.strokeStyle = "rgba(158, 222, 255," + d.alpha.toFixed(3) + ")";
+        bctx.strokeStyle = "rgba(158, 222, 255," + (d.alpha * (0.82 + 0.18 * Math.sin(bTime * 0.23))).toFixed(3) + ")";
         bctx.lineWidth = 1;
         bctx.beginPath();
         bctx.moveTo(d.x, d.y);
