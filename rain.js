@@ -144,6 +144,36 @@
     }
   }
 
+  /* ---------- waterfall footage: gated like the hero video ---------- */
+  var fallsVideo = qs("[data-falls]");
+  if (fallsVideo) {
+    var fallsSave = !!(navigator.connection && navigator.connection.saveData);
+    if (reduce || fallsSave || window.matchMedia("(max-width: 900px)").matches) {
+      fallsVideo.remove();
+    } else {
+      var playFalls = function () {
+        var p = fallsVideo.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      var fallsZone = fallsVideo.closest("[data-scene]") || fallsVideo.parentNode;
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !document.hidden) playFalls();
+            else fallsVideo.pause();
+          });
+        }, { threshold: 0.05 }).observe(fallsZone);
+      } else {
+        playFalls();
+      }
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { fallsVideo.pause(); return; }
+        var r = fallsZone.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) playFalls();
+      });
+    }
+  }
+
   /* ---------- rain engine: layered drops + landing ripples ---------- */
   var rainCanvas = qs("[data-rain]");
   if (rainCanvas && !reduce) {
@@ -351,10 +381,9 @@
     });
   }
 
-  /* ---------- the basin: the waterfall (three.js) + 2D life overlay ---------- */
+  /* ---------- the basin: the waterfall (real footage) + 2D life overlay ---------- */
   var basinCanvas = qs("[data-basin]");
-  var seaCanvas = qs("[data-sea]");
-  if (basinCanvas && seaCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
+  if (basinCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
     var sceneEl = basinCanvas.closest("[data-scene]");
     var bctx = basinCanvas.getContext("2d");
     var bW = 0;
@@ -376,119 +405,13 @@
     var bMX = -9999;
     var bMY = -9999;
 
-    /* --- the WebGL waterfall (three.js, lazy-loaded) --- */
-    var seaLoadStarted = false;
-    var seaReady = false;
-    var seaRenderer = null;
-    var seaSceneGl = null;
-    var seaCam = null;
-    var seaMat = null;
-    var seaRipIdx = 0;
-
-    var SEA_VERT = [
-      "varying vec2 vUv;",
-      "void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }"
-    ].join("\n");
-
-    var SEA_FRAG = [
-      "precision highp float;",
-      "varying vec2 vUv;",
-      "uniform float uTime;",
-      "uniform vec2 uRes;",
-      "uniform float uHy;",
-      "uniform float uChips[6];",
-      "uniform vec3 uMouse;",
-      "uniform vec4 uRipples[8];",
-      "",
-      "float hash21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }",
-      "float vnoise(vec2 p){",
-      "  vec2 i = floor(p); vec2 f = fract(p);",
-      "  f = f*f*(3.0-2.0*f);",
-      "  return mix(mix(hash21(i), hash21(i+vec2(1.0,0.0)), f.x),",
-      "             mix(hash21(i+vec2(0.0,1.0)), hash21(i+vec2(1.0,1.0)), f.x), f.y);",
-      "}",
-      "",
-      "void main(){",
-      "  vec2 px = vec2(vUv.x * uRes.x, (1.0 - vUv.y) * uRes.y);",
-      "  float L = uChips[0] - 70.0;",
-      "  float R = uChips[5] + 70.0;",
-      "  float sx = smoothstep(L - 70.0, L + 40.0, px.x) * (1.0 - smoothstep(R - 40.0, R + 70.0, px.x));",
-      "  float lip = uHy + sin(px.x * 0.012 + uTime * 0.8) * 1.2;",
-      "  float dy = px.y - lip;",
-      "",
-      "  // above the edge: only the smooth tongue of water bending over, inside the fall's span",
-      "  if (dy <= 0.0) {",
-      "    float g = exp(-abs(dy) * 0.3) * sx;",
-      "    gl_FragColor = vec4(vec3(0.45, 0.8, 0.92) * g * 0.4, g * 0.45);",
-      "    return;",
-      "  }",
-      "",
-      "  float span = max(uRes.y - uHy, 1.0);",
-      "  float prog = clamp(dy / span, 0.0, 1.0);",
-      "",
-      "  float colM = 0.0;",
-      "  for (int i = 0; i < 6; i++) {",
-      "    colM += exp(-abs(px.x - uChips[i]) * 0.022);",
-      "  }",
-      "  colM = min(colM, 1.2);",
-      "  float curtain = sx * (0.4 + 0.6 * clamp(colM, 0.0, 1.0));",
-      "",
-      "  // a hand parts the fall",
-      "  float xx = px.x;",
-      "  float cut = 0.0;",
-      "  if (uMouse.z > 0.5) {",
-      "    float mdx = px.x - uMouse.x;",
-      "    float ybell = exp(-pow((px.y - uMouse.y) / 120.0, 2.0));",
-      "    float part = exp(-pow(mdx / 62.0, 2.0)) * ybell;",
-      "    xx += sign(mdx) * part * 40.0;",
-      "    cut += part * 0.8;",
-      "  }",
-      "",
-      "  // clicks pulse pressure waves through the fall",
-      "  float waveGlow = 0.0;",
-      "  for (int i = 0; i < 8; i++) {",
-      "    vec4 Rp = uRipples[i];",
-      "    float age = uTime - Rp.z;",
-      "    if (Rp.w > 0.0 && age > 0.0 && age < 1.8) {",
-      "      float d = distance(px, Rp.xy);",
-      "      float ring = exp(-abs(d - age * 300.0) * 0.022) * exp(-age * 2.1) * Rp.w;",
-      "      waveGlow += ring;",
-      "      xx += sin(d * 0.06 - age * 10.0) * ring * 12.0;",
-      "    }",
-      "  }",
-      "",
-      "  // long coherent filaments — two parallax layers, stretching as they fall",
-      "  float stretch = 1.0 + prog * 1.8;",
-      "  float yc = px.y / stretch;",
-      "  float l1 = vnoise(vec2(xx * 0.085, yc * 0.0045 - uTime * 1.55));",
-      "  float l1b = vnoise(vec2(xx * 0.085 + 57.0, yc * 0.0045 - uTime * 1.85));",
-      "  float l2 = vnoise(vec2(xx * 0.16 + 13.0, yc * 0.009 - uTime * 2.9));",
-      "  float bright = pow(clamp(l1 * 0.55 + l1b * 0.4 + l2 * 0.45, 0.0, 1.0), 1.7);",
-      "",
-      "  float topGlow = exp(-dy * 0.045);",
-      "  float density = curtain * (0.28 + bright * 0.6) + curtain * topGlow * 0.35 - cut;",
-      "  density = max(density, 0.0);",
-      "  float alpha = clamp(density, 0.0, 0.82) * smoothstep(0.0, 20.0, dy);",
-      "",
-      "  vec3 col = mix(vec3(0.07, 0.19, 0.33), vec3(0.72, 0.91, 1.0), clamp(bright * 0.85 + topGlow * 0.35, 0.0, 1.0));",
-      "  col += vec3(0.5, 0.85, 0.95) * waveGlow * 0.5;",
-      "  float tw = hash21(floor(vec2(xx * 0.45, px.y * 0.45 - uTime * 230.0) / 3.0));",
-      "  col += vec3(0.95, 1.0, 1.0) * step(0.992, tw) * curtain * 0.6;",
-      "",
-      "  // the base dissolves into mist, and the mist dissolves into the page",
-      "  float baseZone = smoothstep(uRes.y - 170.0, uRes.y - 46.0, px.y) * (1.0 - smoothstep(uRes.y - 44.0, uRes.y - 8.0, px.y));",
-      "  float m = vnoise(vec2(px.x * 0.012 + uTime * 0.05, px.y * 0.028 + uTime * 0.5)) * 0.6",
-      "          + vnoise(vec2(px.x * 0.028 - uTime * 0.07, px.y * 0.05 + uTime * 0.75)) * 0.45;",
-      "  float mist = baseZone * clamp(m, 0.0, 1.0) * clamp(sx * 1.4, 0.0, 1.0);",
-      "  col = mix(col, vec3(0.6, 0.8, 0.9), clamp(mist, 0.0, 1.0) * 0.5);",
-      "  alpha = max(alpha, mist * 0.45);",
-      "",
-      "  // hard guarantee: nothing paints at the very bottom edge",
-      "  alpha *= 1.0 - smoothstep(uRes.y - 26.0, uRes.y - 2.0, px.y);",
-      "",
-      "  gl_FragColor = vec4(col, alpha);",
-      "}"
-    ].join("\n");
+    // real footage carries the waterfall; the 2D beams stand in until it plays
+    var fallsEl = qs("[data-falls]");
+    var fallsLive = false;
+    if (fallsEl) {
+      fallsEl.addEventListener("playing", function () { fallsLive = true; });
+      fallsEl.addEventListener("error", function () { fallsLive = false; });
+    }
 
     var GLYPH_SET = ["</>", "{}", "01", "=>", "::", "ai"];
 
@@ -497,59 +420,6 @@
       return bWy + Math.sin(x * 0.012 + bTime * 0.8) * 1.2;
     };
 
-    var pushSeaRipple = function (px, py, strength) {
-      if (!seaReady) return;
-      var slot = seaMat.uniforms.uRipples.value[seaRipIdx % 8];
-      slot.set(px, Math.max(py, bWy + 4), bTime, strength);
-      seaRipIdx += 1;
-    };
-
-    var seaResize = function () {
-      if (!seaRenderer) return;
-      seaRenderer.setSize(bW, bH, false);
-      seaMat.uniforms.uRes.value.set(bW, bH);
-      seaMat.uniforms.uHy.value = bWy;
-      if (bChips.length === 6) {
-        for (var ci = 0; ci < 6; ci++) seaMat.uniforms.uChips.value[ci] = bChips[ci].x;
-      }
-    };
-
-    var seaInit = function (THREE) {
-      try {
-        seaRenderer = new THREE.WebGLRenderer({
-          canvas: seaCanvas,
-          alpha: true,
-          antialias: false,
-          premultipliedAlpha: false
-        });
-        seaRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-        seaRenderer.setClearColor(0x000000, 0);
-        seaSceneGl = new THREE.Scene();
-        seaCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-        var ripples = [];
-        for (var ri = 0; ri < 8; ri++) ripples.push(new THREE.Vector4(0, 0, -10, 0));
-        seaMat = new THREE.ShaderMaterial({
-          transparent: true,
-          depthTest: false,
-          depthWrite: false,
-          uniforms: {
-            uTime: { value: 0 },
-            uRes: { value: new THREE.Vector2(1, 1) },
-            uHy: { value: 0 },
-            uChips: { value: [0, 0, 0, 0, 0, 0] },
-            uMouse: { value: new THREE.Vector3(0, 0, 0) },
-            uRipples: { value: ripples }
-          },
-          vertexShader: SEA_VERT,
-          fragmentShader: SEA_FRAG
-        });
-        seaSceneGl.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), seaMat));
-        seaResize();
-        seaReady = true;
-      } catch (err) {
-        seaReady = false; // 2D fallback keeps the scene whole
-      }
-    };
 
     var basinSeedDrop = function (d, fromTop) {
       d.speed = 340 + Math.random() * 420;
@@ -607,8 +477,6 @@
         var r = chip.getBoundingClientRect();
         bChips.push({ x: r.left + r.width / 2 - crect.left, top: r.top - crect.top });
       });
-      if (seaReady) seaResize();
-
       if (!bDrops.length) {
         for (var bd = 0; bd < 70; bd++) bDrops.push(basinSeedDrop({}, false));
       }
@@ -642,7 +510,7 @@
       }
     };
 
-    // until three.js arrives (or if WebGL fails): lip line + simple beams
+    // stand-in while the footage loads (or if video fails): lip line + beams
     var drawFallbackWater = function () {
       bctx.strokeStyle = "rgba(170, 235, 255, 0.5)";
       bctx.lineWidth = 1.5;
@@ -753,18 +621,8 @@
         }
       }
 
-      /* the waterfall itself — WebGL shader, or the 2D stand-in until it loads */
-      if (seaReady) {
-        seaMat.uniforms.uTime.value = bTime;
-        if (bMX > -999 && bMY > bWy + 4) {
-          seaMat.uniforms.uMouse.value.set(bMX, bMY, 1);
-        } else {
-          seaMat.uniforms.uMouse.value.set(0, 0, 0);
-        }
-        seaRenderer.render(seaSceneGl, seaCam);
-      } else {
-        drawFallbackWater();
-      }
+      /* the waterfall is real footage — beams only stand in before it plays */
+      if (!fallsLive) drawFallbackWater();
 
       /* landing glow where each cascade meets its service */
       for (i = 0; i < bChips.length; i++) {
@@ -883,12 +741,6 @@
       bOn = true;
       bLast = performance.now();
       if (!bParts.length) basinBuild();
-      if (!seaLoadStarted) {
-        seaLoadStarted = true;
-        import("https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.min.js")
-          .then(function (THREE) { seaInit(THREE); })
-          .catch(function () { /* fallback stays */ });
-      }
       sceneEl.classList.add("has-basin");
       if (bRaf === null) bRaf = requestAnimationFrame(basinStep);
     };
@@ -918,7 +770,6 @@
       var r = basinCanvas.getBoundingClientRect();
       var bx = e.clientX - r.left;
       var by = e.clientY - r.top;
-      pushSeaRipple(bx, by, 1.0);
       var landY = Math.max(by, surfaceY(bx));
       bRips.push({ x: bx, y: landY, r: 2, max: 40, a: 0.45 });
       for (var s3 = 0; s3 < 10 && bSprays.length < 90; s3++) {
