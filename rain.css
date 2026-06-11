@@ -2174,8 +2174,20 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   overflow: hidden;
 }
 
-/* once the engine is live, the services float on the water instead */
-.water-scene.basin--live .basin-chips { display: none; }
+/* once the engine is live, the services float on the water instead —
+   but the chips STAY in the tab order: invisible until keyboard focus
+   reveals them, so the six links never vanish for keyboard users */
+.water-scene.basin--live .basin-chips { pointer-events: none; }
+.water-scene.basin--live .basin-chip {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+/* pointer-events:none above means focus can only arrive via keyboard,
+   so plain :focus is safe here (and immune to focus-visible heuristics) */
+.water-scene.basin--live .basin-chip:focus {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 /* the overlay (rain, boats) softens out before the canvas edge;
    the sea itself ends in opaque page-paper painted by the shader */
