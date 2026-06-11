@@ -367,7 +367,7 @@
     var bChips = [];
     // the services anchor in WORLD space (lateral lane wx, depth z0) and the
     // camera dolly carries them past the viewer like buoys
-    var FLOAT_POS = [[-30, 100], [36, 135], [-20, 185], [52, 240], [-52, 300], [14, 380]];
+    var FLOAT_POS = [[-14, 40], [17, 55], [-10, 320], [28, 130], [-25, 170], [-2, 90]];
     var bFloat = [];
     var bFloatHits = [];
     var bFloatAge = 0;
@@ -824,13 +824,13 @@
         if (aW <= 0) continue;
         aW = 1 - Math.pow(1 - aW, 3);
         /* slow drift along its own path — a few units per minute */
-        var wxd = fs.wx + Math.sin(bTime * 0.021 + i * 1.7) * 4.5;
-        var zd = fs.z0 + Math.sin(bTime * 0.015 + i * 2.3) * 7;
+        var wxd = fs.wx + Math.sin(bTime * 0.026 + i * 1.7) * (2 + fs.z0 * 0.012);
+        var zd = fs.z0 + Math.sin(bTime * 0.019 + i * 2.3) * (4 + fs.z0 * 0.04);
         var dyW = (CAM_H * fFocal) / zd;
         var fy = bWy + bPar + dyW;
         var fx2 = bW / 2 + (wxd - bCamX) * fFocal / zd;
-        var fontPx2 = Math.max(14, Math.min(40, dyW * 0.17 + 6));
-        var bobA = Math.min(7, dyW * 0.045);
+        var fontPx2 = Math.max(16, Math.min(46, dyW * 0.21 + 8));
+        var bobA = Math.min(8, dyW * 0.05);
         var yb = (Math.sin(bTime * 0.8 + i * 1.9) * 0.8 + Math.sin(bTime * 0.53 + i) * 0.4) * bobA + (1 - aW) * 14;
         var fRot = Math.sin(bTime * 0.7 + i * 2.1) * 0.04;
         var fPitch = 1 + Math.sin(bTime * 0.8 + i * 1.9 + 0.7) * 0.025;
