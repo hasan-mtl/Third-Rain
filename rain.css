@@ -1311,17 +1311,19 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px) scale(0.985);
+  /* exits are quick; the entrance is considered and slightly deferred,
+     so two views never visibly coexist mid-morph */
   transition:
-    opacity 0.4s var(--ease),
-    transform 0.4s var(--ease),
-    visibility 0s linear 0.4s;
+    opacity 0.22s var(--ease),
+    transform 0.22s var(--ease),
+    visibility 0s linear 0.22s;
 }
 .result__view.is-active {
   opacity: 1;
   visibility: visible;
   transform: none;
   z-index: 1;
-  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+  transition: opacity 0.45s var(--ease) 0.08s, transform 0.45s var(--ease) 0.08s;
 }
 .demo__item figcaption {
   display: flex;
