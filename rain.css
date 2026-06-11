@@ -2167,6 +2167,54 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 /* once the engine is live, the services float on the water instead */
 .water-scene.basin--live .basin-chips { display: none; }
 
+/* == the shoreline: the ocean dissolves, three waves carry it to paper == */
+.sea,
+.basin {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 100%);
+}
+.shoreline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: clamp(70px, 11vw, 170px);
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.shoreline__layer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.shoreline__wave--back,
+.shoreline__wave--mid { width: 200%; }
+.shoreline__wave--back { animation: shoredrift-l 28s linear infinite; }
+.shoreline__wave--mid {
+  opacity: 0.5;
+  animation: shoredrift-r 21s linear infinite;
+}
+.shoreline__foam { filter: blur(1px); }
+@keyframes shoredrift-l {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes shoredrift-r {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shoreline__wave--back,
+  .shoreline__wave--mid { animation: none; }
+}
+
+/* the heading below keeps its breathing room under the wave */
+#services { padding-top: clamp(150px, 15vw, 200px); }
+
 .basin {
   position: absolute;
   inset: 0;
@@ -2206,7 +2254,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
 .basin-chips {
   position: absolute;
-  bottom: 26px;
+  bottom: calc(clamp(70px, 11vw, 170px) + 16px);
   left: 50%;
   z-index: 2;
   transform: translateX(-50%);
