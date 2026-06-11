@@ -395,6 +395,24 @@
     var bFallP = [];   // droplet stream for the descent
     var bMistP = [];   // mist bloom at the landing
 
+    // one soft radial sprite, reused by mist and spray (never square points,
+    // never a per-frame createRadialGradient)
+    var bSoftSpr = null;
+    var softSprite = function () {
+      if (bSoftSpr) return bSoftSpr;
+      bSoftSpr = document.createElement("canvas");
+      bSoftSpr.width = 96;
+      bSoftSpr.height = 96;
+      var sc = bSoftSpr.getContext("2d");
+      var sg = sc.createRadialGradient(48, 48, 0, 48, 48, 48);
+      sg.addColorStop(0, "rgba(255, 255, 255, 1)");
+      sg.addColorStop(0.55, "rgba(255, 255, 255, 0.42)");
+      sg.addColorStop(1, "rgba(255, 255, 255, 0)");
+      sc.fillStyle = sg;
+      sc.fillRect(0, 0, 96, 96);
+      return bSoftSpr;
+    };
+
     var ssP = function (a, b, x) {
       var t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
@@ -533,6 +551,13 @@
       "  float hX = waveH(wp + vec2(eps, 0.0));",
       "  float hZ = waveH(wp + vec2(0.0, eps));",
       "  vec3 n = normalize(vec3(hC - hX, eps * 2.6, hC - hZ));",
+      "  float zfade = exp(-z * uScale * 0.16);",
+      "  /* two detail layers, ~6x apart in scale, different drift — close water gets texture */",
+      "  vec2 dA = vec2(vnoise(wp * 5.5 + vec2(uTime * 0.34, -uTime * 0.21)) - 0.5,",
+      "                 vnoise(wp * 5.5 + vec2(7.3 - uTime * 0.27, uTime * 0.31)) - 0.5);",
+      "  vec2 dB = vec2(vnoise(wp * 0.9 + vec2(-uTime * 0.1, uTime * 0.14)) - 0.5,",
+      "                 vnoise(wp * 0.9 + vec2(3.1 + uTime * 0.12, -uTime * 0.09)) - 0.5);",
+      "  n = normalize(n + vec3(dA.x * 0.16 + dB.x * 0.1, 0.0, dA.y * 0.16 + dB.y * 0.1) * zfade);",
       "",
       "  vec3 viewPos = vec3(0.0, uCamH * uScale * 14.0, 0.0);",
       "  vec3 surfPos = vec3(wp.x * 14.0, hC, wp.y * 14.0);",
@@ -541,9 +566,8 @@
       "",
       "  float diff = max(dot(n, lightDir), 0.0);",
       "  vec3 ref = reflect(viewDir, n);",
-      "  float zfade = exp(-z * uScale * 0.16);",
       "  float spec = pow(max(dot(ref, lightDir), 0.0), mix(80.0, 150.0, zfade));",
-      "  float gNear = 0.5 + 0.5 * step(0.55, hash21(floor(wp * 40.0) + floor(uTime * 7.0)));",
+      "  float gNear = 0.5 + 0.5 * step(0.55, hash21(floor(wp * 64.0) + floor(uTime * 7.0)));",
       "  float gFar = 0.55 + 0.45 * hash21(floor(wp * 140.0) + floor(uTime * 11.0));",
       "  spec *= mix(gFar, gNear, zfade);",
       "  float fres = pow(1.0 - max(dot(n, -viewDir), 0.0), 5.0);",
@@ -573,14 +597,18 @@
       "    float pull = exp(-toLip * 0.045);",
       "    float sheetStreak = vnoise(vec2(px.x * 0.14, toLip * 0.08 + uTime * (2.6 + uSpill * 2.4)));",
       "    float sheetFine = vnoise(vec2(px.x * 0.3 + 11.0, toLip * 0.12 + uTime * (3.4 + uSpill * 3.0)));",
-      "    col += vec3(0.5, 0.8, 0.92) * pull * (0.14 + sheetStreak * 0.22 + sheetFine * 0.14) * (0.55 + uSpill * 0.65);",
+      "    col += vec3(0.5, 0.8, 0.92) * pull * (0.14 + sheetStreak * 0.22 + sheetFine * 0.14) * (0.45 + uSpill * 0.5);",
       "    float fleck = step(0.952, vnoise(vec2(px.x * 0.42, toLip * 0.3 - uTime * (3.2 + uSpill * 2.0))));",
-      "    col += vec3(0.9, 1.0, 1.0) * fleck * pull * 0.22;",
-      "    float gleam = exp(-abs(px.y - lipY) * 0.5);",
-      "    col += vec3(0.85, 0.97, 1.0) * gleam * (0.24 + 0.24 * vnoise(vec2(px.x * 0.045 + uTime * 0.5, 0.5))) * (1.0 + uSpill * 0.9);",
-      "    float lspark = step(0.972, hash21(floor(vec2(px.x * 0.7, uTime * 8.0))));",
-      "    col += vec3(1.0) * lspark * exp(-abs(px.y - lipY) * 0.8) * 0.35;",
-      "    alpha = max(alpha, gleam * 0.85);",
+      "    col += vec3(0.9, 1.0, 1.0) * fleck * pull * 0.18;",
+      "    /* churning foam where the water leaves the lip — soft, alive, never a stroke */",
+      "    float foamD = px.y - lipY + (vnoise(vec2(px.x * 0.055 + uTime * 0.7, uTime * 0.4)) - 0.5) * 7.0;",
+      "    float foam = 1.0 - smoothstep(0.0, 7.5 + uSpill * 3.0, abs(foamD));",
+      "    foam *= foam;",
+      "    float shimmer = 0.7 + 0.3 * vnoise(vec2(px.x * 0.2 - uTime * 1.6, uTime * 0.9 + 5.0));",
+      "    col += vec3(0.78, 0.92, 0.97) * foam * shimmer * 0.35;",
+      "    float lspark = step(0.985, hash21(floor(vec2(px.x * 0.7, uTime * 8.0))));",
+      "    col += vec3(1.0) * lspark * foam * 0.22;",
+      "    alpha = max(alpha, foam * 0.4);",
       "  } else {",
       "    float dropRaw = px.y - lipY;",
       "    float curlH = 9.0 + vnoise(vec2(px.x * 0.025, uTime * 0.5)) * 9.0 + uSpill * 5.0;",
@@ -589,7 +617,7 @@
       "      float fc = clamp(dropRaw / max(curlH, 1.0), 0.0, 1.0);",
       "      vec3 belly = mix(vec3(0.32, 0.6, 0.72), vec3(0.05, 0.19, 0.3), smoothstep(0.05, 0.85, fc));",
       "      float rimG = 0.3 + 0.7 * vnoise(vec2(px.x * 0.05 + uTime * 0.6, 2.0));",
-      "      belly += vec3(0.8, 0.95, 1.0) * exp(-fc * 6.0) * rimG * 0.5;",
+      "      belly += vec3(0.8, 0.95, 1.0) * exp(-fc * 6.0) * rimG * 0.3;",
       "      belly += vec3(0.1, 0.42, 0.52) * max(1.0 - abs(fc - 0.5) * 2.6, 0.0) * (0.28 + uSpill * 0.3);",
       "      float wrap = vnoise(vec2(px.x * 0.14, fc * 2.0 - uTime * (2.2 + uSpill * 2.0)));",
       "      belly += vec3(0.5, 0.8, 0.9) * wrap * 0.12 * (1.0 - fc);",
@@ -603,7 +631,7 @@
       "      float cxp = uRes.x * 0.5;",
       "      float gx = (px.x - cxp) * (1.0 + g * 0.00022) + cxp;",
       "      float wob = (vnoise(vec2(gx * 0.013, px.y * 0.0026 - uTime * 0.7)) - 0.5) * (14.0 + 60.0 * gf);",
-      "      float xx = gx + wob;",
+      "      float xx = gx + wob + sin(px.y * 0.011 + uTime * 1.4) * (1.2 + 2.2 * gf);",
       "      float spd = 1.0 + uDesc * 0.9;",
       "      float yA = px.y * 0.0045 - uTime * 3.2 * spd;",
       "      float yB = px.y * 0.0036 - uTime * 2.1 * spd;",
@@ -621,10 +649,12 @@
       "      col = mix(col, vec3(0.93, 0.99, 1.0), clamp(layerA, 0.0, 1.0) * (0.55 + 0.35 * aer));",
       "      float dropS = step(0.992, hash21(floor(vec2(xx * 0.9, px.y * 0.5 - uTime * (640.0 + uDesc * 420.0)) / 2.0)));",
       "      col += vec3(1.0) * dropS * (0.25 + 0.45 * gf);",
-      "      col += vec3(0.8, 0.95, 1.0) * exp(-g * 0.05) * 0.3;",
+      "      col += vec3(0.8, 0.95, 1.0) * exp(-g * 0.05) * 0.2;",
       "      float haze = vnoise(vec2(xx * 0.02 + 4.0, px.y * 0.008 - uTime * 0.9));",
       "      col = mix(col, vec3(0.75, 0.87, 0.94), clamp(haze - 0.45, 0.0, 1.0) * 0.3 * (0.4 + gf));",
-      "      float body = clamp(layerB * 0.8 + layerA * 0.9 + layerC * 0.45, 0.0, 1.0);",
+      "      float streakVar = 0.62 + 0.38 * vnoise(vec2(xx * 0.07, 9.0));",
+      "      float topFade = 0.55 + 0.45 * smoothstep(0.0, 26.0, g);",
+      "      float body = clamp(layerB * 0.8 + layerA * 0.9 + layerC * 0.45, 0.0, 1.0) * streakVar * topFade;",
       "      alpha = (0.22 + body * 0.6 + aer * 0.18) * (0.55 + uSpill * 0.25 + uDesc * 0.3);",
       "      alpha *= 1.0 - gf * (0.35 - uDesc * 0.25);",
       "      alpha += exp(-g * 0.07) * 0.2;",
@@ -663,6 +693,13 @@
 
     var seaResize = function () {
       if (!seaRenderer) return;
+      /* bound total fragment work, not just the ratio — huge windows would
+         otherwise melt integrated GPUs during the descent */
+      var pr = Math.min(
+        Math.min(window.devicePixelRatio || 1, 1.5),
+        Math.max(0.9, Math.sqrt(2600000 / Math.max(bW * bH, 1)))
+      );
+      seaRenderer.setPixelRatio(pr);
       seaRenderer.setSize(bW, bH, false);
       seaMat.uniforms.uRes.value.set(bW, bH);
       seaMat.uniforms.uHy.value = bWy;
@@ -677,7 +714,6 @@
           antialias: false,
           premultipliedAlpha: false
         });
-        seaRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
         seaRenderer.setClearColor(0x000000, 0);
         seaSceneGl = new THREE.Scene();
         seaCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -838,6 +874,14 @@
       updPhases();
       bctx.clearRect(0, 0, bW, bH);
 
+      /* fully handed off to the page: paint only the paper veil, skip all work */
+      if (bProg >= 0.995) {
+        bctx.fillStyle = "rgba(250, 248, 245, 0.98)";
+        bctx.fillRect(0, 0, bW, bH);
+        bRaf = requestAnimationFrame(basinStep);
+        return;
+      }
+
       var i;
       var p;
 
@@ -987,19 +1031,21 @@
         bctx.beginPath();
         bctx.ellipse(0, 4, fw * 0.62, fontPx2 * 0.3, 0, 0, Math.PI * 2);
         bctx.fill();
-        /* its reflection, broken by the swell */
+        /* a whisper of reflection: flipped, stretched, never demanding attention */
         bctx.save();
-        bctx.scale(1, -0.5);
-        bctx.translate(Math.sin(bTime * 1.7 + i * 2.0) * 1.6, -(fontPx2 * 0.5 + 10));
-        bctx.fillStyle = "rgba(150, 230, 250," + (0.14 * fAlpha).toFixed(3) + ")";
+        bctx.scale(1, -1.4);
+        bctx.translate(Math.sin(bTime * 1.7 + i * 2.0) * 1.4, -(fontPx2 * 0.42 + 7));
+        bctx.fillStyle = "rgba(150, 230, 250," + (0.08 * fAlpha).toFixed(3) + ")";
         bctx.fillText(fs.label, 0, 0);
         bctx.restore();
-        /* the word itself */
-        bctx.shadowColor = "rgba(140, 230, 255, 0.55)";
-        bctx.shadowBlur = 12;
-        bctx.fillStyle = "rgba(238, 250, 255," + (0.92 * fAlpha).toFixed(3) + ")";
+        /* crisp text over a soft cyan halo — no blur filters */
+        bctx.fillStyle = "rgba(120, 225, 255," + (0.14 * fAlpha).toFixed(3) + ")";
+        bctx.save();
+        bctx.scale(1.045, 1.08);
+        bctx.fillText(fs.label, 0, 0.6);
+        bctx.restore();
+        bctx.fillStyle = "rgba(238, 250, 255," + (0.94 * fAlpha).toFixed(3) + ")";
         bctx.fillText(fs.label, 0, 0);
-        bctx.shadowBlur = 0;
         bctx.restore();
         if (fAlpha > 0.5) {
           bFloatHits.push({ x: fx2 - fw / 2 - 10, y: fy + yb - fontPx2 - 5, w: fw + 20, h: fontPx2 + 14 });
@@ -1085,9 +1131,10 @@
         sw.vy += 980 * dt;
         sw.x += sw.vx * dt;
         sw.y += sw.vy * dt;
-        bctx.fillStyle = "rgba(170, 230, 255," + Math.min(0.7, sw.life * 1.6).toFixed(3) + ")";
-        bctx.fillRect(sw.x - 1, sw.y - 1, 2, 2.2);
+        bctx.globalAlpha = Math.min(0.7, sw.life * 1.6);
+        bctx.drawImage(softSprite(), sw.x - 2.2, sw.y - 2.2, 4.4, 4.4);
       }
+      bctx.globalAlpha = 1;
 
       /* rings on the water */
       for (i = bRips.length - 1; i >= 0; i--) {
@@ -1180,19 +1227,15 @@
             });
           }
         }
+        var spr = softSprite();
         for (i = 0; i < bMistP.length; i++) {
           var mpp = bMistP[i];
           mpp.y -= mpp.v * dt * (0.4 + mistA);
           if (mpp.y < -mpp.r) { mpp.y = bH + mpp.r * 0.5; mpp.x = Math.random() * bW; }
-          var mg = bctx.createRadialGradient(mpp.x, mpp.y, 0, mpp.x, mpp.y, mpp.r);
-          var ma = 0.16 * mistA * (0.7 + 0.3 * Math.sin(bTime * 0.8 + mpp.ph));
-          mg.addColorStop(0, "rgba(244, 246, 247," + ma.toFixed(3) + ")");
-          mg.addColorStop(1, "rgba(244, 246, 247, 0)");
-          bctx.fillStyle = mg;
-          bctx.beginPath();
-          bctx.arc(mpp.x, mpp.y, mpp.r, 0, Math.PI * 2);
-          bctx.fill();
+          bctx.globalAlpha = 0.16 * mistA * (0.7 + 0.3 * Math.sin(bTime * 0.8 + mpp.ph));
+          bctx.drawImage(spr, mpp.x - mpp.r, mpp.y - mpp.r, mpp.r * 2, mpp.r * 2);
         }
+        bctx.globalAlpha = 1;
         /* the veil completes the crossfade into the next section (paper) */
         bctx.fillStyle = "rgba(250, 248, 245," + (ssP(0.9, 1.0, bProg) * 0.98).toFixed(3) + ")";
         bctx.fillRect(0, 0, bW, bH);
@@ -1225,6 +1268,7 @@
       document.fonts.ready.then(function () {
         bParts = [];
         if (bOn) basinBuild();
+        if (window.ScrollTrigger && bStPin) window.ScrollTrigger.refresh();
       });
     }
 
@@ -1284,6 +1328,7 @@
         bParts = [];
         bDrops = [];
         if (bOn) basinBuild();
+        if (window.ScrollTrigger && bStPin) window.ScrollTrigger.refresh();
       }, 200);
     });
 
@@ -1334,7 +1379,10 @@
         pin: true,
         scrub: 1,
         onUpdate: function (self) { bProg = self.progress; },
-        onToggle: function (self) { if (self.isActive && !document.hidden) basinStart(); }
+        onToggle: function (self) { if (self.isActive && !document.hidden) basinStart(); },
+        /* past the pin the engine must go idle — a hot loop here eats wheel input */
+        onLeave: function () { basinStop(); },
+        onEnterBack: function () { if (!document.hidden) basinStart(); }
       });
       bStPin = true;
       /* scroll restoration can race the first measurement */
