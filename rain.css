@@ -2478,6 +2478,14 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 /* ==========================================================================
    REDUCED MOTION — everything resolves to its final, calm state
    ========================================================================== */
+/* below-fold sections skip all rendering work until approached;
+   the auto keyword remembers the real size after first paint */
+#process,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+
 @media (max-width: 520px) {
   .hero__actions {
     flex-direction: column;
