@@ -525,10 +525,12 @@
       "  col = mix(col, vec3(0.5, 0.65, 0.77), clamp(waterMist, 0.0, 1.0) * 0.7);",
       "  float alpha = 0.92;",
       "",
-      "  /* the pool boundary: the ocean meets a gleaming lip and spills over */",
-      "  float lipY = uRes.y - 54.0",
-      "    + sin(px.x * 0.02 + uTime * 0.9) * 2.0",
-      "    + sin(px.x * 0.047 - uTime * 0.6) * 1.2;",
+      "  /* the pool boundary: a rolling wave crest, thick water curling over */",
+      "  float lipY = uRes.y - 62.0",
+      "    + sin(px.x * 0.012 + uTime * 0.7) * 7.0",
+      "    + sin(px.x * 0.027 - uTime * 0.45) * 3.5",
+      "    + sin(px.x * 0.006 + uTime * 0.25) * 4.5",
+      "    + sin(px.x * 0.052 + uTime * 1.3) * 1.4;",
       "  if (px.y <= lipY) {",
       "    /* water accelerating toward the edge — streamlines anchored to the lip */",
       "    float toLip = lipY - px.y;",
@@ -536,24 +538,42 @@
       "    float sheetStreak = vnoise(vec2(px.x * 0.14, toLip * 0.08 + uTime * (2.6 + uSpill * 2.4)));",
       "    float sheetFine = vnoise(vec2(px.x * 0.3 + 11.0, toLip * 0.12 + uTime * (3.4 + uSpill * 3.0)));",
       "    col += vec3(0.5, 0.8, 0.92) * pull * (0.14 + sheetStreak * 0.22 + sheetFine * 0.14) * (0.55 + uSpill * 0.65);",
-      "    float gleam = exp(-abs(px.y - lipY) * 0.62);",
-      "    col += vec3(0.85, 0.97, 1.0) * gleam * (0.5 + 0.3 * vnoise(vec2(px.x * 0.08 + uTime, 0.5)));",
+      "    float fleck = step(0.935, vnoise(vec2(px.x * 0.42, toLip * 0.3 - uTime * (3.2 + uSpill * 2.0))));",
+      "    col += vec3(0.9, 1.0, 1.0) * fleck * pull * 0.3;",
+      "    float gleam = exp(-abs(px.y - lipY) * 0.5);",
+      "    col += vec3(0.85, 0.97, 1.0) * gleam * (0.42 + 0.3 * vnoise(vec2(px.x * 0.08 + uTime, 0.5)));",
       "    float lspark = step(0.965, hash21(floor(vec2(px.x * 0.7, uTime * 8.0))));",
       "    col += vec3(1.0) * lspark * exp(-abs(px.y - lipY) * 0.8) * 0.5;",
       "    alpha = max(alpha, gleam * 0.92);",
       "  } else {",
-      "    /* the overflow: rivulets pouring over the boundary */",
-      "    float drop2 = px.y - lipY;",
-      "    float riv = pow(clamp(vnoise(vec2(px.x * 0.085, 7.0)) * 0.72 + vnoise(vec2(px.x * 0.23, 3.0)) * 0.45, 0.0, 1.0), 1.4);",
-      "    float grav = 1.0 + drop2 * 0.028;",
-      "    float fallStreak = vnoise(vec2(px.x * 0.16, (px.y / grav) * 0.02 - uTime * (3.0 + uSpill * 3.2 + drop2 * 0.05)));",
-      "    float sheet = clamp(riv * 0.9 + fallStreak * 0.5, 0.0, 1.0) * (0.45 + uSpill * 0.65);",
-      "    col = mix(vec3(0.06, 0.16, 0.28), vec3(0.7, 0.9, 1.0), clamp(fallStreak * 0.95, 0.0, 1.0));",
-      "    col += vec3(0.85, 0.97, 1.0) * exp(-drop2 * 0.12) * 0.4;",
-      "    float tw2 = hash21(floor(vec2(px.x * 0.5, px.y * 0.5 - uTime * 260.0) / 3.0));",
-      "    col += vec3(1.0) * step(0.985, tw2) * 0.65 * clamp(riv * 2.2, 0.0, 1.0);",
-      "    float breakup = mix(1.0, 0.45 + 0.55 * vnoise(vec2(px.x * 0.3, px.y * 0.16 - uTime * 6.5)), smoothstep(10.0, 34.0, drop2));",
-      "    alpha = sheet * breakup * exp(-drop2 * 0.05) * smoothstep(0.0, 4.0, drop2);",
+      "    float dropRaw = px.y - lipY;",
+      "    float curlH = 14.0 + sin(px.x * 0.018 + uTime * 0.8) * 3.5 + uSpill * 6.0;",
+      "    if (dropRaw <= curlH) {",
+      "      /* the thick tongue of water bending over the edge */",
+      "      float fc = clamp(dropRaw / curlH, 0.0, 1.0);",
+      "      vec3 belly = mix(vec3(0.78, 0.96, 1.0), vec3(0.12, 0.46, 0.6), smoothstep(0.1, 0.8, fc));",
+      "      belly = mix(belly, vec3(0.05, 0.22, 0.34), smoothstep(0.78, 1.0, fc));",
+      "      belly += vec3(0.14, 0.5, 0.6) * max(1.0 - abs(fc - 0.45) * 2.4, 0.0) * (0.45 + uSpill * 0.45);",
+      "      float wrap = vnoise(vec2(px.x * 0.15, fc * 2.6 - uTime * (2.4 + uSpill * 2.2)));",
+      "      belly += vec3(0.6, 0.88, 0.97) * wrap * (0.22 - fc * 0.1);",
+      "      float curlSpark = step(0.972, hash21(floor(vec2(px.x * 0.8, fc * 6.0 + floor(uTime * 9.0)))));",
+      "      belly += vec3(1.0) * curlSpark * (1.0 - fc) * 0.4;",
+      "      col = belly;",
+      "      alpha = 0.97 - fc * 0.15;",
+      "    } else {",
+      "      /* the overflow: rivulets pouring from under the curl */",
+      "      float drop2 = dropRaw - curlH;",
+      "      float riv = pow(clamp(vnoise(vec2(px.x * 0.085, 7.0)) * 0.72 + vnoise(vec2(px.x * 0.23, 3.0)) * 0.45, 0.0, 1.0), 1.4);",
+      "      float grav = 1.0 + drop2 * 0.028;",
+      "      float fallStreak = vnoise(vec2(px.x * 0.16, (px.y / grav) * 0.02 - uTime * (3.0 + uSpill * 3.2 + drop2 * 0.05)));",
+      "      float sheet = clamp(riv * 0.9 + fallStreak * 0.5, 0.0, 1.0) * (0.45 + uSpill * 0.65);",
+      "      col = mix(vec3(0.06, 0.16, 0.28), vec3(0.7, 0.9, 1.0), clamp(fallStreak * 0.95, 0.0, 1.0));",
+      "      col += vec3(0.85, 0.97, 1.0) * exp(-drop2 * 0.12) * 0.4;",
+      "      float tw2 = hash21(floor(vec2(px.x * 0.5, px.y * 0.5 - uTime * 260.0) / 3.0));",
+      "      col += vec3(1.0) * step(0.985, tw2) * 0.65 * clamp(riv * 2.2, 0.0, 1.0);",
+      "      float breakup = mix(1.0, 0.45 + 0.55 * vnoise(vec2(px.x * 0.3, px.y * 0.16 - uTime * 6.5)), smoothstep(10.0, 34.0, drop2));",
+      "      alpha = sheet * breakup * exp(-drop2 * 0.05) * smoothstep(0.0, 4.0, drop2);",
+      "    }",
       "  }",
       "",
       "  /* nothing paints at the very bottom edge */",
@@ -571,9 +591,11 @@
 
     // JS mirror of the shader's pool lip, for spray and sparkle
     var lipYJS = function (x) {
-      return bH - 54
-        + Math.sin(x * 0.02 + bTime * 0.9) * 2
-        + Math.sin(x * 0.047 - bTime * 0.6) * 1.2;
+      return bH - 62
+        + Math.sin(x * 0.012 + bTime * 0.7) * 7
+        + Math.sin(x * 0.027 - bTime * 0.45) * 3.5
+        + Math.sin(x * 0.006 + bTime * 0.25) * 4.5
+        + Math.sin(x * 0.052 + bTime * 1.3) * 1.4;
     };
 
     var pushSeaRipple = function (px, py, strength) {
