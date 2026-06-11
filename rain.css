@@ -1303,6 +1303,9 @@ html.js .cap-panel.is-active .cap-panel__outcome {
 
 /* result views stack in one cell; tallest sets the height */
 .result { position: relative; display: grid; }
+/* counting numerals hold their width — rows never jitter mid-count */
+.result__view { font-variant-numeric: tabular-nums; }
+
 .result__view {
   grid-area: 1 / 1;
   opacity: 0;
