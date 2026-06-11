@@ -774,7 +774,7 @@
           g.t = GLYPH_SET[Math.floor(Math.random() * GLYPH_SET.length)];
         }
         bctx.font = g.s.toFixed(0) + "px 'Geist Mono', monospace";
-        bctx.fillStyle = (i % 2 ? "rgba(125, 211, 252," : "rgba(94, 234, 212,") + g.a.toFixed(3) + ")";
+        bctx.fillStyle = (i % 2 ? "rgba(125, 211, 252," : "rgba(94, 234, 212,") + (g.a * (0.72 + 0.28 * bBreath)).toFixed(3) + ")";
         bctx.fillText(g.t, g.x, g.y);
       }
 
