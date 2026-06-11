@@ -2163,7 +2163,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 .water-scene {
   position: relative;
   z-index: 1;
-  height: clamp(420px, 40vw, 540px);
+  height: clamp(440px, 42vw, 580px);
   overflow: hidden;
 }
 

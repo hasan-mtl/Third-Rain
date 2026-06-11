@@ -337,7 +337,7 @@
       var wrap = document.createElement("div");
       wrap.className = "motes";
       wrap.setAttribute("aria-hidden", "true");
-      for (var mi = 0; mi < 9; mi++) {
+      for (var mi = 0; mi < 13; mi++) {
         var dot = document.createElement("i");
         dot.style.setProperty("--mx", (4 + Math.random() * 92).toFixed(1) + "%");
         dot.style.setProperty("--mt", (8 + Math.random() * 84).toFixed(1) + "%");
@@ -351,7 +351,7 @@
     });
   }
 
-  /* ---------- the basin: rain -> water surface -> waterfalls -> services ---------- */
+  /* ---------- the basin: a living sea — sky fx, swells, underwater world ---------- */
   var basinCanvas = qs("[data-basin]");
   if (basinCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
     var sceneEl = basinCanvas.closest("[data-scene]");
@@ -364,6 +364,13 @@
     var bRips = [];
     var bSprays = [];
     var bChips = [];
+    var bBubbles = [];
+    var bSpecks = [];
+    var bFoam = [];
+    var bGlyphs = [];
+    var bClusters = [];
+    var bStreak = null;
+    var bStreakAt = 4;
     var bRaf = null;
     var bOn = false;
     var bLast = 0;
@@ -372,8 +379,17 @@
     var bMY = -9999;
     var bDragT = 0;
 
+    var GLYPH_SET = ["</>", "{}", "01", "=>", "::", "ai"];
+
+    // three swell octaves — a real rolling surface, not a hairline
     var surfaceY = function (x) {
-      return bWy + Math.sin(x * 0.013 + bTime * 1.4) * 3 + Math.sin(x * 0.029 - bTime * 0.9) * 2.2;
+      return bWy
+        + Math.sin(x * 0.008 + bTime * 0.9) * 5
+        + Math.sin(x * 0.018 - bTime * 1.5) * 3
+        + Math.sin(x * 0.041 + bTime * 2.6) * 1.6;
+    };
+    var surfaceSlope = function (x) {
+      return (surfaceY(x + 6) - surfaceY(x - 6)) / 12;
     };
 
     var basinSeedDrop = function (d, fromTop) {
@@ -393,9 +409,9 @@
       basinCanvas.width = Math.round(bW * dpr);
       basinCanvas.height = Math.round(bH * dpr);
       bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      bWy = bH * 0.6;
+      bWy = bH * 0.58;
 
-      // sample the wordmark, centered above the waterline
+      // wordmark targets
       bParts = [];
       var fontPx = Math.min(bW * 0.3, 330);
       var off = document.createElement("canvas");
@@ -406,7 +422,7 @@
       octx.textBaseline = "alphabetic";
       var met = octx.measureText("rain.");
       octx.fillStyle = "#fff";
-      octx.fillText("rain.", (bW - met.width) / 2, bWy - 16);
+      octx.fillText("rain.", (bW - met.width) / 2, bWy - 18);
       var img = octx.getImageData(0, 0, bW, bH).data;
       for (var yy = 0; yy < bH; yy += 4) {
         for (var xx = 0; xx < bW; xx += 4) {
@@ -427,7 +443,7 @@
         }
       }
 
-      // where each waterfall lands — measured from the live chips
+      // waterfall landing points, measured from the live chips
       bChips = [];
       var crect = basinCanvas.getBoundingClientRect();
       qsa(".basin-chip").forEach(function (chip) {
@@ -437,6 +453,66 @@
 
       if (!bDrops.length) {
         for (var bd = 0; bd < 70; bd++) bDrops.push(basinSeedDrop({}, false));
+      }
+
+      // underwater life
+      bBubbles = [];
+      for (var bb = 0; bb < 18; bb++) {
+        bBubbles.push({
+          x: Math.random() * bW,
+          y: bWy + 30 + Math.random() * (bH - bWy - 40),
+          r: 1 + Math.random() * 2.2,
+          vy: 16 + Math.random() * 26,
+          ph: Math.random() * 6.283
+        });
+      }
+      bSpecks = [];
+      for (var sk = 0; sk < 26; sk++) {
+        bSpecks.push({
+          x: Math.random() * bW,
+          y: bWy + 16 + Math.random() * (bH - bWy - 26),
+          vx: (Math.random() - 0.5) * 7,
+          a: 0.05 + Math.random() * 0.09,
+          ph: Math.random() * 6.283
+        });
+      }
+      bFoam = [];
+      for (var fm = 0; fm < 30; fm++) {
+        bFoam.push({
+          x: Math.random() * bW,
+          vx: (Math.random() - 0.5) * 16,
+          life: Math.random() * 4,
+          max: 2.5 + Math.random() * 3
+        });
+      }
+
+      // sky fx — code glyphs + node constellations
+      bGlyphs = [];
+      for (var gl = 0; gl < 10; gl++) {
+        bGlyphs.push({
+          t: GLYPH_SET[gl % GLYPH_SET.length],
+          x: Math.random() * bW,
+          y: Math.random() * (bWy - 60) + 16,
+          vx: (Math.random() - 0.5) * 10,
+          vy: -(2 + Math.random() * 6),
+          a: 0.08 + Math.random() * 0.12,
+          s: 10 + Math.random() * 3,
+          ph: Math.random() * 6.283
+        });
+      }
+      bClusters = [];
+      for (var cl = 0; cl < 3; cl++) {
+        var nodes = [];
+        var nn = 3 + (cl % 2);
+        for (var ni = 0; ni < nn; ni++) {
+          nodes.push({ a: Math.random() * 6.283, r: 10 + Math.random() * 16, w: 0.3 + Math.random() * 0.5 });
+        }
+        bClusters.push({
+          x: bW * (0.12 + 0.36 * cl) + Math.random() * bW * 0.1,
+          y: 30 + Math.random() * (bWy * 0.5),
+          vx: (Math.random() - 0.5) * 6,
+          nodes: nodes
+        });
       }
     };
 
@@ -451,69 +527,255 @@
       var i;
       var p;
 
-      // shimmering reflection of the wordmark in the water
-      for (i = 0; i < bParts.length; i += 3) {
-        p = bParts[i];
-        if (Math.abs(p.y - p.ty) < 40) {
-          var ry = bWy + (bWy - p.y) * 0.42;
-          var rx = p.x + Math.sin(bTime * 2 + p.ty * 0.06) * 2.2;
-          bctx.fillStyle = "rgba(122, 225, 235, 0.13)";
-          bctx.fillRect(rx, ry, 1.8, 1.8);
+      /* --- sky: drifting code glyphs --- */
+      bctx.textBaseline = "middle";
+      for (i = 0; i < bGlyphs.length; i++) {
+        var g = bGlyphs[i];
+        g.x += (g.vx + Math.sin(bTime * 0.7 + g.ph) * 4) * dt;
+        g.y += g.vy * dt;
+        if (g.y < 8 || g.x < -30 || g.x > bW + 30) {
+          g.x = Math.random() * bW;
+          g.y = bWy - 70 - Math.random() * 30;
+          g.t = GLYPH_SET[Math.floor(Math.random() * GLYPH_SET.length)];
+        }
+        bctx.font = g.s.toFixed(0) + "px 'Geist Mono', monospace";
+        bctx.fillStyle = (i % 2 ? "rgba(125, 211, 252," : "rgba(94, 234, 212,") + g.a.toFixed(3) + ")";
+        bctx.fillText(g.t, g.x, g.y);
+      }
+
+      /* --- sky: node constellations --- */
+      for (i = 0; i < bClusters.length; i++) {
+        var cluster = bClusters[i];
+        cluster.x += cluster.vx * dt;
+        if (cluster.x < -40) cluster.x = bW + 30;
+        if (cluster.x > bW + 40) cluster.x = -30;
+        var pts = [];
+        for (var n2 = 0; n2 < cluster.nodes.length; n2++) {
+          var nd = cluster.nodes[n2];
+          pts.push({
+            x: cluster.x + Math.cos(nd.a + bTime * nd.w) * nd.r,
+            y: cluster.y + Math.sin(nd.a + bTime * nd.w) * nd.r * 0.6
+          });
+        }
+        bctx.strokeStyle = "rgba(125, 211, 252, 0.1)";
+        bctx.lineWidth = 1;
+        bctx.beginPath();
+        for (var l2 = 0; l2 < pts.length; l2++) {
+          var pA = pts[l2];
+          var pB = pts[(l2 + 1) % pts.length];
+          bctx.moveTo(pA.x, pA.y);
+          bctx.lineTo(pB.x, pB.y);
+        }
+        bctx.stroke();
+        for (var d2i = 0; d2i < pts.length; d2i++) {
+          bctx.fillStyle = "rgba(158, 222, 255, 0.3)";
+          bctx.fillRect(pts[d2i].x - 1, pts[d2i].y - 1, 2, 2);
         }
       }
 
-      // the water body with a living crest
+      /* --- sky: occasional data streak --- */
+      bStreakAt -= dt;
+      if (bStreakAt <= 0 && !bStreak) {
+        bStreak = {
+          x: Math.random() * bW * 0.6 + bW * 0.2,
+          y: 20 + Math.random() * bWy * 0.4,
+          vx: 420 + Math.random() * 240,
+          life: 0.55
+        };
+        bStreakAt = 6 + Math.random() * 4;
+      }
+      if (bStreak) {
+        bStreak.life -= dt;
+        if (bStreak.life <= 0) {
+          bStreak = null;
+        } else {
+          bStreak.x += bStreak.vx * dt;
+          var sgrad = bctx.createLinearGradient(bStreak.x - 70, bStreak.y, bStreak.x, bStreak.y);
+          sgrad.addColorStop(0, "rgba(125, 230, 255, 0)");
+          sgrad.addColorStop(1, "rgba(125, 230, 255," + (0.5 * bStreak.life / 0.55).toFixed(3) + ")");
+          bctx.strokeStyle = sgrad;
+          bctx.lineWidth = 1.2;
+          bctx.beginPath();
+          bctx.moveTo(bStreak.x - 70, bStreak.y + 7);
+          bctx.lineTo(bStreak.x, bStreak.y);
+          bctx.stroke();
+        }
+      }
+
+      /* --- wordmark reflection, bent by the swells --- */
+      for (i = 0; i < bParts.length; i += 3) {
+        p = bParts[i];
+        if (Math.abs(p.y - p.ty) < 40) {
+          var shift = surfaceY(p.x) - bWy;
+          var ry = bWy + (bWy - p.y) * 0.42 + shift * 1.6;
+          var rx = p.x + Math.sin(bTime * 2 + p.ty * 0.06) * 2.4;
+          bctx.fillStyle = "rgba(122, 225, 235, 0.12)";
+          bctx.fillRect(rx, ry, 1.9, 1.9);
+        }
+      }
+
+      /* --- the water body --- */
       bctx.beginPath();
       bctx.moveTo(0, surfaceY(0));
-      for (var sx = 10; sx <= bW; sx += 10) bctx.lineTo(sx, surfaceY(sx));
+      for (var sx = 8; sx <= bW; sx += 8) bctx.lineTo(sx, surfaceY(sx));
       bctx.lineTo(bW, bH);
       bctx.lineTo(0, bH);
       bctx.closePath();
-      var grad = bctx.createLinearGradient(0, bWy, 0, bH);
-      grad.addColorStop(0, "rgba(56, 130, 246, 0.13)");
-      grad.addColorStop(1, "rgba(13, 28, 62, 0.34)");
+      var grad = bctx.createLinearGradient(0, bWy - 8, 0, bH);
+      grad.addColorStop(0, "rgba(64, 145, 255, 0.16)");
+      grad.addColorStop(0.45, "rgba(28, 70, 145, 0.22)");
+      grad.addColorStop(1, "rgba(6, 18, 38, 0.5)");
       bctx.fillStyle = grad;
       bctx.fill();
-      bctx.beginPath();
-      bctx.moveTo(0, surfaceY(0));
-      for (var cx = 10; cx <= bW; cx += 10) bctx.lineTo(cx, surfaceY(cx));
-      bctx.strokeStyle = "rgba(125, 230, 255, 0.5)";
-      bctx.lineWidth = 1.5;
-      bctx.stroke();
 
-      // waterfalls pouring from the basin into each service
+      /* --- underwater: god rays + caustics (light, additive) --- */
+      bctx.save();
+      bctx.clip(); // stay inside the water body path
+      bctx.globalCompositeOperation = "screen";
+      for (i = 0; i < 5; i++) {
+        var rayX = bW * (0.12 + i * 0.18) + Math.sin(bTime * 0.4 + i * 1.3) * 16;
+        var rayTop = surfaceY(rayX);
+        var rayW = 34 + i * 9;
+        var rayGrad = bctx.createLinearGradient(0, rayTop, 0, bH);
+        rayGrad.addColorStop(0, "rgba(150, 215, 255, 0.085)");
+        rayGrad.addColorStop(1, "rgba(150, 215, 255, 0)");
+        bctx.fillStyle = rayGrad;
+        bctx.beginPath();
+        bctx.moveTo(rayX, rayTop);
+        bctx.lineTo(rayX + rayW, rayTop);
+        bctx.lineTo(rayX + rayW + 70, bH);
+        bctx.lineTo(rayX + 70, bH);
+        bctx.closePath();
+        bctx.fill();
+      }
+      for (i = 0; i < 12; i++) {
+        var cax = (i / 12) * bW + Math.sin(bTime * 1.1 + i * 1.7) * 30;
+        var cay = bWy + 16 + (i % 3) * 9 + Math.sin(bTime * 1.7 + i) * 3;
+        var caa = 0.05 + 0.04 * Math.sin(bTime * 2 + i * 2.2);
+        if (caa > 0.02) {
+          bctx.strokeStyle = "rgba(160, 225, 255," + caa.toFixed(3) + ")";
+          bctx.lineWidth = 1;
+          bctx.beginPath();
+          bctx.ellipse(cax, cay, 24, 6.5, 0, 0, Math.PI * 2);
+          bctx.stroke();
+        }
+      }
+      bctx.restore();
+
+      /* --- underwater: drifting specks --- */
+      for (i = 0; i < bSpecks.length; i++) {
+        var spk = bSpecks[i];
+        spk.x += spk.vx * dt;
+        if (spk.x < -5) spk.x = bW + 5;
+        if (spk.x > bW + 5) spk.x = -5;
+        var spy = spk.y + Math.sin(bTime * 0.8 + spk.ph) * 4;
+        bctx.fillStyle = "rgba(150, 215, 255," + spk.a.toFixed(3) + ")";
+        bctx.fillRect(spk.x, spy, 1.4, 1.4);
+      }
+
+      /* --- underwater: bubbles rising to the surface --- */
+      for (i = 0; i < bBubbles.length; i++) {
+        var bub = bBubbles[i];
+        bub.y -= bub.vy * dt;
+        var bx2 = bub.x + Math.sin(bTime * 2 + bub.ph) * 7;
+        var bsy = surfaceY(bx2);
+        if (bub.y <= bsy + 4) {
+          if (bRips.length < 26) bRips.push({ x: bx2, y: bsy, r: 1, max: 7, a: 0.35 });
+          bub.y = bH - 8 - Math.random() * 30;
+          bub.x = Math.random() * bW;
+          continue;
+        }
+        bctx.strokeStyle = "rgba(170, 225, 255, 0.28)";
+        bctx.lineWidth = 0.9;
+        bctx.beginPath();
+        bctx.arc(bx2, bub.y, bub.r, 0, Math.PI * 2);
+        bctx.stroke();
+        bctx.fillStyle = "rgba(220, 245, 255, 0.35)";
+        bctx.fillRect(bx2 - bub.r * 0.35, bub.y - bub.r * 0.55, 1, 1);
+      }
+
+      /* --- waterfalls pouring into each service --- */
       for (i = 0; i < bChips.length; i++) {
         var ch = bChips[i];
         var topY = surfaceY(ch.x) + 2;
         var botY = ch.top - 8;
         if (botY > topY) {
-          bctx.strokeStyle = "rgba(56, 189, 248, 0.1)";
-          bctx.lineWidth = 5;
+          var beam = bctx.createLinearGradient(0, topY, 0, botY);
+          beam.addColorStop(0, "rgba(96, 200, 255, 0.16)");
+          beam.addColorStop(1, "rgba(96, 200, 255, 0.05)");
+          bctx.strokeStyle = beam;
+          bctx.lineWidth = 8;
           bctx.beginPath();
           bctx.moveTo(ch.x, topY);
           bctx.lineTo(ch.x, botY);
           bctx.stroke();
           bctx.setLineDash([5, 12]);
           bctx.lineDashOffset = -(bTime * 64) + i * 7;
-          bctx.strokeStyle = "rgba(125, 230, 255, 0.5)";
+          bctx.strokeStyle = "rgba(150, 235, 255, 0.55)";
           bctx.lineWidth = 1.8;
           bctx.beginPath();
           bctx.moveTo(ch.x, topY);
           bctx.lineTo(ch.x, botY);
           bctx.stroke();
           bctx.setLineDash([]);
-          var pulse = 0.14 + 0.08 * Math.sin(bTime * 3 + i);
+          var pulse = 0.16 + 0.09 * Math.sin(bTime * 3 + i);
           bctx.fillStyle = "rgba(125, 230, 255," + pulse.toFixed(3) + ")";
           bctx.beginPath();
-          bctx.ellipse(ch.x, botY, 11, 4, 0, 0, Math.PI * 2);
+          bctx.ellipse(ch.x, botY, 12, 4.4, 0, 0, Math.PI * 2);
           bctx.fill();
           bctx.beginPath();
-          bctx.ellipse(ch.x, topY, 7, 2.6, 0, 0, Math.PI * 2);
+          bctx.ellipse(ch.x, topY, 8, 3, 0, 0, Math.PI * 2);
           bctx.fill();
         }
       }
 
-      // rain feeding the basin
+      /* --- surface: lit crest band, specular glints, foam --- */
+      var band = bctx.createLinearGradient(0, bWy - 10, 0, bWy + 12);
+      band.addColorStop(0, "rgba(170, 235, 255, 0)");
+      band.addColorStop(0.5, "rgba(170, 235, 255, 0.3)");
+      band.addColorStop(1, "rgba(120, 200, 255, 0.02)");
+      bctx.strokeStyle = "rgba(170, 235, 255, 0.55)";
+      bctx.lineWidth = 1.6;
+      bctx.beginPath();
+      bctx.moveTo(0, surfaceY(0));
+      for (var cx2 = 8; cx2 <= bW; cx2 += 8) bctx.lineTo(cx2, surfaceY(cx2));
+      bctx.stroke();
+      bctx.fillStyle = band;
+      bctx.beginPath();
+      bctx.moveTo(0, surfaceY(0) - 1.5);
+      for (var bx3 = 8; bx3 <= bW; bx3 += 8) bctx.lineTo(bx3, surfaceY(bx3) - 1.5);
+      for (var bx4 = bW; bx4 >= 0; bx4 -= 8) bctx.lineTo(bx4, surfaceY(bx4) + 7);
+      bctx.closePath();
+      bctx.fill();
+      for (var gx = 0; gx <= bW; gx += 9) {
+        var slope = surfaceSlope(gx);
+        if (slope < -0.18) {
+          var ga = Math.min(0.5, -slope * 0.9);
+          bctx.strokeStyle = "rgba(220, 248, 255," + ga.toFixed(3) + ")";
+          bctx.lineWidth = 1.1;
+          bctx.beginPath();
+          bctx.moveTo(gx - 3, surfaceY(gx - 3) - 0.5);
+          bctx.lineTo(gx + 3, surfaceY(gx + 3) - 0.5);
+          bctx.stroke();
+        }
+      }
+      for (i = 0; i < bFoam.length; i++) {
+        var fmp = bFoam[i];
+        fmp.life += dt;
+        fmp.x += fmp.vx * dt;
+        if (fmp.life > fmp.max || fmp.x < -4 || fmp.x > bW + 4) {
+          fmp.x = Math.random() * bW;
+          fmp.vx = (Math.random() - 0.5) * 16;
+          fmp.life = 0;
+          fmp.max = 2.5 + Math.random() * 3;
+        }
+        var ff = fmp.life / fmp.max;
+        var fa = 0.22 * (ff < 0.2 ? ff / 0.2 : 1 - (ff - 0.2) / 0.8);
+        bctx.fillStyle = "rgba(225, 248, 255," + fa.toFixed(3) + ")";
+        bctx.fillRect(fmp.x, surfaceY(fmp.x) - 1.4, 2.2, 1.2);
+      }
+
+      /* --- rain feeding the sea --- */
       bctx.lineCap = "round";
       for (i = 0; i < bDrops.length; i++) {
         var d = bDrops[i];
@@ -545,7 +807,7 @@
         bctx.stroke();
       }
 
-      // splash spray
+      /* --- splash spray --- */
       for (i = bSprays.length - 1; i >= 0; i--) {
         var sw = bSprays[i];
         sw.life -= dt;
@@ -557,7 +819,7 @@
         bctx.fillRect(sw.x - 1, sw.y - 1, 2, 2.4);
       }
 
-      // ripples on the surface
+      /* --- surface ripples --- */
       for (i = bRips.length - 1; i >= 0; i--) {
         var rp = bRips[i];
         rp.r += 48 * dt * (1 + rp.r / rp.max);
@@ -570,13 +832,13 @@
         bctx.stroke();
       }
 
-      // dragging the cursor through the water leaves a wake
-      if (bMX > -999 && bMY > bWy - 14 && bTime - bDragT > 0.09 && bRips.length < 26) {
+      /* --- the cursor leaves a wake in the water --- */
+      if (bMX > -999 && bMY > bWy - 16 && bTime - bDragT > 0.09 && bRips.length < 26) {
         bRips.push({ x: bMX, y: surfaceY(bMX), r: 1, max: 16, a: 0.45 });
         bDragT = bTime;
       }
 
-      // the wordmark, assembled drop by drop
+      /* --- the wordmark, assembled drop by drop --- */
       for (i = 0; i < bParts.length; i++) {
         p = bParts[i];
         if (p.y < p.ty - 120) {
@@ -588,9 +850,9 @@
         }
         var dx = (p.x + p.ox) - bMX;
         var dy = (p.y + p.oy) - bMY;
-        var d2 = dx * dx + dy * dy;
-        if (d2 < 6400) {
-          var dd = Math.sqrt(d2) || 1;
+        var pd2 = dx * dx + dy * dy;
+        if (pd2 < 6400) {
+          var dd = Math.sqrt(pd2) || 1;
           var f = (80 - dd) / 80;
           p.ox += (dx / dd) * f * 1000 * dt;
           p.oy += (dy / dd) * f * 1000 * dt;
@@ -656,9 +918,9 @@
         var pp = bParts[pi];
         var pdx = pp.x - bx;
         var pdy = pp.y - by;
-        var pd2 = pdx * pdx + pdy * pdy;
-        if (pd2 < 19600) {
-          var pdd = Math.sqrt(pd2) || 1;
+        var pq = pdx * pdx + pdy * pdy;
+        if (pq < 19600) {
+          var pdd = Math.sqrt(pq) || 1;
           var pf = (140 - pdd) / 140;
           pp.ox += (pdx / pdd) * pf * 90;
           pp.oy += (pdy / pdd) * pf * 90;
