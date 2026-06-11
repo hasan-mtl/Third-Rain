@@ -2167,8 +2167,8 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 /* once the engine is live, the services float on the water instead */
 .water-scene.basin--live .basin-chips { display: none; }
 
-/* the last of the water dissolves into the page itself */
-.sea,
+/* the overlay (rain, boats) softens out before the canvas edge;
+   the sea itself ends in opaque page-paper painted by the shader */
 .basin {
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%);
