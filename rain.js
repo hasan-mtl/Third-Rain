@@ -1224,13 +1224,21 @@
 
   /* ---------- scroll reveals ---------- */
   var revealEls = qsa("[data-reveal]");
+  var revealDone = function (el) {
+    var idx = parseFloat(getComputedStyle(el).getPropertyValue("--i")) || 0;
+    window.setTimeout(function () { el.classList.add("is-done"); }, idx * 90 + 820);
+  };
   if (reduce || !("IntersectionObserver" in window)) {
-    revealEls.forEach(function (el) { el.classList.add("is-in"); });
+    revealEls.forEach(function (el) {
+      el.classList.add("is-in");
+      el.classList.add("is-done");
+    });
   } else if (revealEls.length) {
     var revealIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-in");
+          revealDone(entry.target);
           revealIO.unobserve(entry.target);
         }
       });
