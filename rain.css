@@ -1811,7 +1811,7 @@ html.js .chat__msg { animation: msg-in 0.35s var(--ease); }
 /* ==========================================================================
    PLATFORM
    ========================================================================== */
-.platform { padding: 148px 0 24px; }
+.platform { padding: 124px 0 64px; }
 
 .platform__inner {
   position: relative;
@@ -2716,8 +2716,9 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 }
 .platform__stage .circuit {
   max-width: 820px;
-  /* the aspect box runs ~9.5% past the lowest node — fold the dead zone away
-     so the strip sits on the section's rhythm (% scales with circuit width) */
+  /* the aspect box runs empty ~9% above the top tiles and ~9.5% below the
+     lowest labels — fold both dead zones away (% scales with circuit width) */
+  margin-top: -8.5%;
   margin-bottom: -9.5%;
 }
 .platform__stage .circuit__node { font-size: 12px; }
@@ -2755,7 +2756,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin: 42px auto 0;
+  margin: 42px auto 18px;
 }
 @media (max-width: 640px) {
   .platform__strip { gap: 8px; }
