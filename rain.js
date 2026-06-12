@@ -93,10 +93,10 @@
   var cycleEl = qs("[data-cycle]");
   if (cycleEl && !reduce) {
     var PHRASES = [
-      "every customer got a reply.",
-      "your report arrived at 8:00.",
-      "your low stock got reordered.",
-      "your blog posted itself."
+      "every customer gets a reply.",
+      "your report arrives at 8:00.",
+      "your low stock reorders itself.",
+      "your blog posts itself."
     ];
     var cycleIdx = 0;
     var doCycle = function () {
@@ -495,7 +495,7 @@
       "    vec3 col = mix(vec3(0.1, 0.2, 0.33), vec3(0.5, 0.64, 0.76), clamp(mist * 1.2, 0.0, 1.0));",
       "    col += vec3(0.36, 0.52, 0.66) * mNear * horizonPull * 0.18;",
       "    float alpha = mist * 0.42;",
-      "    vec2 wordC = vec2(uRes.x * 0.5, uRes.y * 0.2);",
+      "    vec2 wordC = vec2(uRes.x * 0.5, uRes.y * 0.17);",
       "    float wglow = exp(-distance(px, wordC) * 0.005);",
       "    col += vec3(0.45, 0.75, 0.9) * wglow * 0.3;",
       "    alpha = max(alpha, wglow * 0.34);",
@@ -663,7 +663,7 @@
       bWy = bH * 0.52;
 
       bParts = [];
-      var fontPx = Math.min(bW * 0.12, 170);
+      var fontPx = Math.min(bW * 0.155, bH * 0.3, 225);
       var off = document.createElement("canvas");
       off.width = bW;
       off.height = bH;
@@ -672,7 +672,7 @@
       octx.textBaseline = "alphabetic";
       var met = octx.measureText("rain.");
       octx.fillStyle = "#fff";
-      octx.fillText("rain.", (bW - met.width) / 2, bH * 0.245);
+      octx.fillText("rain.", (bW - met.width) / 2, Math.max(bH * 0.25, fontPx * 0.78 + 28));
       var img = octx.getImageData(0, 0, bW, bH).data;
       for (var yy = 0; yy < bH; yy += 3) {
         for (var xx = 0; xx < bW; xx += 3) {
