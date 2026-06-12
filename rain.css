@@ -2714,7 +2714,12 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   max-width: 820px;
   margin: 10px auto 0;
 }
-.platform__stage .circuit { max-width: 820px; }
+.platform__stage .circuit {
+  max-width: 820px;
+  /* the aspect box runs ~9.5% past the lowest node — fold the dead zone away
+     so the strip sits on the section's rhythm (% scales with circuit width) */
+  margin-bottom: -9.5%;
+}
 .platform__stage .circuit__node { font-size: 12px; }
 .platform__strip {
   display: flex;
@@ -2750,7 +2755,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin: 40px auto 0;
+  margin: 42px auto 0;
 }
 @media (max-width: 640px) {
   .platform__strip { gap: 8px; }
