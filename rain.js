@@ -380,7 +380,7 @@
     var bChips = [];
     // the services anchor in WORLD space (lateral lane wx, depth z0) and the
     // camera dolly carries them past the viewer like buoys
-    var FLOAT_POS = [[-14, 48], [17, 60], [-10, 320], [28, 130], [-25, 170], [-2, 90]];
+    var FLOAT_POS = [[8, 46], [26, 64], [-12, 330], [33, 130], [-22, 250], [0, 95]];
     var bFloat = [];
     var bFloatHits = [];
     var bFloatAge = 0;
@@ -499,7 +499,7 @@
       "    float horizGlow = exp(-abs(dy) * 0.07) * breathe;",
       "    col += vec3(0.5, 0.82, 0.92) * horizGlow * 0.42;",
       "    alpha = max(alpha, horizGlow * 0.5);",
-      "    vec2 wordC = vec2(uRes.x * 0.5, uHy - 110.0);",
+      "    vec2 wordC = vec2(uRes.x * 0.68, uHy - 96.0);",
       "    float wglow = exp(-distance(px, wordC) * 0.006);",
       "    col += vec3(0.45, 0.75, 0.9) * wglow * 0.34;",
       "    alpha = max(alpha, wglow * 0.4);",
@@ -663,7 +663,7 @@
       bWy = bH * 0.52;
 
       bParts = [];
-      var fontPx = Math.min(bW * 0.3, 330);
+      var fontPx = Math.min(bW * 0.21, 270);
       var off = document.createElement("canvas");
       off.width = bW;
       off.height = bH;
@@ -672,7 +672,7 @@
       octx.textBaseline = "alphabetic";
       var met = octx.measureText("rain.");
       octx.fillStyle = "#fff";
-      octx.fillText("rain.", (bW - met.width) / 2, bWy - 18);
+      octx.fillText("rain.", bW * 0.68 - met.width / 2, bWy - 18);
       var img = octx.getImageData(0, 0, bW, bH).data;
       for (var yy = 0; yy < bH; yy += 4) {
         for (var xx = 0; xx < bW; xx += 4) {

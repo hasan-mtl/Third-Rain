@@ -250,30 +250,12 @@ html.js [data-split] .serif-grad.is-cycling.is-swapping {
 }
 
 .circuit-grid,
-.dot-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.circuit-grid {
-  opacity: 0.6;
-  background-image:
-    linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
-  background-size: 34px 34px;
-}
-.dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 26px 26px;
-}
 
 .warm-grid {
   background-color: var(--paper);
   background-image:
-    linear-gradient(to right, rgba(120, 113, 108, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(120, 113, 108, 0.06) 1px, transparent 1px);
-  background-size: 64px 64px;
+    radial-gradient(900px 520px at 85% -10%, rgba(56, 189, 248, 0.05), transparent 70%),
+    radial-gradient(760px 480px at 8% 108%, rgba(45, 212, 191, 0.05), transparent 70%);
 }
 
 .glass {
@@ -1829,7 +1811,7 @@ html.js .chat__msg { animation: msg-in 0.35s var(--ease); }
 /* ==========================================================================
    PLATFORM
    ========================================================================== */
-.platform { padding: 116px 0 0; }
+.platform { padding: 148px 0 24px; }
 
 .platform__inner {
   position: relative;
@@ -1867,7 +1849,7 @@ html.js .chat__msg { animation: msg-in 0.35s var(--ease); }
 .circuit {
   position: relative;
   aspect-ratio: 520 / 440;
-  max-width: 520px;
+  max-width: 640px;
   margin: 0 auto;
 }
 .circuit__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -2246,6 +2228,54 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   }
 }
 
+/* ============ the ocean IS the hero ============ */
+.hero-ocean { padding: var(--header-h) 0 0; }
+.water-scene.water-scene--hero { height: max(640px, calc(100svh - var(--header-h) - 52px)); }
+
+.ocean-hero__copy {
+  position: absolute;
+  z-index: 3;
+  top: clamp(48px, 9vh, 96px);
+  left: clamp(24px, 7vw, 110px);
+  width: min(88vw, 500px);
+  text-align: left;
+  pointer-events: none;
+}
+.ocean-hero__copy .hero__badge { justify-content: flex-start; }
+.ocean-hero__copy h1 {
+  margin-top: 24px;
+  font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  color: #fff;
+  text-wrap: balance;
+}
+.ocean-hero__copy h1 .serif-grad { display: block; margin-top: 6px; }
+.ocean-hero__sub {
+  margin-top: 16px;
+  max-width: 44ch;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--td-body);
+}
+.ocean-hero__copy .hero__actions { margin-top: 26px; pointer-events: auto; }
+
+.water-scene--hero .water-scene__mark { left: 66%; }
+
+@media (max-width: 900px) {
+  .ocean-hero__copy {
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92vw, 560px);
+    text-align: center;
+  }
+  .ocean-hero__copy .hero__badge { justify-content: center; }
+  .ocean-hero__copy .hero__actions { justify-content: center; }
+  .ocean-hero__sub { margin-inline: auto; }
+  .water-scene.water-scene--hero { height: max(600px, calc(100svh - var(--header-h) - 48px)); }
+  .water-scene--hero .water-scene__mark { left: 50%; top: 62%; }
+}
+
 /* once the engine is live, the services float on the water instead —
    but the chips STAY in the tab order: invisible until keyboard focus
    reveals them, so the six links never vanish for keyboard users */
@@ -2580,4 +2610,119 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .demo__pulse.is-firing { animation: none; }
   .result__view { transition: none; }
   .hero__video { display: none; }
+}
+
+
+/* ============ contact: message rain directly ============ */
+.contact-chat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  background: rgba(13, 22, 38, 0.72);
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 24px 64px -24px rgba(2, 6, 16, 0.7);
+}
+.contact-chat__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.contact-chat__ava {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--sky-300), var(--blue-600));
+  border-radius: 10px;
+}
+.contact-chat__ava svg { width: 17px; height: 17px; }
+.contact-chat__title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 19px;
+  color: #fff;
+}
+.contact-chat__head .pill { margin-left: auto; }
+.contact-chat__bubble {
+  max-width: 88%;
+  padding: 11px 14px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--td-body);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px 16px 16px 16px;
+}
+.contact-chat__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.contact-chat input,
+.contact-chat textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 14.5px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.contact-chat input::placeholder,
+.contact-chat textarea::placeholder { color: rgba(196, 210, 228, 0.45); }
+.contact-chat input:focus,
+.contact-chat textarea:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+}
+.contact-chat input.is-invalid,
+.contact-chat textarea.is-invalid {
+  border-color: var(--rose-600);
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.16);
+}
+.contact-chat__composer {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+.contact-chat__composer textarea {
+  resize: none;
+  border-radius: 16px 16px 4px 16px;
+  min-height: 84px;
+}
+.contact-chat__send {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  color: #fff;
+  background: linear-gradient(to bottom, var(--blue-500), var(--blue-600));
+  border-radius: 14px;
+  box-shadow: 0 10px 24px -10px rgba(59, 130, 246, 0.65);
+  transition: transform 0.12s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s ease;
+}
+.contact-chat__send svg { width: 20px; height: 20px; }
+.contact-chat__send:hover { filter: brightness(1.08); box-shadow: 0 14px 30px -10px rgba(59, 130, 246, 0.8); }
+.contact-chat__send:active { transform: scale(0.94); }
+.contact-chat .field { position: relative; }
+.contact-chat .contact-form__note { margin: 0; }
+
+@media (max-width: 640px) {
+  .contact-chat__fields { grid-template-columns: 1fr; }
+  .contact-chat__bubble { max-width: 100%; }
 }
