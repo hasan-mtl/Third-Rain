@@ -380,7 +380,7 @@
     var bChips = [];
     // the services anchor in WORLD space (lateral lane wx, depth z0) and the
     // camera dolly carries them past the viewer like buoys
-    var FLOAT_POS = [[8, 46], [26, 64], [-12, 330], [33, 130], [-22, 250], [0, 95]];
+    var FLOAT_POS = [[0, 49], [34, 77], [21, 399], [45, 183], [-54, 245], [-41, 99]];
     var bFloat = [];
     var bFloatHits = [];
     var bFloatAge = 0;
@@ -499,10 +499,6 @@
       "    float horizGlow = exp(-abs(dy) * 0.07) * breathe;",
       "    col += vec3(0.5, 0.82, 0.92) * horizGlow * 0.42;",
       "    alpha = max(alpha, horizGlow * 0.5);",
-      "    vec2 wordC = vec2(uRes.x * 0.68, uHy - 96.0);",
-      "    float wglow = exp(-distance(px, wordC) * 0.006);",
-      "    col += vec3(0.45, 0.75, 0.9) * wglow * 0.34;",
-      "    alpha = max(alpha, wglow * 0.4);",
       "    gl_FragColor = vec4(col, alpha);",
       "    return;",
       "  }",
@@ -662,36 +658,7 @@
       bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       bWy = bH * 0.52;
 
-      bParts = [];
-      var fontPx = Math.min(bW * 0.21, 270);
-      var off = document.createElement("canvas");
-      off.width = bW;
-      off.height = bH;
-      var octx = off.getContext("2d");
-      octx.font = "italic 600 " + Math.round(fontPx) + "px 'Cormorant Garamond', Georgia, serif";
-      octx.textBaseline = "alphabetic";
-      var met = octx.measureText("rain.");
-      octx.fillStyle = "#fff";
-      octx.fillText("rain.", bW * 0.68 - met.width / 2, bWy - 18);
-      var img = octx.getImageData(0, 0, bW, bH).data;
-      for (var yy = 0; yy < bH; yy += 4) {
-        for (var xx = 0; xx < bW; xx += 4) {
-          if (img[(yy * bW + xx) * 4 + 3] > 128) {
-            bParts.push({
-              tx: xx,
-              ty: yy,
-              x: Math.random() * bW,
-              y: -Math.random() * bH * 1.6,
-              fall: 280 + Math.random() * 340,
-              hue: Math.random(),
-              ph: Math.random() * 6.283,
-              ox: 0,
-              oy: 0
-            });
-            if (bParts.length >= 2400) { yy = bH; break; }
-          }
-        }
-      }
+      bParts = []; // the header carries the brand — the hero sky belongs to the copy
 
       bChips = [];
       bFloat = [];
@@ -711,7 +678,7 @@
       }
 
       bGlyphs = [];
-      for (var gl2 = 0; gl2 < 10; gl2++) {
+      for (var gl2 = 0; gl2 < 6; gl2++) {
         bGlyphs.push({
           t: GLYPH_SET[gl2 % GLYPH_SET.length],
           x: Math.random() * bW,
@@ -774,7 +741,7 @@
           g.t = GLYPH_SET[Math.floor(Math.random() * GLYPH_SET.length)];
         }
         bctx.font = g.s.toFixed(0) + "px 'Geist Mono', monospace";
-        bctx.fillStyle = (i % 2 ? "rgba(125, 211, 252," : "rgba(94, 234, 212,") + (g.a * (0.72 + 0.28 * bBreath)).toFixed(3) + ")";
+        bctx.fillStyle = (i % 2 ? "rgba(125, 211, 252," : "rgba(94, 234, 212,") + (g.a * 0.55 * (0.72 + 0.28 * bBreath)).toFixed(3) + ")";
         bctx.fillText(g.t, g.x, g.y);
       }
 
