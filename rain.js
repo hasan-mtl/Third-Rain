@@ -495,6 +495,10 @@
       "    vec3 col = mix(vec3(0.1, 0.2, 0.33), vec3(0.5, 0.64, 0.76), clamp(mist * 1.2, 0.0, 1.0));",
       "    col += vec3(0.36, 0.52, 0.66) * mNear * horizonPull * 0.18;",
       "    float alpha = mist * 0.42;",
+      "    vec2 wordC = vec2(uRes.x * 0.5, uRes.y * 0.2);",
+      "    float wglow = exp(-distance(px, wordC) * 0.005);",
+      "    col += vec3(0.45, 0.75, 0.9) * wglow * 0.3;",
+      "    alpha = max(alpha, wglow * 0.34);",
       "    float breathe = 0.86 + 0.14 * sin(uTime * 0.45 + vnoise(vec2(px.x * 0.002, 3.3)) * 2.6);",
       "    float horizGlow = exp(-abs(dy) * 0.07) * breathe;",
       "    col += vec3(0.5, 0.82, 0.92) * horizGlow * 0.42;",
@@ -658,7 +662,36 @@
       bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       bWy = bH * 0.52;
 
-      bParts = []; // the header carries the brand — the hero sky belongs to the copy
+      bParts = [];
+      var fontPx = Math.min(bW * 0.12, 170);
+      var off = document.createElement("canvas");
+      off.width = bW;
+      off.height = bH;
+      var octx = off.getContext("2d");
+      octx.font = "italic 600 " + Math.round(fontPx) + "px 'Cormorant Garamond', Georgia, serif";
+      octx.textBaseline = "alphabetic";
+      var met = octx.measureText("rain.");
+      octx.fillStyle = "#fff";
+      octx.fillText("rain.", (bW - met.width) / 2, bH * 0.245);
+      var img = octx.getImageData(0, 0, bW, bH).data;
+      for (var yy = 0; yy < bH; yy += 3) {
+        for (var xx = 0; xx < bW; xx += 3) {
+          if (img[(yy * bW + xx) * 4 + 3] > 128) {
+            bParts.push({
+              tx: xx,
+              ty: yy,
+              x: Math.random() * bW,
+              y: -Math.random() * bH * 1.6,
+              fall: 280 + Math.random() * 340,
+              hue: Math.random(),
+              ph: Math.random() * 6.283,
+              ox: 0,
+              oy: 0
+            });
+            if (bParts.length >= 2200) { yy = bH; break; }
+          }
+        }
+      }
 
       bChips = [];
       bFloat = [];

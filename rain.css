@@ -2235,7 +2235,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 .ocean-hero__copy {
   position: absolute;
   z-index: 3;
-  top: clamp(96px, 15vh, 190px);
+  top: clamp(216px, 31vh, 300px);
   left: 50%;
   transform: translateX(-50%);
   width: min(92vw, 820px);
@@ -2243,15 +2243,16 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   pointer-events: none;
 }
 .ocean-hero__copy h1 {
-  font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+  font-size: clamp(2.2rem, 3.6vw, 3rem);
   line-height: 1.04;
   letter-spacing: -0.028em;
   color: #fff;
   text-wrap: balance;
 }
-.ocean-hero__copy h1 .serif-grad { display: block; margin-top: 8px; }
+.ocean-hero__copy h1 .serif-grad { display: block; margin-top: 4px; }
 .ocean-hero__sub {
-  margin-top: 18px;
+  margin-top: 14px;
+  white-space: nowrap;
   max-width: 52ch;
   margin-inline: auto;
   font-size: 17px;
@@ -2261,8 +2262,9 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 
 @media (max-width: 900px) {
   .ocean-hero__copy { width: min(92vw, 560px); }
+  .ocean-hero__sub { white-space: normal; }
   .water-scene.water-scene--hero { height: max(600px, calc(100svh - var(--header-h) - 48px)); }
-  .water-scene--hero .water-scene__mark { left: 50%; top: 62%; }
+  .water-scene--hero .water-scene__mark { left: 50%; top: 21%; font-size: clamp(4rem, 13vw, 7rem); }
 }
 
 /* once the engine is live, the services float on the water instead —
