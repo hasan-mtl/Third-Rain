@@ -93,10 +93,10 @@
   var cycleEl = qs("[data-cycle]");
   if (cycleEl && !reduce) {
     var PHRASES = [
-      "every customer gets a reply.",
-      "your report arrives at 8:00.",
-      "your low stock reorders itself.",
-      "your blog posts itself."
+      "every customer got a reply.",
+      "your report arrived at 8:00.",
+      "your low stock got reordered.",
+      "your blog posted itself."
     ];
     var cycleIdx = 0;
     var doCycle = function () {
