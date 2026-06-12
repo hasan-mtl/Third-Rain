@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=68" />
+<link rel="stylesheet" href="rain.css?v=69" />
 </head>
 <body>
 
@@ -508,49 +508,14 @@
 
 <!-- ============ PROCESS ============ -->
 <section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
+  <header class="section-head">
+    <p class="eyebrow eyebrow--dark" data-reveal>Our platform</p>
+    <h2 id="platform-title" data-reveal style="--i:1">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
+    <p class="lede lede--dark" data-reveal style="--i:2">Rain Agent is the platform we built and run ourselves — your dedicated agent, wired to your tools, watched on every run.</p>
+  </header>
 
-  <div class="platform__inner">
-    <div class="platform__copy">
-      <p class="eyebrow eyebrow--dark" data-reveal>Our platform</p>
-      <h2 id="platform-title" data-reveal style="--i:1">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
-      <p class="lede lede--dark lede--left" data-reveal style="--i:1">
-        Rain Agent is the platform we built and run ourselves. Your business gets a
-        dedicated agent wired to your tools — watched by our team on every run.
-      </p>
-
-      <ul class="platform__list" data-reveal style="--i:2">
-        <li>
-          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
-          A dedicated agent that learns your voice and rules
-        </li>
-        <li>
-          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
-          Content, reporting, replies &amp; ops — end to end
-        </li>
-        <li>
-          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
-          Ask in plain language from Telegram
-        </li>
-        <li>
-          <span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>
-          Human review on everything that ships
-        </li>
-      </ul>
-
-      <div class="platform__actions" data-reveal style="--i:3">
-        <a class="btn btn--primary" href="#contact">
-          Get your agent
-          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-        </a>
-        <a class="btn btn--outline" href="https://rain-agent.vercel.app" target="_blank" rel="noopener">
-          Explore Rain Agent
-          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6.5 4.5h5v5"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="platform__viz" data-reveal style="--i:2">
-      <div class="circuit">
+  <div class="platform__stage" data-reveal style="--i:2">
+    <div class="circuit">
         <span class="circuit__halo" aria-hidden="true"></span>
         <span class="circuit__ring" aria-hidden="true"></span>
         <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true">
@@ -597,8 +562,24 @@
           <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z"/><path d="M12 11.5 3.5 8.5M12 11.5l8.5-3M12 11.5V20"/></svg></i>Inventory
         </span>
       </div>
+  </div>
 
-      <div class="runlog glass">
+  <ul class="platform__strip" data-reveal style="--i:3">
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Learns your voice and rules</li>
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Content, reporting, replies &amp; ops</li>
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Ask in plain language from Telegram</li>
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Human review on everything</li>
+  </ul>
+
+  <dl class="platform__stats" data-reveal>
+    <div><dt><span data-count="312">0</span></dt><dd>tasks / month</dd></div>
+    <div><dt>0</dt><dd>missed or dropped</dd></div>
+    <div><dt>24/7</dt><dd>monitored runs</dd></div>
+    <div><dt>1</dt><dd>connected system</dd></div>
+  </dl>
+
+  <div class="platform__belt" data-reveal>
+    <div class="runlog glass">
         <div class="runlog__head">
           <span class="live-dot live-dot--sm" aria-hidden="true"></span>
           <span>Live run log</span>
@@ -610,15 +591,18 @@
           <li><span>11:30</span>12 customer replies drafted</li>
         </ul>
       </div>
-    </div>
   </div>
 
-  <dl class="platform__stats" data-reveal>
-    <div><dt><span data-count="312">0</span></dt><dd>tasks / month</dd></div>
-    <div><dt>0</dt><dd>missed or dropped</dd></div>
-    <div><dt>24/7</dt><dd>monitored runs</dd></div>
-    <div><dt>1</dt><dd>connected system</dd></div>
-  </dl>
+  <div class="platform__actions platform__actions--center" data-reveal>
+        <a class="btn btn--primary" href="#contact">
+          Get your agent
+          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+        </a>
+        <a class="btn btn--outline" href="https://rain-agent.vercel.app" target="_blank" rel="noopener">
+          Explore Rain Agent
+          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6.5 4.5h5v5"/></svg>
+        </a>
+      </div>
 </section>
 
 <!-- ============ PLATFORM ============ -->
@@ -744,6 +728,6 @@
   </div>
 </footer>
 
-<script src="rain.js?v=68" defer></script>
+<script src="rain.js?v=69" defer></script>
 </body>
 </html>
