@@ -2235,7 +2235,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 .ocean-hero__copy {
   position: absolute;
   z-index: 3;
-  top: clamp(264px, 34vh, 340px);
+  top: max(258px, 30.5vh);
   left: 50%;
   transform: translateX(-50%);
   width: min(92vw, 820px);
