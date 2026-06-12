@@ -1,10 +1,10 @@
-# Rain — Refresh Your Business for the AI Era
+# Rain - Refresh Your Business for the AI Era
 
-The marketing site for **Rain** (rain.ceo) — an AI implementation studio that
+The marketing site for **Rain** (rain.ceo) - an AI implementation studio that
 designs, builds, and runs websites, branding, software, mobile apps, and AI
 automation for businesses.
 
-Design direction: **"Ink & Current"** — the same design DNA as the Rain Agent
+Design direction: **"Ink & Current"** - the same design DNA as the Rain Agent
 platform (agent-hub), so the studio and its product read as one premium brand:
 
 - Deep navy **ink** dark sections with radial teal/blue glows, film grain, and
@@ -15,7 +15,7 @@ platform (agent-hub), so the studio and its product read as one premium brand:
   refresh" console in the hero, an animated agent circuit + run log in the
   Platform section, gradient hairline frames, floating proof chips.
 
-Self-contained static site — no build step, no dependencies.
+Self-contained static site - no build step, no dependencies.
 
 ## Run it locally
 
@@ -29,15 +29,15 @@ python3 -m http.server 8000
 ## Project layout
 
 ```
-index.html       — the page (canonical entry point)
-rain.css         — design tokens + all section styles ("Ink & Current" system)
-rain.js          — interactions (drawer + focus trap, reveals, count-ups,
+index.html       - the page (canonical entry point)
+rain.css         - design tokens + all section styles ("Ink & Current" system)
+rain.js          - interactions (drawer + focus trap, reveals, count-ups,
                    era rail, live run log, ticker, contact form)
-favicon.svg      — site icon (white raindrop on a blue→teal gradient tile)
-assets/          — LEGACY media from the previous "Liquid Midnight" design;
+favicon.svg      - site icon (white raindrop on a blue→teal gradient tile)
+assets/          - LEGACY media from the previous "Liquid Midnight" design;
                    no longer referenced by the site
-design-source/   — original Claude Design artifacts (concepts, screenshots)
-Rain.html        — LEGACY: an older green/forest design. Not used.
+design-source/   - original Claude Design artifacts (concepts, screenshots)
+Rain.html        - LEGACY: an older green/forest design. Not used.
 ```
 
 ## Sections
@@ -47,7 +47,7 @@ Services (self-demoing "pick a problem" selector; fixes check off one by
 one) → See it work (auto-playing Telegram chat + self-assembling morning
 report) → Process (3 product-style steps) → Platform (Rain Agent circuit +
 live run log + stats) → Contact (white form card on ink) → footer.
-Show-don't-tell throughout: every section demonstrates, copy stays minimal —
+Show-don't-tell throughout: every section demonstrates, copy stays minimal -
 the client's rule is "people hate text, people love action and solution."
 
 ## Accessibility & performance
@@ -57,13 +57,13 @@ the client's rule is "people hate text, people love action and solution."
 - WCAG AA contrast on both light and dark surfaces, full keyboard support
   (skip link, focus-visible, drawer focus trap), semantic landmarks, labelled
   form with live validation messaging.
-- No videos, no photography — the page is a few hundred KB of HTML/CSS/JS
+- No videos, no photography - the page is a few hundred KB of HTML/CSS/JS
   plus three Google Font families. Works with JavaScript disabled.
 
 ## Deploy
 
 Drop the folder on any static host (Vercel, Netlify, GitHub Pages, S3). No
-configuration needed — `index.html` is the entry point.
+configuration needed - `index.html` is the entry point.
 
 > **Note:** the local `.vercel/` link in this folder points at the
 > `second-rain` Vercel project, and `origin` points at the Second-Rain GitHub

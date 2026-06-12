@@ -1,5 +1,5 @@
 /* ============================================================
-   RAIN — "Ink & Current" interactions · v2
+   RAIN - "Ink & Current" interactions · v2
    Header state · drawer w/ focus trap · scroll reveals · count-ups
    headline word cascade · console tilt · era rail · live run log
    ticker loop · contact form
@@ -30,7 +30,7 @@
 
   /* ---------- headline word cascade ---------- */
   // Wrap each hero headline word in a span so CSS can stagger them in.
-  // Skipped under reduced motion — the unsplit headline renders statically.
+  // Skipped under reduced motion - the unsplit headline renders statically.
   var splitTarget = qs("[data-split]");
   if (splitTarget && !reduce) {
     var wi = 0;
@@ -165,7 +165,7 @@
     var heroForRain = rainCanvas.closest(".hero");
 
     // the rain answers the visitor: drops part around the cursor,
-    // and a click lands like a stone — spray + shockwave ring
+    // and a click lands like a stone - spray + shockwave ring
     if (heroForRain) {
       heroForRain.addEventListener("mousemove", function (e) {
         var r = rainCanvas.getBoundingClientRect();
@@ -353,14 +353,14 @@
     });
   }
 
-  /* ---------- the basin: night sail (three.js) — the business sails, Rain delivers ---------- */
+  /* ---------- the basin: night sail (three.js) - the business sails, Rain delivers ---------- */
   var basinCanvas = qs("[data-basin]");
   var seaCanvas = qs("[data-sea]");
   if (basinCanvas && seaCanvas && !reduce && window.matchMedia("(min-width: 901px)").matches) {
     var sceneEl = basinCanvas.closest("[data-scene]");
     var bctx = basinCanvas.getContext("2d");
 
-    // warm the module cache at idle — the ocean starts instantly when reached
+    // warm the module cache at idle - the ocean starts instantly when reached
     var warmThree = function () {
       var warm = document.createElement("link");
       warm.rel = "modulepreload";
@@ -420,7 +420,7 @@
     var bPar = 0;   // idle sway of the horizon (the camera breathing)
     var bCamX = 0;  // idle lateral sway
 
-    // the camera is fixed; it only breathes — a barely perceptible ~10s sway
+    // the camera is fixed; it only breathes - a barely perceptible ~10s sway
     var updIdle = function () {
       bPar = Math.sin(bTime * 0.6) * 1.8;
       bCamX = Math.sin(bTime * 0.63) * 1.2 + Math.sin(bTime * 0.29) * 0.8;
@@ -454,7 +454,7 @@
       "uniform float uFocal;",
       "uniform float uScale;",
       "uniform float uCamX;",
-      "/* shore tuning — change these three, nothing else */",
+      "/* shore tuning - change these three, nothing else */",
       "const float DISSOLVE_HEIGHT = 0.12;",
       "const float LINE_OPACITY = 0.12;",
       "const float NOISE_AMPLITUDE = 10.0;",
@@ -523,7 +523,7 @@
       "  float hZ = waveH(wp + vec2(0.0, eps));",
       "  vec3 n = normalize(vec3(hC - hX, eps * 2.6, hC - hZ));",
       "  float zfade = exp(-z * uScale * 0.16);",
-      "  /* two detail layers, ~6x apart in scale, different drift — close water gets texture */",
+      "  /* two detail layers, ~6x apart in scale, different drift - close water gets texture */",
       "  vec2 dA = vec2(vnoise(wp * 5.5 + vec2(uTime * 0.34, -uTime * 0.21)) - 0.5,",
       "                 vnoise(wp * 5.5 + vec2(7.3 - uTime * 0.27, uTime * 0.31)) - 0.5);",
       "  vec2 dB = vec2(vnoise(wp * 0.9 + vec2(-uTime * 0.1, uTime * 0.14)) - 0.5,",
@@ -564,7 +564,7 @@
       "  col += vec3(0.8, 0.88, 0.94) * sheen * foldT * 0.17 * (0.85 + 0.15 * vnoise(wp * 2.0 + vec2(uTime * 0.3, 0.0)));",
       "",
       "  /* the shore, minimal: one breathing dissolve + a hint of a waterline.",
-      "     the END is pinned above the canvas edge — the bottom row is always",
+      "     the END is pinned above the canvas edge - the bottom row is always",
       "     exact page paper, fully opaque; only the START breathes */",
       "  float shoreN = vnoise(vec2(px.x * 0.006, uTime * 0.083)) - 0.5;",
       "  float d0 = uRes.y * (1.0 - DISSOLVE_HEIGHT) + shoreN * 2.0 * NOISE_AMPLITUDE;",
@@ -592,7 +592,7 @@
 
     var seaResize = function () {
       if (!seaRenderer) return;
-      /* bound total fragment work, not just the ratio — huge windows would
+      /* bound total fragment work, not just the ratio - huge windows would
          otherwise melt integrated GPUs during the descent */
       var pr = Math.min(
         Math.min(window.devicePixelRatio || 1, 1.5),
@@ -837,7 +837,7 @@
         }
       }
 
-      /* the ocean — WebGL, or the 2D stand-in until it loads */
+      /* the ocean - WebGL, or the 2D stand-in until it loads */
       if (seaReady) {
         seaMat.uniforms.uTime.value = bTime;
         seaMat.uniforms.uHy.value = bWy + bPar;
@@ -858,7 +858,7 @@
         }
       }
 
-      /* the services ride at anchor — little boats on the open water */
+      /* the services ride at anchor - little boats on the open water */
       bFloatAge += dt;
       bFloatHits.length = 0;
       var fFocal = bH * 0.95;
@@ -867,7 +867,7 @@
         var aW = Math.max(0, Math.min(1, (bFloatAge - 0.4 - i * 0.22) * 1.2));
         if (aW <= 0) continue;
         aW = 1 - Math.pow(1 - aW, 3);
-        /* slow drift along its own path — a few units per minute */
+        /* slow drift along its own path - a few units per minute */
         var wxd = fs.wx + Math.sin(bTime * 0.026 + i * 1.7) * (2 + fs.z0 * 0.012);
         var zd = fs.z0 + Math.sin(bTime * 0.019 + i * 2.3) * (4 + fs.z0 * 0.04);
         /* never drift into the fold: clamp depth so the keel stays above the bend */
@@ -897,7 +897,7 @@
         bctx.beginPath();
         bctx.ellipse(0, 4, fw * 0.6, fontPx2 * 0.26, 0, 0, Math.PI * 2);
         bctx.fill();
-        /* crisp serif over a soft cyan halo — no blur, no mirror */
+        /* crisp serif over a soft cyan halo - no blur, no mirror */
         bctx.fillStyle = "rgba(120, 225, 255," + ((0.15 + fs.h * 0.13) * aW).toFixed(3) + ")";
         bctx.save();
         bctx.scale(1.045, 1.08);
@@ -1383,7 +1383,7 @@
     });
   }
 
-  /* ---------- "You ask. It's done." — scenario engine ---------- */
+  /* ---------- "You ask. It's done." - scenario engine ---------- */
   // One engine drives the chips, the chat, the connector pulse, and the
   // result card so the whole section plays as a single demonstration.
   var demoGrid = qs(".demo__grid");
@@ -1399,7 +1399,7 @@
       numbers: { user: "Clicks last week vs last month?", reply: "\ud83d\udcc8 4,820 \u2014 up 18%. Full report, right here \u2192", view: "report" },
       content: { user: "Write a blog on cold brew \u2014 publish Monday 7am \u2615", reply: "Done \u2705 Drafted, image ready, scheduled Mon 7:00.", view: "post" },
       restock: { user: "Low on oat milk \u2014 reorder it.", reply: "\ud83d\uded2 48 units ordered from your supplier. ETA Thursday.", view: "order" },
-      replies: { user: "Handle today's customer emails.", reply: "\u2709\ufe0f 12 replies drafted in your tone \u2014 2 flagged for you.", view: "inbox" }
+      replies: { user: "Handle today's customer emails.", reply: "\u2709\ufe0f 12 replies drafted in your tone, 2 flagged for you.", view: "inbox" }
     };
     var SCN_ORDER = ["numbers", "content", "restock", "replies"];
 
@@ -1715,18 +1715,18 @@
       if (!name || !emailOk) {
         setNote(!name && !emailOk
           ? "Add your name and a valid email so we can reply."
-          : (!name ? "Add your name so we know who to reply to." : "That email doesn't look right — mind checking it?"), "error");
+          : (!name ? "Add your name so we know who to reply to." : "That email doesn't look right. Mind checking it?"), "error");
         (!name ? nameInput : emailInput).focus();
         return;
       }
 
-      var subject = "Refresh request — " + name;
+      var subject = "Refresh request - " + name;
       var bodyLines = [
         "Name: " + name,
         "Email: " + email,
         "",
         "Where the manual work piles up:",
-        (message || "(they left this blank — follow up)")
+        (message || "(they left this blank - follow up)")
       ];
       var href = "mailto:hello@rain.studio" +
         "?subject=" + encodeURIComponent(subject) +
