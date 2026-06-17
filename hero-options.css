@@ -1,0 +1,400 @@
+/* ==========================================================================
+   HERO OPTIONS - two redesigned hero compositions over the SAME live water +
+   particle wordmark, flipped by a segmented switcher. Layers on rain.css +
+   rain-editorial.css. Both directions delete the floating chips + ticker.
+   ========================================================================== */
+
+/* the shared headline becomes flow content so either slot can host it */
+.hx-stage .ocean-hero__copy {
+  position: static;
+  transform: none;
+  top: auto;
+  left: auto;
+  width: auto;
+  pointer-events: none;
+}
+.hx-stage .ocean-hero__copy h1 {
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
+  line-height: 1.06;
+}
+
+/* ---------------------------------------------------------------------------
+   Shared slots / scrims
+   --------------------------------------------------------------------------- */
+.hx-headline-slot {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: clamp(200px, 30vh, 332px);
+  transform: translateX(-50%);
+  width: min(92vw, 720px);
+  text-align: center;
+  pointer-events: none;
+}
+
+/* a scrim that seats the lower content over the water */
+.hx-scrim {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(5, 8, 15, 0.45) 42%, rgba(5, 8, 15, 0.84));
+}
+/* a left ink panel for the split layout's legibility */
+.hx-leftscrim {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, rgba(5, 8, 15, 0.86) 0%, rgba(5, 8, 15, 0.55) 32%, transparent 58%);
+}
+
+/* ---------------------------------------------------------------------------
+   Layout A - "Overnight shift": run-log proof in the lower zone
+   --------------------------------------------------------------------------- */
+.hx-overnight {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(56px, 9vh, 96px);
+  transform: translateX(-50%);
+  width: min(92vw, 466px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.hx-log { width: 100%; }
+.hx-log .runlog {
+  margin: 0;
+  max-width: none;
+  width: 100%;
+}
+.hx-log .runlog__lines { min-height: 106px; }
+.hx-log .runlog__lines li {
+  opacity: 0;
+  font-size: 13.5px;
+}
+.hx-log .runlog__lines li.is-shown { opacity: 1; }
+.hx-log .runlog__lines li b {
+  font-weight: 500;
+  color: var(--td-strong, #e6edf6);
+}
+.hx-log .runlog__lines li .ok {
+  color: #34d399;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.hx-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.hx-done { white-space: nowrap; }
+.hx-done {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  letter-spacing: -0.01em;
+  background: linear-gradient(118deg, #ffffff, var(--sky-300) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hx-proof {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--td-faint, #7c8aa0);
+}
+
+/* ---------------------------------------------------------------------------
+   Layout B - "Editorial split": value-prop column on the left
+   --------------------------------------------------------------------------- */
+.hx-split {
+  position: absolute;
+  z-index: 4;
+  left: clamp(24px, 6vw, 104px);
+  top: var(--header-h);
+  bottom: 0;
+  width: min(48%, 600px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 22px;
+  text-align: left;
+}
+.hx-split__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--sky-300);
+}
+.hx-split .ocean-hero__copy { text-align: left; }
+.hx-split .ocean-hero__copy h1 {
+  text-align: left;
+  font-size: calc(clamp(2rem, 3.2vw, 2.85rem) * var(--hx-h-scale, 1));
+  line-height: 1.12;
+  padding-bottom: 6px;
+}
+.hx-split .ocean-hero__copy h1 .serif-grad { margin-top: 8px; line-height: 1.3; }
+.hx-split__sub {
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+  line-height: 1.62;
+  color: var(--td-body, #aebbcd);
+}
+.hx-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: 2px;
+}
+.hx-split__proof {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--td-faint, #7c8aa0);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 8px;
+}
+
+/* ---------------------------------------------------------------------------
+   Layout switching - default state hides everything; the layout class reveals
+   --------------------------------------------------------------------------- */
+.hx-overnight,
+.hx-split,
+.hx-scrim,
+.hx-leftscrim { display: none; }
+
+.hero--overnight .hx-headline-slot,
+.hero--overnight .hx-overnight { display: flex; }
+.hero--overnight .hx-headline-slot { display: block; }
+.hero--overnight .hx-scrim { display: block; }
+
+.hero--split .hx-headline-slot,
+.hero--storm .hx-headline-slot { display: none; }
+.hero--split .hx-split,
+.hero--storm .hx-split { display: flex; }
+.hero--split .hx-leftscrim,
+.hero--storm .hx-leftscrim { display: block; }
+/* rain falls across the WHOLE hero; only the ocean is dropped */
+.hero--split .sea,
+.hero--storm .sea { display: none; }
+
+/* ---------------------------------------------------------------------------
+   Layout C - "Storm": clouds up top, hard rain, big logo forming right-middle,
+   heavy splashes, shorter hero.
+   --------------------------------------------------------------------------- */
+.hero--storm .water-scene--hero { height: clamp(500px, 74vh, 660px); }
+.hero--storm .hx-clouds { display: block; }
+.hero--storm .hx-leftscrim {
+  background: linear-gradient(100deg, rgba(5, 8, 15, 0.9) 0%, rgba(5, 8, 15, 0.6) 30%, transparent 56%);
+}
+/* the storm's left column rides a touch higher so it clears the splash zone */
+.hero--storm .hx-split { justify-content: center; }
+
+.hx-clouds {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 48%;
+  display: none;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+}
+.hx-clouds img {
+  position: absolute;
+  filter: brightness(0.4) saturate(0.85) contrast(1.06) hue-rotate(186deg) blur(1.5px);
+  opacity: 0.7;
+  will-change: transform;
+}
+.hx-cloud--main {
+  top: -12%;
+  right: -6%;
+  width: 56%;
+  animation: cloud-drift-a 46s ease-in-out infinite;
+}
+.hx-cloud--right {
+  top: -4%;
+  right: -12%;
+  width: 32%;
+  opacity: 0.55;
+  animation: cloud-drift-b 38s ease-in-out infinite;
+}
+.hx-cloud--left {
+  top: -14%;
+  left: 36%;
+  width: 30%;
+  opacity: 0.3;
+  animation: cloud-drift-b 54s ease-in-out infinite;
+}
+/* a cool glow under the main cloud - where the rain (and the logo) is born */
+.hx-cloud-glow {
+  position: absolute;
+  z-index: 2;
+  top: -8%;
+  right: 6%;
+  width: 52%;
+  height: 60%;
+  display: none;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 60% 30%, rgba(120, 190, 255, 0.16), rgba(99, 102, 241, 0.07) 45%, transparent 70%);
+  filter: blur(8px);
+}
+.hero--storm .hx-cloud-glow { display: block; }
+
+/* keep the static fallback logo in sync with the live particle logo position
+   (the engine hides this once the canvas is live) */
+.hero--storm .water-scene__mark {
+  top: 54%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(4rem, 11vw, 11rem);
+}
+.hero--split .water-scene__mark { left: 66%; }
+@keyframes cloud-drift-a {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-26px); }
+}
+@keyframes cloud-drift-b {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(22px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hx-clouds img { animation: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Balance panel - live sizing controls for the storm composition
+   --------------------------------------------------------------------------- */
+.hx-balance {
+  position: fixed;
+  z-index: 61;
+  bottom: 24px;
+  right: 22px;
+  width: 238px;
+  padding: 16px 16px 18px;
+  border-radius: 16px;
+  background: rgba(10, 16, 28, 0.86);
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  box-shadow: 0 18px 50px -16px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  display: none;
+  flex-direction: column;
+  gap: 13px;
+}
+.hx-balance.is-shown { display: flex; }
+.hx-balance__title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--td-faint, #7c8aa0);
+}
+.hx-balance label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12.5px;
+  color: #c4d0e0;
+}
+.hx-balance label > span {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.hx-balance label b {
+  font-weight: 500;
+  color: var(--sky-300, #7dd3fc);
+  font-variant-numeric: tabular-nums;
+}
+.hx-balance input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 3px;
+  accent-color: var(--sky-300, #7dd3fc);
+  cursor: pointer;
+}
+@media (max-width: 860px) {
+  .hx-balance { display: none !important; }
+}
+
+/* ---------------------------------------------------------------------------
+   The preview switcher (segmented control, fixed bottom-center)
+   --------------------------------------------------------------------------- */
+.hx-switch {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(10, 16, 28, 0.82);
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  box-shadow: 0 18px 50px -16px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.hx-switch__label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--td-faint, #7c8aa0);
+  padding: 0 10px 0 12px;
+}
+.hx-switch__btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-sans, inherit);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #c4d0e0;
+  background: transparent;
+  padding: 9px 18px;
+  border-radius: 999px;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.hx-switch__btn:hover { color: #fff; }
+.hx-switch__btn.is-on {
+  color: #06121f;
+  background: linear-gradient(135deg, var(--sky-300), var(--teal-300, #5eead4));
+  box-shadow: 0 4px 14px -4px rgba(94, 234, 212, 0.5);
+}
+
+@media (max-width: 860px) {
+  .hx-split { width: min(86vw, 560px); }
+  .hx-leftscrim { background: linear-gradient(180deg, rgba(5, 8, 15, 0.86), rgba(5, 8, 15, 0.5)); }
+  .hero--split .sea { display: none; }
+  .hero--split .basin { inset: 0; width: 100%; opacity: 0.42; }
+  .hx-switch__label { display: none; }
+  .hx-switch__btn { padding: 9px 14px; font-size: 12.5px; }
+}

@@ -15,7 +15,560 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=74" />
+<link rel="stylesheet" href="rain.css?v=75" />
+<link rel="stylesheet" href="rain-editorial.css?v=75" />
+<link rel="stylesheet" href="hero-options.css?v=75" />
+<style>
+  /* Align all section content to the header's centered 1120px (--maxw) gutter
+     so nothing overflows the header width. */
+  #hero .hx-split {
+    left: max(24px, calc((100% - var(--maxw)) / 2 + 24px));
+    right: auto;
+    width: min(48%, 600px);
+  }
+  /* Pull the serif cycling line up under the sans line - kill the loose gap. */
+  #hero .hx-split .ocean-hero__copy h1 .serif-grad {
+    margin-top: 0;
+    line-height: 1.12;
+  }
+  .statement__inner { max-width: var(--maxw); }
+
+  /* Statement beat: room at the bottom for the WebGL water that merges into the
+     paper section, and keep the copy above it. */
+  .statement {
+    padding-top: clamp(64px, 9vh, 104px);
+    padding-bottom: 300px;
+  }
+  .statement__inner { position: relative; z-index: 5; }
+  .statement::after { display: none; }
+  .merge-water {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 290px;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .merge-water--top { top: 0; bottom: auto; }
+  .contact__inner { padding-top: 300px; position: relative; z-index: 5; }
+  /* Demo also opens with the flipped water merging down from the services section. */
+  #demo { padding-top: 300px; }
+  #demo .ed-head,
+  #demo .demo__inner { position: relative; z-index: 5; }
+  .merge-water canvas { display: block; width: 100%; height: 100%; }
+
+  /* Water-settling seams: a long, eased fade so ink pools into paper (and back)
+     as one continuous transition instead of a hard band with a visible edge. */
+  /* Water-settling merges: a long, eased fade so each dark section dissolves into
+     the paper one (and back) like the hero's water ending - soft and organic, no
+     hard curve, no visible band. */
+  .seam--to-paper::after {
+    top: -200px;
+    height: 200px;
+    background: linear-gradient(to bottom,
+      rgba(250, 248, 245, 0) 0%,
+      rgba(250, 248, 245, 0.015) 46%,
+      rgba(250, 248, 245, 0.05) 60%,
+      rgba(250, 248, 245, 0.12) 71%,
+      rgba(250, 248, 245, 0.28) 81%,
+      rgba(250, 248, 245, 0.52) 89%,
+      rgba(250, 248, 245, 0.78) 95%,
+      var(--paper) 100%);
+  }
+  .seam--to-ink::after {
+    top: 0;
+    height: 200px;
+    background: linear-gradient(to bottom,
+      var(--paper) 0%,
+      rgba(250, 248, 245, 0.80) 5%,
+      rgba(250, 248, 245, 0.55) 11%,
+      rgba(250, 248, 245, 0.32) 18%,
+      rgba(250, 248, 245, 0.16) 27%,
+      rgba(250, 248, 245, 0.07) 39%,
+      rgba(250, 248, 245, 0.02) 56%,
+      rgba(250, 248, 245, 0) 100%);
+  }
+  /* Section headers (ed-head): the loose rhythm left big gaps everywhere -
+     tighten the headline→lede gap, the header's top/bottom space, and pull the
+     serif line in so it stops overflowing into the lede when it wraps. */
+  .ed-head {
+    margin-bottom: 40px;
+    padding-top: 32px;
+  }
+  .ed-head__body h2 .serif-grad { line-height: 1.05; }
+  /* Uniform header rhythm everywhere: the eyebrow→headline gap and the
+     headline→lede gap are the same in every section. */
+  .ed-head .eyebrow { margin-bottom: 22px; }
+  .ed-head__body .lede { margin-top: 22px; }
+
+  /* Platform stats: the gradient-clipped numerals were cropped by line-height:0.9.
+     Give them room so the digits aren't cut off. */
+  .platform__stats dt {
+    line-height: 1.06;
+    padding-bottom: 0.08em;
+    overflow: visible;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- HOW WE WORK - three-card timeline ---- */
+  .process .pwork {
+    position: relative;
+    max-width: var(--maxw);
+    margin: 6px auto 0;
+    padding: 0 24px;
+  }
+  .pwork__line {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 0 24px;
+  }
+  .pwork__line::before {
+    content: "";
+    position: absolute;
+    left: 16.66%;
+    right: 16.66%;
+    top: 50%;
+    height: 1.5px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, rgba(59,130,246,0.5), rgba(56,189,248,0.7));
+  }
+  .pwork__dot {
+    justify-self: center;
+    position: relative;
+    z-index: 1;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px solid #60a5fa;
+  }
+  .pwork__dot.is-active {
+    background: var(--blue-500);
+    border-color: var(--blue-500);
+    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.16);
+  }
+  .pwork__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .pwork-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #ffffff, #fbfaf7);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    border-radius: 22px;
+    padding: 26px 26px 28px;
+    box-shadow:
+      0 1px 2px rgba(16, 26, 48, 0.04),
+      0 18px 44px -26px rgba(16, 26, 48, 0.20);
+    transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+  }
+  .pwork-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 2px rgba(16, 26, 48, 0.05),
+      0 30px 60px -28px rgba(16, 26, 48, 0.30);
+  }
+  .pwork-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .pwork-card__icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue-500), var(--indigo-500));
+    box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.65);
+  }
+  .pwork-card__icon svg { width: 22px; height: 22px; }
+  .pwork-card__no {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: rgba(59, 130, 246, 0.16);
+  }
+  .pwork-card__label {
+    margin-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-600);
+  }
+  .pwork-card__title {
+    margin-top: 12px;
+    font-size: 1.4rem;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--t-strong);
+  }
+  .pwork-card__body {
+    margin-top: 14px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--t-body);
+  }
+  .pwork-card__rule {
+    border: 0;
+    height: 1px;
+    background: var(--line-light);
+    margin: 22px 0 18px;
+    margin-top: auto;
+  }
+  .pwork-card__tags {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pwork-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pwork-card__list li {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 14.5px;
+    color: var(--t-strong);
+  }
+  .pwork-card__list .ck {
+    display: grid;
+    place-items: center;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    color: var(--blue-600);
+    background: rgba(59, 130, 246, 0.1);
+  }
+  .pwork-card__list .ck svg { width: 12px; height: 12px; }
+  @media (max-width: 900px) {
+    .pwork__line { display: none; }
+    .pwork__grid { grid-template-columns: 1fr; gap: 18px; }
+  }
+
+  /* Circuit nodes: anchor the ICON center (not the icon+label block center) to
+     the trace endpoint so the connecting lines meet the icons. */
+  .platform .circuit__node { transform: translate(-50%, calc(-50% + 13px)); }
+  @media (max-width: 760px) {
+    .platform .circuit__node { transform: translate(-50%, calc(-50% + 10px)); }
+  }
+
+  /* Live run log - dressed as a macOS window with traffic-light dots. */
+  .platform__belt .runlog {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(6, 11, 22, 0.74);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.3),
+      0 26px 60px -28px rgba(0, 0, 0, 0.85);
+  }
+  .runlog__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 15px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .runlog__dots {
+    display: inline-flex;
+    gap: 8px;
+  }
+  .runlog__dots i {
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.22);
+  }
+  .runlog__dots i:nth-child(1) { background: #ff5f57; }
+  .runlog__dots i:nth-child(2) { background: #febc2e; }
+  .runlog__dots i:nth-child(3) { background: #28c840; }
+  .runlog__title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    color: var(--td-faint);
+    white-space: nowrap;
+  }
+  .runlog__day {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .runlog__lines {
+    margin: 0;
+    padding: 15px 18px 16px;
+    height: 96px;
+    box-sizing: content-box;
+  }
+  .runlog__lines li { font-size: 12.5px; }
+  .runlog__lines li span { color: var(--sky-300); opacity: 0.85; }
+
+  /* Section header hairline removed across all headers (per review). */
+  .ed-head::before { display: none; }
+  /* Demo "See it work": widen the two screens to the full header width and label
+     the flow so the left (you ask) → right (Rain does it) reads at a glance. */
+  #demo .demo__inner { max-width: var(--maxw); }
+  #demo .demo__grid { gap: 40px; }
+  #demo .demo__link { top: 53%; }
+  .demo__cap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 11px;
+    margin-bottom: 20px;
+  }
+  .demo__step {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .demo__step svg { width: 19px; height: 19px; }
+  .demo__cap--ask .demo__step { background: linear-gradient(135deg, var(--sky-400), var(--blue-500)); box-shadow: 0 6px 16px -6px rgba(59, 130, 246, 0.7); }
+  .demo__cap--done .demo__step { background: linear-gradient(135deg, var(--teal-400), var(--emerald-500)); box-shadow: 0 6px 16px -6px rgba(20, 184, 166, 0.7); }
+  .demo__cap__txt strong {
+    display: block;
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #fff;
+  }
+  .demo__cap__txt small {
+    display: block;
+    margin-top: 1px;
+    font-size: 12.5px;
+    color: var(--td-faint);
+  }
+
+  /* Header logo: particle "rain." wordmark (same look as the hero, smaller). */
+  .brand__mark { display: block; }
+
+  /* Rain Agent core - a futuristic circular "solar" node. */
+  .circuit__core {
+    width: 168px;
+    height: 168px;
+    padding: 0 !important;
+    gap: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-radius: 50%;
+    display: grid !important;
+    place-items: center;
+  }
+  .ra-core-disk {
+    position: relative;
+    z-index: 3;
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
+    background: radial-gradient(circle at 50% 36%, #16395f 0%, #0a1b32 62%, #07101f 100%);
+    box-shadow:
+      0 0 36px rgba(94, 234, 212, 0.28),
+      inset 0 0 24px rgba(125, 211, 252, 0.16),
+      inset 0 2px 10px rgba(255, 255, 255, 0.05);
+  }
+  .ra-core-disk .ra-clock { width: 36px; height: 36px; }
+  .ra-core-disk strong { font-size: 13px; font-weight: 600; color: #fff; margin-top: 3px; }
+  .ra-core-disk small {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--td-faint);
+  }
+  .ra-orbit {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    border-radius: 50%;
+    border: 1px dashed rgba(125, 211, 252, 0.28);
+  }
+  .ra-ripple {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    border: 1px solid rgba(94, 234, 212, 0.45);
+    pointer-events: none;
+    animation: ra-ripple 3s ease-out infinite;
+  }
+  .ra-ripple--2 { animation-delay: 1.5s; }
+  .circuit__core::before { border-radius: 50% !important; }
+  @keyframes ra-ripple {
+    0% { transform: scale(0.7); opacity: 0.55; }
+    80% { opacity: 0; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ra-ripple, .ra-orbit { animation: none; }
+  }
+  .ra-orbit::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: var(--teal-300);
+    box-shadow: 0 0 10px var(--teal-300);
+  }
+  .ra-orbit--a { width: 168px; height: 168px; animation: ra-spin 17s linear infinite; }
+  .ra-orbit--b { width: 140px; height: 140px; animation: ra-spin 11s linear infinite reverse; }
+  .ra-orbit--b::before { width: 6px; height: 6px; margin-left: -3px; top: -3px; background: var(--sky-300); box-shadow: 0 0 10px var(--sky-300); }
+  .ra-clock__face { stroke: rgba(125, 211, 252, 0.55); stroke-width: 2.2; }
+  .ra-clock__ticks line { stroke: rgba(125, 211, 252, 0.5); stroke-width: 1.8; }
+  .ra-clock__hand {
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    transform-box: view-box;
+    transform-origin: 24px 24px;
+  }
+  .ra-clock__hand--h { stroke: #7dd3fc; animation: ra-spin 14s linear infinite; }
+  .ra-clock__hand--m { stroke: #5eead4; animation: ra-spin 3.2s linear infinite; }
+  .ra-clock__hub { fill: #ffffff; }
+  .ra-clock__ping {
+    stroke: #5eead4;
+    stroke-width: 2;
+    opacity: 0;
+    transform-box: view-box;
+    transform-origin: 24px 24px;
+    animation: ra-ping 2.6s ease-out infinite;
+  }
+  @keyframes ra-spin { to { transform: rotate(360deg); } }
+  @keyframes ra-ping {
+    0% { opacity: 0.55; transform: scale(0.5); }
+    70% { opacity: 0; transform: scale(1.35); }
+    100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ra-clock__hand, .ra-clock__ping { animation: none; }
+  }
+
+  /* Spread the integrations out toward the header width so the Rain Agent core
+     sits focused in the center, and make the watch bigger + more present. */
+  .platform__stage,
+  .platform__stage .circuit { max-width: 980px; }
+
+  /* Platform also ends in the WebGL water, merging down into the process section. */
+  .platform { padding-bottom: 300px; }
+
+  /* Widen the proof stats so each label stays on one line (no wrap). */
+  .platform .platform__stats { max-width: 1000px; }
+  .platform__stats dd { white-space: nowrap; }
+  /* Demo screens framed as premium MacBook windows (no 1px borders). */
+  .demo__item .macwin {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.35),
+      0 26px 50px -22px rgba(0, 0, 0, 0.7),
+      0 50px 90px -55px rgba(0, 0, 0, 0.6);
+  }
+  .macwin__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 15px;
+    background: linear-gradient(180deg, #2a3346, #222a3a);
+  }
+  .macwin__dots { display: inline-flex; gap: 8px; }
+  .macwin__dots i {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.18);
+  }
+  .macwin__dots i:nth-child(1) { background: #ff5f57; }
+  .macwin__dots i:nth-child(2) { background: #febc2e; }
+  .macwin__dots i:nth-child(3) { background: #28c840; }
+  .macwin__title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+  }
+  .macwin__screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .macwin__screen > .chat,
+  .macwin__screen > .result { flex: 1; }
+  .macwin .chat,
+  .macwin .rcard {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Paper sections: drop the bluish corner tints for a soft, whitish surface;
+     a gentle white bloom in the middle, clean paper within ~30% of top/bottom. */
+  .warm-grid {
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(60% 42% at 50% 48%, rgba(255, 255, 255, 0.7), rgba(250, 248, 245, 0) 75%);
+  }
+  /* kill the blue/teal corner glows on the paper sections entirely */
+  .caps::before,
+  .process::before { display: none !important; }
+</style>
 </head>
 <body>
 
@@ -28,7 +581,7 @@
       <span class="brand__tile" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
       </span>
-      <span class="brand__word">rain<span class="brand__dot">.</span></span>
+      <canvas class="brand__mark" data-brand-mark aria-hidden="true"></canvas>
     </a>
 
     <nav class="pill-nav" aria-label="Primary">
@@ -57,45 +610,64 @@
   </nav>
 </header>
 
-<main id="main" tabindex="-1">
+<main id="main" class="hx-stage" tabindex="-1">
 
-<!-- ============ HERO ============ -->
-<section class="hero-ocean dark-section noise" id="hero" aria-labelledby="hero-title">
+<!-- ============ HERO · Storm ============ -->
+<section class="hero-ocean dark-section noise hero--storm" id="hero" aria-labelledby="hero-title" data-screen-label="Hero">
   <div class="water-scene water-scene--hero" data-scene>
     <canvas class="sea" data-sea aria-hidden="true"></canvas>
     <canvas class="basin" data-basin aria-hidden="true"></canvas>
     <span class="water-scene__mark serif" aria-hidden="true">rain.</span>
+  </div>
 
+  <!-- scrims -->
+  <div class="hx-scrim" aria-hidden="true"></div>
+  <div class="hx-leftscrim" aria-hidden="true"></div>
+
+  <!-- Storm composition: editorial column over heavy rain + a forming wordmark -->
+  <div class="hx-split">
+    <p class="hx-split__eyebrow">AI implementation studio</p>
     <div class="ocean-hero__copy">
       <h1 id="hero-title" data-split>
         While you were sleeping&hellip;
         <span class="serif-grad" data-cycle>your blog posted itself.</span>
       </h1>
     </div>
-
-    <nav class="basin-chips" aria-label="Where the rain flows">
-      <a class="basin-chip" href="#services">AI Automation</a>
-      <a class="basin-chip" href="#services">Websites</a>
-      <a class="basin-chip" href="#services">Branding</a>
-      <a class="basin-chip" href="#services">Software</a>
-      <a class="basin-chip" href="#services">Mobile Apps</a>
-      <a class="basin-chip" href="#services">Connected Systems</a>
-    </nav>
-  </div>
-
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__track" data-ticker>
-      <span>AI Automation</span><span>Websites</span><span>Branding</span><span>Software Development</span><span>Mobile Apps</span><span>AI Agents</span><span>Connected Systems</span><span>Smart Dashboards</span><span>Lead Capture</span><span>E-commerce</span><span>Analytics</span><span>Content Engines</span>
+    <p class="hx-split__sub">We design, build, and run the systems that do your busywork, so the work ships while you sleep and your business keeps working after you log off.</p>
+    <div class="hx-actions">
+      <a class="btn btn--primary" href="#contact">
+        Start the refresh
+        <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+      </a>
+      <a class="btn btn--outline" href="#services">
+        See how it works
+        <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+      </a>
     </div>
+    <p class="hx-split__proof"><span>20+ Years</span><span>&middot;</span><span>Websites</span><span>&middot;</span><span>Brand</span><span>&middot;</span><span>Software</span><span>&middot;</span><span>AI agents</span></p>
   </div>
 </section>
 
+<!-- ============ STATEMENT BEAT ============ -->
+<section class="statement dark-section noise" aria-label="The refresh">
+  <div class="statement__inner">
+    <p class="statement__kicker" data-reveal>The refresh</p>
+    <p class="statement__line" data-reveal style="--i:1">Your business should keep working <span class="serif-grad">after you log off.</span></p>
+    <p class="statement__sub" data-reveal style="--i:2">Rain designs, builds, and runs the systems that do the work: websites, brand, software, and AI that ships while you sleep.</p>
+  </div>
+  <div class="merge-water" data-merge-water aria-hidden="true"><canvas></canvas></div>
+</section>
+
+<div class="seam seam--to-paper"></div>
+
 <!-- ============ SERVICES - pick a problem ============ -->
 <section class="caps warm-grid" id="services" aria-labelledby="services-title">
-  <header class="section-head">
-    <p class="eyebrow" data-reveal>What we fix</p>
-    <h2 id="services-title" data-reveal style="--i:1">Pick a problem. <span class="serif-grad serif-grad--light">Watch it disappear.</span></h2>
-    <p class="lede" data-reveal style="--i:2">Six ways businesses leak time and money, and how we fix each one.</p>
+  <header class="ed-head" data-reveal>
+    <p class="eyebrow">What we fix</p>
+    <div class="ed-head__body">
+      <h2 id="services-title">Pick a problem. <span class="serif-grad serif-grad--light">Watch it disappear.</span></h2>
+      <p class="lede">Six ways businesses leak time and money, and how we fix each one.</p>
+    </div>
   </header>
 
   <div class="caps__grid" data-assemble>
@@ -333,19 +905,23 @@
   </div>
 </section>
 
+<div class="seam seam--to-ink"></div>
+
 <!-- ============ SEE IT WORK ============ -->
 <section class="demo dark-section noise" id="demo" aria-labelledby="demo-title">
+  <div class="merge-water merge-water--top" data-merge-water data-flip aria-hidden="true"><canvas></canvas></div>
+  <header class="ed-head ed-head--dark" data-reveal>
+    <p class="eyebrow eyebrow--dark">See it work</p>
+    <div class="ed-head__body">
+      <h2 id="demo-title">You ask. <span class="serif-grad">It's done.</span></h2>
+      <p class="lede lede--dark">No dashboards to learn. Tap a task, watch it get done.</p>
+    </div>
+  </header>
   <div class="demo__inner">
-    <header class="section-head">
-      <p class="eyebrow eyebrow--dark" data-reveal>See it work</p>
-      <h2 id="demo-title" data-reveal style="--i:1">You ask. <span class="serif-grad">It's done.</span></h2>
-      <p class="lede lede--dark" data-reveal style="--i:2">No dashboards to learn. Tap a task - watch it get done.</p>
-    </header>
-
     <div class="demo__chips" role="group" aria-label="Pick a task" data-reveal>
-      <button class="demo-chip is-active" type="button" data-scenario="numbers" aria-pressed="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg>
-        My numbers
+      <button class="demo-chip is-active" type="button" data-scenario="social" aria-pressed="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+        Post to Socials
       </button>
       <button class="demo-chip" type="button" data-scenario="content" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5L14.5 3Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
@@ -353,17 +929,27 @@
       </button>
       <button class="demo-chip" type="button" data-scenario="restock" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z"/><path d="M12 11.5 3.5 8.5M12 11.5l8.5-3M12 11.5V20"/></svg>
-        Restock
+        Manage Inventory
       </button>
       <button class="demo-chip" type="button" data-scenario="replies" aria-pressed="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7.5 9 6 9-6"/></svg>
-        Customer replies
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4.5V8M8.5 13.5h.01M15.5 13.5h.01M9 19l-1.5 2M15 19l1.5 2"/><circle cx="12" cy="3.5" r="1"/></svg>
+        A.I. Chat Bot
       </button>
     </div>
 
-    <p class="sr-only">Visual demo: you message Rain on Telegram - &ldquo;How did we do yesterday?&rdquo; - and moments later the result card arrives: a morning report with revenue and new customers, a drafted blog post, a restock purchase order, or customer replies answered in your tone. The buttons above switch the scenario.</p>
+    <p class="sr-only">Visual demo: you message Rain on Telegram - &ldquo;Post today's promo&rdquo; - and moments later the result card arrives: a social post published to Facebook and Instagram, a drafted blog post, a restock purchase order, or customer replies answered in your tone. The buttons above switch the scenario.</p>
     <div class="demo__grid" aria-hidden="true">
       <figure class="demo__item" data-reveal>
+        <div class="demo__cap demo__cap--ask">
+          <span class="demo__step" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg></span>
+          <div class="demo__cap__txt">
+            <strong>You ask</strong>
+            <small>Text Rain in plain language</small>
+          </div>
+        </div>
+        <div class="macwin">
+          <div class="macwin__bar" aria-hidden="true"><span class="macwin__dots"><i></i><i></i><i></i></span><span class="macwin__title">rain agent · chat</span></div>
+          <div class="macwin__screen">
         <div class="chat" data-chat>
           <div class="chat__head">
             <span class="chat__avatar" aria-hidden="true">
@@ -381,49 +967,68 @@
             <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 11 13M21.5 2.5l-6.8 19-3.7-8.5-8.5-3.7 19-6.8Z"/></svg></i>
           </div>
         </div>
+          </div>
+        </div>
         <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>Text it - or tap a task above</figcaption>
       </figure>
 
       <span class="demo__link" aria-hidden="true"><i class="demo__pulse" data-pulse></i></span>
 
       <figure class="demo__item" data-reveal style="--i:1">
+        <div class="demo__cap demo__cap--done">
+          <span class="demo__step" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.9L18.5 9l-4.7 1.6L12 15l-1.8-4.4L5.5 9l4.7-1.1L12 3Z"/><path d="M19 14l.6 1.8 1.8.6-1.8.6-.6 1.8-.6-1.8-1.8-.6 1.8-.6.6-1.8Z"/></svg></span>
+          <div class="demo__cap__txt">
+            <strong>Rain does it</strong>
+            <small>The finished result, built in front of you</small>
+          </div>
+        </div>
+        <div class="macwin">
+          <div class="macwin__bar" aria-hidden="true"><span class="macwin__dots"><i></i><i></i><i></i></span><span class="macwin__title">rain agent · result</span></div>
+          <div class="macwin__screen">
         <div class="result" data-result>
 
-          <div class="report result__view is-active" data-view="report" data-report>
+          <div class="rcard result__view is-active" data-view="social">
             <div class="report__head">
               <span class="report__tile" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
               </span>
               <div class="report__id">
-                <strong>Morning report</strong>
-                <small>Tuesday · 8:00 AM</small>
+                <strong>Social post</strong>
+                <small>Today · 9:00 AM</small>
               </div>
-              <span class="report__badge" data-report-badge>Preparing…</span>
+              <span class="report__badge is-done">Posted ✓</span>
             </div>
-            <ul class="report__rows">
-              <li>
-                <span>Revenue yesterday</span>
-                <strong data-report-num="4820" data-report-prefix="$">$0</strong>
-                <em>▲ 12%</em>
-              </li>
-              <li>
-                <span>New customers</span>
-                <strong data-report-num="18">0</strong>
-                <em>▲ 3</em>
-              </li>
-              <li>
-                <span>Replies sent for you</span>
-                <strong data-report-num="12">0</strong>
-                <em>all answered</em>
-              </li>
-            </ul>
-            <div class="report__chart" aria-hidden="true">
-              <i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:74%"></i><i style="--h:88%"></i>
+            <div class="rcard__body">
+              <div class="social-post">
+                <div class="social-post__media" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+                </div>
+                <div class="social-post__copy">
+                  <p class="social-post__caption">☕ Cold brew at home in 5 minutes. Full recipe on the blog. Link in bio 👇</p>
+                  <p class="social-post__meta">Caption + image generated · #coldbrew #cafe</p>
+                </div>
+              </div>
+              <ul class="social-channels">
+                <li>
+                  <span class="social-ico social-ico--fb" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.3-1 1-1h1.6V3H14c-2.3 0-3.6 1.3-3.6 3.7v1.8H8.4v3h2V21H14v-9.5h2.2l.4-3H14Z"/></svg>
+                  </span>
+                  <span class="social-channels__name">Facebook</span>
+                  <em>Posted ✓</em>
+                </li>
+                <li>
+                  <span class="social-ico social-ico--ig" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+                  </span>
+                  <span class="social-channels__name">Instagram</span>
+                  <em>Posted ✓</em>
+                </li>
+              </ul>
+              <p class="rcard__band">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
+                Live on 2 channels · nothing to schedule
+              </p>
             </div>
-            <p class="report__sent">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
-              Sent to your phone - nothing to log into
-            </p>
           </div>
 
           <div class="rcard result__view" data-view="post">
@@ -438,10 +1043,11 @@
               <span class="report__badge is-done">Scheduled ✓</span>
             </div>
             <div class="rcard__body">
-              <div class="rcard__thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+              <div class="rcard__thumb rcard__thumb--img" aria-hidden="true">
+                <img src="assets/coldbrew-hero.png" alt="" />
               </div>
-              <p class="rcard__title">Cold Brew at Home - the 5-minute method</p>
+              <p class="rcard__title">Cold Brew at Home: the 5-minute method</p>
+              <p class="rcard__preview">Skip the $6 café run. Steep coarse grounds in cold water overnight for a smooth, low-acid concentrate that keeps all week. Here's the exact ratio and method.</p>
               <p class="rcard__meta">800 words · image generated · SEO ready</p>
               <ul class="rcard__steps" aria-hidden="true">
                 <li><span class="tick"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Drafted</li>
@@ -458,19 +1064,24 @@
               </span>
               <div class="report__id">
                 <strong>Purchase order</strong>
-                <small>Sent to your supplier</small>
+                <small>Sent to 2 suppliers</small>
               </div>
               <span class="report__badge is-done">Ordered ✓</span>
             </div>
             <div class="rcard__body">
-              <ul class="rcard__rows">
-                <li><span>Oat milk (1L)</span><strong>× 48</strong></li>
-                <li><span>Supplier</span><strong>Your usual</strong></li>
-                <li><span>Delivery</span><strong>Thursday</strong></li>
+              <ul class="rcard__rows order-rows">
+                <li><span><i class="ord-tag ord-tag--bar">Café</i>Cold brew concentrate (3L)</span><strong>× 12</strong></li>
+                <li><span><i class="ord-tag ord-tag--bar">Café</i>Oat milk (1L)</span><strong>× 24</strong></li>
+                <li><span><i class="ord-tag ord-tag--kit">Kitchen</i>Ribeye steak</span><strong>20 kg</strong></li>
+                <li><span><i class="ord-tag ord-tag--kit">Kitchen</i>Fresh limes</span><strong>6 cases</strong></li>
               </ul>
+              <p class="order-deliv">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/></svg>
+                Delivery <strong>Friday before 4pm</strong> · auto-paid on your terms
+              </p>
               <p class="rcard__band">
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
-                Confirmed - invoice on your phone
+                Confirmed - invoices on your phone
               </p>
             </div>
           </div>
@@ -481,24 +1092,26 @@
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
               </span>
               <div class="report__id">
-                <strong>Inbox</strong>
-                <small>Today</small>
+                <strong>Chat bot</strong>
+                <small>Live on your site</small>
               </div>
-              <span class="report__badge is-done">Cleared ✓</span>
+              <span class="report__badge is-done">Handled ✓</span>
             </div>
             <div class="rcard__body">
               <ul class="rcard__mails">
-                <li><i class="rcard__dot" style="--c1:#3b82f6;--c2:#6366f1" aria-hidden="true"></i><span>"Where's my order?"</span><em>replied ✓</em></li>
-                <li><i class="rcard__dot" style="--c1:#f59e0b;--c2:#f97316" aria-hidden="true"></i><span>"Do you ship to Penang?"</span><em>replied ✓</em></li>
-                <li><i class="rcard__dot" style="--c1:#10b981;--c2:#14b8a6" aria-hidden="true"></i><span>"Can I change my booking?"</span><em>replied ✓</em></li>
+                <li><i class="rcard__dot" style="--c1:#ec4899;--c2:#d946ef" aria-hidden="true"></i><span>“Do you offer rhinoplasty?”</span><em>answered ✓</em></li>
+                <li><i class="rcard__dot" style="--c1:#8b5cf6;--c2:#6366f1" aria-hidden="true"></i><span>“Cost of Botox &amp; fillers?”</span><em>answered ✓</em></li>
+                <li><i class="rcard__dot" style="--c1:#14b8a6;--c2:#0ea5e9" aria-hidden="true"></i><span>“Earliest facelift consult?”</span><em>booked ✓</em></li>
               </ul>
               <p class="rcard__band">
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M5.4 8.2l1.8 1.8 3.4-3.8"/></svg>
-                12 answered · 2 waiting for your OK
+                18 patient chats handled · 4 consults booked
               </p>
             </div>
           </div>
 
+        </div>
+          </div>
         </div>
         <figcaption><span class="live-dot live-dot--sm" aria-hidden="true"></span>The result, built in front of you</figcaption>
       </figure>
@@ -508,39 +1121,61 @@
 
 <!-- ============ PROCESS ============ -->
 <section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
-  <header class="section-head">
-    <p class="eyebrow eyebrow--dark" data-reveal>Our platform</p>
-    <h2 id="platform-title" data-reveal style="--i:1">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
-    <p class="lede lede--dark" data-reveal style="--i:2">Rain Agent is the platform we built and run ourselves: your dedicated agent, wired to your tools, watched on every run.</p>
+  <header class="ed-head ed-head--dark" data-reveal>
+    <p class="eyebrow eyebrow--dark">Our platform</p>
+    <div class="ed-head__body">
+      <h2 id="platform-title">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
+      <p class="lede lede--dark">Rain Agent is the platform we built and run ourselves: your dedicated agent, wired to your tools, watched on every run.</p>
+    </div>
   </header>
 
   <div class="platform__stage" data-reveal style="--i:2">
     <div class="circuit">
         <span class="circuit__halo" aria-hidden="true"></span>
         <span class="circuit__ring" aria-hidden="true"></span>
-        <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true">
-          <path class="trace" d="M260 220 H360 V72 H424"/>
-          <path class="trace" d="M260 220 H160 V72 H96"/>
-          <path class="trace" d="M260 220 H456"/>
-          <path class="trace" d="M260 220 H64"/>
-          <path class="trace" d="M260 220 H360 V368 H424"/>
-          <path class="trace" d="M260 220 H160 V368 H96"/>
+        <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true" data-comment-anchor="0c355f3776-svg">
+          <path class="trace" d="M260 220 H360 V70.4 H423.8"/>
+          <path class="trace" d="M260 220 H160 V70.4 H96.2"/>
+          <path class="trace" d="M260 220 H457.6"/>
+          <path class="trace" d="M260 220 H62.4"/>
+          <path class="trace" d="M260 220 H360 V369.6 H423.8"/>
+          <path class="trace" d="M260 220 H160 V369.6 H96.2"/>
+          <path class="trace" d="M260 220 V70.4"/>
+          <path class="trace" d="M260 220 V369.6"/>
           <g class="circuit__pulses">
-            <circle class="pulse" r="3.2"><animateMotion dur="3s" repeatCount="indefinite" path="M260 220 H360 V72 H424"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M260 220 H160 V72 H96"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="2.4s" begin="1.1s" repeatCount="indefinite" path="M260 220 H456"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="2.6s" begin="0.3s" repeatCount="indefinite" path="M260 220 H64"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite" path="M260 220 H360 V368 H424"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="3s" begin="0.9s" repeatCount="indefinite" path="M260 220 H160 V368 H96"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3s" repeatCount="indefinite" path="M260 220 H360 V70.4 H423.8"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M260 220 H160 V70.4 H96.2"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.4s" begin="1.1s" repeatCount="indefinite" path="M260 220 H457.6"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.6s" begin="0.3s" repeatCount="indefinite" path="M260 220 H62.4"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite" path="M260 220 H360 V369.6 H423.8"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3s" begin="0.9s" repeatCount="indefinite" path="M260 220 H160 V369.6 H96.2"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.8s" begin="0.45s" repeatCount="indefinite" path="M260 220 V70.4"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.1s" begin="1.3s" repeatCount="indefinite" path="M260 220 V369.6"/></circle>
           </g>
         </svg>
 
         <div class="circuit__core" aria-hidden="true">
-          <span class="circuit__core-tile">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
+          <span class="ra-orbit ra-orbit--a" aria-hidden="true"></span>
+          <span class="ra-orbit ra-orbit--b" aria-hidden="true"></span>
+          <span class="ra-ripple" aria-hidden="true"></span>
+          <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
+          <span class="ra-core-disk">
+            <svg class="ra-clock" viewBox="0 0 48 48" fill="none">
+              <circle class="ra-clock__ping" cx="24" cy="24" r="19"/>
+              <circle class="ra-clock__face" cx="24" cy="24" r="19"/>
+              <g class="ra-clock__ticks" stroke-linecap="round">
+                <line x1="24" y1="7" x2="24" y2="10.5"/>
+                <line x1="41" y1="24" x2="37.5" y2="24"/>
+                <line x1="24" y1="41" x2="24" y2="37.5"/>
+                <line x1="7" y1="24" x2="10.5" y2="24"/>
+              </g>
+              <line class="ra-clock__hand ra-clock__hand--h" x1="24" y1="24" x2="24" y2="15.5"/>
+              <line class="ra-clock__hand ra-clock__hand--m" x1="24" y1="24" x2="24" y2="10.5"/>
+              <circle class="ra-clock__hub" cx="24" cy="24" r="2.1"/>
+            </svg>
+            <strong>rain agent</strong>
+            <small>always on</small>
           </span>
-          <strong>rain agent</strong>
-          <small>core</small>
         </div>
 
         <span class="circuit__node" style="--x:81.5%;--y:16%" aria-hidden="true">
@@ -561,6 +1196,12 @@
         <span class="circuit__node" style="--x:18.5%;--y:84%" aria-hidden="true">
           <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z"/><path d="M12 11.5 3.5 8.5M12 11.5l8.5-3M12 11.5V20"/></svg></i>Inventory
         </span>
+        <span class="circuit__node" style="--x:50%;--y:16%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9h17M8 3v3M16 3v3"/></svg></i>Calendar
+        </span>
+        <span class="circuit__node" style="--x:50%;--y:84%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg></i>Payments
+        </span>
       </div>
   </div>
 
@@ -572,7 +1213,7 @@
   </ul>
 
   <dl class="platform__stats" data-reveal>
-    <div><dt><span data-count="312">0</span></dt><dd>tasks / month</dd></div>
+    <div><dt><span data-count="312" data-comment-anchor="ad2b7deb31-span">0</span></dt><dd>tasks / month</dd></div>
     <div><dt>0</dt><dd>missed or dropped</dd></div>
     <div><dt>24/7</dt><dd>monitored runs</dd></div>
     <div><dt>1</dt><dd>connected system</dd></div>
@@ -580,9 +1221,9 @@
 
   <div class="platform__belt" data-reveal>
     <div class="runlog glass">
-        <div class="runlog__head">
-          <span class="live-dot live-dot--sm" aria-hidden="true"></span>
-          <span>Live run log</span>
+        <div class="runlog__bar">
+          <span class="runlog__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="runlog__title">rain agent · live run log</span>
           <span class="runlog__day">today</span>
         </div>
         <ul class="runlog__lines" data-runlog aria-live="off">
@@ -603,51 +1244,86 @@
           <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6.5 4.5h5v5"/></svg>
         </a>
       </div>
+  <div class="merge-water" data-merge-water aria-hidden="true"><canvas></canvas></div>
 </section>
 
-<!-- ============ PLATFORM ============ -->
-<section class="process warm-grid" id="process" aria-labelledby="process-title">
-  <header class="section-head">
-    <p class="eyebrow" data-reveal>How we work</p>
-    <h2 id="process-title" data-reveal style="--i:1">A studio that ships - <span class="serif-grad serif-grad--light">then stays.</span></h2>
-    <p class="lede" data-reveal style="--i:2">Five deliberate moves. No mystery, no lock-in.</p>
+<div class="seam seam--to-paper"></div>
+
+<!-- ============ PROCESS ============ -->
+<section class="process warm-grid" id="process" aria-labelledby="process-title" data-comment-anchor="a40f4c1565-section">
+  <header class="ed-head" data-reveal data-comment-anchor="f05478bf85-header">
+    <p class="eyebrow">How we work</p>
+    <div class="ed-head__body">
+      <h2 id="process-title">A studio that ships, <span class="serif-grad serif-grad--light">then stays.</span></h2>
+      <p class="lede">Three deliberate moves. No mystery, no lock-in.</p>
+    </div>
   </header>
 
-  <div class="process__row">
-    <span class="process__line" aria-hidden="true"></span>
-
-    <div class="process-step" data-reveal>
-      <span class="process-step__tile" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
-      </span>
-      <span class="process-step__label">Step 01</span>
-      <h3>Discover</h3>
-      <p>We map your business and pinpoint the work costing you the most.</p>
+  <div class="pwork" data-comment-anchor="ca0f964ca5-div">
+    <div class="pwork__line" aria-hidden="true">
+      <span class="pwork__dot"></span>
+      <span class="pwork__dot is-active"></span>
+      <span class="pwork__dot"></span>
     </div>
 
-    <div class="process-step" data-reveal style="--i:1">
-      <span class="process-step__tile" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
-      </span>
-      <span class="process-step__label">Step 02</span>
-      <h3>Build &amp; connect</h3>
-      <p>We build the system and wire it into the tools you already use.</p>
-    </div>
+    <div class="pwork__grid">
+      <article class="pwork-card" data-reveal>
+        <div class="pwork-card__top">
+          <span class="pwork-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg></span>
+          <span class="pwork-card__no" aria-hidden="true">01</span>
+        </div>
+        <p class="pwork-card__label">Discover</p>
+        <h3 class="pwork-card__title">We find the work that's costing you most.</h3>
+        <p class="pwork-card__body">We map your business end to end and pinpoint the busywork quietly leaking your time and money.</p>
+        <hr class="pwork-card__rule" />
+        <ul class="pwork-card__list">
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Business map</li>
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Cost audit</li>
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Priority plan</li>
+        </ul>
+      </article>
 
-    <div class="process-step" data-reveal style="--i:2">
-      <span class="process-step__tile" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 19a9.5 9.5 0 1 1 17 0"/><path d="M12 15l3.5-5.5"/></svg>
-      </span>
-      <span class="process-step__label">Step 03</span>
-      <h3>Run &amp; improve</h3>
-      <p>We monitor every run, report results, and keep tuning as you grow.</p>
+      <article class="pwork-card" data-reveal style="--i:1">
+        <div class="pwork-card__top">
+          <span class="pwork-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>
+          <span class="pwork-card__no" aria-hidden="true">02</span>
+        </div>
+        <p class="pwork-card__label">Build &amp; connect</p>
+        <h3 class="pwork-card__title">We build the system and wire it in.</h3>
+        <p class="pwork-card__body" data-comment-anchor="8b518bc858-p">We build exactly what the work needs and connect it into the tools you already use. No new logins to learn.</p>
+        <hr class="pwork-card__rule" />
+        <ul class="pwork-card__list">
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Custom build</li>
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Wired to your tools</li>
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>One source of truth</li>
+        </ul>
+      </article>
+
+      <article class="pwork-card" data-reveal style="--i:2">
+        <div class="pwork-card__top">
+          <span class="pwork-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 19a9.5 9.5 0 1 1 17 0"/><path d="M12 15l3.5-5.5"/></svg></span>
+          <span class="pwork-card__no" aria-hidden="true">03</span>
+        </div>
+        <p class="pwork-card__label">Run &amp; improve</p>
+        <h3 class="pwork-card__title">We run it, watch it, and keep tuning.</h3>
+        <p class="pwork-card__body">We monitor every run, report what it delivered, and keep improving the system as your business grows.</p>
+        <hr class="pwork-card__rule" />
+        <ul class="pwork-card__list">
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Monitored 24/7</li>
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Results reported</li>
+          <li><span class="ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Tuned as you grow</li>
+        </ul>
+      </article>
     </div>
   </div>
 
 </section>
 
+<div class="seam seam--to-ink"></div>
+
 <!-- ============ CONTACT ============ -->
 <section class="contact dark-section noise" id="contact" aria-labelledby="contact-title">
+  <div class="merge-water merge-water--top" data-merge-water data-flip aria-hidden="true"><canvas></canvas></div>
   <div class="contact__inner">
     <div class="contact__copy">
       <p class="eyebrow eyebrow--dark" data-reveal>Begin</p>
@@ -712,7 +1388,6 @@
         </span>
         <span class="brand__word">rain<span class="brand__dot">.</span></span>
       </a>
-      <p>The business refresh for the AI era.<br />Led by Michael Cassella - 20+ years of working systems.</p>
     </div>
     <nav class="site-footer__nav" aria-label="Footer">
       <a href="#services">Services</a>
@@ -722,12 +1397,87 @@
       <a href="https://rain-agent.vercel.app" target="_blank" rel="noopener">Rain Agent ↗</a>
     </nav>
     <p class="site-footer__meta">
-      © <span data-year>2026</span> Rain · All systems running<br />
-      <a href="mailto:hello@rain.studio">hello@rain.studio</a>
+      © <span data-year>2026</span> Rain · All systems running
     </p>
   </div>
 </footer>
 
-<script src="rain.js?v=74" defer></script>
+<script src="rain.js?v=75" defer></script>
+<script>
+/* Storm hero - push the scene flags into the live water engine once it's defined. */
+document.addEventListener("DOMContentLoaded", function () {
+  var H = window.__heroTweak;
+  if (!H) return;
+  H.noOcean = true;
+  H.markX = 0.7;
+  H.markY = 0.5;
+  H.markScale = 1.4;
+  H.rainMul = 2.3;
+  H.splashMul = 1.95;
+  H.waterY = 0.86;
+  window.dispatchEvent(new Event("resize"));
+  window.setTimeout(function () { window.dispatchEvent(new Event("resize")); }, 320);
+});
+</script>
+<script>
+/* Persisted Tweaks - the host rewrites this JSON on disk when you change a control. */
+window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
+  "dawnArc": true,
+  "dawnIntensity": 0.6,
+  "storyPaceMs": 4400,
+  "rippleOnSwap": true
+}/*EDITMODE-END*/;
+</script>
+<script src="rain-tweaks.js?v=75" defer></script>
+<script src="merge-water.js?v=75" defer></script>
+<script>
+/* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
+   fine particle dissolve knocked out of it so it echoes the hero water mark. */
+(function () {
+  var cv = document.querySelector("[data-brand-mark]");
+  if (!cv || !cv.getContext) return;
+  function render() {
+    var ctx = cv.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    var fontPx = 27;
+    var font = "italic 600 " + fontPx + "px 'Cormorant Garamond', Georgia, serif";
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.font = font;
+    var tw = ctx.measureText("rain.").width;
+    var padX = 3;
+    var cssW = Math.ceil(tw + padX * 2);
+    var cssH = Math.ceil(fontPx * 1.08);
+    cv.style.width = cssW + "px";
+    cv.style.height = cssH + "px";
+    cv.width = Math.round(cssW * dpr);
+    cv.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+    var g = ctx.createLinearGradient(0, 0, cssW, 0);
+    g.addColorStop(0, "#ffffff");
+    g.addColorStop(0.55, "#7dd3fc");
+    g.addColorStop(1, "#5eead4");
+    ctx.font = font;
+    ctx.textBaseline = "alphabetic";
+    ctx.fillStyle = g;
+    ctx.fillText("rain.", padX, fontPx * 0.83);
+    /* knock out a fine speckle so the word reads as settling particles */
+    ctx.globalCompositeOperation = "destination-out";
+    for (var y = 0; y < cssH; y += 1.5) {
+      for (var x = 0; x < cssW; x += 1.5) {
+        if (Math.random() < 0.26) ctx.fillRect(x, y, 0.85, 0.85);
+      }
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+  if (document.fonts && document.fonts.load) {
+    document.fonts.load("italic 600 27px 'Cormorant Garamond'").then(function () {
+      (document.fonts.ready || Promise.resolve()).then(render);
+    }).catch(render);
+  } else {
+    window.setTimeout(render, 500);
+  }
+})();
+</script>
 </body>
 </html>

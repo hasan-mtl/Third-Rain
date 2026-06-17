@@ -20,6 +20,25 @@
   var qs = function (s, r) { return (r || document).querySelector(s); };
   var qsa = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  // Hero "dawn arc" + copy→water coupling. Shared across the headline-cycle
+  // block and the WebGL water engine (same IIFE scope); also exposed for Tweaks.
+  var HERO = {
+    dawnOn: true,      // night breaks toward first light and back, on a slow loop
+    dawnMax: 1,        // intensity ceiling (0..1)
+    dawnTarget: 0,     // current drift value, driven continuously by the render loop
+    couple: true,      // ripple across the basin on each phrase swap
+    cycleMs: 3600,     // story pace between phrases (ms)
+    noOcean: false,    // rain-logo-only mode: drop the WebGL ocean, rain falls into the dark
+    markX: 0.5,        // horizontal center of the particle wordmark (0..1 of width)
+    markY: 0,          // vertical center of the wordmark (0..1); 0 = engine default (upper)
+    markScale: 1,      // size multiplier for the wordmark
+    rainMul: 1,        // rain density multiplier
+    splashMul: 1,      // splash/ripple size multiplier
+    waterY: 0,         // splash line as a fraction of height; 0 = auto
+    onCycle: null      // assigned by the water engine when it is live
+  };
+  window.__heroTweak = HERO;
+
   /* ---------- header shadow ---------- */
   var header = qs("[data-header]");
   function onScroll() {
@@ -99,21 +118,27 @@
       "your blog posted itself."
     ];
     var cycleIdx = 0;
+    var N = PHRASES.length;
     var doCycle = function () {
       cycleEl.classList.add("is-cycling", "is-swapping");
       window.setTimeout(function () {
-        cycleEl.textContent = PHRASES[cycleIdx % PHRASES.length];
+        cycleEl.textContent = PHRASES[cycleIdx % N];
         cycleIdx += 1;
         cycleEl.classList.remove("is-swapping");
+        /* copy → water: each phrase lands a ripple on the basin */
+        if (HERO.couple && HERO.onCycle) HERO.onCycle(cycleIdx);
       }, 270);
     };
-    // let the entrance cascade land before the first swap
+    // let the entrance cascade land before the first swap, then self-schedule
+    // at the (tweakable) story pace
     window.setTimeout(function () {
       var cycleHome = cycleEl.closest("section");
-      window.setInterval(function () {
+      var tick = function () {
         /* swap only when the tab AND the hero are actually visible */
         if (!document.hidden && !(cycleHome && cycleHome.classList.contains("is-offstage"))) doCycle();
-      }, 3600);
+        window.setTimeout(tick, Math.max(1500, HERO.cycleMs || 3600));
+      };
+      tick();
     }, 3000);
   }
 
@@ -419,6 +444,7 @@
 
     var bPar = 0;   // idle sway of the horizon (the camera breathing)
     var bCamX = 0;  // idle lateral sway
+    var dawnLevel = 0; // eased value of the dawn arc fed to the shader
 
     // the camera is fixed; it only breathes - a barely perceptible ~10s sway
     var updIdle = function () {
@@ -454,6 +480,7 @@
       "uniform float uFocal;",
       "uniform float uScale;",
       "uniform float uCamX;",
+      "uniform float uDawn;",
       "/* shore tuning - change these three, nothing else */",
       "const float DISSOLVE_HEIGHT = 0.12;",
       "const float LINE_OPACITY = 0.12;",
@@ -503,6 +530,14 @@
       "    float horizGlow = exp(-abs(dy) * 0.07) * breathe;",
       "    col += vec3(0.5, 0.82, 0.92) * horizGlow * 0.42;",
       "    alpha = max(alpha, horizGlow * 0.5);",
+      "    /* dawn: a warm band climbs from the waterline; the night sky warms */",
+      "    float dHaze = exp(dy * 0.010);",
+      "    float dBand = exp(dy * 0.024);",
+      "    vec3 dawnLo = vec3(1.0, 0.50, 0.30);",
+      "    vec3 dawnHi = vec3(1.0, 0.80, 0.52);",
+      "    vec3 dawnCol = mix(dawnHi, dawnLo, dBand);",
+      "    col = mix(col, col * 0.66 + dawnCol * 1.12, uDawn * dHaze * 0.92);",
+      "    alpha = max(alpha, uDawn * dBand * 0.62);",
       "    gl_FragColor = vec4(col, alpha);",
       "    return;",
       "  }",
@@ -551,6 +586,11 @@
       "  float path = exp(-abs(wx) * uScale * 1.1);",
       "  col += vec3(0.95, 1.0, 1.0) * spec * (0.7 + path * 0.5);",
       "  col += vec3(0.2, 0.5, 0.62) * path * (0.13 + diff * 0.12);",
+      "  /* dawn on the water: warm the body, lay a gold sun-glitter down the path */",
+      "  vec3 dawnWarm = vec3(1.0, 0.64, 0.40);",
+      "  col = mix(col, col + dawnWarm * 0.18, uDawn);",
+      "  col += dawnWarm * spec * path * uDawn * 2.2;",
+      "  col += dawnWarm * path * uDawn * 0.12;",
       "",
       "  float waterMist = exp(-dy * 0.045);",
       "  col = mix(col, vec3(0.5, 0.65, 0.77), clamp(waterMist, 0.0, 1.0) * 0.7);",
@@ -627,7 +667,8 @@
             uCamH: { value: CAM_H },
             uFocal: { value: 500 },
             uScale: { value: WORLD_SCALE },
-            uCamX: { value: 0 }
+            uCamX: { value: 0 },
+            uDawn: { value: 0 }
           },
           vertexShader: SEA_VERT,
           fragmentShader: SEA_FRAG
@@ -641,7 +682,7 @@
     };
 
     var basinSeedDrop = function (d, fromTop) {
-      d.speed = 340 + Math.random() * 420;
+      d.speed = (340 + Math.random() * 420) * (1 + ((HERO.rainMul || 1) - 1) * 0.16);
       d.drift = d.speed * 0.14;
       d.len = 9 + Math.random() * 13;
       d.alpha = 0.12 + Math.random() * 0.3;
@@ -660,10 +701,10 @@
       basinCanvas.width = Math.round(bW * dpr);
       basinCanvas.height = Math.round(bH * dpr);
       bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      bWy = bH * 0.52;
+      bWy = bH * (HERO.waterY || (HERO.noOcean ? 0.94 : 0.52));
 
       bParts = [];
-      var fontPx = Math.min(bW * 0.155, bH * 0.3, 225);
+      var fontPx = Math.min(bW * 0.155, bH * 0.3, 225) * (HERO.markScale || 1);
       var off = document.createElement("canvas");
       off.width = bW;
       off.height = bH;
@@ -672,7 +713,8 @@
       octx.textBaseline = "alphabetic";
       var met = octx.measureText("rain.");
       octx.fillStyle = "#fff";
-      octx.fillText("rain.", (bW - met.width) / 2, Math.max(bH * 0.25, fontPx * 0.78 + 28));
+      var baseY = HERO.markY ? bH * HERO.markY + fontPx * 0.35 : Math.max(bH * 0.25, fontPx * 0.78 + 28);
+      octx.fillText("rain.", bW * (HERO.markX || 0.5) - met.width / 2, baseY);
       var img = octx.getImageData(0, 0, bW, bH).data;
       for (var yy = 0; yy < bH; yy += 3) {
         for (var xx = 0; xx < bW; xx += 3) {
@@ -707,7 +749,8 @@
       if (seaReady) seaResize();
 
       if (!bDrops.length) {
-        for (var bd = 0; bd < 70; bd++) bDrops.push(basinSeedDrop({}, false));
+        var bdN = Math.round(70 * (HERO.rainMul || 1));
+        for (var bd = 0; bd < bdN; bd++) bDrops.push(basinSeedDrop({}, false));
       }
 
       bGlyphs = [];
@@ -837,24 +880,40 @@
         }
       }
 
-      /* the ocean - WebGL, or the 2D stand-in until it loads */
-      if (seaReady) {
+      /* the ocean - WebGL, or the 2D stand-in until it loads. in rain-only
+         mode we draw neither: no sea, no horizon - just the logo and the rain. */
+      if (HERO.noOcean) {
+        /* rain-logo-only: the waterline sits off the bottom, drops fall into dark */
+      } else if (seaReady) {
         seaMat.uniforms.uTime.value = bTime;
         seaMat.uniforms.uHy.value = bWy + bPar;
         seaMat.uniforms.uCamX.value = bCamX;
+        /* dawn arc: a continuous, autonomous drift - deep night blooms up to
+           first light and eases back on a slow loop, so the sky is always
+           perceptibly alive (not stepped to the text). smoothstep makes it
+           linger in night and at the crest rather than racing through. */
+        var DAWN_PERIOD = 28; // seconds for one full night→dawn→night cycle
+        var drift = 0.5 - 0.5 * Math.cos((bTime / DAWN_PERIOD) * Math.PI * 2);
+        drift = drift * drift * (3 - 2 * drift);
+        HERO.dawnTarget = drift;
+        var dTgt = HERO.dawnOn ? drift * HERO.dawnMax : 0;
+        dawnLevel += (dTgt - dawnLevel) * Math.min(1, 0.5 * dt);
+        seaMat.uniforms.uDawn.value = dawnLevel;
         seaRenderer.render(seaSceneGl, seaCam);
       } else {
         drawFallbackWater();
       }
 
-      /* wordmark reflection shimmering on the water */
-      for (i = 0; i < bParts.length; i += 3) {
-        p = bParts[i];
-        if (Math.abs(p.y - p.ty) < 40) {
-          var ry = (bWy + bPar) + ((bWy + bPar) - p.y) * 0.36;
-          var rx = p.x + Math.sin(bTime * 1.6 + p.ty * 0.05) * 2.0;
-          bctx.fillStyle = "rgba(140, 225, 240," + (0.07 + 0.05 * bBreath).toFixed(3) + ")";
-          bctx.fillRect(rx, ry, 1.9, 1.6);
+      /* wordmark reflection shimmering on the water (skipped in rain-only mode) */
+      if (!HERO.noOcean) {
+        for (i = 0; i < bParts.length; i += 3) {
+          p = bParts[i];
+          if (Math.abs(p.y - p.ty) < 40) {
+            var ry = (bWy + bPar) + ((bWy + bPar) - p.y) * 0.36;
+            var rx = p.x + Math.sin(bTime * 1.6 + p.ty * 0.05) * 2.0;
+            bctx.fillStyle = "rgba(140, 225, 240," + (0.07 + 0.05 * bBreath).toFixed(3) + ")";
+            bctx.fillRect(rx, ry, 1.9, 1.6);
+          }
         }
       }
 
@@ -918,24 +977,27 @@
         d.y += d.speed * dt;
         d.x += d.drift * dt;
         if (d.y >= d.land + bPar) {
-          if (bRips.length < 26) {
+          if (bRips.length < 40) {
             bRips.push({
               x: d.x,
               y: d.land + bPar,
               r: 1,
-              max: (8 + Math.random() * 9) * d.scaleF,
+              max: (8 + Math.random() * 9) * d.scaleF * (HERO.splashMul || 1),
               a: 0.3 + 0.2 * d.scaleF,
-              sf: d.scaleF
+              sf: d.scaleF * (HERO.splashMul || 1)
             });
           }
-          if (d.scaleF > 0.55 && bSprays.length < 90) {
-            bSprays.push({
-              x: d.x,
-              y: d.land + bPar,
-              vx: (Math.random() - 0.5) * 110 * d.scaleF,
-              vy: -(55 + Math.random() * 110) * d.scaleF,
-              life: 0.32 + Math.random() * 0.22
-            });
+          if (d.scaleF > 0.55 && bSprays.length < 150) {
+            var spN = (HERO.splashMul || 1) > 1.3 ? 2 : 1;
+            for (var spi = 0; spi < spN; spi++) {
+              bSprays.push({
+                x: d.x,
+                y: d.land + bPar,
+                vx: (Math.random() - 0.5) * 110 * d.scaleF * (HERO.splashMul || 1),
+                vy: -(55 + Math.random() * 110) * d.scaleF * (HERO.splashMul || 1),
+                life: 0.32 + Math.random() * 0.24
+              });
+            }
           }
           basinSeedDrop(d, true);
           continue;
@@ -958,7 +1020,8 @@
         sw.x += sw.vx * dt;
         sw.y += sw.vy * dt;
         bctx.globalAlpha = Math.min(0.7, sw.life * 1.6);
-        bctx.drawImage(softSprite(), sw.x - 2.2, sw.y - 2.2, 4.4, 4.4);
+        var ss = 4.4 * (HERO.splashMul || 1);
+        bctx.drawImage(softSprite(), sw.x - ss / 2, sw.y - ss / 2, ss, ss);
       }
       bctx.globalAlpha = 1;
 
@@ -1067,6 +1130,23 @@
         if (svc) svc.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
+
+    // copy → water coupling: the water engine owns bRips/bSprays, so it hands
+    // the headline-cycle a callback that lands a broad ripple + a little spray.
+    HERO.onCycle = function () {
+      if (!bOn) return;
+      var rx = bW * (0.34 + Math.random() * 0.32);
+      var ry = bWy + bPar + (bH - bWy) * (0.26 + Math.random() * 0.12);
+      bRips.push({ x: rx, y: ry, r: 3, max: 120, a: 0.5, sf: 1.6 });
+      for (var s = 0; s < 8 && bSprays.length < 90; s++) {
+        bSprays.push({
+          x: rx, y: ry,
+          vx: (Math.random() - 0.5) * 120,
+          vy: -(50 + Math.random() * 90),
+          life: 0.4 + Math.random() * 0.25
+        });
+      }
+    };
 
     var basinResizeT;
     window.addEventListener("resize", function () {
@@ -1396,12 +1476,12 @@
     var reportBadge = qs("[data-report-badge]", demoGrid);
 
     var SCENARIOS = {
-      numbers: { user: "Clicks last week vs last month?", reply: "\ud83d\udcc8 4,820 \u2014 up 18%. Full report, right here \u2192", view: "report" },
+      social: { user: "Post today's promo to Facebook & Instagram 📸", reply: "Done ✅ Posted to Facebook + Instagram. Caption and image ready.", view: "social" },
       content: { user: "Write a blog on cold brew \u2014 publish Monday 7am \u2615", reply: "Done \u2705 Drafted, image ready, scheduled Mon 7:00.", view: "post" },
-      restock: { user: "Low on oat milk \u2014 reorder it.", reply: "\ud83d\uded2 48 units ordered from your supplier. ETA Thursday.", view: "order" },
-      replies: { user: "Handle today's customer emails.", reply: "\u2709\ufe0f 12 replies drafted in your tone, 2 flagged for you.", view: "inbox" }
+      restock: { user: "We're low for Friday - restock the café & kitchen.", reply: "📦 Ordered: coffee beans, oat milk & fresh produce, delivery Friday before 4pm.", view: "order" },
+      replies: { user: "Answer the chat widget on our clinic site.", reply: "💬 18 patient chats handled - 4 consults booked, 2 flagged for you.", view: "inbox" }
     };
-    var SCN_ORDER = ["numbers", "content", "restock", "replies"];
+    var SCN_ORDER = ["social", "content", "restock", "replies"];
 
     var scnTimers = [];
     var scnTyping = null;
@@ -1473,7 +1553,6 @@
       target.classList.remove("is-live");
       void target.offsetWidth; // restart the assemble transitions
       target.classList.add("is-live");
-      if (key === "report") assembleReport(instant);
     };
 
     var setChip = function (key) {
@@ -1540,7 +1619,7 @@
     });
 
     if (reduce) {
-      runScenario("numbers");
+      runScenario("social");
     } else {
       demoGrid.addEventListener("mouseenter", scnStop);
       demoGrid.addEventListener("mouseleave", scnPlay);
