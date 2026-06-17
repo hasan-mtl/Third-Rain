@@ -1209,7 +1209,7 @@ html.js .cap-panel.is-active .cap-panel__outcome {
   font-weight: 500;
   color: #fff;
   border-radius: 12px;
-  background: linear-gradient(to right, var(--ink-900), var(--ink-800));
+  background: linear-gradient(to right, var(--blue-600), var(--blue-500));
 }
 
 /* ==========================================================================

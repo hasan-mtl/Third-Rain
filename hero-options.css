@@ -144,11 +144,15 @@
 .hx-split .ocean-hero__copy { text-align: left; }
 .hx-split .ocean-hero__copy h1 {
   text-align: left;
-  font-size: calc(clamp(2rem, 3.2vw, 2.85rem) * var(--hx-h-scale, 1));
+  font-size: calc(clamp(2.08rem, 3.4vw, 3rem) * var(--hx-h-scale, 1));
   line-height: 1.12;
   padding-bottom: 6px;
 }
-.hx-split .ocean-hero__copy h1 .serif-grad { margin-top: 8px; line-height: 1.3; }
+.hx-split .ocean-hero__copy h1 .serif-grad {
+  margin-top: 8px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
 .hx-split__sub {
   max-width: 46ch;
   font-size: clamp(1rem, 1.3vw, 1.16rem);
