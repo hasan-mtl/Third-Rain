@@ -22,12 +22,13 @@
     "uniform float uTime;",
     "uniform vec2 uRes;",
     "uniform float uFlip;",
+    "uniform float uOcean;",
     "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453123); }",
     "float noise(vec2 p){ vec2 i=floor(p), f=fract(p); float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.)); vec2 u=f*f*(3.-2.*f); return mix(mix(a,b,u.x),mix(c,d,u.x),u.y); }",
     "float fbm(vec2 p){ float v=0.0, a=0.55; for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.03; a*=0.5; } return v; }",
     "void main(){",
     "  float y = (uFlip > 0.5) ? vUv.y : (1.0 - vUv.y);",            /* 0 = horizon/dark, 1 = paper */
-    "  float persp = mix(0.10, 1.0, y);",  /* waves grow toward the viewer */
+    "  float persp = mix(0.10, (uOcean > 0.5 ? 0.58 : 1.0), y);",  /* calmer + more distant for the open-ocean band */
     "  float t = uTime;",
     "  vec2 wp = vec2(vUv.x*3.4, y*5.2);",
     "  float w = fbm(wp + vec2(t*0.05, -t*0.20));",
@@ -39,6 +40,16 @@
     "  vec3 col = mix(deep, mid, smoothstep(0.0, 0.55, y));",
     "  col += crest * vec3(0.22,0.46,0.58) * persp;",
     "  col += smoothstep(0.26, 0.04, y) * vec3(0.03,0.09,0.15);",
+    "  if (uOcean > 0.5) {",                                            /* open-ocean band: no paper, fade into the hero (far) and dark statement (near) */
+    "    col *= 0.78;",                                                 /* a dark, moody sea to match the rainy-night hero */
+    "    col += crest * vec3(0.10,0.20,0.27) * persp * 1.4;",           /* clearer swells / reflections so it reads as water */
+    "    float ofoam = smoothstep(0.54, 0.85, y) * (0.16 + 0.5*crest);",
+    "    col = mix(col, vec3(0.42,0.60,0.72), ofoam*0.40);",            /* restrained sparkle on the swells, never a white slab */
+    "    col += smoothstep(0.13, 0.0, y) * vec3(0.08,0.16,0.24);",      /* faint, moody light along the far horizon */
+    "    float oa = smoothstep(0.0, 0.20, y) * (1.0 - smoothstep(0.64, 1.0, y));",  /* emerge gently from the hero, sink into the dark near-water */
+    "    gl_FragColor = vec4(col, oa);",
+    "    return;",
+    "  }",
     "  vec3 paper = vec3(0.980,0.972,0.961);",
     "  float toPaper = smoothstep(0.62, 1.0, y + w*0.04);",
     "  float foam = smoothstep(0.52, 0.70, y) * (0.35 + 0.65*crest) * (1.0 - toPaper);",
@@ -65,7 +76,7 @@
     var mat = new THREE.ShaderMaterial({
       transparent: true,
       depthTest: false,
-      uniforms: { uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }, uFlip: { value: flip } },
+      uniforms: { uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }, uFlip: { value: flip }, uOcean: { value: host.hasAttribute("data-ocean") ? 1 : 0 } },
       vertexShader: VERT,
       fragmentShader: FRAG
     });

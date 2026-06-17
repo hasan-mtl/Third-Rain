@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=104" />
-<link rel="stylesheet" href="rain-editorial.css?v=104" />
-<link rel="stylesheet" href="hero-options.css?v=104" />
+<link rel="stylesheet" href="rain.css?v=109" />
+<link rel="stylesheet" href="rain-editorial.css?v=109" />
+<link rel="stylesheet" href="hero-options.css?v=109" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -63,86 +63,23 @@
   .statement__inner { position: relative; z-index: 5; }
   .statement::after { display: none; }
 
-  /* ---- hero -> statement: ONE seamless dark canvas (no band) ----
-     The earlier version faded to a much darker colour, which read as an ugly
-     horizontal band. Fix: the hero's lower third converges - very gently, over
-     ~300px - to its OWN dominant deep-navy (#0a1f2c), and the statement opens on
-     that exact colour. Brightness matches on both sides of the line, so there is
-     no band and nothing to see; the rain melts straight into the headline. A
-     whisper of wide, edge-less blue light pools where it lands, for depth. */
-  .basin {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
-  }
-  .hero-floor {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 320px;
-    z-index: 2;
-    pointer-events: none;
-    background: linear-gradient(to bottom,
-      rgba(10, 31, 44, 0) 0%,
-      rgba(10, 31, 44, 0.22) 44%,
-      rgba(10, 31, 44, 0.55) 68%,
-      rgba(10, 31, 44, 0.88) 84%,
-      #0a1f2c 93%,
-      #0a1f2c 100%);
-  }
-  /* ---- the statement is UNDERWATER (Mike) ----
-     Out of the rain you break the surface: a lit, rippling waterline glows at the
-     top, the water darkens with depth below, and a scene of caustics + god rays +
-     rising bubbles plays behind the copy. The boundary is the surface, not a seam. */
+  /* ---- hero -> statement: a calm ocean seen from afar (Mike: natural water, above
+     the surface, like the site's other water flows - NOT underwater). The hero's
+     rain falls onto a distant sea rendered in the SAME WebGL shader as the section
+     merges (data-ocean); the message sits on the dark near-water below the horizon. */
   .statement {
+    padding-top: 300px;
     background:
-      radial-gradient(180% 280px at 50% -10px, rgba(98, 192, 242, 0.34), rgba(98, 192, 242, 0.06) 44%, transparent 70%),
-      radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.2), transparent 55%),
-      linear-gradient(to bottom, #0d2a3c 0%, #0a2334 12%, #07182a 50%, #0a1f2c 100%);
+      radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.18), transparent 55%),
+      linear-gradient(180deg, #0a1c2c 0%, #0a1a28 46%, #0a1f2c 100%);
   }
-  .statement::before { top: 64px; }
-
-  .uw { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-
-  /* caustics: two drifting, mirrored turbulence layers, brightest at the surface */
-  .uw__caustics {
-    position: absolute; left: 0; right: 0; top: 0; height: 520px; overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 38%, transparent 94%);
-    mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 38%, transparent 94%);
+  .statement::before { top: 280px; }            /* keep the aurora off the far-sea band */
+  .statement .merge-water--ocean { height: 300px; }   /* the distant-sea transition at the hero seam */
+  @media (max-width: 680px) {
+    .statement { padding-top: 208px; }
+    .statement::before { top: 196px; }
+    .statement .merge-water--ocean { height: 208px; }
   }
-  .uw__cn { position: absolute; left: -15%; top: -15%; width: 130%; height: 130%; mix-blend-mode: screen; will-change: transform; }
-  .uw__cn--a { opacity: .42; animation: uw-drift-a 30s ease-in-out infinite alternate; }
-  .uw__cn--b { opacity: .28; transform: scaleX(-1); animation: uw-drift-b 41s ease-in-out infinite alternate; }
-  @keyframes uw-drift-a { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(2.5%, 2%, 0) scale(1.05); } }
-  @keyframes uw-drift-b { from { transform: scaleX(-1) translate3d(-2.5%, 1%, 0) scale(1.04); } to { transform: scaleX(-1) translate3d(2%, -1.5%, 0) scale(1.08); } }
-
-  /* god rays slanting down from the surface, swaying slowly */
-  .uw__rays { position: absolute; inset: 0; }
-  .uw__rays span {
-    position: absolute; top: -10%; left: var(--x); width: clamp(70px, 11vw, 168px); height: 122%;
-    background: linear-gradient(to bottom, rgba(168, 224, 255, 0.34) 0%, rgba(168, 224, 255, 0.1) 46%, transparent 80%);
-    filter: blur(14px); transform-origin: top center; mix-blend-mode: screen;
-    animation: uw-ray var(--d) ease-in-out infinite alternate; will-change: transform, opacity;
-  }
-  @keyframes uw-ray {
-    from { transform: rotate(calc(var(--r) - 3deg)) scaleY(1); opacity: .5; }
-    to   { transform: rotate(calc(var(--r) + 3deg)) scaleY(1.08); opacity: 1; }
-  }
-
-  /* slow bubbles rising toward the surface */
-  .uw__bubbles { position: absolute; inset: 0; }
-  .uw__bubbles i {
-    position: absolute; left: var(--x); bottom: -20px; width: var(--s); height: var(--s); border-radius: 50%;
-    background: radial-gradient(circle at 34% 30%, rgba(224, 246, 255, .92), rgba(150, 210, 255, .22) 56%, transparent 72%);
-    box-shadow: 0 0 7px rgba(150, 210, 255, .22); opacity: 0;
-    animation: uw-bubble var(--d) linear infinite; animation-delay: var(--delay); will-change: transform, opacity;
-  }
-  @keyframes uw-bubble {
-    0% { transform: translate(0, 0) scale(.65); opacity: 0; }
-    12% { opacity: .85; } 86% { opacity: .55; }
-    100% { transform: translate(var(--drift, 10px), -660px) scale(1); opacity: 0; }
-  }
-
-  .is-offstage .uw__cn, .is-offstage .uw__rays span, .is-offstage .uw__bubbles i { animation-play-state: paused !important; }
-  @media (prefers-reduced-motion: reduce) { .uw__cn, .uw__rays span, .uw__bubbles i { animation: none; } }
 
   /* Rain Agent intro: a big brand headline with a tight one-line subline (Mike) */
   #platform .ed-head__body h2 { font-size: clamp(2.6rem, 5.6vw, 4.6rem); max-width: 18ch; }
@@ -951,46 +888,11 @@
     </div>
     <p class="hx-split__proof"><span>20+ Years</span><span>&middot;</span><span>Websites</span><span>&middot;</span><span>Brand</span><span>&middot;</span><span>Software</span><span>&middot;</span><span>AI agents</span></p>
   </div>
-  <div class="hero-floor" aria-hidden="true"></div>
 </section>
 
 <!-- ============ STATEMENT BEAT ============ -->
 <section class="statement dark-section noise" aria-label="The refresh">
-  <div class="uw" aria-hidden="true">
-    <div class="uw__caustics">
-      <svg class="uw__cn uw__cn--a" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="uw-caustic" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">
-            <feTurbulence type="fractalNoise" baseFrequency="0.019 0.027" numOctaves="2" seed="7" stitchTiles="stitch" result="t"/>
-            <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.46  0 0 0 0 0.82  0 0 0 0 1  0 0 0 6.2 -3.45"/>
-          </filter>
-        </defs>
-        <rect x="-80" y="-80" width="1360" height="880" filter="url(#uw-caustic)"/>
-      </svg>
-      <svg class="uw__cn uw__cn--b" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect x="-80" y="-80" width="1360" height="880" filter="url(#uw-caustic)"/>
-      </svg>
-    </div>
-    <div class="uw__rays">
-      <span style="--x:12%;--r:-7deg;--d:14s"></span>
-      <span style="--x:32%;--r:4deg;--d:18s"></span>
-      <span style="--x:52%;--r:-3deg;--d:16s"></span>
-      <span style="--x:71%;--r:8deg;--d:20s"></span>
-      <span style="--x:88%;--r:-5deg;--d:15s"></span>
-    </div>
-    <div class="uw__bubbles">
-      <i style="--x:9%;--s:5px;--d:16s;--delay:-1s;--drift:14px"></i>
-      <i style="--x:18%;--s:8px;--d:21s;--delay:-7s;--drift:-10px"></i>
-      <i style="--x:27%;--s:4px;--d:14s;--delay:-3s;--drift:8px"></i>
-      <i style="--x:39%;--s:7px;--d:23s;--delay:-12s;--drift:-16px"></i>
-      <i style="--x:48%;--s:5px;--d:18s;--delay:-5s;--drift:12px"></i>
-      <i style="--x:57%;--s:9px;--d:25s;--delay:-16s;--drift:-8px"></i>
-      <i style="--x:66%;--s:4px;--d:15s;--delay:-9s;--drift:10px"></i>
-      <i style="--x:74%;--s:6px;--d:20s;--delay:-2s;--drift:-12px"></i>
-      <i style="--x:83%;--s:5px;--d:17s;--delay:-11s;--drift:9px"></i>
-      <i style="--x:92%;--s:7px;--d:22s;--delay:-6s;--drift:-14px"></i>
-    </div>
-  </div>
+  <div class="merge-water merge-water--top merge-water--ocean" data-merge-water data-ocean aria-hidden="true"><canvas></canvas></div>
   <div class="statement__inner">
     <p class="statement__kicker" data-reveal>The refresh</p>
     <p class="statement__line" data-reveal style="--i:1">Your business should keep working <span class="serif-grad">after you log off.</span></p>
@@ -1999,7 +1901,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=104" defer></script>
+<script src="rain.js?v=109" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -2025,8 +1927,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=104" defer></script>
-<script src="merge-water.js?v=104" defer></script>
+<script src="rain-tweaks.js?v=109" defer></script>
+<script src="merge-water.js?v=109" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
