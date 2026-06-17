@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=80" />
-<link rel="stylesheet" href="rain-editorial.css?v=80" />
-<link rel="stylesheet" href="hero-options.css?v=80" />
+<link rel="stylesheet" href="rain.css?v=81" />
+<link rel="stylesheet" href="rain-editorial.css?v=81" />
+<link rel="stylesheet" href="hero-options.css?v=81" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -574,6 +574,17 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
   .cap-panel__pain { border-radius: 10px; }
+
+  /* readability: larger content type across the services section (Mike) */
+  .cap-btn__text strong { font-size: 16px; }
+  .cap-btn__text small { font-size: 13.5px; line-height: 1.45; }
+  .cap-btn__text strong::before { font-size: 12px; }
+  .cap-panel__head h3 { font-size: 24px; }
+  .cap-panel__head p { font-size: 15px; }
+  .cap-panel__pain b, .cap-panel__fix b { font-size: 11.5px; letter-spacing: 0.15em; }
+  .cap-panel__pain p { font-size: 16px; line-height: 1.62; }
+  .cap-panel__fix li { font-size: 16px; line-height: 1.6; }
+  .cap-panel__outcome { font-size: 15px; }
 
   /* Spread the integrations out toward the header width so the Rain Agent core
      sits focused in the center, and make the watch bigger + more present. */
@@ -1500,7 +1511,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=80" defer></script>
+<script src="rain.js?v=81" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1526,8 +1537,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=80" defer></script>
-<script src="merge-water.js?v=80" defer></script>
+<script src="rain-tweaks.js?v=81" defer></script>
+<script src="merge-water.js?v=81" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
