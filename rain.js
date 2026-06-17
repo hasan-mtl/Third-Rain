@@ -1563,12 +1563,15 @@
       });
     };
 
-    var runScenario = function (key) {
+    var runScenario = function (key, immediate) {
       var t = SCENARIOS[key];
       if (!t) return;
       scnClear();
       setChip(key);
-      if (reduce) {
+      // each task shows its own clean exchange — never pile scenarios together
+      chatBody.innerHTML = "";
+      // a user tap resolves instantly (the typing theater is only for autoplay)
+      if (reduce || immediate) {
         chatMsg("user", t.user);
         chatMsg("agent", t.reply);
         showView(t.view, true);
@@ -1614,7 +1617,7 @@
         scnTouched = true;
         scnStop();
         scnIdx = SCN_ORDER.indexOf(chip.getAttribute("data-scenario"));
-        runScenario(chip.getAttribute("data-scenario"));
+        runScenario(chip.getAttribute("data-scenario"), true);
       });
     });
 
