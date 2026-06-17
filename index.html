@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=93" />
-<link rel="stylesheet" href="rain-editorial.css?v=93" />
+<link rel="stylesheet" href="rain.css?v=94" />
+<link rel="stylesheet" href="rain-editorial.css?v=94" />
 <link rel="stylesheet" href="hero-options.css?v=94" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
@@ -62,6 +62,40 @@
   }
   .statement__inner { position: relative; z-index: 5; }
   .statement::after { display: none; }
+
+  /* ---- hero -> statement: one seamless, premium merge (Mike) ----
+     The rain dissolves over a longer fall, the hero floor fades to the exact
+     colour the statement opens on, and a soft pool of light rests on the seam
+     where the rain "lands", so the two dark sections read as a single canvas. */
+  .basin {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 77%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 77%, transparent 100%);
+  }
+  .statement {
+    background:
+      radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.2), transparent 55%),
+      linear-gradient(180deg, #070d1c 0%, #0c1a38 62%, #0a1f2c 100%);
+  }
+  .hero-floor {
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 240px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      radial-gradient(135% 130px at 50% 100%, rgba(125, 211, 252, 0.14), transparent 70%),
+      linear-gradient(to bottom, transparent 0%, rgba(7, 13, 28, 0.5) 64%, #070d1c 100%);
+  }
+
+  /* Rain Agent intro: a big brand headline with a tight one-line subline (Mike) */
+  #platform .ed-head__body h2 { font-size: clamp(2.6rem, 5.6vw, 4.6rem); max-width: 18ch; }
+  #platform .ed-head__body .lede { margin-top: 18px; max-width: 48ch; }
+  @media (max-width: 820px) {
+    #platform .ed-head__body h2 { font-size: clamp(2.2rem, 9vw, 3rem); }
+  }
+
+  /* one big primary CTA (Mike: the two buttons become one) */
+  .btn--xl { height: 58px; padding: 0 34px; font-size: 16.5px; border-radius: 15px; }
   .merge-water {
     position: absolute;
     left: 0;
@@ -838,6 +872,7 @@
     </div>
     <p class="hx-split__proof"><span>20+ Years</span><span>&middot;</span><span>Websites</span><span>&middot;</span><span>Brand</span><span>&middot;</span><span>Software</span><span>&middot;</span><span>AI agents</span></p>
   </div>
+  <div class="hero-floor" aria-hidden="true"></div>
 </section>
 
 <!-- ============ STATEMENT BEAT ============ -->
@@ -1431,8 +1466,8 @@
   <header class="ed-head ed-head--dark" data-reveal>
     <p class="eyebrow eyebrow--dark">Our platform</p>
     <div class="ed-head__body">
-      <h2 id="platform-title">We don't just advise. <span class="serif-grad">We run our own platform.</span></h2>
-      <p class="lede lede--dark">Rain Agent is the platform we built and run ourselves: your dedicated agent, wired to your tools, watched on every run.</p>
+      <h2 id="platform-title">Introducing <span class="serif-grad">Rain Agent.</span></h2>
+      <p class="lede lede--dark">We don't just advise. We built our own platform, and we run it for you.</p>
     </div>
   </header>
 
@@ -1558,13 +1593,9 @@
   </div>
 
   <div class="platform__actions platform__actions--center" data-reveal>
-        <a class="btn btn--primary" href="#contact">
-          Get your agent
+        <a class="btn btn--primary btn--xl" href="#contact">
+          Start automating your business
           <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-        </a>
-        <a class="btn btn--outline" href="https://rain-agent.vercel.app" target="_blank" rel="noopener">
-          Explore Rain Agent
-          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6.5 4.5h5v5"/></svg>
         </a>
       </div>
   <div class="merge-water" data-merge-water aria-hidden="true"><canvas></canvas></div>
@@ -1725,7 +1756,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=93" defer></script>
+<script src="rain.js?v=94" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1751,8 +1782,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=93" defer></script>
-<script src="merge-water.js?v=93" defer></script>
+<script src="rain-tweaks.js?v=94" defer></script>
+<script src="merge-water.js?v=94" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
