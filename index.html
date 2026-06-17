@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=83" />
-<link rel="stylesheet" href="rain-editorial.css?v=83" />
-<link rel="stylesheet" href="hero-options.css?v=83" />
+<link rel="stylesheet" href="rain.css?v=85" />
+<link rel="stylesheet" href="rain-editorial.css?v=85" />
+<link rel="stylesheet" href="hero-options.css?v=85" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -513,15 +513,15 @@
   .ra-core-disk .ra-clock { width: 56px; height: 56px; margin: 0; filter: drop-shadow(0 0 7px rgba(94, 234, 212, 0.4)); }
   /* the brand wraps the centered clock as a slowly rotating engraved bezel */
   .ra-seal { position: absolute; inset: 0; margin: auto; width: 168px; height: 168px; z-index: 2; pointer-events: none; animation: ra-spin 38s linear infinite; }
-  .ra-seal text { font-family: var(--font-mono); font-size: 6.2px; letter-spacing: 0.16em; text-transform: uppercase; fill: rgba(125, 211, 252, 0.6); }
+  .ra-seal text { font-family: var(--font-mono); font-size: 7.6px; letter-spacing: 0.12em; text-transform: uppercase; fill: rgba(135, 216, 255, 0.72); }
   @media (prefers-reduced-motion: reduce) { .ra-seal { animation: none; } }
   .ra-clock__face { stroke: rgba(125, 211, 252, 0.4); stroke-width: 0.7; }
   .ra-clock__ticks-fine { stroke: rgba(125, 211, 252, 0.32); stroke-width: 1; stroke-linecap: round; }
   .ra-clock__ticks-maj { stroke: rgba(94, 234, 212, 0.65); stroke-width: 1.5; stroke-linecap: round; }
   .ra-clock__hand { stroke-width: 2.3; stroke-linecap: round; transform-box: view-box; transform-origin: 24px 24px; }
-  .ra-clock__hand--h { stroke: url(#raHandH); animation: ra-spin 14s linear infinite; }
-  .ra-clock__hand--m { stroke: url(#raHandM); animation: ra-spin 3.2s linear infinite; }
-  .ra-clock__sec { transform-box: view-box; transform-origin: 24px 24px; animation: ra-spin 6s linear infinite; }
+  .ra-clock__hand--h { stroke: url(#raHandH); }
+  .ra-clock__hand--m { stroke: url(#raHandM); }
+  .ra-clock__sec { transform-box: view-box; transform-origin: 24px 24px; }
   .ra-clock__sec line { stroke: rgba(186, 230, 253, 0.85); stroke-width: 0.9; stroke-linecap: round; }
   .ra-clock__sec circle { fill: #7dd3fc; filter: drop-shadow(0 0 3px #7dd3fc); }
   .ra-clock__hub { fill: #ffffff; }
@@ -670,6 +670,7 @@
   /* ===== alternate "Pick a problem": horizontal tabs + split stage (compare) ===== */
   .c2-sec { padding: 72px 24px; }
   .c2 { max-width: var(--maxw); margin: 0 auto; }
+  @keyframes c2-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .c2__r { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .c2__tabs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .c2__tab {
@@ -689,6 +690,7 @@
   .c2__stage { margin-top: 22px; }
   .c2__panel {
     display: none; grid-template-columns: 1fr 1fr;
+    animation: c2-fade .5s var(--ease);
     border-radius: 20px; overflow: hidden; border: 1px solid transparent;
     background: linear-gradient(#fff, #fff) padding-box, linear-gradient(150deg, rgba(125, 211, 252, .6), rgba(94, 234, 212, .4) 45%, rgba(15, 23, 42, .06) 82%) border-box;
     box-shadow: 0 34px 64px -32px rgba(15, 23, 42, .32), 0 2px 10px rgba(15, 23, 42, .05);
@@ -1698,7 +1700,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=83" defer></script>
+<script src="rain.js?v=85" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1724,8 +1726,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=83" defer></script>
-<script src="merge-water.js?v=83" defer></script>
+<script src="rain-tweaks.js?v=85" defer></script>
+<script src="merge-water.js?v=85" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
@@ -1772,6 +1774,49 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
     }).catch(render);
   } else {
     window.setTimeout(render, 500);
+  }
+})();
+</script>
+<script>
+/* Rain Agent clock: a real clock - hands at the correct local time, ticking each second. */
+(function () {
+  var h = document.querySelector(".ra-clock__hand--h");
+  var m = document.querySelector(".ra-clock__hand--m");
+  var sec = document.querySelector(".ra-clock__sec");
+  if (!h || !m || !sec) return;
+  function tick() {
+    var d = new Date();
+    var s = d.getSeconds(), mi = d.getMinutes(), hr = d.getHours() % 12;
+    h.style.transform = "rotate(" + (hr * 30 + mi * 0.5) + "deg)";
+    m.style.transform = "rotate(" + (mi * 6 + s * 0.1) + "deg)";
+    sec.style.transform = "rotate(" + (s * 6) + "deg)";
+  }
+  tick();
+  /* align the first tick to the next whole second, then tick once per second */
+  setTimeout(function () { tick(); setInterval(tick, 1000); }, 1000 - (Date.now() % 1000));
+})();
+
+/* Alternate "Pick a problem": auto-advance the tabs so it feels alive (pause on hover / off-screen). */
+(function () {
+  var radios = Array.prototype.slice.call(document.querySelectorAll(".c2__r"));
+  var wrap = document.querySelector(".c2");
+  if (radios.length < 2 || !wrap) return;
+  var i = 0;
+  for (var k = 0; k < radios.length; k++) { if (radios[k].checked) { i = k; break; } }
+  var paused = false, visible = true;
+  function advance() {
+    if (paused || !visible || document.hidden) return;
+    i = (i + 1) % radios.length;
+    radios[i].checked = true;
+  }
+  window.setInterval(advance, 3600);
+  wrap.addEventListener("mouseenter", function () { paused = true; });
+  wrap.addEventListener("mouseleave", function () { paused = false; });
+  radios.forEach(function (r, n) { r.addEventListener("change", function () { i = n; }); });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { visible = e.isIntersecting; });
+    }, { threshold: 0.2 }).observe(wrap);
   }
 })();
 </script>
