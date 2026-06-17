@@ -1680,8 +1680,8 @@
   }
 
   /* ---------- live run log ---------- */
-  var runlog = qs("[data-runlog]");
-  if (runlog && !reduce) {
+  var __runlogs = qsa("[data-runlog]");
+  if (__runlogs.length && !reduce) __runlogs.forEach(function (runlog) {
     var LOG_LINES = [
       ["12:05", "Social caption drafted + image generated"],
       ["13:18", "Low-stock alert: 3 SKUs flagged"],
@@ -1743,7 +1743,7 @@
         if (r.top < window.innerHeight && r.bottom > 0) startLog();
       }
     });
-  }
+  });
 
   /* ---------- contact form ---------- */
   var form = qs("[data-form]");

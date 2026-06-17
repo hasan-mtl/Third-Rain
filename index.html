@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=101" />
-<link rel="stylesheet" href="rain-editorial.css?v=101" />
-<link rel="stylesheet" href="hero-options.css?v=101" />
+<link rel="stylesheet" href="rain.css?v=104" />
+<link rel="stylesheet" href="rain-editorial.css?v=104" />
+<link rel="stylesheet" href="hero-options.css?v=104" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -634,6 +634,28 @@
   .ra-clock__hub { fill: #ffffff; }
   .ra-clock__hub-ring { fill: none; stroke: rgba(150, 220, 255, 0.7); stroke-width: 0.6; }
   @media (prefers-reduced-motion: reduce) { .ra-clock__sec { animation: none; } }
+
+  /* ===== CROWN JEWEL (B): Rain Digital - a readable 7-segment LCD watch (scoped .rd-) ===== */
+  .rd-lcd { position: relative; display: grid; place-items: center; font-family: var(--font-mono, ui-monospace, "SFMono-Regular", Menlo, monospace); line-height: 1; -webkit-user-select: none; user-select: none; }
+  .rd-lcd__face { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+  .rd-lcd__main { display: block; filter: drop-shadow(0 0 8px rgba(94, 234, 212, 0.5)); }
+  .rd-seg { fill: #5eead4; transition: fill 0.14s ease; }
+  .rd-seg.rd-off { fill: rgba(125, 211, 252, 0.09); }            /* faint ghost off-segment */
+  .rd-dot { fill: #5eead4; transition: fill 0.14s ease; }
+  .rd-colon.rd-dim .rd-dot { fill: rgba(125, 211, 252, 0.1); }   /* JS-driven 1Hz colon blink */
+  .rd-bar { width: 78px; height: 2.5px; margin-top: 9px; border-radius: 2px; background: rgba(125, 211, 252, 0.14); overflow: hidden; }
+  .rd-bar__fill { display: block; height: 100%; width: 0; border-radius: 2px; background: linear-gradient(90deg, #2dd4bf, #5eead4); box-shadow: 0 0 6px rgba(94, 234, 212, 0.6); transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+  .rd-lcd__sub { display: flex; align-items: center; gap: 7px; margin-top: 8px; }
+  .rd-ampm { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; color: #bae6fd; }
+  .rd-sep { width: 1px; height: 8px; background: rgba(125, 211, 252, 0.35); }
+  .rd-live { font-size: 9px; font-weight: 600; letter-spacing: 0.22em; color: #5eead4; position: relative; padding-left: 11px; }
+  .rd-live::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 5px; height: 5px; border-radius: 50%; background: #2dd4bf; box-shadow: 0 0 5px #2dd4bf, 0 0 9px rgba(45, 212, 191, 0.6); animation: rd-beat 2.4s ease-in-out infinite; }
+  @keyframes rd-beat { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @media (prefers-reduced-motion: reduce) {
+    .rd-live::before { animation: none; }
+    .rd-colon.rd-dim .rd-dot { fill: #5eead4; }
+    .rd-seg, .rd-dot, .rd-bar__fill { transition: none; }
+  }
 
   /* ===== services selector: 25x premium, futuristic, sharp ===== */
   .cap-btn {
@@ -1556,7 +1578,7 @@
 <!-- ============ PROCESS ============ -->
 <section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
   <header class="ed-head ed-head--dark" data-reveal>
-    <p class="eyebrow eyebrow--dark">Our platform</p>
+    <p class="eyebrow eyebrow--dark">Our platform &middot; analog dial</p>
     <div class="ed-head__body">
       <h2 id="platform-title">Introducing <span class="serif-grad">Rain Agent.</span></h2>
       <p class="lede lede--dark">We don't just advise. We built our own platform, and we run it for you.</p>
@@ -1664,6 +1686,135 @@
 
   <dl class="platform__stats" data-reveal>
     <div><dt><span data-count="312" data-comment-anchor="ad2b7deb31-span">0</span></dt><dd>tasks / month</dd></div>
+    <div><dt>0</dt><dd>missed or dropped</dd></div>
+    <div><dt>24/7</dt><dd>monitored runs</dd></div>
+    <div><dt>1</dt><dd>connected system</dd></div>
+  </dl>
+
+  <div class="platform__belt" data-reveal>
+    <div class="runlog glass">
+        <div class="runlog__bar">
+          <span class="runlog__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="runlog__title">rain agent · live run log</span>
+          <span class="runlog__day">today</span>
+        </div>
+        <ul class="runlog__lines" data-runlog aria-live="off">
+          <li><span>08:00</span>Morning report sent to 3 clients</li>
+          <li><span>09:12</span>Blog draft ready → waiting for review</li>
+          <li><span>11:30</span>12 customer replies drafted</li>
+        </ul>
+      </div>
+  </div>
+
+  <div class="platform__actions platform__actions--center" data-reveal>
+        <a class="btn btn--primary btn--xl" href="#contact">
+          Start automating your business
+          <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
+        </a>
+      </div>
+</section>
+
+<section class="platform dark-section noise" id="platform-digital" aria-labelledby="platform-digital-title">
+  <header class="ed-head ed-head--dark" data-reveal>
+    <p class="eyebrow eyebrow--dark">Our platform &middot; digital readout</p>
+    <div class="ed-head__body">
+      <h2 id="platform-digital-title">Introducing <span class="serif-grad">Rain Agent.</span></h2>
+      <p class="lede lede--dark">We don't just advise. We built our own platform, and we run it for you.</p>
+    </div>
+  </header>
+
+  <div class="platform__stage" data-reveal style="--i:2">
+    <div class="circuit">
+        <span class="circuit__halo" aria-hidden="true"></span>
+        <span class="circuit__ring" aria-hidden="true"></span>
+        <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true">
+          <path class="trace" d="M260 220 H360 V70.4 H423.8"/>
+          <path class="trace" d="M260 220 H160 V70.4 H96.2"/>
+          <path class="trace" d="M260 220 H457.6"/>
+          <path class="trace" d="M260 220 H62.4"/>
+          <path class="trace" d="M260 220 H360 V369.6 H423.8"/>
+          <path class="trace" d="M260 220 H160 V369.6 H96.2"/>
+          <path class="trace" d="M260 220 V70.4"/>
+          <path class="trace" d="M260 220 V369.6"/>
+          <g class="circuit__pulses">
+            <circle class="pulse" r="3.2"><animateMotion dur="3s" repeatCount="indefinite" path="M260 220 H360 V70.4 H423.8"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M260 220 H160 V70.4 H96.2"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.4s" begin="1.1s" repeatCount="indefinite" path="M260 220 H457.6"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.6s" begin="0.3s" repeatCount="indefinite" path="M260 220 H62.4"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite" path="M260 220 H360 V369.6 H423.8"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3s" begin="0.9s" repeatCount="indefinite" path="M260 220 H160 V369.6 H96.2"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="2.8s" begin="0.45s" repeatCount="indefinite" path="M260 220 V70.4"/></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.1s" begin="1.3s" repeatCount="indefinite" path="M260 220 V369.6"/></circle>
+          </g>
+        </svg>
+
+        <div class="circuit__core" aria-hidden="true">
+          <span class="ra-ripple" aria-hidden="true"></span>
+          <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
+          <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
+            <defs><path id="raSealPath2" d="M 84,24 a 60,60 0 1 1 -0.01 0"/></defs>
+            <text><textPath href="#raSealPath2" startOffset="0" textLength="368">RAIN AGENT · ALWAYS ON · </textPath></text>
+          </svg>
+          <span class="ra-core-disk">
+            <div class="rd-lcd" role="img" aria-label="Live local time">
+              <div class="rd-lcd__face">
+                <svg class="rd-lcd__main" viewBox="0 0 196 66" width="104" height="35" fill="none" shape-rendering="geometricPrecision" aria-hidden="true">
+                  <g class="rd-d" data-d="h0" transform="translate(0,1)"></g>
+                  <g class="rd-d" data-d="h1" transform="translate(43,1)"></g>
+                  <g class="rd-colon" transform="translate(86,1)">
+                    <rect class="rd-dot" x="6" y="20" width="9" height="9" rx="2.4"/>
+                    <rect class="rd-dot" x="6" y="44" width="9" height="9" rx="2.4"/>
+                  </g>
+                  <g class="rd-d" data-d="m0" transform="translate(108,1)"></g>
+                  <g class="rd-d" data-d="m1" transform="translate(151,1)"></g>
+                </svg>
+                <div class="rd-bar" aria-hidden="true"><span class="rd-bar__fill"></span></div>
+                <div class="rd-lcd__sub">
+                  <span class="rd-ampm" data-d="ap">--</span>
+                  <span class="rd-sep" aria-hidden="true"></span>
+                  <span class="rd-live">LIVE</span>
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+
+        <span class="circuit__node" style="--x:81.5%;--y:16%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5L14.5 3Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></i>Blog
+        </span>
+        <span class="circuit__node" style="--x:18.5%;--y:16%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-3"/></svg></i>Analytics
+        </span>
+        <span class="circuit__node" style="--x:88%;--y:50%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="5.5" r="2.2"/><circle cx="18" cy="18.5" r="2.2"/><path d="M8 11l8-4.5M8 13l8 4.5"/></svg></i>Social
+        </span>
+        <span class="circuit__node" style="--x:12%;--y:50%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7.5 9 6 9-6"/></svg></i>Email
+        </span>
+        <span class="circuit__node" style="--x:81.5%;--y:84%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5a3.2 3.2 0 0 1 0 6.3M17.5 14.6a5.5 5.5 0 0 1 3 5.4"/></svg></i>CRM
+        </span>
+        <span class="circuit__node" style="--x:18.5%;--y:84%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z"/><path d="M12 11.5 3.5 8.5M12 11.5l8.5-3M12 11.5V20"/></svg></i>Inventory
+        </span>
+        <span class="circuit__node" style="--x:50%;--y:16%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9h17M8 3v3M16 3v3"/></svg></i>Calendar
+        </span>
+        <span class="circuit__node" style="--x:50%;--y:84%" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg></i>Payments
+        </span>
+      </div>
+  </div>
+
+  <ul class="platform__strip" data-reveal style="--i:3">
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Learns your voice and rules</li>
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Content, reporting, replies &amp; ops</li>
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Ask in plain language from Telegram</li>
+    <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Human review on everything</li>
+  </ul>
+
+  <dl class="platform__stats" data-reveal>
+    <div><dt><span data-count="312">0</span></dt><dd>tasks / month</dd></div>
     <div><dt>0</dt><dd>missed or dropped</dd></div>
     <div><dt>24/7</dt><dd>monitored runs</dd></div>
     <div><dt>1</dt><dd>connected system</dd></div>
@@ -1848,7 +1999,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=101" defer></script>
+<script src="rain.js?v=104" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1874,8 +2025,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=101" defer></script>
-<script src="merge-water.js?v=101" defer></script>
+<script src="rain-tweaks.js?v=104" defer></script>
+<script src="merge-water.js?v=104" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
@@ -1941,6 +2092,65 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   }
   tick();
   /* align the first tick to the next whole second, then tick once per second */
+  setTimeout(function () { tick(); setInterval(tick, 1000); }, 1000 - (Date.now() % 1000));
+})();
+
+/* Rain Digital: real local time on a 7-segment LCD - blinking colon, seconds bar, AM/PM. */
+(function () {
+  var lcd = document.querySelector(".rd-lcd");
+  if (!lcd) return;
+  var NS = "http://www.w3.org/2000/svg";
+  var SEG = {
+    a: "7,1 33,1 28,6 12,6",
+    b: "34,2 38.5,6.5 38.5,29 34,31 30,27 30,8",
+    c: "38.5,35 38.5,57.5 34,62 30,56 30,37 34,33",
+    d: "12,58 28,58 33,63 7,63 2,58 6,56",
+    e: "1,35 6,33 10,37 10,56 6,62 1.5,57.5",
+    f: "1.5,6.5 6,2 10,8 10,27 6,31 1.5,29",
+    g: "6,32 12,28 28,28 34,32 28,36 12,36"
+  };
+  var MAP = { 0: "abcdef", 1: "bc", 2: "abdeg", 3: "abcdg", 4: "bcfg", 5: "acdfg", 6: "acdefg", 7: "abc", 8: "abcdefg", 9: "abcdfg" };
+  function build(g) {
+    for (var k in SEG) {
+      var p = document.createElementNS(NS, "polygon");
+      p.setAttribute("points", SEG[k]);
+      p.setAttribute("class", "rd-seg");
+      p.setAttribute("data-s", k);
+      g.appendChild(p);
+    }
+  }
+  var cells = lcd.querySelectorAll(".rd-d");
+  for (var i = 0; i < cells.length; i++) build(cells[i]);
+  function lit(g, v, blank) {
+    var on = (v === null || blank) ? "" : (MAP[v] || "");
+    var segs = g.querySelectorAll("polygon");
+    for (var x = 0; x < segs.length; x++) {
+      var k = segs[x].getAttribute("data-s");
+      if (on.indexOf(k) >= 0) segs[x].classList.remove("rd-off");
+      else segs[x].classList.add("rd-off");
+    }
+  }
+  function setD(sel, v, blank) {
+    var g = lcd.querySelector('[data-d="' + sel + '"]');
+    if (g) lit(g, v, blank);
+  }
+  var col = lcd.querySelector(".rd-colon");
+  var ampm = lcd.querySelector(".rd-ampm");
+  var bar = lcd.querySelector(".rd-bar__fill");
+  function tick() {
+    var d = new Date(), H = d.getHours(), M = d.getMinutes(), S = d.getSeconds();
+    var ap = H < 12 ? "AM" : "PM";
+    var h = H % 12; if (h === 0) h = 12;
+    var tens = Math.floor(h / 10);
+    setD("h0", tens, tens === 0);          /* blank the leading hour zero */
+    setD("h1", h % 10, false);
+    setD("m0", Math.floor(M / 10), false);
+    setD("m1", M % 10, false);
+    if (ampm) ampm.textContent = ap;
+    if (col) col.classList.toggle("rd-dim", S % 2 !== 0);
+    if (bar) bar.style.width = ((S / 60) * 100).toFixed(1) + "%";
+  }
+  tick();
   setTimeout(function () { tick(); setInterval(tick, 1000); }, 1000 - (Date.now() % 1000));
 })();
 
