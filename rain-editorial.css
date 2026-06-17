@@ -170,8 +170,8 @@
   margin-bottom: 30px;
 }
 .statement__line {
-  font-size: clamp(2.6rem, 7vw, 6rem);
-  line-height: 1.04;
+  font-size: clamp(2rem, 4.6vw, 4.2rem);
+  line-height: 1.06;
   letter-spacing: -0.035em;
   font-weight: 600;
   color: #fff;
