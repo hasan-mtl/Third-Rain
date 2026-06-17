@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=90" />
-<link rel="stylesheet" href="rain-editorial.css?v=90" />
-<link rel="stylesheet" href="hero-options.css?v=90" />
+<link rel="stylesheet" href="rain.css?v=91" />
+<link rel="stylesheet" href="rain-editorial.css?v=91" />
+<link rel="stylesheet" href="hero-options.css?v=91" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -385,8 +385,8 @@
 
   /* Rain Agent core - a futuristic circular "solar" node. */
   .circuit__core {
-    width: 168px;
-    height: 168px;
+    width: 190px;
+    height: 190px;
     padding: 0 !important;
     gap: 0 !important;
     background: none !important;
@@ -436,8 +436,8 @@
     position: absolute;
     inset: 0;
     margin: auto;
-    width: 108px;
-    height: 108px;
+    width: 138px;
+    height: 138px;
     border-radius: 50%;
     border: 1px solid rgba(94, 234, 212, 0.45);
     pointer-events: none;
@@ -499,8 +499,8 @@
 
   /* ===== CROWN JEWEL: bigger, futuristic Rain Agent clock ===== */
   .ra-core-disk {
-    width: 116px;
-    height: 116px;
+    width: 150px;
+    height: 150px;
     display: grid;
     place-items: center;
     background: radial-gradient(circle at 50% 34%, #19426e 0%, #0b1f37 58%, #060f1d 100%);
@@ -510,10 +510,10 @@
       inset 0 0 32px rgba(125, 211, 252, 0.18),
       inset 0 2px 12px rgba(255, 255, 255, 0.06);
   }
-  .ra-core-disk .ra-clock { width: 56px; height: 56px; margin: 0; filter: drop-shadow(0 0 7px rgba(94, 234, 212, 0.4)); }
+  .ra-core-disk .ra-clock { width: 74px; height: 74px; margin: 0; filter: drop-shadow(0 0 9px rgba(94, 234, 212, 0.42)); }
   /* the brand wraps the centered clock as a slowly rotating engraved bezel */
-  .ra-seal { position: absolute; inset: 0; margin: auto; width: 168px; height: 168px; z-index: 4; pointer-events: none; animation: ra-spin 30s linear infinite; }
-  .ra-seal text { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: uppercase; fill: rgba(175, 230, 255, 0.96); paint-order: stroke; stroke: rgba(175, 230, 255, 0.96); stroke-width: 0.5px; }
+  .ra-seal { position: absolute; inset: 0; margin: auto; width: 190px; height: 190px; z-index: 4; pointer-events: none; animation: ra-spin 30s linear infinite; }
+  .ra-seal text { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: uppercase; fill: rgba(175, 230, 255, 0.96); paint-order: stroke; stroke: rgba(175, 230, 255, 0.96); stroke-width: 0.5px; }
   @media (prefers-reduced-motion: reduce) { .ra-seal { animation: none; } }
   .ra-clock__bezel { stroke: rgba(140, 210, 250, 0.55); stroke-width: 0.8; }
   .ra-clock__ring2 { stroke: rgba(125, 211, 252, 0.13); stroke-width: 0.5; }
@@ -1438,8 +1438,8 @@
           <span class="ra-ripple" aria-hidden="true"></span>
           <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
           <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
-            <defs><path id="raSealPath" d="M 84,44 a 40,40 0 1 1 -0.01 0"/></defs>
-            <text><textPath href="#raSealPath" startOffset="0" textLength="246">RAIN AGENT · ALWAYS ON · </textPath></text>
+            <defs><path id="raSealPath" d="M 84,34 a 50,50 0 1 1 -0.01 0"/></defs>
+            <text><textPath href="#raSealPath" startOffset="0" textLength="308">RAIN AGENT · ALWAYS ON · </textPath></text>
           </svg>
           <span class="ra-core-disk">
             <svg class="ra-clock" viewBox="0 0 48 48" fill="none">
@@ -1698,7 +1698,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=90" defer></script>
+<script src="rain.js?v=91" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1724,8 +1724,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=90" defer></script>
-<script src="merge-water.js?v=90" defer></script>
+<script src="rain-tweaks.js?v=91" defer></script>
+<script src="merge-water.js?v=91" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
