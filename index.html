@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=88" />
-<link rel="stylesheet" href="rain-editorial.css?v=88" />
-<link rel="stylesheet" href="hero-options.css?v=88" />
+<link rel="stylesheet" href="rain.css?v=89" />
+<link rel="stylesheet" href="rain-editorial.css?v=89" />
+<link rel="stylesheet" href="hero-options.css?v=89" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -513,19 +513,20 @@
   .ra-core-disk .ra-clock { width: 56px; height: 56px; margin: 0; filter: drop-shadow(0 0 7px rgba(94, 234, 212, 0.4)); }
   /* the brand wraps the centered clock as a slowly rotating engraved bezel */
   .ra-seal { position: absolute; inset: 0; margin: auto; width: 168px; height: 168px; z-index: 2; pointer-events: none; animation: ra-spin 38s linear infinite; }
-  .ra-seal text { font-family: var(--font-mono); font-size: 7.6px; letter-spacing: 0.12em; text-transform: uppercase; fill: rgba(135, 216, 255, 0.72); }
+  .ra-seal text { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase; fill: rgba(140, 218, 255, 0.82); }
   @media (prefers-reduced-motion: reduce) { .ra-seal { animation: none; } }
-  .ra-clock__face { stroke: rgba(125, 211, 252, 0.4); stroke-width: 0.7; }
-  .ra-clock__ticks-fine { stroke: rgba(125, 211, 252, 0.32); stroke-width: 1; stroke-linecap: round; }
-  .ra-clock__ticks-maj { stroke: rgba(94, 234, 212, 0.65); stroke-width: 1.5; stroke-linecap: round; }
-  .ra-clock__hand { stroke-width: 2.3; stroke-linecap: round; transform-box: view-box; transform-origin: 24px 24px; }
-  .ra-clock__hand--h { stroke: url(#raHandH); }
-  .ra-clock__hand--m { stroke: url(#raHandM); }
+  .ra-clock__bezel { stroke: rgba(140, 210, 250, 0.55); stroke-width: 0.8; }
+  .ra-clock__ring2 { stroke: rgba(125, 211, 252, 0.13); stroke-width: 0.5; }
+  .ra-clock__ticks-fine { stroke: rgba(125, 211, 252, 0.3); stroke-width: 0.9; stroke-linecap: round; }
+  .ra-clock__ticks-maj { stroke: rgba(150, 220, 255, 0.85); stroke-width: 1.7; stroke-linecap: round; }
+  .ra-clock__hand { transform-box: view-box; transform-origin: 24px 24px; }
+  .ra-clock__hand--h { fill: url(#raHandH); stroke: none; filter: drop-shadow(0 0.4px 0.8px rgba(0, 0, 0, 0.5)); }
+  .ra-clock__hand--m { fill: url(#raHandM); stroke: none; filter: drop-shadow(0 0.4px 0.8px rgba(0, 0, 0, 0.5)); }
   .ra-clock__sec { transform-box: view-box; transform-origin: 24px 24px; }
-  .ra-clock__sec line { stroke: rgba(186, 230, 253, 0.85); stroke-width: 0.9; stroke-linecap: round; }
-  .ra-clock__sec circle { fill: #7dd3fc; filter: drop-shadow(0 0 3px #7dd3fc); }
+  .ra-clock__sec line { stroke: #bae6fd; stroke-width: 0.8; stroke-linecap: round; }
+  .ra-clock__sec-tip { fill: #7dd3fc; filter: drop-shadow(0 0 2.5px #7dd3fc); }
   .ra-clock__hub { fill: #ffffff; }
-  .ra-clock__hub-ring { fill: none; stroke: rgba(125, 211, 252, 0.6); stroke-width: 0.7; }
+  .ra-clock__hub-ring { fill: none; stroke: rgba(150, 220, 255, 0.7); stroke-width: 0.6; }
   @media (prefers-reduced-motion: reduce) { .ra-clock__sec { animation: none; } }
 
   /* ===== services selector: 25x premium, futuristic, sharp ===== */
@@ -1439,7 +1440,7 @@
           <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
           <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
             <defs><path id="raSealPath" d="M 84,8 a 76,76 0 1 1 -0.01 0"/></defs>
-            <text><textPath href="#raSealPath" startOffset="0" textLength="474">· RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON </textPath></text>
+            <text><textPath href="#raSealPath" startOffset="0" textLength="468">RAIN AGENT · ALWAYS ON · </textPath></text>
           </svg>
           <span class="ra-core-disk">
             <svg class="ra-clock" viewBox="0 0 48 48" fill="none">
@@ -1449,26 +1450,27 @@
                   <stop offset="72%" stop-color="#0a1c31"/>
                   <stop offset="100%" stop-color="#05101d"/>
                 </radialGradient>
-                <linearGradient id="raHandH" x1="24" y1="27" x2="24" y2="16" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#bae6fd"/>
+                <linearGradient id="raHandH" x1="24" y1="24" x2="24" y2="13" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#eaf4ff"/>
                 </linearGradient>
-                <linearGradient id="raHandM" x1="24" y1="27" x2="24" y2="10.5" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#99f6e4"/>
+                <linearGradient id="raHandM" x1="24" y1="24" x2="24" y2="8" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#e8fffb"/>
                 </linearGradient>
               </defs>
               <circle class="ra-clock__ping" cx="24" cy="24" r="20"/>
               <circle cx="24" cy="24" r="20.5" fill="url(#raFace)"/>
-              <circle class="ra-clock__face" cx="24" cy="24" r="20.5"/>
-              <circle class="ra-clock__ticks-fine" cx="24" cy="24" r="18" stroke-dasharray="0.35 1.535"/>
-              <circle class="ra-clock__ticks-maj" cx="24" cy="24" r="18.4" stroke-dasharray="1.1 8.534"/>
-              <line class="ra-clock__hand ra-clock__hand--h" x1="24" y1="26.5" x2="24" y2="16.5"/>
-              <line class="ra-clock__hand ra-clock__hand--m" x1="24" y1="26.5" x2="24" y2="11"/>
+              <circle class="ra-clock__bezel" cx="24" cy="24" r="20.5"/>
+              <circle class="ra-clock__ring2" cx="24" cy="24" r="17.4"/>
+              <circle class="ra-clock__ticks-fine" cx="24" cy="24" r="18" stroke-dasharray="0.3 1.585"/>
+              <circle class="ra-clock__ticks-maj" cx="24" cy="24" r="18.1" stroke-dasharray="1.5 7.98"/>
+              <polygon class="ra-clock__hand ra-clock__hand--h" points="24,13.6 22.5,24 25.5,24" fill="url(#raHandH)"/>
+              <polygon class="ra-clock__hand ra-clock__hand--m" points="24,8.4 23,24 25,24" fill="url(#raHandM)"/>
               <g class="ra-clock__sec">
-                <line x1="24" y1="28.5" x2="24" y2="8"/>
-                <circle cx="24" cy="8" r="1.5"/>
+                <line x1="24" y1="29.6" x2="24" y2="10.2"/>
+                <circle class="ra-clock__sec-tip" cx="24" cy="12.6" r="1.2"/>
               </g>
-              <circle class="ra-clock__hub-ring" cx="24" cy="24" r="3.3"/>
-              <circle class="ra-clock__hub" cx="24" cy="24" r="2.2"/>
+              <circle class="ra-clock__hub-ring" cx="24" cy="24" r="3"/>
+              <circle class="ra-clock__hub" cx="24" cy="24" r="1.9"/>
             </svg>
           </span>
         </div>
@@ -1697,7 +1699,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=88" defer></script>
+<script src="rain.js?v=89" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1723,8 +1725,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=88" defer></script>
-<script src="merge-water.js?v=88" defer></script>
+<script src="rain-tweaks.js?v=89" defer></script>
+<script src="merge-water.js?v=89" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
