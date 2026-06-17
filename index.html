@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=79" />
-<link rel="stylesheet" href="rain-editorial.css?v=79" />
-<link rel="stylesheet" href="hero-options.css?v=79" />
+<link rel="stylesheet" href="rain.css?v=80" />
+<link rel="stylesheet" href="rain-editorial.css?v=80" />
+<link rel="stylesheet" href="hero-options.css?v=80" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -497,6 +497,83 @@
   @media (prefers-reduced-motion: reduce) {
     .ra-clock__hand, .ra-clock__ping { animation: none; }
   }
+
+  /* ===== CROWN JEWEL: bigger, futuristic Rain Agent clock ===== */
+  .ra-core-disk {
+    width: 130px;
+    height: 130px;
+    background: radial-gradient(circle at 50% 34%, #19426e 0%, #0b1f37 58%, #060f1d 100%);
+    box-shadow:
+      0 0 54px rgba(94, 234, 212, 0.32),
+      0 0 0 1px rgba(125, 211, 252, 0.2),
+      inset 0 0 32px rgba(125, 211, 252, 0.18),
+      inset 0 2px 12px rgba(255, 255, 255, 0.06);
+  }
+  .ra-core-disk .ra-clock { width: 52px; height: 52px; margin-bottom: 1px; filter: drop-shadow(0 0 6px rgba(94, 234, 212, 0.35)); }
+  .ra-core-disk strong { font-size: 13px; margin-top: 6px; }
+  .ra-clock__face { stroke: rgba(125, 211, 252, 0.4); stroke-width: 0.7; }
+  .ra-clock__ticks-fine { stroke: rgba(125, 211, 252, 0.32); stroke-width: 1; stroke-linecap: round; }
+  .ra-clock__ticks-maj { stroke: rgba(94, 234, 212, 0.65); stroke-width: 1.5; stroke-linecap: round; }
+  .ra-clock__hand { stroke-width: 2.3; stroke-linecap: round; transform-box: view-box; transform-origin: 24px 24px; }
+  .ra-clock__hand--h { stroke: url(#raHandH); animation: ra-spin 14s linear infinite; }
+  .ra-clock__hand--m { stroke: url(#raHandM); animation: ra-spin 3.2s linear infinite; }
+  .ra-clock__sec { transform-box: view-box; transform-origin: 24px 24px; animation: ra-spin 6s linear infinite; }
+  .ra-clock__sec line { stroke: rgba(186, 230, 253, 0.85); stroke-width: 0.9; stroke-linecap: round; }
+  .ra-clock__sec circle { fill: #7dd3fc; filter: drop-shadow(0 0 3px #7dd3fc); }
+  .ra-clock__hub { fill: #ffffff; }
+  .ra-clock__hub-ring { fill: none; stroke: rgba(125, 211, 252, 0.6); stroke-width: 0.7; }
+  @media (prefers-reduced-motion: reduce) { .ra-clock__sec { animation: none; } }
+
+  /* ===== services selector: 25x premium, futuristic, sharp ===== */
+  .cap-btn {
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.55));
+    border: 1px solid rgba(15, 23, 42, 0.07);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+    transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease), border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .cap-btn::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    transform: translateY(-50%);
+    border-radius: 0 2px 2px 0;
+    background: linear-gradient(180deg, var(--sky-300), var(--blue-600));
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+    transition: height 0.3s var(--ease);
+  }
+  .cap-btn:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 12px 26px -14px rgba(37, 99, 235, 0.32);
+  }
+  .cap-btn.is-active {
+    background: #fff;
+    border-color: rgba(59, 130, 246, 0.28);
+    box-shadow: 0 18px 40px -18px rgba(37, 99, 235, 0.45), inset 0 0 0 1px rgba(59, 130, 246, 0.08);
+  }
+  .cap-btn.is-active::after { height: 56%; }
+  .cap-btn .icon-tile { border-radius: 10px; }
+  .cap-btn.is-active .icon-tile { box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.55); }
+
+  .cap-panel {
+    border-radius: 16px;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(150deg, rgba(125, 211, 252, 0.6), rgba(94, 234, 212, 0.4) 42%, rgba(15, 23, 42, 0.06) 82%) border-box;
+    box-shadow:
+      0 34px 64px -32px rgba(15, 23, 42, 0.32),
+      0 2px 10px rgba(15, 23, 42, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  .cap-panel__pain { border-radius: 10px; }
 
   /* Spread the integrations out toward the header width so the Rain Agent core
      sits focused in the center, and make the watch bigger + more present. */
@@ -1167,17 +1244,32 @@
           <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
           <span class="ra-core-disk">
             <svg class="ra-clock" viewBox="0 0 48 48" fill="none">
-              <circle class="ra-clock__ping" cx="24" cy="24" r="19"/>
-              <circle class="ra-clock__face" cx="24" cy="24" r="19"/>
-              <g class="ra-clock__ticks" stroke-linecap="round">
-                <line x1="24" y1="7" x2="24" y2="10.5"/>
-                <line x1="41" y1="24" x2="37.5" y2="24"/>
-                <line x1="24" y1="41" x2="24" y2="37.5"/>
-                <line x1="7" y1="24" x2="10.5" y2="24"/>
+              <defs>
+                <radialGradient id="raFace" cx="50%" cy="38%" r="64%">
+                  <stop offset="0%" stop-color="#16365b"/>
+                  <stop offset="72%" stop-color="#0a1c31"/>
+                  <stop offset="100%" stop-color="#05101d"/>
+                </radialGradient>
+                <linearGradient id="raHandH" x1="24" y1="27" x2="24" y2="16" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#bae6fd"/>
+                </linearGradient>
+                <linearGradient id="raHandM" x1="24" y1="27" x2="24" y2="10.5" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#99f6e4"/>
+                </linearGradient>
+              </defs>
+              <circle class="ra-clock__ping" cx="24" cy="24" r="20"/>
+              <circle cx="24" cy="24" r="20.5" fill="url(#raFace)"/>
+              <circle class="ra-clock__face" cx="24" cy="24" r="20.5"/>
+              <circle class="ra-clock__ticks-fine" cx="24" cy="24" r="18" stroke-dasharray="0.35 1.535"/>
+              <circle class="ra-clock__ticks-maj" cx="24" cy="24" r="18.4" stroke-dasharray="1.1 8.534"/>
+              <line class="ra-clock__hand ra-clock__hand--h" x1="24" y1="26.5" x2="24" y2="16.5"/>
+              <line class="ra-clock__hand ra-clock__hand--m" x1="24" y1="26.5" x2="24" y2="11"/>
+              <g class="ra-clock__sec">
+                <line x1="24" y1="28.5" x2="24" y2="8"/>
+                <circle cx="24" cy="8" r="1.5"/>
               </g>
-              <line class="ra-clock__hand ra-clock__hand--h" x1="24" y1="24" x2="24" y2="15.5"/>
-              <line class="ra-clock__hand ra-clock__hand--m" x1="24" y1="24" x2="24" y2="10.5"/>
-              <circle class="ra-clock__hub" cx="24" cy="24" r="2.1"/>
+              <circle class="ra-clock__hub-ring" cx="24" cy="24" r="3.3"/>
+              <circle class="ra-clock__hub" cx="24" cy="24" r="2.2"/>
             </svg>
             <strong>rain agent</strong>
             <small>always on</small>
@@ -1408,7 +1500,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=79" defer></script>
+<script src="rain.js?v=80" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1434,8 +1526,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=79" defer></script>
-<script src="merge-water.js?v=79" defer></script>
+<script src="rain-tweaks.js?v=80" defer></script>
+<script src="merge-water.js?v=80" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
