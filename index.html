@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=82" />
-<link rel="stylesheet" href="rain-editorial.css?v=82" />
-<link rel="stylesheet" href="hero-options.css?v=82" />
+<link rel="stylesheet" href="rain.css?v=83" />
+<link rel="stylesheet" href="rain-editorial.css?v=83" />
+<link rel="stylesheet" href="hero-options.css?v=83" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -499,8 +499,10 @@
 
   /* ===== CROWN JEWEL: bigger, futuristic Rain Agent clock ===== */
   .ra-core-disk {
-    width: 130px;
-    height: 130px;
+    width: 116px;
+    height: 116px;
+    display: grid;
+    place-items: center;
     background: radial-gradient(circle at 50% 34%, #19426e 0%, #0b1f37 58%, #060f1d 100%);
     box-shadow:
       0 0 54px rgba(94, 234, 212, 0.32),
@@ -508,8 +510,11 @@
       inset 0 0 32px rgba(125, 211, 252, 0.18),
       inset 0 2px 12px rgba(255, 255, 255, 0.06);
   }
-  .ra-core-disk .ra-clock { width: 52px; height: 52px; margin-bottom: 1px; filter: drop-shadow(0 0 6px rgba(94, 234, 212, 0.35)); }
-  .ra-core-disk strong { font-size: 13px; margin-top: 6px; }
+  .ra-core-disk .ra-clock { width: 56px; height: 56px; margin: 0; filter: drop-shadow(0 0 7px rgba(94, 234, 212, 0.4)); }
+  /* the brand wraps the centered clock as a slowly rotating engraved bezel */
+  .ra-seal { position: absolute; inset: 0; margin: auto; width: 168px; height: 168px; z-index: 2; pointer-events: none; animation: ra-spin 38s linear infinite; }
+  .ra-seal text { font-family: var(--font-mono); font-size: 6.2px; letter-spacing: 0.16em; text-transform: uppercase; fill: rgba(125, 211, 252, 0.6); }
+  @media (prefers-reduced-motion: reduce) { .ra-seal { animation: none; } }
   .ra-clock__face { stroke: rgba(125, 211, 252, 0.4); stroke-width: 0.7; }
   .ra-clock__ticks-fine { stroke: rgba(125, 211, 252, 0.32); stroke-width: 1; stroke-linecap: round; }
   .ra-clock__ticks-maj { stroke: rgba(94, 234, 212, 0.65); stroke-width: 1.5; stroke-linecap: round; }
@@ -661,6 +666,70 @@
   /* kill the blue/teal corner glows on the paper sections entirely */
   .caps::before,
   .process::before { display: none !important; }
+
+  /* ===== alternate "Pick a problem": horizontal tabs + split stage (compare) ===== */
+  .c2-sec { padding: 72px 24px; }
+  .c2 { max-width: var(--maxw); margin: 0 auto; }
+  .c2__r { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .c2__tabs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .c2__tab {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 9px;
+    padding: 15px 15px 17px; cursor: pointer; position: relative;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.55));
+    border: 1px solid rgba(15, 23, 42, 0.07);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .2s ease;
+  }
+  .c2__tab:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -14px rgba(37, 99, 235, .3); border-color: rgba(59, 130, 246, .28); }
+  .c2__num { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; color: var(--blue-500); }
+  .c2__tab-ic { width: 36px; height: 36px; border-radius: 10px; }
+  .c2__tab-ic svg { width: 19px; height: 19px; }
+  .c2__tab-tt { font-size: 14px; font-weight: 600; line-height: 1.22; color: var(--t-strong); }
+  .c2__stage { margin-top: 22px; }
+  .c2__panel {
+    display: none; grid-template-columns: 1fr 1fr;
+    border-radius: 20px; overflow: hidden; border: 1px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(150deg, rgba(125, 211, 252, .6), rgba(94, 234, 212, .4) 45%, rgba(15, 23, 42, .06) 82%) border-box;
+    box-shadow: 0 34px 64px -32px rgba(15, 23, 42, .32), 0 2px 10px rgba(15, 23, 42, .05);
+  }
+  .c2__lead { padding: 36px; background: linear-gradient(165deg, #f6f9ff, #eef3fb); border-right: 1px solid rgba(15, 23, 42, 0.06); }
+  .c2__id { margin-top: 16px; }
+  .c2__id h3 { font-size: 24px; letter-spacing: -.02em; color: var(--t-strong); }
+  .c2__id p { margin-top: 3px; font-size: 15px; color: var(--t-faint); }
+  .c2__pain { margin-top: 22px; padding: 16px 18px; border-radius: 12px; border: 1px solid rgba(253, 230, 138, .7); background: linear-gradient(135deg, #fffbeb, rgba(255, 251, 235, .4)); }
+  .c2__pain b { display: block; font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: #b45309; }
+  .c2__pain p { margin-top: 7px; font-size: 17px; line-height: 1.5; font-weight: 500; color: #44403c; }
+  .c2__fix { padding: 36px; display: flex; flex-direction: column; }
+  .c2__fix > b { display: block; font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: #047857; }
+  .c2__fix ul { display: grid; gap: 14px; margin-top: 16px; padding: 0; list-style: none; }
+  .c2__fix li { display: flex; gap: 11px; font-size: 16px; line-height: 1.5; color: #44403c; }
+  .c2__outcome { margin-top: 24px; padding: 14px 18px; font-size: 15px; font-weight: 500; color: #fff; border-radius: 12px; background: linear-gradient(to right, var(--ink-900), var(--ink-800)); }
+  #c2-1:checked ~ .c2__tabs .c2__tab:nth-child(1) { background: #fff; border-color: rgba(59, 130, 246, .32); box-shadow: 0 16px 36px -16px rgba(37, 99, 235, .42); }
+  #c2-1:checked ~ .c2__tabs .c2__tab:nth-child(1) .c2__tab-ic { background: linear-gradient(135deg, var(--blue-600), var(--indigo-500)); color: #fff; }
+  #c2-1:checked ~ .c2__stage .c2__panel[data-p="1"] { display: grid; }
+  #c2-2:checked ~ .c2__tabs .c2__tab:nth-child(2) { background: #fff; border-color: rgba(59, 130, 246, .32); box-shadow: 0 16px 36px -16px rgba(37, 99, 235, .42); }
+  #c2-2:checked ~ .c2__tabs .c2__tab:nth-child(2) .c2__tab-ic { background: linear-gradient(135deg, var(--blue-600), var(--indigo-500)); color: #fff; }
+  #c2-2:checked ~ .c2__stage .c2__panel[data-p="2"] { display: grid; }
+  #c2-3:checked ~ .c2__tabs .c2__tab:nth-child(3) { background: #fff; border-color: rgba(59, 130, 246, .32); box-shadow: 0 16px 36px -16px rgba(37, 99, 235, .42); }
+  #c2-3:checked ~ .c2__tabs .c2__tab:nth-child(3) .c2__tab-ic { background: linear-gradient(135deg, var(--blue-600), var(--indigo-500)); color: #fff; }
+  #c2-3:checked ~ .c2__stage .c2__panel[data-p="3"] { display: grid; }
+  #c2-4:checked ~ .c2__tabs .c2__tab:nth-child(4) { background: #fff; border-color: rgba(59, 130, 246, .32); box-shadow: 0 16px 36px -16px rgba(37, 99, 235, .42); }
+  #c2-4:checked ~ .c2__tabs .c2__tab:nth-child(4) .c2__tab-ic { background: linear-gradient(135deg, var(--blue-600), var(--indigo-500)); color: #fff; }
+  #c2-4:checked ~ .c2__stage .c2__panel[data-p="4"] { display: grid; }
+  #c2-5:checked ~ .c2__tabs .c2__tab:nth-child(5) { background: #fff; border-color: rgba(59, 130, 246, .32); box-shadow: 0 16px 36px -16px rgba(37, 99, 235, .42); }
+  #c2-5:checked ~ .c2__tabs .c2__tab:nth-child(5) .c2__tab-ic { background: linear-gradient(135deg, var(--blue-600), var(--indigo-500)); color: #fff; }
+  #c2-5:checked ~ .c2__stage .c2__panel[data-p="5"] { display: grid; }
+  #c2-6:checked ~ .c2__tabs .c2__tab:nth-child(6) { background: #fff; border-color: rgba(59, 130, 246, .32); box-shadow: 0 16px 36px -16px rgba(37, 99, 235, .42); }
+  #c2-6:checked ~ .c2__tabs .c2__tab:nth-child(6) .c2__tab-ic { background: linear-gradient(135deg, var(--blue-600), var(--indigo-500)); color: #fff; }
+  #c2-6:checked ~ .c2__stage .c2__panel[data-p="6"] { display: grid; }
+  @media (max-width: 760px) {
+    .c2__tabs { grid-template-columns: repeat(3, 1fr); }
+    .c2__panel { grid-template-columns: 1fr; }
+    .c2__lead { border-right: none; border-bottom: 1px solid rgba(15, 23, 42, 0.06); }
+    .c2-sec { padding: 56px 20px; }
+  }
+  @media (max-width: 460px) { .c2__tabs { grid-template-columns: repeat(2, 1fr); } .c2__tab-tt { font-size: 13px; } }
 </style>
 </head>
 <body>
@@ -998,6 +1067,132 @@
   </div>
 </section>
 
+<!-- ============ PICK A PROBLEM - alternate creative version (for comparison) ============ -->
+<section class="c2-sec warm-grid" aria-label="Pick a problem, alternate layout">
+  <header class="ed-head" data-reveal>
+    <p class="eyebrow">Same six, a new view</p>
+    <div class="ed-head__body">
+      <h2>Pick a problem. <span class="serif-grad serif-grad--light">See it vanish.</span></h2>
+      <p class="lede">A second take on the selector, side by side with the one above so you can compare.</p>
+    </div>
+  </header>
+  <div class="c2">
+    <input class="c2__r" type="radio" name="c2grp" id="c2-1" checked>
+    <input class="c2__r" type="radio" name="c2grp" id="c2-2">
+    <input class="c2__r" type="radio" name="c2grp" id="c2-3">
+    <input class="c2__r" type="radio" name="c2grp" id="c2-4">
+    <input class="c2__r" type="radio" name="c2grp" id="c2-5">
+    <input class="c2__r" type="radio" name="c2grp" id="c2-6">
+    <div class="c2__tabs">
+      <label class="c2__tab" for="c2-1"><b class="c2__num">01</b><span class="icon-tile c2__tab-ic icon-tile--blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5h6l-1 8L18 10.5h-6l1-8Z"/></svg></span><span class="c2__tab-tt">AI Automation</span></label>
+      <label class="c2__tab" for="c2-2"><b class="c2__num">02</b><span class="icon-tile c2__tab-ic icon-tile--sky" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><span class="c2__tab-tt">Websites</span></label>
+      <label class="c2__tab" for="c2-3"><b class="c2__num">03</b><span class="icon-tile c2__tab-ic icon-tile--amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg></span><span class="c2__tab-tt">Branding</span></label>
+      <label class="c2__tab" for="c2-4"><b class="c2__num">04</b><span class="icon-tile c2__tab-ic icon-tile--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span><span class="c2__tab-tt">Software</span></label>
+      <label class="c2__tab" for="c2-5"><b class="c2__num">05</b><span class="icon-tile c2__tab-ic icon-tile--emerald" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg></span><span class="c2__tab-tt">Mobile Apps</span></label>
+      <label class="c2__tab" for="c2-6"><b class="c2__num">06</b><span class="icon-tile c2__tab-ic icon-tile--ink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M7 11l10-4.5M7 13l10 4.5"/></svg></span><span class="c2__tab-tt">Connected Systems</span></label>
+    </div>
+    <div class="c2__stage">
+      <article class="c2__panel" data-p="1">
+        <div class="c2__lead">
+          <span class="icon-tile icon-tile--lg icon-tile--blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5h6l-1 8L18 10.5h-6l1-8Z"/></svg></span>
+          <div class="c2__id"><h3>AI Automation</h3><p>The busywork eats your week</p></div>
+          <div class="c2__pain"><b>The pain</b><p>Follow-ups, posting, reporting, replies - all manual, all late.</p></div>
+        </div>
+        <div class="c2__fix">
+          <b>How Rain fixes it</b>
+          <ul>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>An agent drafts content, replies &amp; reports daily</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Runs inside your real tools - no new logins</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>You approve - it ships</li>
+          </ul>
+          <p class="c2__outcome">Hours back every week. Nothing slips.</p>
+        </div>
+      </article>
+      <article class="c2__panel" data-p="2">
+        <div class="c2__lead">
+          <span class="icon-tile icon-tile--lg icon-tile--sky" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+          <div class="c2__id"><h3>Websites</h3><p>Looks fine. Does nothing.</p></div>
+          <div class="c2__pain"><b>The pain</b><p>A pretty brochure - no leads, invisible on Google.</p></div>
+        </div>
+        <div class="c2__fix">
+          <b>How Rain fixes it</b>
+          <ul>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Rebuilt to load fast and rank</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Designed to turn visitors into booked calls</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Wired into your CRM from day one</li>
+          </ul>
+          <p class="c2__outcome">A site that sells while you sleep.</p>
+        </div>
+      </article>
+      <article class="c2__panel" data-p="3">
+        <div class="c2__lead">
+          <span class="icon-tile icon-tile--lg icon-tile--amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg></span>
+          <div class="c2__id"><h3>Branding</h3><p>You've outgrown your look</p></div>
+          <div class="c2__pain"><b>The pain</b><p>The business grew. The brand still looks like 2015.</p></div>
+        </div>
+        <div class="c2__fix">
+          <b>How Rain fixes it</b>
+          <ul>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Identity, voice &amp; design system</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Applied everywhere customers meet you</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Consistent from invoice to Instagram</li>
+          </ul>
+          <p class="c2__outcome">You look like the company you're becoming.</p>
+        </div>
+      </article>
+      <article class="c2__panel" data-p="4">
+        <div class="c2__lead">
+          <span class="icon-tile icon-tile--lg icon-tile--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span>
+          <div class="c2__id"><h3>Software</h3><p>Spreadsheets run the company</p></div>
+          <div class="c2__pain"><b>The pain</b><p>Critical operations live in tabs nobody dares to touch.</p></div>
+        </div>
+        <div class="c2__fix">
+          <b>How Rain fixes it</b>
+          <ul>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Custom dashboards, portals &amp; internal tools</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Shaped to how you actually operate</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>One login, one source of truth</li>
+          </ul>
+          <p class="c2__outcome">Operations you can see - and trust.</p>
+        </div>
+      </article>
+      <article class="c2__panel" data-p="5">
+        <div class="c2__lead">
+          <span class="icon-tile icon-tile--lg icon-tile--emerald" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg></span>
+          <div class="c2__id"><h3>Mobile Apps</h3><p>Your customers live on phones</p></div>
+          <div class="c2__pain"><b>The pain</b><p>And your business isn't there yet.</p></div>
+        </div>
+        <div class="c2__fix">
+          <b>How Rain fixes it</b>
+          <ul>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Customer &amp; team apps - iOS and Android</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Bookings, orders &amp; push built in</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Connected to the same system as everything else</li>
+          </ul>
+          <p class="c2__outcome">Your business, in every pocket.</p>
+        </div>
+      </article>
+      <article class="c2__panel" data-p="6">
+        <div class="c2__lead">
+          <span class="icon-tile icon-tile--lg icon-tile--ink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M7 11l10-4.5M7 13l10 4.5"/></svg></span>
+          <div class="c2__id"><h3>Connected Systems</h3><p>Five tools. None of them talk.</p></div>
+          <div class="c2__pain"><b>The pain</b><p>You're the human API between your own apps.</p></div>
+        </div>
+        <div class="c2__fix">
+          <b>How Rain fixes it</b>
+          <ul>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>CRM, store, inbox &amp; analytics wired together</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Data moves the moment something happens</li>
+          <li><span class="tick tick--teal" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>No more copy-paste glue work</li>
+          </ul>
+          <p class="c2__outcome">One system that runs itself.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
 <div class="seam seam--to-ink"></div>
 
 <!-- ============ SEE IT WORK ============ -->
@@ -1241,9 +1436,12 @@
 
         <div class="circuit__core" aria-hidden="true">
           <span class="ra-orbit ra-orbit--a" aria-hidden="true"></span>
-          <span class="ra-orbit ra-orbit--b" aria-hidden="true"></span>
           <span class="ra-ripple" aria-hidden="true"></span>
           <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
+          <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
+            <defs><path id="raSealPath" d="M 84,8 a 76,76 0 1 1 -0.01 0"/></defs>
+            <text><textPath href="#raSealPath" startOffset="0" textLength="474">· RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON </textPath></text>
+          </svg>
           <span class="ra-core-disk">
             <svg class="ra-clock" viewBox="0 0 48 48" fill="none">
               <defs>
@@ -1273,8 +1471,6 @@
               <circle class="ra-clock__hub-ring" cx="24" cy="24" r="3.3"/>
               <circle class="ra-clock__hub" cx="24" cy="24" r="2.2"/>
             </svg>
-            <strong>rain agent</strong>
-            <small>always on</small>
           </span>
         </div>
 
@@ -1502,7 +1698,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=82" defer></script>
+<script src="rain.js?v=83" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1528,8 +1724,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=82" defer></script>
-<script src="merge-water.js?v=82" defer></script>
+<script src="rain-tweaks.js?v=83" defer></script>
+<script src="merge-water.js?v=83" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
