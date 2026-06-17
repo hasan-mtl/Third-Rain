@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=94" />
-<link rel="stylesheet" href="rain-editorial.css?v=94" />
-<link rel="stylesheet" href="hero-options.css?v=94" />
+<link rel="stylesheet" href="rain.css?v=97" />
+<link rel="stylesheet" href="rain-editorial.css?v=97" />
+<link rel="stylesheet" href="hero-options.css?v=97" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -63,29 +63,40 @@
   .statement__inner { position: relative; z-index: 5; }
   .statement::after { display: none; }
 
-  /* ---- hero -> statement: one seamless, premium merge (Mike) ----
-     The rain dissolves over a longer fall, the hero floor fades to the exact
-     colour the statement opens on, and a soft pool of light rests on the seam
-     where the rain "lands", so the two dark sections read as a single canvas. */
+  /* ---- hero -> statement: ONE seamless dark canvas (no band) ----
+     The earlier version faded to a much darker colour, which read as an ugly
+     horizontal band. Fix: the hero's lower third converges - very gently, over
+     ~300px - to its OWN dominant deep-navy (#0a1f2c), and the statement opens on
+     that exact colour. Brightness matches on both sides of the line, so there is
+     no band and nothing to see; the rain melts straight into the headline. A
+     whisper of wide, edge-less blue light pools where it lands, for depth. */
   .basin {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 77%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 77%, transparent 100%);
-  }
-  .statement {
-    background:
-      radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.2), transparent 55%),
-      linear-gradient(180deg, #070d1c 0%, #0c1a38 62%, #0a1f2c 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
   }
   .hero-floor {
     position: absolute;
-    left: 0; right: 0; bottom: -1px;
-    height: 240px;
+    left: 0; right: 0; bottom: 0;
+    height: 320px;
     z-index: 2;
     pointer-events: none;
-    background:
-      radial-gradient(135% 130px at 50% 100%, rgba(125, 211, 252, 0.14), transparent 70%),
-      linear-gradient(to bottom, transparent 0%, rgba(7, 13, 28, 0.5) 64%, #070d1c 100%);
+    background: linear-gradient(to bottom,
+      rgba(10, 31, 44, 0) 0%,
+      rgba(10, 31, 44, 0.22) 44%,
+      rgba(10, 31, 44, 0.55) 68%,
+      rgba(10, 31, 44, 0.88) 84%,
+      #0a1f2c 93%,
+      #0a1f2c 100%);
   }
+  .statement {
+    background:
+      radial-gradient(1200px 320px at 50% 46px, rgba(96, 165, 250, 0.08), transparent 72%),
+      radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.2), transparent 55%),
+      linear-gradient(to bottom, #0a1f2c 0%, #0a1f2c 5%, #0b1e38 48%, #0a1f2c 100%);
+  }
+  /* keep the statement's aurora from tinting the very top edge, so the seam
+     meets the hero floor as the same flat colour on both sides. */
+  .statement::before { top: 70px; }
 
   /* Rain Agent intro: a big brand headline with a tight one-line subline (Mike) */
   #platform .ed-head__body h2 { font-size: clamp(2.6rem, 5.6vw, 4.6rem); max-width: 18ch; }
@@ -1756,7 +1767,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=94" defer></script>
+<script src="rain.js?v=97" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1782,8 +1793,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=94" defer></script>
-<script src="merge-water.js?v=94" defer></script>
+<script src="rain-tweaks.js?v=97" defer></script>
+<script src="merge-water.js?v=97" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
