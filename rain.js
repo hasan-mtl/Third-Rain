@@ -1602,16 +1602,16 @@
   var __runlogs = qsa("[data-runlog]");
   if (__runlogs.length && !reduce) __runlogs.forEach(function (runlog) {
     var LOG_LINES = [
-      ["12:05", "Social caption drafted + image generated"],
-      ["13:18", "Low-stock alert: 3 SKUs flagged"],
-      ["14:02", "Lead follow-up email queued"],
-      ["15:47", "Blog post published to WordPress"],
-      ["16:30", "Weekly numbers summarized for review"],
-      ["17:15", "9 customer replies sent after approval"],
-      ["18:08", "Tomorrow's content scheduled"],
-      ["08:00", "Morning report sent to 3 clients"],
-      ["09:12", "Blog draft ready → waiting for review"],
-      ["11:30", "12 customer replies drafted"]
+      ["10:05", "Review request sent to the Garcias"],
+      ["06:12", "After-hours call answered → water heater, booked 9"],
+      ["07:58", "Morning report sent: jobs, revenue, calls"],
+      ["08:40", "Estimate follow-up: Hendersons reminded (day 3)"],
+      ["11:20", "Missed call texted back in 30 seconds"],
+      ["13:02", "New 5-star review replied to and reposted"],
+      ["14:35", "Quote sent: kitchen remodel, $8,400"],
+      ["16:10", "Tomorrow's schedule confirmed with 6 crews"],
+      ["17:45", "Invoice paid: Patel job, marked complete"],
+      ["09:30", "Lead from Google chased, booked for Tuesday"]
     ];
     var logIndex = 0;
     var logTimer = null;
