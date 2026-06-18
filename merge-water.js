@@ -46,7 +46,7 @@
     "    float ofoam = smoothstep(0.54, 0.85, y) * (0.16 + 0.5*crest);",
     "    col = mix(col, vec3(0.42,0.60,0.72), ofoam*0.40);",            /* restrained sparkle on the swells, never a white slab */
     "    col += smoothstep(0.13, 0.0, y) * vec3(0.08,0.16,0.24);",      /* faint, moody light along the far horizon */
-    "    float oa = smoothstep(0.0, 0.20, y) * (1.0 - smoothstep(0.64, 1.0, y));",  /* emerge gently from the hero, sink into the dark near-water */
+    "    float oa = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.64, 1.0, y));",  /* fully transparent at the seam, the sea EMERGES well below it */
     "    gl_FragColor = vec4(col, oa);",
     "    return;",
     "  }",

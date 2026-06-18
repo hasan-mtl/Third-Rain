@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=109" />
-<link rel="stylesheet" href="rain-editorial.css?v=109" />
-<link rel="stylesheet" href="hero-options.css?v=109" />
+<link rel="stylesheet" href="rain.css?v=110" />
+<link rel="stylesheet" href="rain-editorial.css?v=110" />
+<link rel="stylesheet" href="hero-options.css?v=110" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -63,21 +63,27 @@
   .statement__inner { position: relative; z-index: 5; }
   .statement::after { display: none; }
 
-  /* ---- hero -> statement: a calm ocean seen from afar (Mike: natural water, above
-     the surface, like the site's other water flows - NOT underwater). The hero's
-     rain falls onto a distant sea rendered in the SAME WebGL shader as the section
-     merges (data-ocean); the message sits on the dark near-water below the horizon. */
+  /* ---- hero + statement = ONE seamless scene (Mike: no separation) ----
+     The boundary is invisible: the hero floor converges to the exact dark the
+     statement opens on (#0a1f2c), and the calm sea (same merge-water shader,
+     data-ocean) is fully transparent right at the seam and only EMERGES lower
+     down, so the rain melts into the dark and the distant water appears as the
+     scene continues - one rainy seascape, not two stacked sections. */
+  .hero-floor {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 300px; z-index: 2; pointer-events: none;
+    background: linear-gradient(to bottom,
+      rgba(10, 31, 44, 0) 0%, rgba(10, 31, 44, 0.5) 64%, rgba(10, 31, 44, 0.9) 88%, #0a1f2c 100%);
+  }
   .statement {
     padding-top: 300px;
     background:
       radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.18), transparent 55%),
-      linear-gradient(180deg, #0a1c2c 0%, #0a1a28 46%, #0a1f2c 100%);
+      linear-gradient(180deg, #0a1f2c 0%, #0a1a28 46%, #0a1f2c 100%);
   }
-  .statement::before { top: 280px; }            /* keep the aurora off the far-sea band */
-  .statement .merge-water--ocean { height: 300px; }   /* the distant-sea transition at the hero seam */
+  .statement::before { display: none; }         /* drop the teal aurora glow Mike X'd out */
+  .statement .merge-water--ocean { height: 300px; }   /* the distant sea, emerging below the seamless seam */
   @media (max-width: 680px) {
     .statement { padding-top: 208px; }
-    .statement::before { top: 196px; }
     .statement .merge-water--ocean { height: 208px; }
   }
 
@@ -888,6 +894,7 @@
     </div>
     <p class="hx-split__proof"><span>20+ Years</span><span>&middot;</span><span>Websites</span><span>&middot;</span><span>Brand</span><span>&middot;</span><span>Software</span><span>&middot;</span><span>AI agents</span></p>
   </div>
+  <div class="hero-floor" aria-hidden="true"></div>
 </section>
 
 <!-- ============ STATEMENT BEAT ============ -->
@@ -1661,14 +1668,16 @@
             <div class="rd-lcd" role="img" aria-label="Live local time">
               <div class="rd-lcd__face">
                 <svg class="rd-lcd__main" viewBox="0 0 196 66" width="104" height="35" fill="none" shape-rendering="geometricPrecision" aria-hidden="true">
-                  <g class="rd-d" data-d="h0" transform="translate(0,1)"></g>
-                  <g class="rd-d" data-d="h1" transform="translate(43,1)"></g>
-                  <g class="rd-colon" transform="translate(86,1)">
-                    <rect class="rd-dot" x="6" y="20" width="9" height="9" rx="2.4"/>
-                    <rect class="rd-dot" x="6" y="44" width="9" height="9" rx="2.4"/>
+                  <g class="rd-digits" transform="translate(0,0)">
+                    <g class="rd-d" data-d="h0" transform="translate(0,1)"></g>
+                    <g class="rd-d" data-d="h1" transform="translate(43,1)"></g>
+                    <g class="rd-colon" transform="translate(86,1)">
+                      <rect class="rd-dot" x="6" y="20" width="9" height="9" rx="2.4"/>
+                      <rect class="rd-dot" x="6" y="44" width="9" height="9" rx="2.4"/>
+                    </g>
+                    <g class="rd-d" data-d="m0" transform="translate(108,1)"></g>
+                    <g class="rd-d" data-d="m1" transform="translate(151,1)"></g>
                   </g>
-                  <g class="rd-d" data-d="m0" transform="translate(108,1)"></g>
-                  <g class="rd-d" data-d="m1" transform="translate(151,1)"></g>
                 </svg>
                 <div class="rd-bar" aria-hidden="true"><span class="rd-bar__fill"></span></div>
                 <div class="rd-lcd__sub">
@@ -1901,7 +1910,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=109" defer></script>
+<script src="rain.js?v=110" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1927,8 +1936,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=109" defer></script>
-<script src="merge-water.js?v=109" defer></script>
+<script src="rain-tweaks.js?v=110" defer></script>
+<script src="merge-water.js?v=110" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
@@ -2039,15 +2048,21 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   var col = lcd.querySelector(".rd-colon");
   var ampm = lcd.querySelector(".rd-ampm");
   var bar = lcd.querySelector(".rd-bar__fill");
+  var digits = lcd.querySelector(".rd-digits");
+  var h0g = lcd.querySelector('[data-d="h0"]');
   function tick() {
     var d = new Date(), H = d.getHours(), M = d.getMinutes(), S = d.getSeconds();
     var ap = H < 12 ? "AM" : "PM";
     var h = H % 12; if (h === 0) h = 12;
-    var tens = Math.floor(h / 10);
-    setD("h0", tens, tens === 0);          /* blank the leading hour zero */
+    var twoDigit = h >= 10;
+    /* show the tens digit only for 10/11/12; otherwise hide that slot entirely
+       (no faint ghost) and slide the whole readout so HH:MM stays centred. */
+    if (h0g) h0g.style.display = twoDigit ? "" : "none";
+    if (twoDigit) setD("h0", Math.floor(h / 10), false);
     setD("h1", h % 10, false);
     setD("m0", Math.floor(M / 10), false);
     setD("m1", M % 10, false);
+    if (digits) digits.setAttribute("transform", "translate(" + (twoDigit ? 3 : -19) + ",0)");
     if (ampm) ampm.textContent = ap;
     if (col) col.classList.toggle("rd-dim", S % 2 !== 0);
     if (bar) bar.style.width = ((S / 60) * 100).toFixed(1) + "%";
