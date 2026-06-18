@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=113" />
-<link rel="stylesheet" href="rain-editorial.css?v=113" />
-<link rel="stylesheet" href="hero-options.css?v=113" />
+<link rel="stylesheet" href="rain.css?v=115" />
+<link rel="stylesheet" href="rain-editorial.css?v=115" />
+<link rel="stylesheet" href="hero-options.css?v=115" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -70,21 +70,21 @@
      down, so the rain melts into the dark and the distant water appears as the
      scene continues - one rainy seascape, not two stacked sections. */
   .hero-floor {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 300px; z-index: 2; pointer-events: none;
+    position: absolute; left: 0; right: 0; bottom: 0; height: 132px; z-index: 2; pointer-events: none;
     background: linear-gradient(to bottom,
-      rgba(10, 31, 44, 0) 0%, rgba(10, 31, 44, 0.5) 64%, rgba(10, 31, 44, 0.9) 88%, #0a1f2c 100%);
+      rgba(10, 31, 44, 0) 0%, rgba(10, 31, 44, 0.55) 58%, rgba(10, 31, 44, 0.9) 84%, #0a1f2c 100%);
   }
   .statement {
-    padding-top: 300px;
+    padding-top: 72px;                           /* tight, no dead space - the headline sits just under the seam */
     background:
       radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.18), transparent 55%),
       linear-gradient(180deg, #0a1f2c 0%, #0a1e2b 55%, #0a1f2c 100%);
   }
   .statement::before { display: none; }         /* drop the teal aurora glow Mike X'd out */
-  .statement .merge-water--ocean { height: 300px; }   /* the distant sea, emerging below the seamless seam */
+  .statement .merge-water--ocean { height: 170px; }   /* the whisper of water sits only across the seam */
   @media (max-width: 680px) {
-    .statement { padding-top: 208px; }
-    .statement .merge-water--ocean { height: 208px; }
+    .statement { padding-top: 68px; }
+    .statement .merge-water--ocean { height: 140px; }
   }
 
   /* Rain Agent intro: a big brand headline with a tight one-line subline (Mike) */
@@ -1933,7 +1933,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=113" defer></script>
+<script src="rain.js?v=115" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1959,8 +1959,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=113" defer></script>
-<script src="merge-water.js?v=113" defer></script>
+<script src="rain-tweaks.js?v=115" defer></script>
+<script src="merge-water.js?v=115" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
