@@ -40,14 +40,12 @@
     "  vec3 col = mix(deep, mid, smoothstep(0.0, 0.55, y));",
     "  col += crest * vec3(0.22,0.46,0.58) * persp;",
     "  col += smoothstep(0.26, 0.04, y) * vec3(0.03,0.09,0.15);",
-    "  if (uOcean > 0.5) {",                                            /* open-ocean band: no paper, fade into the hero (far) and dark statement (near) */
-    "    col *= 0.78;",                                                 /* a dark, moody sea to match the rainy-night hero */
-    "    col += crest * vec3(0.10,0.20,0.27) * persp * 1.4;",           /* clearer swells / reflections so it reads as water */
-    "    float ofoam = smoothstep(0.54, 0.85, y) * (0.16 + 0.5*crest);",
-    "    col = mix(col, vec3(0.42,0.60,0.72), ofoam*0.40);",            /* restrained sparkle on the swells, never a white slab */
-    "    col += smoothstep(0.13, 0.0, y) * vec3(0.08,0.16,0.24);",      /* faint, moody light along the far horizon */
-    "    float oa = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.64, 1.0, y));",  /* fully transparent at the seam, the sea EMERGES well below it */
-    "    gl_FragColor = vec4(col, oa);",
+    "  if (uOcean > 0.5) {",                                            /* seamless merge: the SAME dark as both sections, only a whisper of ripple - no band, no horizon line */
+    "    vec3 sea = vec3(0.039, 0.122, 0.173);",                        /* exact #0a1f2c that the hero floor + statement both use */
+    "    sea += (w - 0.34) * vec3(0.013, 0.024, 0.034);",              /* a barely-there ripple: troughs a hair darker, crests a hair lighter */
+    "    sea += crest * vec3(0.018, 0.034, 0.046);",                    /* the faintest glint on a few swells */
+    "    float oa = smoothstep(0.0, 0.26, y) * (1.0 - smoothstep(0.72, 1.0, y));",  /* soft, edgeless fade top + bottom */
+    "    gl_FragColor = vec4(sea, oa * 0.9);",
     "    return;",
     "  }",
     "  vec3 paper = vec3(0.980,0.972,0.961);",

@@ -2243,7 +2243,7 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   pointer-events: none;
 }
 .ocean-hero__copy h1 {
-  font-size: clamp(2.2rem, 3.6vw, 3rem);
+  font-size: clamp(2.45rem, 4vw, 3.25rem);
   line-height: 1.04;
   letter-spacing: -0.028em;
   color: #fff;

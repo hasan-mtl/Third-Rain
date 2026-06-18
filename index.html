@@ -15,16 +15,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=112" />
-<link rel="stylesheet" href="rain-editorial.css?v=112" />
-<link rel="stylesheet" href="hero-options.css?v=112" />
+<link rel="stylesheet" href="rain.css?v=113" />
+<link rel="stylesheet" href="rain-editorial.css?v=113" />
+<link rel="stylesheet" href="hero-options.css?v=113" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
   #hero .hx-split {
     left: max(24px, calc((100% - var(--maxw)) / 2 + 24px));
     right: auto;
-    width: min(48%, 600px);
+    width: min(52%, 672px);   /* room for the bigger headline to stay one line, clear of the wordmark */
   }
   /* Keep each headline line on a single row as size bumps. */
   #hero .hx-split .ocean-hero__copy h1 {
@@ -78,7 +78,7 @@
     padding-top: 300px;
     background:
       radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.18), transparent 55%),
-      linear-gradient(180deg, #0a1f2c 0%, #0a1a28 46%, #0a1f2c 100%);
+      linear-gradient(180deg, #0a1f2c 0%, #0a1e2b 55%, #0a1f2c 100%);
   }
   .statement::before { display: none; }         /* drop the teal aurora glow Mike X'd out */
   .statement .merge-water--ocean { height: 300px; }   /* the distant sea, emerging below the seamless seam */
@@ -1933,7 +1933,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=112" defer></script>
+<script src="rain.js?v=113" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1959,8 +1959,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=112" defer></script>
-<script src="merge-water.js?v=112" defer></script>
+<script src="rain-tweaks.js?v=113" defer></script>
+<script src="merge-water.js?v=113" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
