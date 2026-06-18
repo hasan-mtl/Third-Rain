@@ -63,26 +63,22 @@
   .ed-head__body h2 { font-size: clamp(1.9rem, 7vw, 2.5rem); }
 }
 
-/* warm sections (.caps/.process) already pad the section 24px, so the header's
+/* warm sections (.process) already pad the section 24px, so the header's
    own 24px would double up and push the heading 24px right of the content.
    Null it there and span the hairline to the content edges. */
-.caps > .ed-head,
 .process > .ed-head { padding-left: 0; padding-right: 0; }
-.caps > .ed-head::before,
 .process > .ed-head::before { left: 0; right: 0; }
 
 /* ----------------------------------------------------------------------
    2 · GRAIN + GLOW + HAIRLINE carried into the PAPER sections
    So the warm sections feel like the same world as the ink ones.
    ---------------------------------------------------------------------- */
-.caps,
 .process {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
 /* faint film grain on paper */
-.caps::after,
 .process::after {
   content: "";
   position: absolute;
@@ -93,7 +89,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
 }
 /* a cool horizon glow bleeding in from a corner - the "current" */
-.caps::before,
 .process::before {
   content: "";
   position: absolute;
@@ -105,18 +100,10 @@
   max-height: 900px;
   border-radius: 50%;
   filter: blur(8px);
-}
-.caps::before {
-  top: -28%;
-  right: -18%;
-  background: radial-gradient(circle, rgba(45, 212, 191, 0.12), rgba(59, 130, 246, 0.07) 42%, transparent 66%);
-}
-.process::before {
   bottom: -32%;
   left: -16%;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.12), rgba(99, 102, 241, 0.06) 44%, transparent 68%);
 }
-.caps > *,
 .process > * { position: relative; z-index: 1; }
 
 /* ----------------------------------------------------------------------
@@ -201,57 +188,7 @@
 }
 
 /* ----------------------------------------------------------------------
-   5 · SERVICES - editorial showcase
-   Keep the cap-btn / cap-panel interaction. Number the choices, widen
-   the rhythm, lift the panel.
-   ---------------------------------------------------------------------- */
-.caps { padding-top: 18px; }
-
-/* index numerals on each problem button */
-.cap-btn { counter-increment: cap; position: relative; }
-.caps__list { counter-reset: cap; }
-.cap-btn__text { position: relative; }
-.cap-btn__text strong::before {
-  content: "0" counter(cap);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--blue-500);
-  margin-right: 10px;
-  opacity: 0.6;
-  vertical-align: 1px;
-}
-.cap-btn.is-active .cap-btn__text strong::before { opacity: 1; color: var(--indigo-500); }
-
-/* lift + enlarge the active panel a touch, premium */
-.cap-panel {
-  border-radius: 2rem;
-}
-.cap-panel__inner { padding: 34px; }
-.cap-panel__head h3 { font-size: 23px; letter-spacing: -0.02em; }
-
-/* a quiet section tag that frames the panel as a "case" */
-.caps__panels { position: relative; }
-.caps__panels::before {
-  content: "the fix";
-  position: absolute;
-  top: -30px;
-  right: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--t-faint);
-  opacity: 0.7;
-}
-
-@media (max-width: 900px) {
-  .caps__panels::before { display: none; }
-}
-
-/* ----------------------------------------------------------------------
-   6 · PLATFORM stats - dramatic proof numerals
+   5 · PLATFORM stats - dramatic proof numerals
    ---------------------------------------------------------------------- */
 .platform__stats {
   border-top: 1px solid var(--line-dark);

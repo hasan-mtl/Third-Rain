@@ -8,6 +8,7 @@ design-source/
 Rain CEO BG.mp4
 assets/*.png
 !assets/coldbrew-hero.png
+!assets/rain-logo.png
 assets/canal-water-flow.mp4
 assets/main-waterfall.mp4
 assets/rain-video-first.mp4

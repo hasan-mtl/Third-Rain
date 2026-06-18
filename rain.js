@@ -1126,8 +1126,8 @@
       if (e.target.closest("a, button")) return;
       var r = basinCanvas.getBoundingClientRect();
       if (floatHitAt(e.clientX - r.left, e.clientY - r.top) >= 0) {
-        var svc = document.getElementById("services");
-        if (svc) svc.scrollIntoView({ behavior: "smooth", block: "start" });
+        var target = document.querySelector(".c2-sec");
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
 
@@ -1380,87 +1380,6 @@
       });
     }, { threshold: 0.6 });
     countEls.forEach(function (el) { countIO.observe(el); });
-  }
-
-  /* ---------- formation entrance for the selector ---------- */
-  var assembleEl = qs("[data-assemble]");
-  if (assembleEl) {
-    if (reduce || !("IntersectionObserver" in window)) {
-      assembleEl.classList.add("is-assembled");
-    } else {
-      var asmIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            assembleEl.classList.add("is-assembled");
-            asmIO.disconnect();
-          }
-        });
-      }, { threshold: 0.22 });
-      asmIO.observe(assembleEl);
-    }
-  }
-
-  /* ---------- services: pick a problem (self-demoing) ---------- */
-  var capBtns = qsa("[data-cap]");
-  var capPanels = qsa("[data-cap-panel]");
-  if (capBtns.length && capPanels.length) {
-    var capKeys = capBtns.map(function (b) { return b.getAttribute("data-cap"); });
-    var capIdx = 0;
-    var capTimer = null;
-    var capTouched = false; // once the visitor clicks, the demo stops for good
-
-    var setCap = function (key) {
-      capIdx = Math.max(0, capKeys.indexOf(key));
-      capBtns.forEach(function (btn) {
-        var on = btn.getAttribute("data-cap") === key;
-        btn.classList.toggle("is-active", on);
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-      capPanels.forEach(function (panel) {
-        panel.classList.toggle("is-active", panel.getAttribute("data-cap-panel") === key);
-      });
-    };
-
-    var capStop = function () {
-      if (capTimer !== null) { window.clearInterval(capTimer); capTimer = null; }
-    };
-    var capPlay = function () {
-      if (capTimer !== null || capTouched || reduce || document.hidden) return;
-      capTimer = window.setInterval(function () {
-        setCap(capKeys[(capIdx + 1) % capKeys.length]);
-      }, 4500);
-    };
-
-    capBtns.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        capTouched = true;
-        capStop();
-        setCap(btn.getAttribute("data-cap"));
-      });
-    });
-
-    var capZone = qs(".caps__grid");
-    if (capZone) {
-      capZone.addEventListener("mouseenter", capStop);
-      capZone.addEventListener("mouseleave", capPlay);
-      if ("IntersectionObserver" in window) {
-        var capIO = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) capPlay();
-            else capStop();
-          });
-        }, { threshold: 0.35 });
-        capIO.observe(capZone);
-      } else {
-        capPlay();
-      }
-    }
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) { capStop(); return; }
-      if (!capZone) return;
-      var r = capZone.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) capPlay();
-    });
   }
 
   /* ---------- "You ask. It's done." - scenario engine ---------- */

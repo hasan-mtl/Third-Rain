@@ -506,26 +506,15 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
 }
-.brand__tile {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, var(--blue-500), var(--teal-400));
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
-  color: #fff;
+.brand__mark {
+  display: block;
+  height: 30px;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
 }
-.brand__tile svg { width: 17px; height: 17px; }
-.brand__word {
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
-.brand__dot { color: var(--teal-400); }
+.brand__mark--footer { height: 26px; }
 
 .pill-nav {
   position: absolute;
@@ -1005,212 +994,6 @@ html.js .console-row {
   to   { transform: translateX(-50%); }
 }
 
-/* ==========================================================================
-   SERVICES - pick a problem (interactive selector + detail panel)
-   ========================================================================== */
-.caps { padding: 116px 24px 124px; }
-
-.caps__grid {
-  display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
-  gap: 24px;
-  align-items: stretch; /* both columns share one bottom edge */
-  max-width: var(--maxw);
-  margin: 0 auto;
-}
-
-.caps__list {
-  display: grid;
-  gap: 12px;
-  grid-auto-rows: 1fr; /* buttons split the full column height equally */
-}
-
-/* formation entrance: pieces fly in from scattered vectors and snap to grid */
-html.js [data-assemble]:not(.is-assembled) .cap-btn,
-html.js [data-assemble]:not(.is-assembled) .caps__panels { opacity: 0; }
-
-html.js [data-assemble].is-assembled .cap-btn,
-html.js [data-assemble].is-assembled .caps__panels {
-  animation: fly-in 0.85s cubic-bezier(0.3, 1.35, 0.45, 1) both;
-  animation-delay: var(--fd, 0s);
-}
-html.js [data-assemble].is-assembled .cap-btn:nth-child(1) { --fx: -130px; --fy: -44px; --fr: -5deg; --fd: 0.05s; }
-html.js [data-assemble].is-assembled .cap-btn:nth-child(2) { --fx: -180px; --fy: 14px;  --fr: 3deg;  --fd: 0.12s; }
-html.js [data-assemble].is-assembled .cap-btn:nth-child(3) { --fx: -120px; --fy: 54px;  --fr: -3deg; --fd: 0.19s; }
-html.js [data-assemble].is-assembled .cap-btn:nth-child(4) { --fx: -190px; --fy: -24px; --fr: 4deg;  --fd: 0.26s; }
-html.js [data-assemble].is-assembled .cap-btn:nth-child(5) { --fx: -140px; --fy: 34px;  --fr: -4deg; --fd: 0.33s; }
-html.js [data-assemble].is-assembled .cap-btn:nth-child(6) { --fx: -170px; --fy: 64px;  --fr: 3deg;  --fd: 0.4s; }
-html.js [data-assemble].is-assembled .caps__panels { --fx: 150px; --fy: 38px; --fr: 2.5deg; --fd: 0.18s; }
-
-@keyframes fly-in {
-  from {
-    opacity: 0;
-    transform: translate(var(--fx, -140px), var(--fy, 0)) rotate(var(--fr, 0deg)) scale(0.96);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-}
-
-.cap-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  padding: 13px 15px;
-  text-align: left;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid var(--line-light);
-  border-radius: 16px;
-  transition:
-    border-color 0.18s ease,
-    background-color 0.18s ease,
-    box-shadow 0.18s var(--ease),
-    transform 0.12s var(--ease);
-}
-.cap-btn:hover { border-color: #d6d3d1; background: #fff; }
-.cap-btn:active { transform: scale(0.985); }
-.cap-btn.is-active {
-  background: #fff;
-  border-color: transparent;
-  box-shadow: var(--shadow-premium), 0 0 0 1px rgba(37, 99, 235, 0.18);
-}
-
-.cap-btn .icon-tile {
-  background: #eff6ff;
-  color: var(--blue-600);
-  box-shadow: none;
-  transition: background-color 0.18s ease, color 0.18s ease;
-}
-.cap-btn:hover .icon-tile { background: #dbeafe; }
-.cap-btn.is-active .icon-tile {
-  background: linear-gradient(135deg, var(--blue-600), var(--indigo-500));
-  color: #fff;
-  box-shadow: 0 4px 12px -4px rgba(37, 99, 235, 0.5);
-}
-
-.cap-btn__text { min-width: 0; }
-.cap-btn__text strong {
-  display: block;
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--t-strong);
-}
-.cap-btn__text small {
-  display: block;
-  margin-top: 2px;
-  font-size: 12px;
-  line-height: 1.4;
-  color: var(--t-faint);
-}
-
-.cap-btn__arrow {
-  width: 16px;
-  height: 16px;
-  margin-left: auto;
-  color: var(--blue-600);
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.18s ease, transform 0.18s var(--ease);
-  flex-shrink: 0;
-}
-.cap-btn:hover .cap-btn__arrow { opacity: 0.55; transform: none; }
-.cap-btn.is-active .cap-btn__arrow { opacity: 1; transform: none; }
-
-/* single-layer card - gradient hairline directly on the panel, no mat */
-.caps__panels { height: 100%; }
-.cap-panel {
-  display: none;
-  height: 100%;
-  padding: 0;
-  border-radius: 20px;
-  box-shadow: var(--shadow-premium);
-}
-.cap-panel.is-active { display: flex; flex-direction: column; }
-html.js .cap-panel.is-active { animation: panel-in 0.45s var(--ease); }
-@keyframes panel-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: none; }
-}
-
-.cap-panel__inner {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 28px;
-}
-.cap-panel__fix { flex: 1; } /* outcome band pins to the shared bottom edge */
-
-.cap-panel__head { display: flex; align-items: center; gap: 15px; }
-.cap-panel__head h3 { font-size: 20px; }
-.cap-panel__head p { margin-top: 2px; font-size: 13px; color: var(--t-faint); }
-
-.cap-panel__pain {
-  margin-top: 22px;
-  padding: 14px 16px;
-  border: 1px solid rgba(253, 230, 138, 0.7);
-  border-radius: 14px;
-  background: linear-gradient(135deg, #fffbeb, rgba(255, 251, 235, 0.4));
-}
-.cap-panel__pain b {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-  color: #b45309;
-}
-.cap-panel__pain p { margin-top: 6px; font-size: 14px; line-height: 1.6; color: #44403c; }
-
-.cap-panel__fix b {
-  display: block;
-  margin-top: 22px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-  color: #047857;
-}
-.cap-panel__fix ul { display: grid; gap: 11px; margin-top: 13px; }
-.cap-panel__fix li {
-  display: flex;
-  gap: 10px;
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: #44403c;
-}
-
-/* fixes check themselves off every time a panel opens */
-html.js .cap-panel.is-active .cap-panel__fix li {
-  opacity: 0;
-  animation: fix-in 0.45s var(--ease) forwards;
-}
-html.js .cap-panel.is-active .cap-panel__fix li:nth-child(1) { animation-delay: 0.18s; }
-html.js .cap-panel.is-active .cap-panel__fix li:nth-child(2) { animation-delay: 0.36s; }
-html.js .cap-panel.is-active .cap-panel__fix li:nth-child(3) { animation-delay: 0.54s; }
-html.js .cap-panel.is-active .cap-panel__outcome {
-  opacity: 0;
-  animation: fix-in 0.45s var(--ease) 0.78s forwards;
-}
-@keyframes fix-in {
-  from { opacity: 0; transform: translateX(-8px); }
-  to   { opacity: 1; transform: none; }
-}
-
-.cap-panel__outcome {
-  margin-top: 24px;
-  padding: 12px 16px;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: #fff;
-  border-radius: 12px;
-  background: linear-gradient(to right, var(--blue-600), var(--blue-500));
-}
 
 /* ==========================================================================
    SEE IT WORK - live demo theater (chat + morning report)
@@ -2411,12 +2194,6 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 }
 
 @media (max-width: 900px) {
-  .caps__grid { grid-template-columns: 1fr; gap: 18px; }
-  .caps__list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .cap-btn { padding: 12px 14px; gap: 11px; min-height: 70px; }
-  .cap-btn__text small { display: none; }
-  .cap-btn__arrow { display: none; }
-
   .demo__grid { grid-template-columns: 1fr; gap: 36px; }
   .demo__item { max-width: 440px; width: 100%; margin: 0 auto; }
   .demo__link { display: none; }
@@ -2454,11 +2231,9 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .float-chip--report { left: -8px; bottom: -18px; }
   .float-chip--growth { right: -6px; top: -16px; }
 
-  .caps, .process { padding-left: 20px; padding-right: 20px; }
+  .process { padding-left: 20px; padding-right: 20px; }
   .demo__inner { padding: 0 20px; }
   .contact__inner { padding: 96px 20px 104px; }
-
-  .cap-panel__inner { padding: 20px; }
 
   .process__row { grid-template-columns: 1fr; gap: 40px; }
   .process__line { display: none; }
@@ -2483,8 +2258,6 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .hero h1 { font-size: clamp(2.2rem, 9.6vw, 2.7rem); }
   .hero__stats { grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .hero__stats dd { font-size: 11px; }
-
-  .cap-btn__text strong { font-size: 13.5px; }
 
   .console-row__state { display: none; }
   .float-chip--growth { display: none; }
@@ -2563,15 +2336,6 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .circuit__pulses { display: none; }
 
   .tilt { transition: none; }
-
-  html.js [data-assemble]:not(.is-assembled) .cap-btn,
-  html.js [data-assemble]:not(.is-assembled) .caps__panels { opacity: 1; }
-  html.js [data-assemble].is-assembled .cap-btn,
-  html.js [data-assemble].is-assembled .caps__panels { animation: none; }
-
-  html.js .cap-panel.is-active { animation: none; }
-  html.js .cap-panel.is-active .cap-panel__fix li,
-  html.js .cap-panel.is-active .cap-panel__outcome { opacity: 1; animation: none; }
 
   html.js .report__rows li,
   html.js .report__chart i,

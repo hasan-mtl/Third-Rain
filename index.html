@@ -52,7 +52,7 @@
   :root { --water-room: 176px; --water-band: 168px; }
   /* paper sections sit between two water bands - the water gives the gap, so the
      section itself needs only modest, symmetric breathing room. */
-  .caps, .process { padding-top: 48px; padding-bottom: 48px; }
+  .process { padding-top: 48px; padding-bottom: 48px; }
 
   /* Statement beat: room at the bottom for the WebGL water that merges into the
      paper section, and keep the copy above it. */
@@ -107,7 +107,7 @@
   }
   .merge-water--top { top: 0; bottom: auto; }
   .contact__inner { padding-top: var(--water-room); position: relative; z-index: 5; }
-  /* Demo also opens with the flipped water merging down from the services section. */
+  /* Demo opens with the flipped water merging down from the paper section above. */
   #demo { padding-top: var(--water-room); padding-bottom: 56px; }
   #demo .ed-head,
   #demo .demo__inner { position: relative; z-index: 5; }
@@ -429,9 +429,6 @@
     backdrop-filter: blur(6px);
   }
 
-  /* Header logo: particle "rain." wordmark (same look as the hero, smaller). */
-  .brand__mark { display: block; }
-
   /* Rain Agent core - a futuristic circular "solar" node. */
   .circuit__core {
     width: 190px;
@@ -620,68 +617,6 @@
   .rd-bezel__txt text { font-family: var(--font-mono); font-size: 15px; font-weight: 600; letter-spacing: 0.01em; text-transform: uppercase; fill: rgba(196, 235, 255, 0.95); }
   @media (prefers-reduced-motion: reduce) { .rd-bezel__txt { animation: none; } }
 
-  /* ===== services selector: 25x premium, futuristic, sharp ===== */
-  .cap-btn {
-    border-radius: 12px;
-    padding: 14px 16px;
-    background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.55));
-    border: 1px solid rgba(15, 23, 42, 0.07);
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-    overflow: hidden;
-    transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease), border-color 0.2s ease, background-color 0.2s ease;
-  }
-  .cap-btn::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 3px;
-    height: 0;
-    transform: translateY(-50%);
-    border-radius: 0 2px 2px 0;
-    background: linear-gradient(180deg, var(--sky-300), var(--blue-600));
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
-    transition: height 0.3s var(--ease);
-  }
-  .cap-btn:hover {
-    transform: translateY(-2px);
-    background: #fff;
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 12px 26px -14px rgba(37, 99, 235, 0.32);
-  }
-  .cap-btn.is-active {
-    background: #fff;
-    border-color: rgba(59, 130, 246, 0.28);
-    box-shadow: 0 18px 40px -18px rgba(37, 99, 235, 0.45), inset 0 0 0 1px rgba(59, 130, 246, 0.08);
-  }
-  .cap-btn.is-active::after { height: 56%; }
-  .cap-btn .icon-tile { border-radius: 10px; }
-  .cap-btn.is-active .icon-tile { box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.55); }
-
-  .cap-panel {
-    border-radius: 16px;
-    border: 1px solid transparent;
-    background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(150deg, rgba(125, 211, 252, 0.6), rgba(94, 234, 212, 0.4) 42%, rgba(15, 23, 42, 0.06) 82%) border-box;
-    box-shadow:
-      0 34px 64px -32px rgba(15, 23, 42, 0.32),
-      0 2px 10px rgba(15, 23, 42, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-  .cap-panel__pain { border-radius: 10px; }
-
-  /* readability: larger content type across the services section (Mike) */
-  .cap-btn__text strong { font-size: 16px; }
-  .cap-btn__text small { font-size: 13.5px; line-height: 1.45; }
-  .cap-btn__text strong::before { font-size: 12px; }
-  .cap-panel__head h3 { font-size: 24px; }
-  .cap-panel__head p { font-size: 15px; }
-  .cap-panel__pain b, .cap-panel__fix b { font-size: 11.5px; letter-spacing: 0.15em; }
-  .cap-panel__pain p { font-size: 16px; line-height: 1.62; }
-  .cap-panel__fix li { font-size: 16px; line-height: 1.6; }
-  .cap-panel__outcome { font-size: 15px; }
-
   /* Spread the integrations out toward the header width so the Rain Agent core
      sits focused in the center, and make the watch bigger + more present. */
   .platform__stage,
@@ -756,7 +691,6 @@
       radial-gradient(60% 42% at 50% 48%, rgba(255, 255, 255, 0.7), rgba(250, 248, 245, 0) 75%);
   }
   /* kill the blue/teal corner glows on the paper sections entirely */
-  .caps::before,
   .process::before { display: none !important; }
 
   /* ===== alternate "Pick a problem": horizontal tabs + split stage (compare) ===== */
@@ -846,14 +780,10 @@
 <header class="site-header" data-header>
   <div class="site-header__inner">
     <a class="brand" href="#hero" aria-label="Rain - home">
-      <span class="brand__tile" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
-      </span>
-      <canvas class="brand__mark" data-brand-mark aria-hidden="true"></canvas>
+      <img class="brand__mark" src="assets/rain-logo.png" alt="" width="600" height="250" decoding="async" />
     </a>
 
     <nav class="pill-nav" aria-label="Primary">
-      <a href="#services" data-nav>Services</a>
       <a href="#process" data-nav>Process</a>
       <a href="#platform" data-nav>Platform</a>
       <a href="#contact" data-nav>Contact</a>
@@ -869,7 +799,6 @@
   </div>
 
   <nav class="drawer" id="drawer" aria-label="Mobile" data-drawer>
-    <a href="#services" data-drawer-link>Services</a>
     <a href="#process" data-drawer-link>Process</a>
     <a href="#platform" data-drawer-link>Platform</a>
     <a href="#contact" data-drawer-link>Contact</a>
@@ -907,7 +836,7 @@
         Start the refresh
         <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
       </a>
-      <a class="btn btn--outline" href="#services">
+      <a class="btn btn--outline" href="#demo">
         See how it works
         <svg class="btn__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
       </a>
@@ -930,250 +859,6 @@
 
 <div class="seam seam--to-paper"></div>
 
-<!-- ============ SERVICES - pick a problem ============ -->
-<section class="caps warm-grid" id="services" aria-labelledby="services-title">
-  <header class="ed-head" data-reveal>
-    <p class="eyebrow">What we fix</p>
-    <div class="ed-head__body">
-      <h2 id="services-title">Pick a problem. <span class="serif-grad serif-grad--light">Watch it disappear.</span></h2>
-      <p class="lede">Six ways businesses leak time and money, and how we fix each one.</p>
-    </div>
-  </header>
-
-  <div class="caps__grid" data-assemble>
-    <div class="caps__list" role="group" aria-label="Pick a problem">
-      <button class="cap-btn is-active" type="button" data-cap="automation" aria-pressed="true">
-        <span class="icon-tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5h6l-1 8L18 10.5h-6l1-8Z"/></svg>
-        </span>
-        <span class="cap-btn__text">
-          <strong>AI Automation</strong>
-          <small>The busywork eats your week</small>
-        </span>
-        <svg class="cap-btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </button>
-
-      <button class="cap-btn" type="button" data-cap="websites" aria-pressed="false">
-        <span class="icon-tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </span>
-        <span class="cap-btn__text">
-          <strong>Websites</strong>
-          <small>Looks fine. Does nothing.</small>
-        </span>
-        <svg class="cap-btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </button>
-
-      <button class="cap-btn" type="button" data-cap="branding" aria-pressed="false">
-        <span class="icon-tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
-        </span>
-        <span class="cap-btn__text">
-          <strong>Branding</strong>
-          <small>You've outgrown your look</small>
-        </span>
-        <svg class="cap-btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </button>
-
-      <button class="cap-btn" type="button" data-cap="software" aria-pressed="false">
-        <span class="icon-tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
-        </span>
-        <span class="cap-btn__text">
-          <strong>Software</strong>
-          <small>Spreadsheets run the company</small>
-        </span>
-        <svg class="cap-btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </button>
-
-      <button class="cap-btn" type="button" data-cap="mobile" aria-pressed="false">
-        <span class="icon-tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>
-        </span>
-        <span class="cap-btn__text">
-          <strong>Mobile Apps</strong>
-          <small>Your customers live on phones</small>
-        </span>
-        <svg class="cap-btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </button>
-
-      <button class="cap-btn" type="button" data-cap="systems" aria-pressed="false">
-        <span class="icon-tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M7 11l10-4.5M7 13l10 4.5"/></svg>
-        </span>
-        <span class="cap-btn__text">
-          <strong>Connected Systems</strong>
-          <small>Five tools. None of them talk.</small>
-        </span>
-        <svg class="cap-btn__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10.5M9.5 4.5 13 8l-3.5 3.5"/></svg>
-      </button>
-    </div>
-
-    <div class="caps__panels">
-      <article class="cap-panel gradient-frame is-active" data-cap-panel="automation">
-        <div class="cap-panel__inner">
-          <div class="cap-panel__head">
-            <span class="icon-tile icon-tile--lg icon-tile--blue" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 13.5h6l-1 8L18 10.5h-6l1-8Z"/></svg>
-            </span>
-            <div>
-              <h3>AI Automation</h3>
-              <p>The busywork eats your week</p>
-            </div>
-          </div>
-          <div class="cap-panel__pain">
-            <b>The pain</b>
-            <p>Follow-ups, posting, reporting, replies - all manual, all late.</p>
-          </div>
-          <div class="cap-panel__fix">
-            <b>How Rain fixes it</b>
-            <ul>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>An agent drafts content, replies &amp; reports daily</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Runs inside your real tools - no new logins</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>You approve - it ships</li>
-            </ul>
-          </div>
-          <p class="cap-panel__outcome">Hours back every week. Nothing slips.</p>
-        </div>
-      </article>
-
-      <article class="cap-panel gradient-frame" data-cap-panel="websites">
-        <div class="cap-panel__inner">
-          <div class="cap-panel__head">
-            <span class="icon-tile icon-tile--lg icon-tile--sky" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            </span>
-            <div>
-              <h3>Websites</h3>
-              <p>Looks fine. Does nothing.</p>
-            </div>
-          </div>
-          <div class="cap-panel__pain">
-            <b>The pain</b>
-            <p>A pretty brochure - no leads, invisible on Google.</p>
-          </div>
-          <div class="cap-panel__fix">
-            <b>How Rain fixes it</b>
-            <ul>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Rebuilt to load fast and rank</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Designed to turn visitors into booked calls</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Wired into your CRM from day one</li>
-            </ul>
-          </div>
-          <p class="cap-panel__outcome">A site that sells while you sleep.</p>
-        </div>
-      </article>
-
-      <article class="cap-panel gradient-frame" data-cap-panel="branding">
-        <div class="cap-panel__inner">
-          <div class="cap-panel__head">
-            <span class="icon-tile icon-tile--lg icon-tile--amber" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 5.4L19.5 10l-5.5 1.6L12 17l-2-5.4L4.5 10 10 8.4 12 3Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg>
-            </span>
-            <div>
-              <h3>Branding</h3>
-              <p>You've outgrown your look</p>
-            </div>
-          </div>
-          <div class="cap-panel__pain">
-            <b>The pain</b>
-            <p>The business grew. The brand still looks like 2015.</p>
-          </div>
-          <div class="cap-panel__fix">
-            <b>How Rain fixes it</b>
-            <ul>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Identity, voice &amp; design system</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Applied everywhere customers meet you</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Consistent from invoice to Instagram</li>
-            </ul>
-          </div>
-          <p class="cap-panel__outcome">You look like the company you're becoming.</p>
-        </div>
-      </article>
-
-      <article class="cap-panel gradient-frame" data-cap-panel="software">
-        <div class="cap-panel__inner">
-          <div class="cap-panel__head">
-            <span class="icon-tile icon-tile--lg icon-tile--violet" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
-            </span>
-            <div>
-              <h3>Software</h3>
-              <p>Spreadsheets run the company</p>
-            </div>
-          </div>
-          <div class="cap-panel__pain">
-            <b>The pain</b>
-            <p>Critical operations live in tabs nobody dares to touch.</p>
-          </div>
-          <div class="cap-panel__fix">
-            <b>How Rain fixes it</b>
-            <ul>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Custom dashboards, portals &amp; internal tools</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Shaped to how you actually operate</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>One login, one source of truth</li>
-            </ul>
-          </div>
-          <p class="cap-panel__outcome">Operations you can see - and trust.</p>
-        </div>
-      </article>
-
-      <article class="cap-panel gradient-frame" data-cap-panel="mobile">
-        <div class="cap-panel__inner">
-          <div class="cap-panel__head">
-            <span class="icon-tile icon-tile--lg icon-tile--emerald" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg>
-            </span>
-            <div>
-              <h3>Mobile Apps</h3>
-              <p>Your customers live on phones</p>
-            </div>
-          </div>
-          <div class="cap-panel__pain">
-            <b>The pain</b>
-            <p>And your business isn't there yet.</p>
-          </div>
-          <div class="cap-panel__fix">
-            <b>How Rain fixes it</b>
-            <ul>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Customer &amp; team apps - iOS and Android</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Bookings, orders &amp; push built in</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Connected to the same system as everything else</li>
-            </ul>
-          </div>
-          <p class="cap-panel__outcome">Your business, in every pocket.</p>
-        </div>
-      </article>
-
-      <article class="cap-panel gradient-frame" data-cap-panel="systems">
-        <div class="cap-panel__inner">
-          <div class="cap-panel__head">
-            <span class="icon-tile icon-tile--lg icon-tile--ink" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M7 11l10-4.5M7 13l10 4.5"/></svg>
-            </span>
-            <div>
-              <h3>Connected Systems</h3>
-              <p>Five tools. None of them talk.</p>
-            </div>
-          </div>
-          <div class="cap-panel__pain">
-            <b>The pain</b>
-            <p>You're the human API between your own apps.</p>
-          </div>
-          <div class="cap-panel__fix">
-            <b>How Rain fixes it</b>
-            <ul>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>CRM, store, inbox &amp; analytics wired together</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>Data moves the moment something happens</li>
-              <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l2.8 2.8 6.2-7"/></svg></span>No more copy-paste glue work</li>
-            </ul>
-          </div>
-          <p class="cap-panel__outcome">One system that runs itself.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
 
 <!-- ============ PICK A PROBLEM - alternate creative version (for comparison) ============ -->
 <section class="c2-sec warm-grid" aria-label="Pick a problem, alternate layout">
@@ -1908,14 +1593,10 @@
   <div class="site-footer__inner">
     <div class="site-footer__brand">
       <a class="brand" href="#hero" aria-label="Rain - home">
-        <span class="brand__tile" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg>
-        </span>
-        <span class="brand__word">rain<span class="brand__dot">.</span></span>
+        <img class="brand__mark brand__mark--footer" src="assets/rain-logo.png" alt="" width="600" height="250" decoding="async" />
       </a>
     </div>
     <nav class="site-footer__nav" aria-label="Footer">
-      <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#platform">Platform</a>
       <a href="#contact">Contact</a>
@@ -1955,55 +1636,6 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
 </script>
 <script src="rain-tweaks.js?v=116" defer></script>
 <script src="merge-water.js?v=116" defer></script>
-<script>
-/* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
-   fine particle dissolve knocked out of it so it echoes the hero water mark. */
-(function () {
-  var cv = document.querySelector("[data-brand-mark]");
-  if (!cv || !cv.getContext) return;
-  function render() {
-    var ctx = cv.getContext("2d");
-    var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-    var fontPx = 27;
-    var font = "italic 600 " + fontPx + "px 'Cormorant Garamond', Georgia, serif";
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.font = font;
-    var tw = ctx.measureText("rain.").width;
-    var padX = 3;
-    var cssW = Math.ceil(tw + padX * 2);
-    var cssH = Math.ceil(fontPx * 1.08);
-    cv.style.width = cssW + "px";
-    cv.style.height = cssH + "px";
-    cv.width = Math.round(cssW * dpr);
-    cv.height = Math.round(cssH * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, cssW, cssH);
-    var g = ctx.createLinearGradient(0, 0, cssW, 0);
-    g.addColorStop(0, "#ffffff");
-    g.addColorStop(0.55, "#7dd3fc");
-    g.addColorStop(1, "#5eead4");
-    ctx.font = font;
-    ctx.textBaseline = "alphabetic";
-    ctx.fillStyle = g;
-    ctx.fillText("rain.", padX, fontPx * 0.83);
-    /* knock out a fine speckle so the word reads as settling particles */
-    ctx.globalCompositeOperation = "destination-out";
-    for (var y = 0; y < cssH; y += 1.5) {
-      for (var x = 0; x < cssW; x += 1.5) {
-        if (Math.random() < 0.26) ctx.fillRect(x, y, 0.85, 0.85);
-      }
-    }
-    ctx.globalCompositeOperation = "source-over";
-  }
-  if (document.fonts && document.fonts.load) {
-    document.fonts.load("italic 600 27px 'Cormorant Garamond'").then(function () {
-      (document.fonts.ready || Promise.resolve()).then(render);
-    }).catch(render);
-  } else {
-    window.setTimeout(render, 500);
-  }
-})();
-</script>
 <script>
 /* Rain Agent clock: a real clock - hands at the correct local time, ticking each second. */
 (function () {
