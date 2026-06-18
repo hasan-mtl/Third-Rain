@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=110" />
-<link rel="stylesheet" href="rain-editorial.css?v=110" />
-<link rel="stylesheet" href="hero-options.css?v=110" />
+<link rel="stylesheet" href="rain.css?v=111" />
+<link rel="stylesheet" href="rain-editorial.css?v=111" />
+<link rel="stylesheet" href="hero-options.css?v=111" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -581,9 +581,9 @@
   /* ===== CROWN JEWEL (B): Rain Digital - a readable 7-segment LCD watch (scoped .rd-) ===== */
   .rd-lcd { position: relative; display: grid; place-items: center; font-family: var(--font-mono, ui-monospace, "SFMono-Regular", Menlo, monospace); line-height: 1; -webkit-user-select: none; user-select: none; }
   .rd-lcd__face { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
-  .rd-lcd__main { display: block; filter: drop-shadow(0 0 8px rgba(94, 234, 212, 0.5)); }
+  .rd-lcd__main { display: block; filter: none; }                /* no shadow/halo behind the number (Mike) */
   .rd-seg { fill: #5eead4; transition: fill 0.14s ease; }
-  .rd-seg.rd-off { fill: rgba(125, 211, 252, 0.09); }            /* faint ghost off-segment */
+  .rd-seg.rd-off { fill: rgba(125, 211, 252, 0.05); }            /* very faint ghost off-segment */
   .rd-dot { fill: #5eead4; transition: fill 0.14s ease; }
   .rd-colon.rd-dim .rd-dot { fill: rgba(125, 211, 252, 0.1); }   /* JS-driven 1Hz colon blink */
   .rd-bar { width: 78px; height: 2.5px; margin-top: 9px; border-radius: 2px; background: rgba(125, 211, 252, 0.14); overflow: hidden; }
@@ -599,6 +599,26 @@
     .rd-colon.rd-dim .rd-dot { fill: #5eead4; }
     .rd-seg, .rd-dot, .rd-bar__fill { transition: none; }
   }
+
+  /* ===== Rain Digital: two clean layers - inner readout face + outer engraved bezel ring (Mike) ===== */
+  /* INNER layer: a smaller watch face, clearly inside the ring; the readout has no halo. */
+  #platform-digital .ra-core-disk {
+    width: 116px; height: 116px;
+    background: radial-gradient(circle at 50% 36%, #163a60 0%, #0a1c32 60%, #060f1d 100%);
+    box-shadow:
+      0 0 0 1.5px rgba(125, 211, 252, 0.30),
+      inset 0 0 20px rgba(125, 211, 252, 0.14),
+      inset 0 2px 10px rgba(255, 255, 255, 0.05);
+  }
+  #platform-digital .rd-lcd__main { width: 100px; height: 33.7px; }   /* fit the smaller inner face */
+  #platform-digital .rd-bar { width: 70px; }
+  /* OUTER layer: a real bezel ring track that carries the brand text, separated from the face. */
+  .rd-bezel { position: absolute; inset: 0; margin: auto; width: 190px; height: 190px; z-index: 4; pointer-events: none; }
+  .rd-bezel__band { fill: none; stroke: rgba(30, 57, 92, 0.6); stroke-width: 26; }   /* the engraved ring track */
+  .rd-bezel__rim { fill: none; stroke: rgba(125, 211, 252, 0.22); stroke-width: 0.8; }   /* inner + outer rim lines */
+  .rd-bezel__txt { transform-origin: 100px 100px; animation: ra-spin 40s linear infinite; }
+  .rd-bezel__txt text { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; fill: rgba(184, 231, 255, 0.92); }
+  @media (prefers-reduced-motion: reduce) { .rd-bezel__txt { animation: none; } }
 
   /* ===== services selector: 25x premium, futuristic, sharp ===== */
   .cap-btn {
@@ -1660,9 +1680,12 @@
         <div class="circuit__core" aria-hidden="true">
           <span class="ra-ripple" aria-hidden="true"></span>
           <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
-          <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
-            <defs><path id="raSealPath2" d="M 84,24 a 60,60 0 1 1 -0.01 0"/></defs>
-            <text><textPath href="#raSealPath2" startOffset="0" textLength="368">RAIN AGENT · ALWAYS ON · </textPath></text>
+          <svg class="rd-bezel" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="rdBezelPath" d="M 100,20 a 80,80 0 1 1 -0.01 0"/></defs>
+            <circle class="rd-bezel__band" cx="100" cy="100" r="80"/>
+            <circle class="rd-bezel__rim" cx="100" cy="100" r="67"/>
+            <circle class="rd-bezel__rim" cx="100" cy="100" r="93"/>
+            <g class="rd-bezel__txt"><text><textPath href="#rdBezelPath" startOffset="0" textLength="462">RAIN AGENT · ALWAYS ON · </textPath></text></g>
           </svg>
           <span class="ra-core-disk">
             <div class="rd-lcd" role="img" aria-label="Live local time">
@@ -1910,7 +1933,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=110" defer></script>
+<script src="rain.js?v=111" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1936,8 +1959,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=110" defer></script>
-<script src="merge-water.js?v=110" defer></script>
+<script src="rain-tweaks.js?v=111" defer></script>
+<script src="merge-water.js?v=111" defer></script>
 <script>
 /* Header logo: a small italic "rain." in the hero's cyan→teal gradient, with a
    fine particle dissolve knocked out of it so it echoes the hero water mark. */
