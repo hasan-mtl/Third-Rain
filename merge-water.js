@@ -23,6 +23,7 @@
     "uniform vec2 uRes;",
     "uniform float uFlip;",
     "uniform float uOcean;",
+    "uniform float uDawn;",
     "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453123); }",
     "float noise(vec2 p){ vec2 i=floor(p), f=fract(p); float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.)); vec2 u=f*f*(3.-2.*f); return mix(mix(a,b,u.x),mix(c,d,u.x),u.y); }",
     "float fbm(vec2 p){ float v=0.0, a=0.55; for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.03; a*=0.5; } return v; }",
@@ -46,6 +47,17 @@
     "    sea += crest * vec3(0.018, 0.034, 0.046);",                    /* the faintest glint on a few swells */
     "    float oa = smoothstep(0.0, 0.26, y) * (1.0 - smoothstep(0.72, 1.0, y));",  /* soft, edgeless fade top + bottom */
     "    gl_FragColor = vec4(sea, oa * 0.9);",
+    "    return;",
+    "  }",
+    "  if (uDawn > 0.5) {",                                              /* bright first-light horizon near the foot, the same glow as the paper seam but melting back to dark */
+    "    float glow = smoothstep(0.30, 0.80, y) * (1.0 - smoothstep(0.84, 1.0, y));",  /* bright zone climbs to ~0.8 then eases off before the very edge */
+    "    vec3 lo = vec3(0.16, 0.30, 0.46);",
+    "    vec3 hi = vec3(0.84, 0.90, 0.97);",                             /* bright cool first light, like the paper horizon */
+    "    vec3 d = vec3(0.039, 0.122, 0.173);",                          /* the #0a1f2c both sections share */
+    "    d = mix(d, mix(lo, hi, glow), glow);",
+    "    d += crest * vec3(0.40, 0.52, 0.62) * glow;",                  /* lit crests catching the light along the horizon */
+    "    float a = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.88, 1.0, y) * 0.85);",  /* fade up into the rain, melt into the dark at the foot */
+    "    gl_FragColor = vec4(d, a);",
     "    return;",
     "  }",
     "  vec3 paper = vec3(0.980,0.972,0.961);",
@@ -74,7 +86,7 @@
     var mat = new THREE.ShaderMaterial({
       transparent: true,
       depthTest: false,
-      uniforms: { uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }, uFlip: { value: flip }, uOcean: { value: host.hasAttribute("data-ocean") ? 1 : 0 } },
+      uniforms: { uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }, uFlip: { value: flip }, uOcean: { value: host.hasAttribute("data-ocean") ? 1 : 0 }, uDawn: { value: host.hasAttribute("data-dawn") ? 1 : 0 } },
       vertexShader: VERT,
       fragmentShader: FRAG
     });
