@@ -388,6 +388,7 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 .btn--primary:hover::before { left: 125%; }
 
 .btn--outline {
+  position: relative;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.02);
@@ -396,6 +397,42 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 
 .btn--sm { height: 36px; padding: 0 14px; font-size: 13.5px; }
 .btn--lg { height: 50px; padding: 0 26px; font-size: 15px; border-radius: 13px; }
+
+/* ---------- Running border glow ----------
+   A bright segment continuously orbits the button edge. Colors are left
+   untouched; the ring rides on top via a conic gradient masked to the border. */
+@property --btn-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.btn--primary,
+.btn--outline { --btn-glow: rgba(255, 255, 255, 0.95); }
+.btn--primary { --btn-glow: rgba(191, 219, 254, 0.95); }   /* light-blue head to match the blue fill */
+.btn--primary::after,
+.btn--outline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.6px;                       /* ring thickness */
+  background: conic-gradient(from var(--btn-angle),
+      transparent 0deg,
+      var(--btn-glow) 26deg,
+      #fff 52deg,
+      var(--btn-glow) 78deg,
+      transparent 128deg,
+      transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  filter: drop-shadow(0 0 4px var(--btn-glow));
+  animation: btn-runborder 2.8s linear infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+@keyframes btn-runborder { to { --btn-angle: 360deg; } }
 
 /* ---------- Icon tiles ---------- */
 .icon-tile {
@@ -2415,6 +2452,8 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .circuit__ring,
   .ripples i,
   .btn--primary::before,
+  .btn--primary::after,
+  .btn--outline::after,
   .dark-section::before,
   .chat__typing i,
   .motes i { animation: none; }
@@ -2486,24 +2525,9 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-/* the live particle "rain." wordmark in the chat header (mini hero crest) */
-.contact-chat__mark {
-  display: block;
-  flex: none;
-  width: 122px;
-  height: 40px;
-}
-.contact-chat__mark canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
 .contact-chat__title {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 600;
-  font-size: 19px;
-  color: #fff;
+  font-size: 25px;
+  line-height: 1;
 }
 .contact-chat__head .pill { margin-left: auto; }
 .contact-chat__bubble {
