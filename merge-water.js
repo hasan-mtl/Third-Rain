@@ -56,7 +56,7 @@
     "    vec3 d = vec3(0.039, 0.122, 0.173);",                          /* the #0a1f2c both sections share */
     "    d = mix(d, mix(lo, hi, glow), glow);",
     "    d += crest * vec3(0.40, 0.52, 0.62) * glow;",                  /* lit crests catching the light along the horizon */
-    "    float a = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.88, 1.0, y) * 0.85);",  /* fade up into the rain, melt into the dark at the foot */
+    "    float a = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.84, 0.96, y));",  /* fade up into rain AND fade fully out just below the bright horizon - no dark-sea band at the seam (Mike) */
     "    gl_FragColor = vec4(d, a);",
     "    return;",
     "  }",
