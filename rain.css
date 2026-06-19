@@ -388,7 +388,6 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 .btn--primary:hover::before { left: 125%; }
 
 .btn--outline {
-  position: relative;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.02);
@@ -398,41 +397,55 @@ h2 { font-size: clamp(2.1rem, 3.8vw, 3rem); text-wrap: balance; }
 .btn--sm { height: 36px; padding: 0 14px; font-size: 13.5px; }
 .btn--lg { height: 50px; padding: 0 26px; font-size: 15px; border-radius: 13px; }
 
-/* ---------- Running border glow ----------
-   A bright segment continuously orbits the button edge. Colors are left
-   untouched; the ring rides on top via a conic gradient masked to the border. */
+/* ---------- Running border glow (primary button only) ----------
+   Twin light comets chase each other around a faint always-on rail, with a
+   slow charge-up pulse layered on top. The blue fill is left untouched; the
+   whole effect rides on a masked conic gradient pinned to the border. */
 @property --btn-angle {
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
 }
-.btn--primary,
-.btn--outline { --btn-glow: rgba(255, 255, 255, 0.95); }
-.btn--primary { --btn-glow: rgba(191, 219, 254, 0.95); }   /* light-blue head to match the blue fill */
-.btn--primary::after,
-.btn--outline::after {
+.btn--primary {
+  --btn-glow: 191, 219, 254;     /* light-blue comet, matches the fill */
+  --btn-rail: 255, 255, 255;     /* faint white track the comets ride */
+}
+.btn--primary::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1.6px;                       /* ring thickness */
+  padding: 1.7px;                /* ring thickness */
   background: conic-gradient(from var(--btn-angle),
-      transparent 0deg,
-      var(--btn-glow) 26deg,
-      #fff 52deg,
-      var(--btn-glow) 78deg,
-      transparent 128deg,
-      transparent 360deg);
+      rgba(var(--btn-rail), 0.14) 0deg,
+      rgba(var(--btn-glow), 0.85) 22deg,
+      #ffffff 46deg,                                /* comet 1 — bright head */
+      rgba(var(--btn-glow), 0.85) 70deg,
+      rgba(var(--btn-rail), 0.14) 112deg,
+      rgba(var(--btn-rail), 0.14) 200deg,
+      rgba(var(--btn-glow), 0.6) 214deg,
+      #dbeafe 232deg,                               /* comet 2 — dimmer head, 180 away */
+      rgba(var(--btn-glow), 0.6) 250deg,
+      rgba(var(--btn-rail), 0.14) 292deg,
+      rgba(var(--btn-rail), 0.14) 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
-  filter: drop-shadow(0 0 4px var(--btn-glow));
-  animation: btn-runborder 2.8s linear infinite;
+  /* blur bleeds inward past the edge for a soft glowing rim */
+  filter: drop-shadow(0 0 4px rgba(var(--btn-glow), 0.9));
+  animation:
+    btn-runborder 2.6s linear infinite,
+    btn-charge 3.4s ease-in-out infinite;
   pointer-events: none;
   z-index: 3;
 }
+.btn--primary:hover::after {
+  animation-duration: 1.4s, 3.4s;                   /* comets speed up on hover */
+  filter: drop-shadow(0 0 6px rgba(var(--btn-glow), 1)) drop-shadow(0 0 2px #fff);
+}
 @keyframes btn-runborder { to { --btn-angle: 360deg; } }
+@keyframes btn-charge { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
 
 /* ---------- Icon tiles ---------- */
 .icon-tile {
@@ -2453,7 +2466,6 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   .ripples i,
   .btn--primary::before,
   .btn--primary::after,
-  .btn--outline::after,
   .dark-section::before,
   .chat__typing i,
   .motes i { animation: none; }
