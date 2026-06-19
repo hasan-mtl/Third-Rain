@@ -721,7 +721,7 @@
   .ra-core-disk .ra-clock { width: 74px; height: 74px; margin: 0; overflow: visible; filter: drop-shadow(0 0 9px rgba(94, 234, 212, 0.42)); }
   /* the brand wraps the centered clock as a slowly rotating engraved bezel */
   .ra-seal { position: absolute; inset: 0; margin: auto; width: 190px; height: 190px; z-index: 4; pointer-events: none; animation: ra-spin 36s linear infinite; }
-  .ra-seal text { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; fill: rgba(192, 236, 255, 0.95); filter: drop-shadow(0 0 4px rgba(125, 211, 252, 0.55)); }
+  .ra-seal text { font-family: var(--font-mono); font-size: 8px; font-weight: 600; letter-spacing: 0; text-transform: uppercase; fill: rgba(192, 236, 255, 0.95); filter: drop-shadow(0 0 4px rgba(125, 211, 252, 0.55)); }
   @media (prefers-reduced-motion: reduce) { .ra-seal { animation: none; } }
   .ra-clock__bezel { stroke: rgba(140, 210, 250, 0.55); stroke-width: 0.8; }
   .ra-clock__ring2 { stroke: rgba(125, 211, 252, 0.13); stroke-width: 0.5; }
@@ -1397,7 +1397,7 @@
           <span class="ra-ring--inner" aria-hidden="true"></span>
           <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
             <defs><path id="raSealPath" d="M 84,18 a 66,66 0 1 1 -0.01 0"/></defs>
-            <text><textPath href="#raSealPath" startOffset="0" textLength="415">RAIN AGENT · ALWAYS ON · </textPath></text>
+            <text><textPath href="#raSealPath" startOffset="0" textLength="415">RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON · </textPath></text>
           </svg>
           <span class="ra-core-disk">
             <span class="ra-core-disk__sheen" aria-hidden="true"></span>
