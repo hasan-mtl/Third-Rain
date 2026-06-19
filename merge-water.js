@@ -56,7 +56,7 @@
     "    vec3 d = vec3(0.086, 0.192, 0.302);",                          /* #16314d = the lifted statement top + hero floor, so the dawn sea has NO dark base at the seam */
     "    d = mix(d, mix(lo, hi, glow), glow);",
     "    d += crest * vec3(0.40, 0.52, 0.62) * glow;",                  /* lit crests catching the light along the horizon */
-    "    float a = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.84, 0.96, y));",  /* fade up into rain AND fade fully out just below the bright horizon - no dark-sea band at the seam (Mike) */
+    "    float a = smoothstep(0.0, 0.34, y);",  /* fade up into rain at the top, but stay SOLID below the bright horizon so the #16314d sea fills right up to the white water (covers the hero's dark ocean, extends the blue UP per Mike) */
     "    gl_FragColor = vec4(d, a);",
     "    return;",
     "  }",
