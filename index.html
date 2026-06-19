@@ -91,7 +91,6 @@
     padding-bottom: var(--water-room);
   }
   .statement__inner { position: relative; z-index: 5; }
-  .statement::after { display: none; }
 
   /* ---- hero + statement = ONE seamless scene (Mike: no separation) ----
      The boundary is invisible: the hero floor converges to the exact dark the
@@ -105,18 +104,8 @@
       rgba(10, 31, 44, 0) 0%, rgba(10, 31, 44, 0.55) 58%, rgba(10, 31, 44, 0.9) 84%, #0a1f2c 100%);
   }
   .statement { padding-top: 72px; }              /* tight, no dead space - the headline sits just under the seam */
-  /* The statement shares `.dark-section`, whose multi-stop dark gradient + aurora ::before
-     band badly ("pixelated"). We fully override it here with a 2-class selector (beats the
-     1-class `.dark-section` no matter the load order). The glow uses SOLID colour stops
-     (#0c2a35 -> #0a1f2c), NOT an rgba alpha fade - alpha fades band far worse on 8-bit dark
-     panels. Subtle teal lift in the top-right per Mike's ref; base/top stays the seam #0a1f2c. */
-  .statement.dark-section {
-    background: radial-gradient(1700px 1100px at 88% -10%, #0c2a35 0%, #0a1f2c 60%);
-  }
-  .statement::before { display: none; }         /* kill the .dark-section aurora drift on this section */
-  /* the grain was 0.5 soft-light - way too heavy on this near-flat navy, it read as
-     "pixelated". A light dither is plenty now (the base is solid, only the glow can band). */
-  .statement.noise::after { opacity: 0.2; }
+  /* No per-section background override: the statement renders the standard `.dark-section`
+     background + aurora ::before + noise, exactly like every other dark section (Mike's spec). */
   .statement .merge-water--ocean { height: 170px; }   /* the whisper of water sits only across the seam */
   /* the hero ends on the same bright first-light horizon as the statement bottom (Mike), rendered in the water shader, melting into the dark statement below */
   .hero-ocean .merge-water--herodawn { height: 270px; z-index: 3; }
