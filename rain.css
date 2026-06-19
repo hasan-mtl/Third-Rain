@@ -2486,43 +2486,17 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-.contact-chat__ava {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  background: linear-gradient(150deg, #0f2f4d, #07182b 72%);
-  box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.22), inset 0 9px 20px -10px rgba(125, 211, 252, 0.42);
+/* the live particle "rain." wordmark in the chat header (mini hero crest) */
+.contact-chat__mark {
+  display: block;
+  flex: none;
+  width: 122px;
+  height: 40px;
 }
-/* animated "rain" mark: live falling streaks (replaces the static waterdrop) */
-.chat-rain {
-  position: relative;
-  overflow: hidden;
-}
-.chat-rain i {
-  position: absolute;
-  top: -36%;
-  width: 1.8px;
-  height: 10px;
-  border-radius: 1px;
-  background: linear-gradient(180deg, rgba(125, 211, 252, 0), rgba(204, 246, 255, 1));
-  box-shadow: 0 0 5px rgba(170, 236, 255, 0.75);
-  transform: translateY(0) rotate(12deg);
-  animation: chatRainFall linear infinite;
-}
-.chat-rain i:nth-child(1) { left: 16%; animation-duration: 0.92s; animation-delay: 0s; }
-.chat-rain i:nth-child(2) { left: 31%; animation-duration: 1.12s; animation-delay: 0.34s; }
-.chat-rain i:nth-child(3) { left: 46%; animation-duration: 0.8s; animation-delay: 0.16s; }
-.chat-rain i:nth-child(4) { left: 61%; animation-duration: 1.05s; animation-delay: 0.52s; }
-.chat-rain i:nth-child(5) { left: 75%; animation-duration: 0.88s; animation-delay: 0.72s; }
-.chat-rain i:nth-child(6) { left: 88%; animation-duration: 1s; animation-delay: 0.24s; }
-@keyframes chatRainFall {
-  0% { transform: translateY(0) rotate(12deg); opacity: 0; }
-  18% { opacity: 1; }
-  82% { opacity: 1; }
-  100% { transform: translateY(150%) rotate(12deg); opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .chat-rain i { animation: none; opacity: 0.5; transform: translateY(40%) rotate(12deg); }
+.contact-chat__mark canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .contact-chat__title {
   font-family: var(--font-serif);
