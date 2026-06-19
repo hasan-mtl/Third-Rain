@@ -780,20 +780,7 @@
           ph: Math.random() * 6.283
         });
       }
-      bClusters = [];
-      for (var cl = 0; cl < 3; cl++) {
-        var nodes = [];
-        var nn = 3 + (cl % 2);
-        for (var ni = 0; ni < nn; ni++) {
-          nodes.push({ a: Math.random() * 6.283, r: 10 + Math.random() * 16, w: 0.3 + Math.random() * 0.5 });
-        }
-        bClusters.push({
-          x: bW * (0.12 + 0.36 * cl) + Math.random() * bW * 0.1,
-          y: 30 + Math.random() * (bWy * 0.5),
-          vx: (Math.random() - 0.5) * 6,
-          nodes: nodes
-        });
-      }
+      bClusters = [];   /* node constellations removed (Mike: delete the UFO-like flying thing) */
     };
 
     // stand-in while three.js loads (or if WebGL fails)
@@ -1237,29 +1224,8 @@
     }, { passive: true });
   }
 
-  /* ---------- magnetic primary buttons (fine pointers) ---------- */
-  if (window.matchMedia("(pointer: fine)").matches) {
-    qsa(".btn--primary").forEach(function (btn) {
-      var magRaf = null;
-      var mx = 0;
-      var my = 0;
-      var applyMag = function () {
-        magRaf = null;
-        btn.style.translate = mx.toFixed(1) + "px " + my.toFixed(1) + "px";
-      };
-      btn.addEventListener("mousemove", function (e) {
-        if (reduce) return;
-        var r = btn.getBoundingClientRect();
-        mx = Math.max(-4, Math.min(4, (e.clientX - (r.left + r.width / 2)) * 0.12));
-        my = Math.max(-3, Math.min(3, (e.clientY - (r.top + r.height / 2)) * 0.22));
-        if (magRaf === null) magRaf = requestAnimationFrame(applyMag);
-      });
-      btn.addEventListener("mouseleave", function () {
-        if (magRaf !== null) { cancelAnimationFrame(magRaf); magRaf = null; }
-        btn.style.translate = "";
-      });
-    });
-  }
+  /* magnetic primary buttons REMOVED (Mike: the button must not move/shake on hover -
+     it stays put and only changes colour, which the CSS :hover already does). */
 
   /* ---------- console rows pulse like live jobs ---------- */
   var pingRows = qsa(".console-row");
