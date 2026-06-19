@@ -144,8 +144,8 @@
 .hx-split .ocean-hero__copy { text-align: left; }
 .hx-split .ocean-hero__copy h1 {
   text-align: left;
-  font-size: calc(clamp(2.08rem, 3.4vw, 3rem) * var(--hx-h-scale, 1));
-  line-height: 1.12;
+  font-size: calc(clamp(2.5rem, 4.2vw, 3.6rem) * var(--hx-h-scale, 1));
+  line-height: 1.1;
   padding-bottom: 6px;
 }
 .hx-split .ocean-hero__copy h1 .serif-grad {

@@ -108,38 +108,52 @@
     });
   }
 
-  /* ---------- hero outcome line cycles through results ---------- */
+  /* ---------- hero outcome line: types itself out, live, phrase by phrase ---------- */
   var cycleEl = qs("[data-cycle]");
   if (cycleEl && !reduce) {
     var PHRASES = [
+      "your low stock got reordered.",
       "every customer got a reply.",
       "your report arrived at 8:00.",
-      "your low stock got reordered.",
       "your blog posted itself."
     ];
-    var cycleIdx = 0;
     var N = PHRASES.length;
-    var doCycle = function () {
-      cycleEl.classList.add("is-cycling", "is-swapping");
-      window.setTimeout(function () {
-        cycleEl.textContent = PHRASES[cycleIdx % N];
-        cycleIdx += 1;
-        cycleEl.classList.remove("is-swapping");
-        /* copy → water: each phrase lands a ripple on the basin */
-        if (HERO.couple && HERO.onCycle) HERO.onCycle(cycleIdx);
-      }, 270);
+    cycleEl.classList.add("is-typing");
+    cycleEl.textContent = "";              /* the typewriter IS this line's entrance */
+    var pIdx = 0, chIdx = 0, deleting = false;
+    var cycleHome = cycleEl.closest("section");
+    var stalled = function () {
+      return document.hidden || (cycleHome && cycleHome.classList.contains("is-offstage"));
     };
-    // let the entrance cascade land before the first swap, then self-schedule
-    // at the (tweakable) story pace
-    window.setTimeout(function () {
-      var cycleHome = cycleEl.closest("section");
-      var tick = function () {
-        /* swap only when the tab AND the hero are actually visible */
-        if (!document.hidden && !(cycleHome && cycleHome.classList.contains("is-offstage"))) doCycle();
-        window.setTimeout(tick, Math.max(1500, HERO.cycleMs || 3600));
-      };
-      tick();
-    }, 3000);
+    var TYPE = 50, ERASE = 28, HOLD = 1750, GAP = 460;  /* per-char + pauses (ms) */
+    var step = function () {
+      if (stalled()) { window.setTimeout(step, 420); return; }   /* freeze offstage/hidden */
+      var full = PHRASES[pIdx % N];
+      if (!deleting) {
+        chIdx += 1;
+        cycleEl.textContent = full.slice(0, chIdx);
+        if (chIdx >= full.length) {
+          deleting = true;
+          /* copy → water: each outcome that lands drops a ripple on the basin */
+          if (HERO.couple && HERO.onCycle) HERO.onCycle(pIdx + 1);
+          window.setTimeout(step, HOLD);
+        } else {
+          window.setTimeout(step, TYPE + Math.random() * 46);    /* a little human jitter */
+        }
+      } else {
+        chIdx -= 1;
+        cycleEl.textContent = full.slice(0, chIdx);
+        if (chIdx <= 0) {
+          deleting = false;
+          pIdx += 1;
+          window.setTimeout(step, GAP);
+        } else {
+          window.setTimeout(step, ERASE);
+        }
+      }
+    };
+    // let line 1's word cascade land, then start typing
+    window.setTimeout(step, 1150);
   }
 
   /* ---------- hero video: gated, graded, battery-friendly ---------- */
