@@ -106,11 +106,17 @@
   }
   .statement {
     padding-top: 72px;                           /* tight, no dead space - the headline sits just under the seam */
+    /* smooth navy + a soft teal glow in the top-right (Mike's ref). Fades use a clean
+       rgba(...,0) of the SAME hue - NOT the `transparent` keyword - so the gradient
+       does not interpolate through transparent-black and muddy/band on dark panels. */
     background:
-      radial-gradient(900px 520px at 6% 122%, rgba(59, 130, 246, 0.18), transparent 55%),
-      linear-gradient(180deg, #0a1f2c 0%, #0a1e2b 55%, #0a1f2c 100%);
+      radial-gradient(1250px 820px at 88% -4%, rgba(48, 198, 200, 0.15), rgba(48, 198, 200, 0) 58%),
+      linear-gradient(180deg, #0a1f2c 0%, #0a1a27 54%, #081420 100%);
   }
   .statement::before { display: none; }         /* drop the teal aurora glow Mike X'd out */
+  /* the grain was 0.5 soft-light - way too heavy on this near-flat navy, it read as
+     "pixelated". Drop it to a faint dither that just keeps the gradient from banding. */
+  .statement.noise::after { opacity: 0.13; }
   .statement .merge-water--ocean { height: 170px; }   /* the whisper of water sits only across the seam */
   /* the hero ends on the same bright first-light horizon as the statement bottom (Mike), rendered in the water shader, melting into the dark statement below */
   .hero-ocean .merge-water--herodawn { height: 270px; z-index: 3; }
