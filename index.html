@@ -144,7 +144,7 @@
   .pf2__visual { display: flex; flex-direction: column; align-items: center; gap: 22px; }
   .pf2__visual .circuit { width: 100%; max-width: 470px; }
   /* the Rain logo sits in the core where the mockup had a watch */
-  .ra-core-logo { width: 90px; height: auto; filter: drop-shadow(0 0 10px rgba(94, 234, 212, 0.5)); }
+  .ra-core-logo { width: 86px; height: auto; position: relative; z-index: 1; filter: drop-shadow(0 0 13px rgba(94, 234, 212, 0.6)) drop-shadow(0 0 4px rgba(190, 235, 255, 0.55)); }
   /* the live run log, dressed as a macOS window with traffic-light dots (see .pf2__visual .runlog) */
   #platform .runlog__title { text-transform: uppercase; letter-spacing: 0.12em; }
   @media (max-width: 960px) {
@@ -570,14 +570,58 @@
     position: absolute;
     inset: 0;
     margin: auto;
-    width: 138px;
-    height: 138px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    border: 1px solid rgba(94, 234, 212, 0.45);
+    border: 1px solid rgba(94, 234, 212, 0.38);
     pointer-events: none;
-    animation: ra-ripple 3s ease-out infinite;
+    z-index: 1;
+    animation: ra-ripple 4.6s ease-out infinite;
   }
-  .ra-ripple--2 { animation-delay: 1.5s; }
+  .ra-ripple--2 { animation-delay: 2.3s; }
+  /* soft breathing halo behind the whole core */
+  .ra-glow {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 188px;
+    height: 188px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.24), rgba(59, 130, 246, 0.1) 46%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ra-breath 5.5s ease-in-out infinite;
+  }
+  @keyframes ra-breath {
+    0%, 100% { transform: scale(0.9); opacity: 0.62; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+  /* the engraved ring the rotating seal text rides on */
+  .ra-ring--track {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 154px;
+    height: 154px;
+    border-radius: 50%;
+    border: 1px solid rgba(125, 211, 252, 0.18);
+    box-shadow: inset 0 0 16px rgba(125, 211, 252, 0.07), 0 0 10px rgba(125, 211, 252, 0.05);
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* glass sheen across the top of the orb */
+  .ra-core-disk__sheen {
+    position: absolute;
+    top: 9px;
+    left: 24px;
+    right: 24px;
+    height: 28%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0));
+    filter: blur(2px);
+    pointer-events: none;
+    z-index: 2;
+  }
   .circuit__core::before { border-radius: 50% !important; }
   @keyframes ra-ripple {
     0% { transform: scale(0.7); opacity: 0.55; }
@@ -585,7 +629,7 @@
     100% { transform: scale(2.5); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .ra-ripple, .ra-orbit { animation: none; }
+    .ra-ripple, .ra-orbit, .ra-glow { animation: none; }
   }
   .ra-orbit::before {
     content: "";
@@ -633,21 +677,28 @@
 
   /* ===== CROWN JEWEL: bigger, futuristic Rain Agent clock ===== */
   .ra-core-disk {
-    width: 150px;
-    height: 150px;
+    position: relative;
+    z-index: 3;
+    width: 120px;
+    height: 120px;
     display: grid;
     place-items: center;
-    background: radial-gradient(circle at 50% 34%, #19426e 0%, #0b1f37 58%, #060f1d 100%);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 28%, rgba(135, 232, 255, 0.45) 0%, transparent 52%),
+      radial-gradient(circle at 50% 70%, rgba(45, 212, 191, 0.24) 0%, transparent 56%),
+      radial-gradient(circle at 50% 50%, #143c61 0%, #0a1f38 56%, #060f1e 100%);
     box-shadow:
-      0 0 54px rgba(94, 234, 212, 0.32),
-      0 0 0 1px rgba(125, 211, 252, 0.2),
-      inset 0 0 32px rgba(125, 211, 252, 0.18),
-      inset 0 2px 12px rgba(255, 255, 255, 0.06);
+      0 0 62px rgba(45, 212, 191, 0.36),
+      0 0 0 1px rgba(125, 211, 252, 0.4),
+      inset 0 0 26px rgba(125, 211, 252, 0.24),
+      inset 0 -11px 24px rgba(0, 0, 0, 0.45),
+      inset 0 3px 13px rgba(255, 255, 255, 0.09);
   }
   .ra-core-disk .ra-clock { width: 74px; height: 74px; margin: 0; overflow: visible; filter: drop-shadow(0 0 9px rgba(94, 234, 212, 0.42)); }
   /* the brand wraps the centered clock as a slowly rotating engraved bezel */
-  .ra-seal { position: absolute; inset: 0; margin: auto; width: 190px; height: 190px; z-index: 4; pointer-events: none; animation: ra-spin 30s linear infinite; }
-  .ra-seal text { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; fill: rgba(170, 226, 255, 0.9); }
+  .ra-seal { position: absolute; inset: 0; margin: auto; width: 190px; height: 190px; z-index: 4; pointer-events: none; animation: ra-spin 36s linear infinite; }
+  .ra-seal text { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: uppercase; fill: rgba(192, 236, 255, 0.95); filter: drop-shadow(0 0 4px rgba(125, 211, 252, 0.55)); }
   @media (prefers-reduced-motion: reduce) { .ra-seal { animation: none; } }
   .ra-clock__bezel { stroke: rgba(140, 210, 250, 0.55); stroke-width: 0.8; }
   .ra-clock__ring2 { stroke: rgba(125, 211, 252, 0.13); stroke-width: 0.5; }
@@ -1318,13 +1369,16 @@
         </svg>
 
         <div class="circuit__core" aria-hidden="true">
+          <span class="ra-glow" aria-hidden="true"></span>
           <span class="ra-ripple" aria-hidden="true"></span>
           <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
+          <span class="ra-ring--track" aria-hidden="true"></span>
           <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
-            <defs><path id="raSealPath" d="M 84,34 a 50,50 0 1 1 -0.01 0"/></defs>
-            <text><textPath href="#raSealPath" startOffset="0" textLength="308">RAIN AGENT · ALWAYS ON · </textPath></text>
+            <defs><path id="raSealPath" d="M 84,18 a 66,66 0 1 1 -0.01 0"/></defs>
+            <text><textPath href="#raSealPath" startOffset="0" textLength="415">RAIN AGENT · ALWAYS ON · </textPath></text>
           </svg>
           <span class="ra-core-disk">
+            <span class="ra-core-disk__sheen" aria-hidden="true"></span>
             <img class="ra-core-logo" src="assets/rain-logo.png?v=129" alt="" width="600" height="250" decoding="async" />
           </span>
         </div>
@@ -1456,7 +1510,7 @@
         <span class="founder-card__corner founder-card__corner--br" aria-hidden="true"></span>
         <span class="founder-card__role"><span class="founder-card__dot" aria-hidden="true"></span>Founder &amp; CEO</span>
         <p class="founder-card__name">Michael Cassella</p>
-        <p class="founder-card__meta">20+ years automating the busywork away.</p>
+        <p class="founder-card__meta">20+ years solving problems for businesses like yours.</p>
         <p class="founder-card__line">Straight to the founder. No sales team, no hand-offs.</p>
       </div>
     </div>
