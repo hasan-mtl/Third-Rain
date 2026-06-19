@@ -1849,37 +1849,119 @@ html.js .runlog__lines li.is-new { animation: log-in 0.4s var(--ease); }
 }
 .contact__copy .lede { margin-top: 18px; max-width: 500px; }
 
-.contact__mail {
-  display: inline-block;
-  margin-top: 32px;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(1.6rem, 2.7vw, 2.05rem);
-  background: linear-gradient(100deg, var(--sky-300), var(--teal-300));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  border-bottom: 1px solid rgba(94, 234, 212, 0.35);
-  padding: 0.08em 0.12em 4px;
-  margin-left: -0.12em;
-  margin-right: -0.12em;
-  transition: border-color 0.15s ease;
+/* Futuristic founder credential - Mike's info as a HUD-style card (no MC avatar, no email) */
+.founder-card {
+  position: relative;
+  max-width: 444px;
+  margin-top: 34px;
+  padding: 19px 22px 18px;
+  border-radius: 16px;
+  background: linear-gradient(165deg, rgba(15, 31, 48, 0.74), rgba(7, 15, 27, 0.8));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 56px -30px rgba(0, 0, 0, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  isolation: isolate;
 }
-.contact__mail:hover { border-color: var(--teal-300); }
-
-.contact__founder {
+/* gradient glow perimeter (mask trick = 1px gradient border) */
+.founder-card__glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(125deg, rgba(94, 234, 212, 0.65), rgba(59, 130, 246, 0.28) 44%, rgba(94, 234, 212, 0) 72%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+/* bright scan line across the top edge */
+.founder-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.75), transparent);
+}
+/* cool radial wash in the top-right */
+.founder-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 95% at 90% -10%, rgba(59, 130, 246, 0.16), transparent 58%);
+  pointer-events: none;
+  z-index: -1;
+}
+.founder-card__top {
   display: flex;
   align-items: center;
-  gap: 14px;
-  max-width: 440px;
-  margin-top: 30px;
-  padding: 15px 18px;
-  border-radius: 17px;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 13px;
 }
-.contact__founder p { font-size: 13.5px; line-height: 1.5; color: var(--td-faint); }
-.contact__founder p:first-child { font-size: 14px; color: var(--td-body); }
-.contact__founder strong { color: #fff; font-weight: 600; }
+.founder-card__role {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--teal-300);
+}
+.founder-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--td-faint);
+}
+.founder-card__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+  animation: founderPulse 2.4s ease-out infinite;
+}
+@keyframes founderPulse {
+  0% { box-shadow: 0 0 6px #34d399, 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  70% { box-shadow: 0 0 6px #34d399, 0 0 0 9px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 6px #34d399, 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.founder-card__name {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.founder-card__meta {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: var(--td-faint);
+}
+.founder-card__line {
+  margin: 13px 0 0;
+  padding-top: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13.5px;
+  color: var(--td-body);
+}
+/* HUD corner brackets */
+.founder-card__corner {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border: 1px solid rgba(94, 234, 212, 0.55);
+  pointer-events: none;
+  z-index: 1;
+}
+.founder-card__corner--tl { top: 9px; left: 9px; border-right: 0; border-bottom: 0; border-radius: 5px 0 0 0; }
+.founder-card__corner--br { bottom: 9px; right: 9px; border-left: 0; border-top: 0; border-radius: 0 0 5px 0; }
+@media (prefers-reduced-motion: reduce) {
+  .founder-card__pulse { animation: none; }
+}
 
 .contact__reply {
   display: flex;
