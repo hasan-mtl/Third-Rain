@@ -103,7 +103,10 @@
     background: linear-gradient(to bottom,
       rgba(22, 49, 77, 0) 0%, rgba(22, 49, 77, 0.5) 58%, rgba(22, 49, 77, 0.85) 84%, #16314d 100%);
   }
-  .statement { padding-top: 72px; }              /* tight, no dead space - the headline sits just under the seam */
+  /* Pull the section UP a touch (negative margin) + raise it above the hero (z-index) so its blue
+     covers the hero's bottom edge / the dawn-canvas seam line on the right where the water sits high.
+     padding-top compensates so the copy keeps its position. (Mike: push the top up, hide the blue edge.) */
+  .statement { margin-top: -24px; padding-top: 96px; z-index: 6; }
   /* Statement = the `.dark-section` look (aurora + noise + teal/blue glows), but the linear is now a
      VERTICAL fade that is LIGHTEST at the very top (#16314d) so there is no dark band where the bright
      water lands, easing down to the navy #0a1f2c body. The dawn water above also fades fully out below
@@ -111,7 +114,7 @@
      kept circling a dark band at the seam - this kills it from both sides.) */
   .statement.dark-section {
     background:
-      radial-gradient(1250px 600px at 85% -16%, rgba(28, 80, 158, 0.22), rgba(28, 80, 158, 0) 62%),
+      radial-gradient(1250px 620px at 86% -16%, rgba(20, 56, 112, 0.1), rgba(20, 56, 112, 0) 64%),
       radial-gradient(900px 500px at 5% 110%, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0) 55%),
       linear-gradient(180deg, #16314d 0%, #0f2740 26%, #0a1f2c 64%);
   }
