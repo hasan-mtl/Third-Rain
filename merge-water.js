@@ -53,7 +53,7 @@
     "    float glow = smoothstep(0.30, 0.80, y) * (1.0 - smoothstep(0.84, 1.0, y));",  /* bright zone climbs to ~0.8 then eases off before the very edge */
     "    vec3 lo = vec3(0.16, 0.30, 0.46);",
     "    vec3 hi = vec3(0.84, 0.90, 0.97);",                             /* bright cool first light, like the paper horizon */
-    "    vec3 d = vec3(0.039, 0.122, 0.173);",                          /* the #0a1f2c both sections share */
+    "    vec3 d = vec3(0.086, 0.192, 0.302);",                          /* #16314d = the lifted statement top + hero floor, so the dawn sea has NO dark base at the seam */
     "    d = mix(d, mix(lo, hi, glow), glow);",
     "    d += crest * vec3(0.40, 0.52, 0.62) * glow;",                  /* lit crests catching the light along the horizon */
     "    float a = smoothstep(0.0, 0.34, y) * (1.0 - smoothstep(0.84, 0.96, y));",  /* fade up into rain AND fade fully out just below the bright horizon - no dark-sea band at the seam (Mike) */
