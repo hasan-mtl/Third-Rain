@@ -104,18 +104,16 @@
     background: linear-gradient(to bottom,
       rgba(10, 31, 44, 0) 0%, rgba(10, 31, 44, 0.55) 58%, rgba(10, 31, 44, 0.9) 84%, #0a1f2c 100%);
   }
-  .statement {
-    padding-top: 72px;                           /* tight, no dead space - the headline sits just under the seam */
-    /* near-SOLID #0a1f2c + ONE soft teal glow top-right (Mike's ref). The previous
-       full linear gradient banded badly on dark panels ("pixelated"); a near-solid
-       base has no big ramp to band, so it stays smooth. Solid base also means the
-       top is exactly the hero-seam colour #0a1f2c. Glow fades to rgba(...,0) of its
-       own hue (never the `transparent` keyword = transparent-black = muddy banding). */
-    background:
-      radial-gradient(1600px 1050px at 86% -8%, rgba(44, 182, 190, 0.13), rgba(44, 182, 190, 0) 58%),
-      #0a1f2c;
+  .statement { padding-top: 72px; }              /* tight, no dead space - the headline sits just under the seam */
+  /* The statement shares `.dark-section`, whose multi-stop dark gradient + aurora ::before
+     band badly ("pixelated"). We fully override it here with a 2-class selector (beats the
+     1-class `.dark-section` no matter the load order). The glow uses SOLID colour stops
+     (#0c2a35 -> #0a1f2c), NOT an rgba alpha fade - alpha fades band far worse on 8-bit dark
+     panels. Subtle teal lift in the top-right per Mike's ref; base/top stays the seam #0a1f2c. */
+  .statement.dark-section {
+    background: radial-gradient(1700px 1100px at 88% -10%, #0c2a35 0%, #0a1f2c 60%);
   }
-  .statement::before { display: none; }         /* drop the teal aurora glow Mike X'd out */
+  .statement::before { display: none; }         /* kill the .dark-section aurora drift on this section */
   /* the grain was 0.5 soft-light - way too heavy on this near-flat navy, it read as
      "pixelated". A light dither is plenty now (the base is solid, only the glow can band). */
   .statement.noise::after { opacity: 0.2; }
