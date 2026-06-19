@@ -104,14 +104,21 @@
       rgba(10, 31, 44, 0) 0%, rgba(10, 31, 44, 0.55) 58%, rgba(10, 31, 44, 0.9) 84%, #0a1f2c 100%);
   }
   .statement { padding-top: 72px; }              /* tight, no dead space - the headline sits just under the seam */
-  /* No per-section background override: the statement renders the standard `.dark-section`
-     background + aurora ::before + noise, exactly like every other dark section (Mike's spec). */
-  .statement .merge-water--ocean { height: 170px; }   /* the whisper of water sits only across the seam */
+  /* Statement = the standard `.dark-section` look (aurora + noise + the teal/blue glows), EXCEPT the
+     linear's near-black #070d1c start is lifted to the navy #0a1f2c - that near-black read as a hard
+     dark band under the bright water above (Mike: "blow up the top dark black thing"). #0a1f2c also
+     matches the hero floor so the seam stays clean. (The dark-ocean canvas that used to sit on top
+     here was removed.) */
+  .statement.dark-section {
+    background:
+      radial-gradient(1100px 480px at 80% -10%, rgba(45, 212, 191, 0.18), transparent 60%),
+      radial-gradient(900px 500px at 5% 110%, rgba(59, 130, 246, 0.22), transparent 55%),
+      linear-gradient(140deg, #0a1f2c 0%, #0d1c3e 55%, #0a1f2c 100%);
+  }
   /* the hero ends on the same bright first-light horizon as the statement bottom (Mike), rendered in the water shader, melting into the dark statement below */
   .hero-ocean .merge-water--herodawn { height: 270px; z-index: 3; }
   @media (max-width: 680px) {
     .statement { padding-top: 68px; }
-    .statement .merge-water--ocean { height: 140px; }
     .hero-ocean .merge-water--herodawn { height: 210px; }
   }
 
@@ -982,7 +989,6 @@
 
 <!-- ============ STATEMENT BEAT ============ -->
 <section class="statement dark-section noise" aria-label="The refresh">
-  <div class="merge-water merge-water--top merge-water--ocean" data-merge-water data-ocean aria-hidden="true"><canvas></canvas></div>
   <div class="statement__inner">
     <p class="statement__kicker" data-reveal>The refresh</p>
     <p class="statement__line" data-reveal style="--i:1">Your business should keep working <span class="serif-grad">after you log off.</span></p>
