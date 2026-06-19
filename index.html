@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="rain.css?v=122" />
-<link rel="stylesheet" href="rain-editorial.css?v=122" />
-<link rel="stylesheet" href="hero-options.css?v=122" />
+<link rel="stylesheet" href="rain.css?v=123" />
+<link rel="stylesheet" href="rain-editorial.css?v=123" />
+<link rel="stylesheet" href="hero-options.css?v=123" />
 <style>
   /* Align all section content to the header's centered 1120px (--maxw) gutter
      so nothing overflows the header width. */
@@ -115,15 +115,7 @@
   .pf2__visual .circuit { width: 100%; max-width: 470px; }
   /* the Rain logo sits in the core where the mockup had a watch */
   .ra-core-logo { width: 90px; height: auto; filter: drop-shadow(0 0 10px rgba(94, 234, 212, 0.5)); }
-  /* the live run log shown on a MacBook (Mike) */
-  .macbook { position: relative; width: 100%; max-width: 466px; display: flex; flex-direction: column; align-items: center; filter: drop-shadow(0 34px 50px rgba(0, 0, 0, 0.45)); }
-  .macbook__lid { position: relative; width: 100%; background: linear-gradient(180deg, #1b1e26, #0a0c11); border-radius: 17px 17px 4px 4px; padding: 12px 12px 13px; box-shadow: inset 0 0 0 1px rgba(150, 180, 220, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07); }
-  .macbook__lid::before { content: ""; position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: #23272f; box-shadow: 0 0 3px rgba(125, 211, 252, 0.35); }
-  .macbook__screen { margin: 0 !important; max-width: none !important; padding: 14px 16px 15px !important; border-radius: 8px; background: radial-gradient(125% 100% at 50% 0%, #123353, #081627 70%); box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.12), inset 0 14px 30px -16px rgba(125, 211, 252, 0.22); -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; }
-  .macbook__base { position: relative; width: 110%; height: 13px; background: linear-gradient(180deg, #b8bcc5 0%, #8d919a 42%, #62666f 100%); border-radius: 1px 1px 12px 12px; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 18px 24px -12px rgba(0, 0, 0, 0.7); }
-  .macbook__base::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 92px; height: 6px; border-radius: 0 0 9px 9px; background: linear-gradient(180deg, #595d67, #44474f); }
-  .macbook .runlog__lines { height: auto; }
-  .runlog__live { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; flex: none; }
+  /* the live run log, dressed as a macOS window with traffic-light dots (see .pf2__visual .runlog) */
   #platform .runlog__title { text-transform: uppercase; letter-spacing: 0.12em; }
   @media (max-width: 960px) {
     #platform .pf2 { grid-template-columns: 1fr; gap: 36px; max-width: 540px; padding: 0 22px; }
@@ -362,7 +354,10 @@
   }
 
   /* Live run log - dressed as a macOS window with traffic-light dots. */
-  .platform__belt .runlog {
+  .pf2__visual .runlog {
+    width: 100%;
+    max-width: 466px;
+    margin: 0 auto;
     padding: 0;
     overflow: hidden;
     border-radius: 14px;
@@ -1256,7 +1251,7 @@
       <p class="lede lede--dark">We built this system ourselves and we run it every day. Your shop gets its own agent wired to your phones, calendar and books, and a real person on our team checks every single run.</p>
       <ul class="pf2__list">
         <li><span class="pf2__ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.4l2.6 2.6 5.4-6"/></svg></span>It learns your services, your prices and how you talk</li>
-        <li><span class="pf2__ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.4l2.6 2.6 5.4-6"/></svg></span>Answers calls, chases quotes, asks for reviews, reports back</li>
+        <li><span class="pf2__ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.4l2.6 2.6 5.4-6"/></svg></span>Drafts posts, chases quotes, asks for reviews, reports back</li>
         <li><span class="pf2__ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.4l2.6 2.6 5.4-6"/></svg></span>Text it like an employee. No dashboards to learn</li>
         <li><span class="pf2__ck" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.4l2.6 2.6 5.4-6"/></svg></span>You can review everything before it goes out</li>
       </ul>
@@ -1297,7 +1292,7 @@
             <text><textPath href="#raSealPath" startOffset="0" textLength="308">RAIN AGENT · ALWAYS ON · </textPath></text>
           </svg>
           <span class="ra-core-disk">
-            <img class="ra-core-logo" src="assets/rain-logo.png?v=122" alt="" width="600" height="250" decoding="async" />
+            <img class="ra-core-logo" src="assets/rain-logo.png?v=123" alt="" width="600" height="250" decoding="async" />
           </span>
         </div>
 
@@ -1321,23 +1316,18 @@
         </span>
       </div>
 
-      <div class="macbook pf2__runlog">
-        <div class="macbook__lid">
-          <div class="runlog macbook__screen">
-            <div class="runlog__bar">
-              <span class="runlog__live" aria-hidden="true"></span>
-              <span class="runlog__title">live run log</span>
-              <span class="runlog__day">today</span>
-            </div>
-            <ul class="runlog__lines" data-runlog aria-live="off">
-              <li><span>10:05</span>Review request sent to the Garcias</li>
-              <li><span>06:12</span>After-hours call answered &rarr; water heater, booked 9</li>
-              <li><span>07:58</span>Morning report sent: jobs, revenue, calls</li>
-              <li><span>08:40</span>Estimate follow-up: Hendersons reminded (day 3)</li>
-            </ul>
-          </div>
+      <div class="runlog pf2__runlog">
+        <div class="runlog__bar">
+          <span class="runlog__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="runlog__title">live run log</span>
+          <span class="runlog__day">today</span>
         </div>
-        <div class="macbook__base" aria-hidden="true"></div>
+        <ul class="runlog__lines" data-runlog aria-live="off">
+          <li><span>10:05</span>Review request sent to the Garcias</li>
+          <li><span>06:12</span>After-hours lead &rarr; water heater quote drafted</li>
+          <li><span>07:58</span>Morning report sent: jobs, revenue, leads</li>
+          <li><span>08:40</span>Estimate follow-up: Hendersons reminded (day 3)</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -1438,7 +1428,7 @@
       </div>
 
       <div class="contact-chat__body">
-        <p class="contact-chat__bubble">What's eating your week? Type it like a text. Mike reads every message and replies within a day.</p>
+        <p class="contact-chat__bubble">What's eating your week? Type it like a text.</p>
       </div>
 
       <div class="contact-chat__fields">
@@ -1473,6 +1463,7 @@
       <a class="brand" href="#hero" aria-label="Rain - home">
         <img class="brand__mark brand__mark--footer" src="assets/rain-logo.png" alt="" width="600" height="250" decoding="async" />
       </a>
+      <p>The business refresh for the AI era.<br />Led by Michael Cassella - 20+ years of working systems.</p>
     </div>
     <nav class="site-footer__nav" aria-label="Footer">
       <a href="#process">Process</a>
@@ -1486,7 +1477,7 @@
   </div>
 </footer>
 
-<script src="rain.js?v=122" defer></script>
+<script src="rain.js?v=123" defer></script>
 <script>
 /* Storm hero - push the scene flags into the live water engine once it's defined. */
 document.addEventListener("DOMContentLoaded", function () {
@@ -1512,8 +1503,8 @@ window.__RAIN_TWEAKS = /*EDITMODE-BEGIN*/{
   "rippleOnSwap": true
 }/*EDITMODE-END*/;
 </script>
-<script src="rain-tweaks.js?v=122" defer></script>
-<script src="merge-water.js?v=122" defer></script>
+<script src="rain-tweaks.js?v=123" defer></script>
+<script src="merge-water.js?v=123" defer></script>
 <script>
 /* Rain Agent clock: a real clock - hands at the correct local time, ticking each second. */
 (function () {
