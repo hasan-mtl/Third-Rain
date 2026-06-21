@@ -154,7 +154,7 @@
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--sky-300);
-  margin-bottom: 30px;
+  margin-bottom: 14px;   /* was 30px - too much gap to the headline (Mike) */
 }
 .statement__line {
   font-size: clamp(2rem, 4.6vw, 4.2rem);
