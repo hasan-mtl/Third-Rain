@@ -1348,6 +1348,186 @@
   </div>
 </section>
 
+<!-- ============ BUILD YOUR AGENT (interactive configurator) ============ -->
+<style>
+  .agentlab { padding: clamp(74px, 9vw, 118px) 0; }
+  .agentlab__inner { max-width: min(1120px, calc(100vw - 48px)); margin: 0 auto; }
+  .agentlab__head { text-align: center; max-width: 720px; margin: 0 auto clamp(34px, 4vw, 54px); }
+  .agentlab__head h2 { font-size: clamp(2rem, 4.2vw, 3.1rem); line-height: 1.06; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
+  .agentlab__lede { margin: 16px 0 0; font-size: clamp(1rem, 1.3vw, 1.12rem); line-height: 1.55; color: var(--td-body); }
+  .agentlab__grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr); gap: clamp(18px, 2.4vw, 30px); align-items: start; }
+  @media (max-width: 880px) { .agentlab__grid { grid-template-columns: 1fr; gap: 18px; } }
+
+  /* capability picks */
+  .agentlab__picks { display: flex; flex-direction: column; gap: 11px; }
+  .cap { position: relative; display: flex; align-items: center; gap: 13px; width: 100%; text-align: left; cursor: pointer; padding: 13px 15px; border-radius: 15px; background: rgba(11, 22, 44, 0.5); border: 1px solid rgba(125, 211, 252, 0.1); color: inherit; font: inherit; transition: transform .26s cubic-bezier(.2,.7,.2,1), border-color .26s, background .26s, box-shadow .26s; -webkit-tap-highlight-color: transparent; }
+  .cap:hover { transform: translateY(-2px); border-color: rgba(125, 211, 252, 0.34); background: rgba(15, 30, 56, 0.6); }
+  .cap:focus-visible { outline: 2px solid var(--teal-300); outline-offset: 2px; }
+  .cap[aria-pressed="true"] { background: rgba(18, 38, 66, 0.66); border-color: rgba(94, 234, 212, 0.42); box-shadow: 0 0 0 1px rgba(94, 234, 212, 0.1), 0 16px 32px -24px rgba(45, 212, 191, 0.7); }
+  .cap__ic { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: rgba(125, 211, 252, 0.07); border: 1px solid rgba(125, 211, 252, 0.12); color: var(--sky-300); transition: background .26s, color .26s, border-color .26s, box-shadow .26s; }
+  .cap__ic svg { width: 20px; height: 20px; }
+  .cap[aria-pressed="true"] .cap__ic { background: linear-gradient(135deg, var(--blue-500), var(--teal-400)); border-color: transparent; color: #04121f; box-shadow: 0 6px 16px -6px rgba(45, 212, 191, 0.7); }
+  .cap__tx { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .cap__tx b { font-size: 14.5px; font-weight: 600; color: #e8f2fb; letter-spacing: -0.01em; }
+  .cap__tx i { font-size: 11.5px; font-style: normal; color: var(--td-faint); line-height: 1.35; }
+  .cap__check { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(148, 163, 184, 0.4); color: transparent; transition: all .26s; }
+  .cap__check svg { width: 12px; height: 12px; }
+  .cap[aria-pressed="true"] .cap__check { border-color: transparent; background: linear-gradient(135deg, var(--teal-400), var(--blue-500)); color: #04121f; }
+
+  /* live agent card */
+  .agentcard { position: relative; --fill: 0.66; padding: 22px 22px 20px; border-radius: 18px; background: linear-gradient(165deg, rgba(15, 31, 48, 0.82), rgba(7, 15, 27, 0.88)); box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 30px 64px -34px rgba(0,0,0,.9); -webkit-backdrop-filter: blur(13px); backdrop-filter: blur(13px); overflow: hidden; isolation: isolate; }
+  @media (min-width: 881px) { .agentcard { position: sticky; top: 92px; } }
+  .agentcard__glow { position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(135deg, rgba(94,234,212,.6), rgba(59,130,246,.28) 46%, rgba(94,234,212,0) 74%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+  .agentcard::before { content:""; position:absolute; inset:0 0 auto 0; height:1px; background: linear-gradient(90deg, transparent, rgba(94,234,212,.7), transparent); }
+  .agentcard::after { content:""; position:absolute; inset:0; pointer-events:none; z-index:-1; background: radial-gradient(120% 90% at 88% -8%, rgba(59,130,246,.16), transparent 56%); }
+  .agentcard__sweep { position:absolute; inset:0; border-radius:inherit; overflow:hidden; pointer-events:none; }
+  .agentcard__sweep::before { content:""; position:absolute; top:-25%; left:0; width:40%; height:150%; background: linear-gradient(100deg, transparent, rgba(125,211,252,.12), rgba(255,255,255,.06), transparent); transform: translateX(-180%) skewX(-16deg); animation: agentSweep 7.2s ease-in-out infinite; }
+  .agentcard__corner { position:absolute; width:13px; height:13px; border:1px solid rgba(94,234,212,.5); pointer-events:none; z-index:2; }
+  .agentcard__corner--tl { top:11px; left:11px; border-right:0; border-bottom:0; }
+  .agentcard__corner--br { bottom:11px; right:11px; border-left:0; border-top:0; }
+  .agentcard__head { position:relative; z-index:1; display:flex; align-items:center; gap:13px; padding-bottom:15px; margin-bottom:4px; border-bottom:1px solid rgba(255,255,255,.07); }
+  .agentcard__orb { flex:none; width:46px; height:46px; border-radius:50%; background: radial-gradient(circle at 36% 30%, #d6f1ff, #57b6f5 42%, #1f6fc4 72%, #124a86); box-shadow: 0 0 calc(12px + var(--fill) * 28px) rgba(94,234,212, calc(.26 + var(--fill) * .4)), inset 0 0 10px rgba(255,255,255,.35); position: relative; transition: box-shadow .5s ease; }
+  .agentcard__orb::after { content:""; position:absolute; inset:-6px; border-radius:50%; border:1px solid rgba(94,234,212,.3); animation: agentPing 3s ease-out infinite; }
+  .agentcard__name { margin:0; font-size:16px; font-weight:600; color:#fff; letter-spacing:-.01em; }
+  .agentcard__status { margin:3px 0 0; display:inline-flex; align-items:center; gap:7px; font-family: var(--font-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color: var(--teal-300); }
+  .agentcard__status .dot { width:6px; height:6px; border-radius:50%; background:#34d399; box-shadow:0 0 7px #34d399; animation: agentPulse 2.4s ease-out infinite; }
+  .agentcard__list { position:relative; z-index:1; list-style:none; margin:0; padding:4px 0 0; min-height: 100px; }
+  .agentcard__list li { display:flex; align-items:center; gap:10px; padding:7px 0; font-size:13.5px; color: var(--td-body); border-bottom:1px solid rgba(255,255,255,.04); animation: agentRowIn .42s cubic-bezier(.2,.7,.2,1) both; }
+  .agentcard__list li.is-out { animation: agentRowOut .3s ease forwards; }
+  .agentcard__list li .tick { flex:none; display:grid; place-items:center; width:18px; height:18px; border-radius:50%; background: linear-gradient(135deg, var(--teal-400), var(--blue-500)); color:#04121f; }
+  .agentcard__list li .tick svg { width:11px; height:11px; }
+  .agentcard__empty { position:relative; z-index:1; display:none; padding:30px 4px; text-align:center; font-size:13px; color: var(--td-faint); }
+  .agentcard__foot { position:relative; z-index:1; margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.08); }
+  .agentcard__count { margin:0 0 13px; font-size:13.5px; color: var(--td-faint); }
+  .agentcard__count b { font-size:17px; font-weight:700; color:#fff; font-variant-numeric: tabular-nums; display:inline-block; }
+  .agentcard__count b.pop { animation: agentCountPop .4s cubic-bezier(.2,.8,.2,1); }
+  .agentcard__cta { display:inline-flex; align-items:center; justify-content:center; gap:9px; width:100%; padding:14px 22px; border-radius:13px; text-decoration:none; font-size:14.5px; font-weight:600; letter-spacing:.01em; color:#04121f; background: linear-gradient(120deg, var(--sky-300), #8fd8f5 40%, var(--teal-300)); box-shadow: 0 16px 34px -16px rgba(94,234,212,.7), inset 0 1px 0 rgba(255,255,255,.4); transition: transform .24s, box-shadow .24s, filter .24s; }
+  .agentcard__cta:hover { transform: translateY(-2px); box-shadow: 0 22px 44px -16px rgba(94,234,212,.85), inset 0 1px 0 rgba(255,255,255,.5); filter: brightness(1.04); }
+  .agentcard__cta svg { width:17px; height:17px; }
+  @keyframes agentSweep { 0%{transform:translateX(-180%) skewX(-16deg);opacity:0;} 10%{opacity:1;} 30%{opacity:1;} 44%{transform:translateX(360%) skewX(-16deg);opacity:0;} 100%{transform:translateX(360%) skewX(-16deg);opacity:0;} }
+  @keyframes agentPing { 0%{transform:scale(1);opacity:.5;} 70%{transform:scale(1.25);opacity:0;} 100%{opacity:0;} }
+  @keyframes agentPulse { 0%{box-shadow:0 0 6px #34d399, 0 0 0 0 rgba(52,211,153,.5);} 70%{box-shadow:0 0 6px #34d399, 0 0 0 8px rgba(52,211,153,0);} 100%{box-shadow:0 0 6px #34d399, 0 0 0 0 rgba(52,211,153,0);} }
+  @keyframes agentRowIn { from{opacity:0; transform:translateX(-8px);} to{opacity:1; transform:none;} }
+  @keyframes agentRowOut { to{opacity:0; transform:translateX(8px); height:0; padding:0; margin:0;} }
+  @keyframes agentCountPop { 0%{transform:scale(1);} 40%{transform:scale(1.4); color:var(--teal-300);} 100%{transform:scale(1);} }
+  @media (prefers-reduced-motion: reduce) { .agentcard__sweep::before, .agentcard__orb::after, .agentcard__status .dot { animation: none; } .cap, .agentcard__cta { transition: none; } }
+</style>
+<section class="agentlab dark-section noise" id="build" aria-labelledby="agentlab-title">
+  <div class="agentlab__inner">
+    <header class="agentlab__head">
+      <p class="eyebrow eyebrow--dark" data-reveal>Make it yours</p>
+      <h2 id="agentlab-title" data-reveal style="--i:1">Build the agent <span class="serif-grad">your business needs.</span></h2>
+      <p class="agentlab__lede" data-reveal style="--i:2">Tap what you want handled. Watch your agent take shape.</p>
+    </header>
+
+    <div class="agentlab__grid">
+      <div class="agentlab__picks" data-reveal style="--i:2" role="group" aria-label="Choose what your agent handles">
+        <button type="button" class="cap" data-cap data-tag="Answering chats" aria-pressed="true">
+          <span class="cap__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H9l-4 3.5V16H5.5A1.5 1.5 0 0 1 4 14.5z"/><path d="M7.5 8.5h9M7.5 12h5.5"/></svg></span>
+          <span class="cap__tx"><b>Answer every chat</b><i>Website, replies and DMs, day and night.</i></span>
+          <span class="cap__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </button>
+        <button type="button" class="cap" data-cap data-tag="Booking appointments" aria-pressed="true">
+          <span class="cap__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg></span>
+          <span class="cap__tx"><b>Book appointments</b><i>Fills your calendar while you work.</i></span>
+          <span class="cap__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </button>
+        <button type="button" class="cap" data-cap data-tag="Chasing every lead" aria-pressed="true">
+          <span class="cap__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg></span>
+          <span class="cap__tx"><b>Send follow-ups</b><i>Every lead chased, nothing slips.</i></span>
+          <span class="cap__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </button>
+        <button type="button" class="cap" data-cap data-tag="Qualifying leads" aria-pressed="false">
+          <span class="cap__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5h18l-7.2 8.6V19l-3.6 1.8v-8.7z"/></svg></span>
+          <span class="cap__tx"><b>Qualify leads</b><i>Sorts the serious from the curious.</i></span>
+          <span class="cap__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </button>
+        <button type="button" class="cap" data-cap data-tag="Collecting reviews" aria-pressed="true">
+          <span class="cap__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2l2.5 5.25 5.8.85-4.2 4.05 1 5.75L12 16.4l-5.1 2.65 1-5.75-4.2-4.05 5.8-.85z"/></svg></span>
+          <span class="cap__tx"><b>Chase reviews</b><i>Asks happy customers at the right moment.</i></span>
+          <span class="cap__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </button>
+        <button type="button" class="cap" data-cap data-tag="Syncing your tools" aria-pressed="false">
+          <span class="cap__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.8 13.9a3.8 3.8 0 0 0 5.6 0l3-3a3.8 3.8 0 1 0-5.4-5.4L11.4 7"/><path d="M14.2 10.1a3.8 3.8 0 0 0-5.6 0l-3 3a3.8 3.8 0 1 0 5.4 5.4L12.6 17"/></svg></span>
+          <span class="cap__tx"><b>Sync your tools</b><i>Moves the data so you never copy-paste.</i></span>
+          <span class="cap__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        </button>
+      </div>
+
+      <aside class="agentcard" data-reveal style="--i:3" aria-live="polite" aria-label="Your agent so far">
+        <span class="agentcard__glow" aria-hidden="true"></span>
+        <span class="agentcard__sweep" aria-hidden="true"></span>
+        <span class="agentcard__corner agentcard__corner--tl" aria-hidden="true"></span>
+        <span class="agentcard__corner agentcard__corner--br" aria-hidden="true"></span>
+        <div class="agentcard__head">
+          <span class="agentcard__orb" aria-hidden="true"></span>
+          <div>
+            <p class="agentcard__name">Your Rain agent</p>
+            <p class="agentcard__status"><span class="dot" aria-hidden="true"></span>Online · never clocks out</p>
+          </div>
+        </div>
+        <ul class="agentcard__list" data-agent-list></ul>
+        <p class="agentcard__empty" data-agent-empty>Tap a capability to start building.</p>
+        <div class="agentcard__foot">
+          <p class="agentcard__count">Handles <b data-agent-count>0</b> <span data-agent-noun>jobs</span> for you, around the clock.</p>
+          <a class="agentcard__cta" href="#contact">Get this agent<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<script>
+  (function () {
+    var lab = document.getElementById("build");
+    if (!lab) return;
+    var caps = [].slice.call(lab.querySelectorAll("[data-cap]"));
+    var list = lab.querySelector("[data-agent-list]");
+    var empty = lab.querySelector("[data-agent-empty]");
+    var countEl = lab.querySelector("[data-agent-count]");
+    var nounEl = lab.querySelector("[data-agent-noun]");
+    var card = lab.querySelector(".agentcard");
+    var tick = '<span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>';
+
+    function idx(cap) { return caps.indexOf(cap); }
+
+    function addRow(cap) {
+      var li = document.createElement("li");
+      li.setAttribute("data-row", cap.getAttribute("data-tag"));
+      li.dataset.idx = idx(cap);
+      li.innerHTML = tick + "<span>" + cap.getAttribute("data-tag") + "</span>";
+      var rows = [].slice.call(list.querySelectorAll("li:not(.is-out)"));
+      var before = null;
+      for (var i = 0; i < rows.length; i++) { if (parseInt(rows[i].dataset.idx, 10) > idx(cap)) { before = rows[i]; break; } }
+      list.insertBefore(li, before);
+    }
+    function removeRow(cap) {
+      var li = list.querySelector('li[data-row="' + cap.getAttribute("data-tag") + '"]:not(.is-out)');
+      if (!li) return;
+      li.classList.add("is-out");
+      setTimeout(function () { if (li.parentNode) li.parentNode.removeChild(li); }, 300);
+    }
+    function render(pop) {
+      var on = caps.filter(function (c) { return c.getAttribute("aria-pressed") === "true"; }).length;
+      if (countEl) { countEl.textContent = on; if (pop) { countEl.classList.remove("pop"); void countEl.offsetWidth; countEl.classList.add("pop"); } }
+      if (nounEl) nounEl.textContent = on === 1 ? "job" : "jobs";
+      if (card) card.style.setProperty("--fill", (on / caps.length).toFixed(3));
+      if (empty) empty.style.display = on ? "none" : "block";
+    }
+
+    caps.forEach(function (c) { if (c.getAttribute("aria-pressed") === "true") addRow(c); });
+    render(false);
+
+    caps.forEach(function (cap) {
+      cap.addEventListener("click", function () {
+        var on = cap.getAttribute("aria-pressed") === "true";
+        cap.setAttribute("aria-pressed", on ? "false" : "true");
+        if (on) removeRow(cap); else addRow(cap);
+        render(true);
+      });
+    });
+  })();
+</script>
+
 <!-- ============ PROCESS ============ -->
 <section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
   <div class="pf2" data-reveal>
