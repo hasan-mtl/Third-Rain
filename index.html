@@ -1348,100 +1348,88 @@
   </div>
 </section>
 
-<!-- ============ PROOF (real run / case study) ============ -->
+<!-- ============ CASE STUDY ============ -->
 <style>
-  .proof { padding: clamp(74px, 9vw, 118px) 0; }
-  .proof__inner { max-width: min(1120px, calc(100vw - 48px)); margin: 0 auto; }
-  .proof__head { text-align: center; max-width: 740px; margin: 0 auto clamp(36px, 4.5vw, 56px); }
-  .proof__head h2 { font-size: clamp(2rem, 4.2vw, 3.1rem); line-height: 1.06; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
-  .proof__lede { margin: 16px 0 0; font-size: clamp(1rem, 1.3vw, 1.12rem); line-height: 1.55; color: var(--td-body); }
-  .proof__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.94fr); gap: clamp(22px, 3.4vw, 46px); align-items: center; }
-  @media (max-width: 900px) { .proof__grid { grid-template-columns: 1fr; gap: 26px; } }
+  .cstudy { padding: clamp(74px, 9vw, 118px) 0; }
+  .cstudy__inner { max-width: min(1080px, calc(100vw - 48px)); margin: 0 auto; }
+  .cstudy__head { text-align: center; max-width: 760px; margin: 0 auto clamp(34px, 4vw, 52px); }
+  .cstudy__head h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.07; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
 
-  /* case: client + quote + before/after */
-  .proof__client { display: flex; align-items: center; gap: 13px; margin-bottom: 19px; }
-  .proof__avatar { flex: none; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); box-shadow: 0 10px 22px -8px rgba(94, 234, 212, 0.6); }
-  .proof__who { flex: 1 1 auto; min-width: 0; line-height: 1.32; }
-  .proof__who strong { display: block; font-size: 16px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
-  .proof__who span { font-size: 12.5px; color: var(--td-faint); }
-  .proof__stars { flex: none; font-size: 14px; letter-spacing: 1.5px; color: #ffce47; text-shadow: 0 0 12px rgba(255, 206, 71, 0.35); }
-  .proof__quote { margin: 0 0 23px; font-family: var(--font-serif); font-weight: 500; font-style: italic; font-size: clamp(1.32rem, 2.1vw, 1.66rem); line-height: 1.42; color: #eef6fc; text-wrap: pretty; }
-  .proof__stats { display: flex; flex-direction: column; gap: 1px; border-radius: 15px; overflow: hidden; border: 1px solid rgba(125, 211, 252, 0.13); background: rgba(125, 211, 252, 0.13); }
-  .proof__stat { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 17px; background: linear-gradient(180deg, rgba(15, 31, 48, 0.74), rgba(9, 18, 33, 0.8)); }
-  .proof__stat-k { font-size: 12.5px; color: var(--td-faint); }
-  .proof__stat-v { display: inline-flex; align-items: center; gap: 9px; font-size: 15.5px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .proof__stat-v i { font-style: normal; font-weight: 600; font-size: 13px; color: var(--td-faint); text-decoration: line-through; text-decoration-color: rgba(148, 163, 184, 0.55); }
-  .proof__stat-v svg { width: 15px; height: 15px; color: var(--teal-300); }
-  .proof__stat-v--up { color: var(--teal-300); }
+  .cstudy__card { position: relative; display: grid; grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr); gap: clamp(24px, 3vw, 46px); padding: clamp(24px, 3vw, 38px); border-radius: 22px; background: linear-gradient(165deg, rgba(15, 31, 48, 0.72), rgba(7, 15, 27, 0.84)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 40px 84px -42px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(13px); backdrop-filter: blur(13px); overflow: hidden; isolation: isolate; }
+  @media (max-width: 880px) { .cstudy__card { grid-template-columns: 1fr; gap: 26px; } }
+  .cstudy__glow { position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(135deg, rgba(94, 234, 212, 0.55), rgba(59, 130, 246, 0.24) 46%, rgba(94, 234, 212, 0) 74%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+  .cstudy__card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.6), transparent); }
+  .cstudy__card::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1; background: radial-gradient(120% 80% at 92% -6%, rgba(59, 130, 246, 0.14), transparent 56%); }
 
-  /* run screenshot (reuses native .macwin + .chat) */
-  .proof__run { margin: 0; position: relative; }
-  .proof__run .macwin { display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.35), 0 26px 50px -22px rgba(0,0,0,.7), 0 50px 90px -55px rgba(0,0,0,.6); }
-  .proof__run .chat__body { min-height: 0; }
-  .proof__run-cap { display: flex; align-items: center; gap: 8px; margin: 14px 2px 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.03em; color: var(--td-faint); }
-  .proof__note { margin: clamp(30px, 4vw, 46px) auto 0; text-align: center; font-size: 13px; color: var(--td-faint); }
-  .proof__note a { color: var(--sky-300); text-decoration: none; font-weight: 600; white-space: nowrap; }
-  .proof__note a:hover { text-decoration: underline; }
+  .cstudy__main { position: relative; z-index: 1; }
+  .cstudy__client { display: flex; align-items: center; gap: 13px; padding-bottom: 18px; margin-bottom: 21px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .cstudy__avatar { flex: none; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 14px; font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); box-shadow: 0 10px 22px -8px rgba(94, 234, 212, 0.6); }
+  .cstudy__who { flex: 1 1 auto; min-width: 0; line-height: 1.34; }
+  .cstudy__who strong { display: block; font-size: 16px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+  .cstudy__who span { font-size: 12.5px; color: var(--td-faint); }
+  .cstudy__tag { flex: none; align-self: center; padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(125, 211, 252, 0.2); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sky-300); }
+  .cstudy__block { margin-bottom: 19px; }
+  .cstudy__lbl { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-300); margin-bottom: 7px; }
+  .cstudy__block p { margin: 0; font-size: 14.5px; line-height: 1.58; color: var(--td-body); }
+  .cstudy__quote { margin: 23px 0 0; padding-left: 16px; border-left: 2px solid rgba(94, 234, 212, 0.55); font-size: 16px; line-height: 1.5; font-weight: 500; color: #eaf3fb; }
+  .cstudy__quote cite { display: block; margin-top: 9px; font-size: 12.5px; font-style: normal; font-weight: 600; color: var(--td-faint); }
+
+  .cstudy__results { position: relative; z-index: 1; align-self: stretch; display: flex; flex-direction: column; gap: 15px; padding: 22px; border-radius: 16px; background: rgba(8, 16, 30, 0.5); border: 1px solid rgba(125, 211, 252, 0.13); }
+  .cstudy__results-lbl { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--td-faint); }
+  .cstudy__metric { display: flex; align-items: baseline; gap: 13px; padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .cstudy__metric:last-child { border-bottom: 0; padding-bottom: 0; }
+  .cstudy__metric b { flex: none; min-width: 96px; font-size: clamp(1.7rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; background: linear-gradient(120deg, var(--sky-300), var(--teal-300)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cstudy__metric span { font-size: 12.5px; line-height: 1.4; color: var(--td-body); }
+  .cstudy__metric span i { display: block; font-style: normal; font-size: 11px; color: var(--td-faint); margin-top: 2px; }
+
+  .cstudy__note { margin: clamp(28px, 4vw, 44px) auto 0; text-align: center; font-size: 13.5px; color: var(--td-faint); }
+  .cstudy__note a { color: var(--sky-300); text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .cstudy__note a:hover { text-decoration: underline; }
 </style>
-<section class="proof dark-section noise" id="proof" aria-labelledby="proof-title">
-  <div class="proof__inner">
-    <header class="proof__head">
-      <p class="eyebrow eyebrow--dark" data-reveal>Proof</p>
-      <h2 id="proof-title" data-reveal style="--i:1">Less time on the phone. <span class="serif-grad">More jobs booked.</span></h2>
-      <p class="proof__lede" data-reveal style="--i:2">A Rain agent handling an after-hours lead, start to finish, while the owner was off the clock.</p>
+<section class="cstudy dark-section noise" id="proof" aria-labelledby="cstudy-title">
+  <div class="cstudy__inner">
+    <header class="cstudy__head">
+      <p class="eyebrow eyebrow--dark" data-reveal>Case study</p>
+      <h2 id="cstudy-title" data-reveal style="--i:1">How Keller Plumbing got its <span class="serif-grad">nights back.</span></h2>
     </header>
 
-    <div class="proof__grid">
-      <div class="proof__case" data-reveal style="--i:2">
-        <div class="proof__client">
-          <span class="proof__avatar" aria-hidden="true">RK</span>
-          <div class="proof__who">
-            <strong>Ryan Keller</strong>
-            <span>Owner · Keller Plumbing &amp; Air · Columbus, OH</span>
+    <div class="cstudy__card" data-reveal style="--i:2">
+      <span class="cstudy__glow" aria-hidden="true"></span>
+      <div class="cstudy__main">
+        <div class="cstudy__client">
+          <span class="cstudy__avatar" aria-hidden="true">KP</span>
+          <div class="cstudy__who">
+            <strong>Keller Plumbing &amp; Air</strong>
+            <span>Columbus, OH</span>
           </div>
-          <span class="proof__stars" aria-label="5 out of 5 stars">★★★★★</span>
+          <span class="cstudy__tag">Home services</span>
         </div>
-        <blockquote class="proof__quote">"I used to spend every night texting leads back and confirming jobs. Rain handles all of it now. Last month it booked 9 jobs I would have missed after hours, and I never touched my phone after six."</blockquote>
-        <div class="proof__stats">
-          <div class="proof__stat">
-            <span class="proof__stat-k">After-hours leads answered</span>
-            <span class="proof__stat-v"><i>62%</i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>100%</span>
-          </div>
-          <div class="proof__stat">
-            <span class="proof__stat-k">Hours a week on follow-ups</span>
-            <span class="proof__stat-v"><i>10 hrs</i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>under 2</span>
-          </div>
-          <div class="proof__stat">
-            <span class="proof__stat-k">New jobs booked per month</span>
-            <span class="proof__stat-v proof__stat-v--up">+9</span>
-          </div>
+
+        <div class="cstudy__block">
+          <span class="cstudy__lbl">The challenge</span>
+          <p>Leads came in after hours and went cold by morning. Ryan was answering texts from the truck between jobs and still losing work to whoever called back first.</p>
         </div>
+        <div class="cstudy__block">
+          <span class="cstudy__lbl">What Rain runs</span>
+          <p>Rain now answers every inquiry in seconds, qualifies the job, sends a quote, and books it straight into the calendar. Day and night, with no app for Ryan to check.</p>
+        </div>
+
+        <blockquote class="cstudy__quote">
+          "I never touch my phone after six, and the calendar still fills up."
+          <cite>Ryan Keller, owner</cite>
+        </blockquote>
       </div>
 
-      <figure class="proof__run" data-reveal style="--i:3">
-        <div class="macwin">
-          <div class="macwin__bar" aria-hidden="true"><span class="macwin__dots"><i></i><i></i><i></i></span><span class="macwin__title">rain agent · live run</span></div>
-          <div class="macwin__screen">
-            <div class="chat">
-              <div class="chat__head">
-                <span class="chat__avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2s6.8 8.3 6.8 13a6.8 6.8 0 0 1-13.6 0c0-4.7 6.8-13 6.8-13Z"/></svg></span>
-                <div class="chat__id"><strong>rain agent</strong><small><span class="live-dot live-dot--sm" aria-hidden="true"></span>online · replies instantly</small></div>
-              </div>
-              <div class="chat__body">
-                <div class="chat__msg chat__msg--user">Hey, my AC just quit and it is 96 out. Any chance someone can come today?</div>
-                <div class="chat__msg chat__msg--agent">Oh no, that is rough in this heat. I can get a tech out to you today. What is the address and a good callback number?</div>
-                <div class="chat__msg chat__msg--user">1420 Oak St, and 614-555-0148</div>
-                <div class="chat__msg chat__msg--agent">You are booked ✓ A tech will be there between 2 and 4pm today. I have texted a confirmation and a reminder to that number. Anything else I can do?</div>
-                <div class="chat__msg chat__msg--user">Nope, that is perfect. Thank you!</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <figcaption class="proof__run-cap"><span class="live-dot live-dot--sm" aria-hidden="true"></span>After-hours run · booked in 41 seconds · no one on the team touched it</figcaption>
-      </figure>
+      <div class="cstudy__results">
+        <span class="cstudy__results-lbl">The results · first 90 days</span>
+        <div class="cstudy__metric"><b>100%</b><span>after-hours leads answered<i>up from 62%</i></span></div>
+        <div class="cstudy__metric"><b>+9</b><span>new jobs booked a month</span></div>
+        <div class="cstudy__metric"><b>&lt;2 hrs</b><span>a week on follow-ups<i>down from 10</i></span></div>
+        <div class="cstudy__metric"><b>41 sec</b><span>average reply, day or night</span></div>
+      </div>
     </div>
 
-    <p class="proof__note" data-reveal>This is what a Rain run looks like. <a href="#contact">See it on your business →</a></p>
+    <p class="cstudy__note" data-reveal>This is what Rain runs for a business like yours. <a href="#contact">Get a setup like this →</a></p>
   </div>
 </section>
 
