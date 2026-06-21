@@ -784,8 +784,9 @@
   .platform__stage,
   .platform__stage .circuit { max-width: 980px; }
 
-  /* Platform also ends in the WebGL water, merging down into the process section. */
-  .platform { padding-top: 56px; padding-bottom: var(--water-room); }
+  /* Platform now flows straight into the case study (both dark); the WebGL
+     water moved to the case study's foot, so platform takes a normal bottom pad. */
+  .platform { padding-top: 56px; padding-bottom: 56px; }
 
   /* Widen the proof stats so each label stays on one line (no wrap). */
   .platform .platform__stats { max-width: 1000px; }
@@ -1348,92 +1349,7 @@
   </div>
 </section>
 
-<!-- ============ CASE STUDY ============ -->
-<style>
-  .cstudy { padding: clamp(74px, 9vw, 118px) 0; }
-  .cstudy__inner { max-width: min(1080px, calc(100vw - 48px)); margin: 0 auto; }
-  .cstudy__head { text-align: center; max-width: 760px; margin: 0 auto clamp(34px, 4vw, 52px); }
-  .cstudy__head h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.07; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
-
-  .cstudy__card { position: relative; display: grid; grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr); gap: clamp(24px, 3vw, 46px); padding: clamp(24px, 3vw, 38px); border-radius: 22px; background: linear-gradient(165deg, rgba(15, 31, 48, 0.72), rgba(7, 15, 27, 0.84)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 40px 84px -42px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(13px); backdrop-filter: blur(13px); overflow: hidden; isolation: isolate; }
-  @media (max-width: 880px) { .cstudy__card { grid-template-columns: 1fr; gap: 26px; } }
-  .cstudy__glow { position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(135deg, rgba(94, 234, 212, 0.55), rgba(59, 130, 246, 0.24) 46%, rgba(94, 234, 212, 0) 74%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-  .cstudy__card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.6), transparent); }
-  .cstudy__card::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1; background: radial-gradient(120% 80% at 92% -6%, rgba(59, 130, 246, 0.14), transparent 56%); }
-
-  .cstudy__main { position: relative; z-index: 1; }
-  .cstudy__client { display: flex; align-items: center; gap: 13px; padding-bottom: 18px; margin-bottom: 21px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-  .cstudy__avatar { flex: none; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 14px; font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); box-shadow: 0 10px 22px -8px rgba(94, 234, 212, 0.6); }
-  .cstudy__who { flex: 1 1 auto; min-width: 0; line-height: 1.34; }
-  .cstudy__who strong { display: block; font-size: 16px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
-  .cstudy__who span { font-size: 12.5px; color: var(--td-faint); }
-  .cstudy__tag { flex: none; align-self: center; padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(125, 211, 252, 0.2); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sky-300); }
-  .cstudy__block { margin-bottom: 19px; }
-  .cstudy__lbl { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-300); margin-bottom: 7px; }
-  .cstudy__block p { margin: 0; font-size: 14.5px; line-height: 1.58; color: var(--td-body); }
-  .cstudy__quote { margin: 23px 0 0; padding-left: 16px; border-left: 2px solid rgba(94, 234, 212, 0.55); font-size: 16px; line-height: 1.5; font-weight: 500; color: #eaf3fb; }
-  .cstudy__quote cite { display: block; margin-top: 9px; font-size: 12.5px; font-style: normal; font-weight: 600; color: var(--td-faint); }
-
-  .cstudy__results { position: relative; z-index: 1; align-self: stretch; display: flex; flex-direction: column; gap: 15px; padding: 22px; border-radius: 16px; background: rgba(8, 16, 30, 0.5); border: 1px solid rgba(125, 211, 252, 0.13); }
-  .cstudy__results-lbl { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--td-faint); }
-  .cstudy__metric { display: flex; align-items: baseline; gap: 13px; padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-  .cstudy__metric:last-child { border-bottom: 0; padding-bottom: 0; }
-  .cstudy__metric b { flex: none; min-width: 96px; font-size: clamp(1.7rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; background: linear-gradient(120deg, var(--sky-300), var(--teal-300)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .cstudy__metric span { font-size: 12.5px; line-height: 1.4; color: var(--td-body); }
-  .cstudy__metric span i { display: block; font-style: normal; font-size: 11px; color: var(--td-faint); margin-top: 2px; }
-
-  .cstudy__note { margin: clamp(28px, 4vw, 44px) auto 0; text-align: center; font-size: 13.5px; color: var(--td-faint); }
-  .cstudy__note a { color: var(--sky-300); text-decoration: none; font-weight: 600; white-space: nowrap; }
-  .cstudy__note a:hover { text-decoration: underline; }
-</style>
-<section class="cstudy dark-section noise" id="proof" aria-labelledby="cstudy-title">
-  <div class="cstudy__inner">
-    <header class="cstudy__head">
-      <p class="eyebrow eyebrow--dark" data-reveal>Case study</p>
-      <h2 id="cstudy-title" data-reveal style="--i:1">How Keller Plumbing got its <span class="serif-grad">nights back.</span></h2>
-    </header>
-
-    <div class="cstudy__card" data-reveal style="--i:2">
-      <span class="cstudy__glow" aria-hidden="true"></span>
-      <div class="cstudy__main">
-        <div class="cstudy__client">
-          <span class="cstudy__avatar" aria-hidden="true">KP</span>
-          <div class="cstudy__who">
-            <strong>Keller Plumbing &amp; Air</strong>
-            <span>Columbus, OH</span>
-          </div>
-          <span class="cstudy__tag">Home services</span>
-        </div>
-
-        <div class="cstudy__block">
-          <span class="cstudy__lbl">The challenge</span>
-          <p>Leads came in after hours and went cold by morning. Ryan was answering texts from the truck between jobs and still losing work to whoever called back first.</p>
-        </div>
-        <div class="cstudy__block">
-          <span class="cstudy__lbl">What Rain runs</span>
-          <p>Rain now answers every inquiry in seconds, qualifies the job, sends a quote, and books it straight into the calendar. Day and night, with no app for Ryan to check.</p>
-        </div>
-
-        <blockquote class="cstudy__quote">
-          "I never touch my phone after six, and the calendar still fills up."
-          <cite>Ryan Keller, owner</cite>
-        </blockquote>
-      </div>
-
-      <div class="cstudy__results">
-        <span class="cstudy__results-lbl">The results · first 90 days</span>
-        <div class="cstudy__metric"><b>100%</b><span>after-hours leads answered<i>up from 62%</i></span></div>
-        <div class="cstudy__metric"><b>+9</b><span>new jobs booked a month</span></div>
-        <div class="cstudy__metric"><b>&lt;2 hrs</b><span>a week on follow-ups<i>down from 10</i></span></div>
-        <div class="cstudy__metric"><b>41 sec</b><span>average reply, day or night</span></div>
-      </div>
-    </div>
-
-    <p class="cstudy__note" data-reveal>This is what Rain runs for a business like yours. <a href="#contact">Get a setup like this →</a></p>
-  </div>
-</section>
-
-<!-- ============ PROCESS ============ -->
+<!-- ============ PLATFORM ============ -->
 <section class="platform dark-section noise" id="platform" aria-labelledby="platform-title">
   <div class="pf2" data-reveal>
     <div class="pf2__copy">
@@ -1524,6 +1440,95 @@
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDY ============ -->
+<style>
+  .cstudy { padding: clamp(58px, 7vw, 88px) 0 var(--water-room); }
+  .cstudy__inner { position: relative; z-index: 5; max-width: min(1060px, calc(100vw - 48px)); margin: 0 auto; }
+  .cstudy__head { text-align: center; max-width: 760px; margin: 0 auto clamp(34px, 4vw, 50px); }
+  .cstudy__head h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.07; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
+
+  .cstudy__card { position: relative; padding: clamp(26px, 3.2vw, 42px); border-radius: 22px; background: linear-gradient(165deg, rgba(15, 31, 48, 0.72), rgba(7, 15, 27, 0.84)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 40px 84px -42px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(13px); backdrop-filter: blur(13px); overflow: hidden; isolation: isolate; }
+  .cstudy__glow { position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(135deg, rgba(94, 234, 212, 0.5), rgba(59, 130, 246, 0.22) 46%, rgba(94, 234, 212, 0) 74%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+  .cstudy__card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.55), transparent); }
+
+  .cstudy__top { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; padding-bottom: clamp(20px, 2.4vw, 26px); border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
+  .cstudy__avatar { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); box-shadow: 0 10px 22px -8px rgba(94, 234, 212, 0.6); }
+  .cstudy__who { flex: 1 1 auto; min-width: 0; line-height: 1.32; }
+  .cstudy__who strong { display: block; font-size: 17px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+  .cstudy__who span { font-size: 12.5px; color: var(--td-faint); }
+  .cstudy__tag { flex: none; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(125, 211, 252, 0.22); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--sky-300); white-space: nowrap; }
+
+  .cstudy__story { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 4vw, 56px); padding: clamp(22px, 2.6vw, 30px) 0; border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
+  @media (max-width: 720px) { .cstudy__story { grid-template-columns: 1fr; gap: 22px; } }
+  .cstudy__lbl { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-300); margin-bottom: 9px; }
+  .cstudy__block p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--td-body); }
+
+  .cstudy__results { position: relative; z-index: 1; padding: clamp(24px, 2.8vw, 32px) 0 0; }
+  .cstudy__results-lbl { display: block; text-align: center; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--td-faint); margin-bottom: 18px; }
+  .cstudy__metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(125, 211, 252, 0.12); background: rgba(125, 211, 252, 0.12); }
+  @media (max-width: 720px) { .cstudy__metrics { grid-template-columns: 1fr 1fr; } }
+  .cstudy__metric { display: flex; flex-direction: column; gap: 7px; padding: clamp(18px, 2vw, 24px) clamp(14px, 1.6vw, 20px); background: linear-gradient(180deg, rgba(13, 25, 46, 0.66), rgba(9, 17, 32, 0.72)); }
+  .cstudy__metric b { font-size: clamp(1.9rem, 3.2vw, 2.45rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; background: linear-gradient(120deg, var(--sky-300), var(--teal-300)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cstudy__metric span { font-size: 12.5px; line-height: 1.4; color: var(--td-body); }
+  .cstudy__metric em { font-style: normal; font-size: 11px; color: var(--td-faint); margin-top: auto; padding-top: 2px; }
+
+  .cstudy__quote { position: relative; z-index: 1; margin: clamp(26px, 3vw, 34px) 0 0; padding-top: clamp(22px, 2.6vw, 28px); border-top: 1px solid rgba(255, 255, 255, 0.09); text-align: center; font-size: clamp(1.12rem, 1.9vw, 1.42rem); line-height: 1.5; font-weight: 500; color: #eef6fc; text-wrap: balance; }
+  .cstudy__quote cite { display: block; margin-top: 11px; font-size: 13px; font-style: normal; font-weight: 600; color: var(--td-faint); }
+
+  .cstudy__note { position: relative; z-index: 5; margin: clamp(26px, 3.5vw, 40px) auto 0; text-align: center; font-size: 13.5px; color: var(--td-faint); }
+  .cstudy__note a { color: var(--sky-300); text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .cstudy__note a:hover { text-decoration: underline; }
+</style>
+<section class="cstudy dark-section noise" id="proof" aria-labelledby="cstudy-title">
+  <div class="cstudy__inner">
+    <header class="cstudy__head">
+      <p class="eyebrow eyebrow--dark" data-reveal>Case study</p>
+      <h2 id="cstudy-title" data-reveal style="--i:1">How Keller Plumbing got its <span class="serif-grad">nights back.</span></h2>
+    </header>
+
+    <div class="cstudy__card" data-reveal style="--i:2">
+      <span class="cstudy__glow" aria-hidden="true"></span>
+
+      <div class="cstudy__top">
+        <span class="cstudy__avatar" aria-hidden="true">KP</span>
+        <div class="cstudy__who">
+          <strong>Keller Plumbing &amp; Air</strong>
+          <span>Columbus, OH</span>
+        </div>
+        <span class="cstudy__tag">Home services</span>
+      </div>
+
+      <div class="cstudy__story">
+        <div class="cstudy__block">
+          <span class="cstudy__lbl">The challenge</span>
+          <p>Leads came in after hours and went cold by morning. Ryan was answering texts from the truck between jobs and still losing work to whoever called back first.</p>
+        </div>
+        <div class="cstudy__block">
+          <span class="cstudy__lbl">What Rain runs</span>
+          <p>Rain answers every inquiry in seconds, qualifies the job, sends a quote, and books it straight into the calendar. Day and night, no app to check.</p>
+        </div>
+      </div>
+
+      <div class="cstudy__results">
+        <span class="cstudy__results-lbl">The results · first 90 days</span>
+        <div class="cstudy__metrics">
+          <div class="cstudy__metric"><b>100%</b><span>after-hours leads answered</span><em>up from 62%</em></div>
+          <div class="cstudy__metric"><b>+9</b><span>new jobs booked a month</span></div>
+          <div class="cstudy__metric"><b>&lt;2 hrs</b><span>a week on follow-ups</span><em>down from 10</em></div>
+          <div class="cstudy__metric"><b>41 sec</b><span>average reply, day or night</span></div>
+        </div>
+      </div>
+
+      <blockquote class="cstudy__quote">
+        "I never touch my phone after six, and the calendar still fills up."
+        <cite>Ryan Keller, owner</cite>
+      </blockquote>
+    </div>
+
+    <p class="cstudy__note" data-reveal>This is what Rain runs for a business like yours. <a href="#contact">Get a setup like this →</a></p>
   </div>
   <div class="merge-water" data-merge-water aria-hidden="true"><canvas></canvas></div>
 </section>
