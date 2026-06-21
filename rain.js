@@ -1376,9 +1376,9 @@
 
     var SCENARIOS = {
       social: { user: "Post today's promo to Facebook & Instagram 📸", reply: "Done ✅ Posted to Facebook + Instagram. Caption and image ready.", view: "social" },
-      content: { user: "Write a blog on cold brew \u2014 publish Monday 7am \u2615", reply: "Done \u2705 Drafted, image ready, scheduled Mon 7:00.", view: "post" },
+      content: { user: "Write a blog on cold brew, publish Monday 7am \u2615", reply: "Done \u2705 Drafted, image ready, scheduled Mon 7:00.", view: "post" },
       restock: { user: "We're low for Friday - restock the café & kitchen.", reply: "📦 Ordered: coffee beans, oat milk & fresh produce, delivery Friday before 4pm.", view: "order" },
-      replies: { user: "Answer the chat widget on our clinic site.", reply: "💬 18 patient chats handled - 4 consults booked, 2 flagged for you.", view: "inbox" }
+      replies: { user: "Answer the chat widget on our website.", reply: "💬 18 customer chats handled - 4 tables booked, 2 flagged for you.", view: "inbox" }
     };
     var SCN_ORDER = ["social", "content", "restock", "replies"];
 
