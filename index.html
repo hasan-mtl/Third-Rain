@@ -1443,211 +1443,192 @@
   </div>
 </section>
 
-<!-- ============ PROOF (command console - alt design for Mike to compare) ============ -->
+<!-- ============ PROOF - futuristic agent terminal (Mike / Claude Design) ============ -->
 <style>
-  .proofcmd { padding: clamp(64px, 8vw, 106px) 0; }
-  .proofcmd__inner { max-width: min(900px, calc(100vw - 48px)); margin: 0 auto; }
-  .proofcmd__head { text-align: center; max-width: 720px; margin: 0 auto clamp(32px, 4vw, 48px); }
-  .proofcmd__head h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.07; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
+  .proof { padding-top: clamp(78px, 10vh, 124px); padding-bottom: var(--water-room); }
+  .proof__inner { position: relative; z-index: 5; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .proof__head { text-align: center; }
+  .proof__kicker { margin: 0; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.34em; text-transform: uppercase; color: var(--teal-300); }
+  .proof__title { margin: 18px 0 0; font-size: clamp(2.3rem, 5vw, 4rem); line-height: 1.04; letter-spacing: -0.02em; font-weight: 600; color: #fff; }
+  .proof__title .serif-grad { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 1.05em; }
 
-  /* the futuristic console */
-  .pcmd { position: relative; border-radius: 22px; padding: clamp(20px, 2.4vw, 30px); background: linear-gradient(168deg, rgba(13, 28, 48, 0.82), rgba(6, 13, 26, 0.9)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 44px 90px -44px rgba(0, 0, 0, 0.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); overflow: hidden; isolation: isolate; }
-  .pcmd__edge { position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(135deg, rgba(94, 234, 212, 0.6), rgba(59, 130, 246, 0.3) 42%, rgba(94, 234, 212, 0) 72%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-  .pcmd::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.75), transparent); }
-  .pcmd::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1; background: radial-gradient(120% 70% at 85% -8%, rgba(59, 130, 246, 0.16), transparent 56%); }
-  .pcmd__cnr { position: absolute; width: 14px; height: 14px; border: 1px solid rgba(94, 234, 212, 0.5); pointer-events: none; z-index: 2; }
-  .pcmd__cnr--tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
-  .pcmd__cnr--br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
-
-  .pcmd__bar { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--td-faint); }
-  .pcmd__bar .live { display: inline-flex; align-items: center; gap: 7px; color: var(--teal-300); }
-  .pcmd__bar .live i { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; animation: pcmdPulse 2.4s ease-out infinite; }
-  .pcmd__bar .mid { flex: 1 1 auto; text-align: center; color: rgba(255, 255, 255, 0.5); }
-  .pcmd__bar .ts { color: var(--td-faint); }
-
-  /* the owner's command */
-  .pcmd__cmd { position: relative; z-index: 1; }
-  .pcmd__who { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sky-300); margin-bottom: 10px; }
-  .pcmd__who b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; font-size: 9px; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); }
-  .pcmd__input { display: flex; align-items: center; gap: 13px; padding: 16px 18px; border-radius: 14px; background: rgba(94, 234, 212, 0.06); border: 1px solid rgba(94, 234, 212, 0.28); box-shadow: 0 0 0 1px rgba(94, 234, 212, 0.05), 0 18px 40px -24px rgba(45, 212, 191, 0.5); }
-  .pcmd__input .pr { flex: none; font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--teal-300); }
-  .pcmd__input .tx { flex: 1 1 auto; min-width: 0; font-family: var(--font-mono); font-size: clamp(13px, 1.5vw, 15px); line-height: 1.4; color: #eaf6fc; }
-  .pcmd__input .car { display: inline-block; width: 8px; height: 1.05em; vertical-align: -2px; margin-left: 2px; background: var(--teal-300); box-shadow: 0 0 8px var(--teal-300); animation: pcmdBlink 1.1s steps(1) infinite; }
-  .pcmd__input .send { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); box-shadow: 0 8px 18px -8px rgba(94, 234, 212, 0.8); }
-  .pcmd__input .send svg { width: 16px; height: 16px; }
-
-  /* the agent executing */
-  .pcmd__runlbl { position: relative; z-index: 1; display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-300); margin: 22px 0 14px; }
-  .pcmd__steps { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; }
-  .pcmd__step { position: relative; display: flex; align-items: flex-start; gap: 14px; padding-bottom: 15px; }
-  .pcmd__step:last-child { padding-bottom: 0; }
-  .pcmd__step::before { content: ""; position: absolute; left: 10px; top: 22px; bottom: -1px; width: 1px; background: linear-gradient(rgba(94, 234, 212, 0.45), rgba(94, 234, 212, 0.05)); }
-  .pcmd__step:last-child::before { display: none; }
-  .pcmd__node { flex: none; display: grid; place-items: center; width: 21px; height: 21px; border-radius: 50%; color: #04121f; background: linear-gradient(135deg, var(--teal-400), var(--blue-500)); box-shadow: 0 0 12px rgba(45, 212, 191, 0.55); position: relative; z-index: 1; }
-  .pcmd__node svg { width: 11px; height: 11px; }
-  .pcmd__step p { margin: 0; padding-top: 1px; font-size: 13.5px; line-height: 1.45; color: var(--td-body); }
-  .pcmd__step p b { color: #fff; font-weight: 600; }
-
-  .pcmd__result { position: relative; z-index: 1; display: flex; align-items: center; gap: 13px; margin-top: 20px; padding: 16px 18px; border-radius: 14px; background: linear-gradient(120deg, rgba(45, 212, 191, 0.12), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(94, 234, 212, 0.22); }
-  .pcmd__result .rk { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); }
-  .pcmd__result .rk svg { width: 16px; height: 16px; }
-  .pcmd__result b { font-size: 15px; font-weight: 700; color: #fff; }
-  .pcmd__result span { font-size: 12.5px; color: var(--td-faint); }
-  .pcmd__result b, .pcmd__result span { display: block; line-height: 1.35; }
-
-  /* the quote - clean, clearly a quote, not huge */
-  .pcmd__quote { display: flex; align-items: flex-start; gap: 15px; max-width: 760px; margin: clamp(26px, 3vw, 38px) auto 0; padding: 20px 24px; border-radius: 16px; background: rgba(13, 25, 46, 0.42); border: 1px solid rgba(125, 211, 252, 0.1); }
-  .pcmd__quote .av { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); }
-  .pcmd__quote .body { flex: 1 1 auto; min-width: 0; }
-  .pcmd__quote .q { margin: 0; font-size: 15px; line-height: 1.55; font-weight: 500; color: #e8f2fb; }
-  .pcmd__quote .q::before { content: "\201C"; color: var(--teal-300); font-weight: 700; margin-right: 1px; }
-  .pcmd__quote .q::after { content: "\201D"; color: var(--teal-300); font-weight: 700; margin-left: 1px; }
-  .pcmd__quote cite { display: block; margin-top: 9px; font-size: 12px; font-style: normal; font-weight: 600; color: var(--td-faint); }
-
-  @media (prefers-reduced-motion: reduce) { .pcmd__bar .live i, .pcmd__input .car { animation: none; } }
-  @keyframes pcmdPulse { 0% { box-shadow: 0 0 6px #34d399, 0 0 0 0 rgba(52, 211, 153, 0.5); } 70% { box-shadow: 0 0 6px #34d399, 0 0 0 7px rgba(52, 211, 153, 0); } 100% { box-shadow: 0 0 6px #34d399, 0 0 0 0 rgba(52, 211, 153, 0); } }
-  @keyframes pcmdBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+  .proofx { position: relative; max-width: 920px; margin: clamp(36px, 5vh, 60px) auto 0; border-radius: 22px; background: linear-gradient(180deg, rgba(14, 30, 58, 0.74), rgba(7, 15, 31, 0.86)); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 2px 10px rgba(0, 0, 0, 0.4), 0 44px 90px -46px rgba(0, 0, 0, 0.8), 0 0 130px -50px rgba(45, 212, 191, 0.5); }
+  .proofx::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(94, 234, 212, 0.55), rgba(56, 189, 248, 0.3) 38%, rgba(99, 102, 241, 0.18) 60%, transparent 78%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .proofx__corner { position: absolute; width: 15px; height: 15px; border: 1.5px solid rgba(94, 234, 212, 0.55); pointer-events: none; z-index: 2; }
+  .proofx__corner--tl { top: 11px; left: 11px; border-right: 0; border-bottom: 0; }
+  .proofx__corner--tr { top: 11px; right: 11px; border-left: 0; border-bottom: 0; }
+  .proofx__corner--bl { bottom: 11px; left: 11px; border-right: 0; border-top: 0; }
+  .proofx__corner--br { bottom: 11px; right: 11px; border-left: 0; border-top: 0; }
+  .proofx__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 26px; border-bottom: 1px solid rgba(125, 211, 252, 0.1); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .proofx__status { display: inline-flex; align-items: center; gap: 9px; color: var(--teal-300); }
+  .proofx__live { width: 7px; height: 7px; border-radius: 50%; background: var(--teal-400); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.5); animation: px-pulse 2.2s infinite; }
+  @keyframes px-pulse { 0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.5); } 70% { box-shadow: 0 0 0 8px rgba(45, 212, 191, 0); } 100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); } }
+  .proofx__agent { color: rgba(255, 255, 255, 0.42); }
+  .proofx__time { color: var(--td-faint); }
+  .proofx__body { padding: 26px clamp(20px, 3.4vw, 34px) 30px; }
+  .proofx__user { display: flex; align-items: center; gap: 11px; }
+  .proofx__avatar { width: 27px; height: 27px; border-radius: 8px; display: grid; place-items: center; font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: #052330; background: linear-gradient(135deg, #5eead4, #38bdf8); box-shadow: 0 4px 10px -4px rgba(56, 189, 248, 0.6); }
+  .proofx__who { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--td-faint); }
+  .proofx__cmd { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px 15px 15px 18px; border-radius: 14px; background: rgba(3, 10, 22, 0.6); border: 1px solid rgba(125, 211, 252, 0.14); box-shadow: inset 0 0 24px rgba(56, 189, 248, 0.05); font-family: var(--font-mono); font-size: clamp(13px, 1.55vw, 15.5px); line-height: 1.5; color: #e9f7ff; min-height: 56px; }
+  .proofx__prompt { color: var(--teal-300); font-weight: 600; }
+  .proofx__type { white-space: pre-wrap; }
+  .proofx__caret { display: inline-block; width: 8px; height: 1.05em; margin-left: 1px; vertical-align: -2px; background: var(--teal-300); box-shadow: 0 0 9px var(--teal-300); animation: px-blink 1.05s steps(1) infinite; }
+  @keyframes px-blink { 50% { opacity: 0; } }
+  .proofx__send { margin-left: auto; flex: none; width: 42px; height: 42px; border: 0; border-radius: 12px; display: grid; place-items: center; color: #052330; cursor: pointer; background: linear-gradient(135deg, #5eead4, #0ea5e9); box-shadow: 0 8px 18px -8px rgba(45, 212, 191, 0.7); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .proofx__send svg { width: 18px; height: 18px; }
+  .proofx__send:hover { transform: translateY(-1px); box-shadow: 0 12px 22px -8px rgba(45, 212, 191, 0.85); }
+  .proofx__work { opacity: 0; transition: opacity 0.45s ease; margin-top: 22px; }
+  .proofx.is-playing .proofx__work { opacity: 1; }
+  .proofx__working { display: flex; align-items: center; gap: 9px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-300); }
+  .proofx__spin { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(94, 234, 212, 0.28); border-top-color: var(--teal-300); animation: px-spin 0.8s linear infinite; }
+  @keyframes px-spin { to { transform: rotate(360deg); } }
+  .proofx__steps { list-style: none; margin: 0; padding: 0; position: relative; display: flex; flex-direction: column; gap: 17px; }
+  .proofx__steps::before { content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 1.5px; background: linear-gradient(rgba(94, 234, 212, 0.5), rgba(56, 189, 248, 0.12)); transform: scaleY(0); transform-origin: top; transition: transform 1.7s ease; }
+  .proofx.is-playing .proofx__steps::before { transform: scaleY(1); }
+  .proofx__step { display: flex; gap: 14px; align-items: flex-start; opacity: 0; transform: translateY(8px); transition: opacity 0.55s ease, transform 0.55s ease; font-size: 14.5px; color: var(--td-body); }
+  .proofx__step.is-on { opacity: 1; transform: none; }
+  .proofx__step b { color: #fff; font-weight: 600; }
+  .proofx__txt { padding-top: 1px; }
+  .proofx__check { flex: none; position: relative; z-index: 1; width: 23px; height: 23px; border-radius: 50%; display: grid; place-items: center; color: #052330; background: radial-gradient(circle at 50% 32%, #5eead4, #0ea5e9); box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.1), 0 4px 10px -4px rgba(14, 165, 233, 0.7); transform: scale(0.4); opacity: 0; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+  .proofx__step.is-on .proofx__check { transform: scale(1); opacity: 1; }
+  .proofx__check svg { width: 12px; height: 12px; }
+  .proofx__result { position: relative; overflow: hidden; display: flex; gap: 14px; align-items: flex-start; margin-top: 24px; padding: 18px 20px; border-radius: 15px; background: linear-gradient(135deg, rgba(45, 212, 191, 0.14), rgba(56, 189, 248, 0.06)); border: 1px solid rgba(94, 234, 212, 0.24); opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .proofx__result.is-on { opacity: 1; transform: none; }
+  .proofx__resicon { flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: #052330; background: linear-gradient(135deg, #5eead4, #2dd4bf); box-shadow: 0 6px 14px -6px rgba(45, 212, 191, 0.8); }
+  .proofx__resicon svg { width: 16px; height: 16px; }
+  .proofx__resbody { display: flex; flex-direction: column; gap: 3px; }
+  .proofx__resbody b { color: #fff; font-size: 15.5px; font-weight: 600; }
+  .proofx__resbody span { color: var(--td-faint); font-size: 13px; line-height: 1.5; }
+  .proofx__resshine { position: absolute; top: 0; left: -60%; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.16), transparent); transform: skewX(-18deg); }
+  .proofx__result.is-on .proofx__resshine { animation: px-shine 1.5s ease 0.25s 1; }
+  @keyframes px-shine { to { left: 120%; } }
+  @media (max-width: 560px) { .proofx__send { display: none; } .proofx__bar { padding: 14px 18px; font-size: 10px; letter-spacing: 0.12em; } }
+  /* isolated reveal (renamed from data-reveal so the site's reveal system cannot clash) */
+  [data-px-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; transition-delay: calc(var(--i, 0) * 0.08s); }
+  [data-px-reveal].is-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { [data-px-reveal] { opacity: 1; transform: none; } .proofx__live, .proofx__spin, .proofx__caret, .proofx__resshine { animation: none; } .proofx__steps::before { transition: none; } .proofx__step, .proofx__check, .proofx__work, .proofx__result { transition: none; } }
 </style>
-<section class="proofcmd dark-section noise" id="proofcmd" aria-labelledby="proofcmd-title">
-  <div class="proofcmd__inner">
-    <header class="proofcmd__head">
-      <p class="eyebrow eyebrow--dark" data-reveal>Proof</p>
-      <h2 id="proofcmd-title" data-reveal style="--i:1">You send one line. <span class="serif-grad">Rain runs the rest.</span></h2>
+<section class="proof dark-section noise" id="proof" aria-label="Proof">
+  <div class="proof__inner">
+    <header class="proof__head" data-px-reveal>
+      <p class="proof__kicker">Proof</p>
+      <h2 class="proof__title">You send one line.<br /><span class="serif-grad">Rain runs the rest.</span></h2>
     </header>
 
-    <div class="pcmd" data-reveal style="--i:2">
-      <span class="pcmd__edge" aria-hidden="true"></span>
-      <span class="pcmd__cnr pcmd__cnr--tl" aria-hidden="true"></span>
-      <span class="pcmd__cnr pcmd__cnr--br" aria-hidden="true"></span>
+    <div class="proofx" data-proofx data-px-reveal style="--i:1">
+      <span class="proofx__corner proofx__corner--tl" aria-hidden="true"></span>
+      <span class="proofx__corner proofx__corner--tr" aria-hidden="true"></span>
+      <span class="proofx__corner proofx__corner--bl" aria-hidden="true"></span>
+      <span class="proofx__corner proofx__corner--br" aria-hidden="true"></span>
 
-      <div class="pcmd__bar">
-        <span class="live"><i aria-hidden="true"></i>Session active</span>
-        <span class="mid">rain agent</span>
-        <span class="ts">9:42 PM</span>
+      <div class="proofx__bar">
+        <span class="proofx__status"><i class="proofx__live" aria-hidden="true"></i>Session active</span>
+        <span class="proofx__agent">Rain Agent</span>
+        <span class="proofx__time">9:42 PM</span>
       </div>
 
-      <div class="pcmd__cmd">
-        <span class="pcmd__who"><b aria-hidden="true">RK</b>Ryan · owner</span>
-        <div class="pcmd__input">
-          <span class="pr" aria-hidden="true">&gt;</span>
-          <span class="tx">Follow up with every lead who didn't book this week.<span class="car" aria-hidden="true"></span></span>
-          <span class="send" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+      <div class="proofx__body">
+        <div class="proofx__user">
+          <span class="proofx__avatar" aria-hidden="true">RK</span>
+          <span class="proofx__who">Ryan &middot; Owner</span>
         </div>
-      </div>
 
-      <span class="pcmd__runlbl">Rain · working</span>
-      <ul class="pcmd__steps">
-        <li class="pcmd__step" data-reveal style="--i:1"><span class="pcmd__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Pulled <b>14 leads</b> from this week's missed calls and form fills</p></li>
-        <li class="pcmd__step" data-reveal style="--i:2"><span class="pcmd__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Wrote a personal follow-up for each one</p></li>
-        <li class="pcmd__step" data-reveal style="--i:3"><span class="pcmd__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Sent by text, then followed up by email</p></li>
-        <li class="pcmd__step" data-reveal style="--i:4"><span class="pcmd__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Booked <b>3 jobs</b>, two more asked for a quote</p></li>
-      </ul>
+        <div class="proofx__cmd">
+          <span class="proofx__prompt" aria-hidden="true">&gt;</span>
+          <span class="proofx__type" data-proof-type></span><span class="proofx__caret" aria-hidden="true"></span>
+          <button class="proofx__send" type="button" aria-hidden="true" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
 
-      <div class="pcmd__result" data-reveal style="--i:5">
-        <span class="rk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
-        <span><b>3 jobs booked, 2 quotes out.</b><span>In the 20 minutes after one command. Ryan was at dinner.</span></span>
+        <div class="proofx__work">
+          <p class="proofx__working"><span class="proofx__spin" aria-hidden="true"></span>Rain &middot; working</p>
+          <ul class="proofx__steps">
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Pulled <b>14 leads</b> from this week&rsquo;s missed calls and form fills</span>
+            </li>
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Wrote a personal follow-up for each one</span>
+            </li>
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Sent by text, then followed up by email</span>
+            </li>
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Booked <b>3 jobs</b>, two more asked for a quote</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="proofx__result">
+          <span class="proofx__resicon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+          <div class="proofx__resbody">
+            <b>3 jobs booked, 2 quotes out.</b>
+            <span>In the 20 minutes after one command. Ryan was at dinner.</span>
+          </div>
+          <span class="proofx__resshine" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
-
-    <div class="pcmd__quote" data-reveal>
-      <span class="av" aria-hidden="true">RK</span>
-      <div class="body">
-        <p class="q">I send Rain one line and it handles the rest. It's like having an office manager who never sleeps.</p>
-        <cite>Ryan Keller · Keller Plumbing &amp; Air, Columbus OH</cite>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CASE STUDY ============ -->
-<style>
-  .cstudy { padding: clamp(58px, 7vw, 88px) 0 var(--water-room); }
-  .cstudy__inner { position: relative; z-index: 5; max-width: min(1060px, calc(100vw - 48px)); margin: 0 auto; }
-  .cstudy__head { text-align: center; max-width: 760px; margin: 0 auto clamp(34px, 4vw, 50px); }
-  .cstudy__head h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.07; letter-spacing: -0.03em; font-weight: 600; color: #fff; margin: 14px 0 0; text-wrap: balance; }
-
-  .cstudy__card { position: relative; padding: clamp(26px, 3.2vw, 42px); border-radius: 22px; background: linear-gradient(165deg, rgba(15, 31, 48, 0.72), rgba(7, 15, 27, 0.84)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 40px 84px -42px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(13px); backdrop-filter: blur(13px); overflow: hidden; isolation: isolate; }
-  .cstudy__glow { position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(135deg, rgba(94, 234, 212, 0.5), rgba(59, 130, 246, 0.22) 46%, rgba(94, 234, 212, 0) 74%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-  .cstudy__card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.55), transparent); }
-
-  .cstudy__top { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; padding-bottom: clamp(20px, 2.4vw, 26px); border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
-  .cstudy__avatar { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: #04121f; background: linear-gradient(135deg, var(--sky-300), var(--teal-300)); box-shadow: 0 10px 22px -8px rgba(94, 234, 212, 0.6); }
-  .cstudy__who { flex: 1 1 auto; min-width: 0; line-height: 1.32; }
-  .cstudy__who strong { display: block; font-size: 17px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
-  .cstudy__who span { font-size: 12.5px; color: var(--td-faint); }
-  .cstudy__tag { flex: none; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(125, 211, 252, 0.22); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--sky-300); white-space: nowrap; }
-
-  .cstudy__story { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 4vw, 56px); padding: clamp(22px, 2.6vw, 30px) 0; border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
-  @media (max-width: 720px) { .cstudy__story { grid-template-columns: 1fr; gap: 22px; } }
-  .cstudy__lbl { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-300); margin-bottom: 9px; }
-  .cstudy__block p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--td-body); }
-
-  .cstudy__results { position: relative; z-index: 1; padding: clamp(24px, 2.8vw, 32px) 0 0; }
-  .cstudy__results-lbl { display: block; text-align: center; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--td-faint); margin-bottom: 18px; }
-  .cstudy__metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(125, 211, 252, 0.12); background: rgba(125, 211, 252, 0.12); }
-  @media (max-width: 720px) { .cstudy__metrics { grid-template-columns: 1fr 1fr; } }
-  .cstudy__metric { display: flex; flex-direction: column; gap: 7px; padding: clamp(18px, 2vw, 24px) clamp(14px, 1.6vw, 20px); background: linear-gradient(180deg, rgba(13, 25, 46, 0.66), rgba(9, 17, 32, 0.72)); }
-  .cstudy__metric b { font-size: clamp(1.9rem, 3.2vw, 2.45rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; background: linear-gradient(120deg, var(--sky-300), var(--teal-300)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .cstudy__metric span { font-size: 12.5px; line-height: 1.4; color: var(--td-body); }
-  .cstudy__metric em { font-style: normal; font-size: 11px; color: var(--td-faint); margin-top: auto; padding-top: 2px; }
-
-  .cstudy__quote { position: relative; z-index: 1; margin: clamp(26px, 3vw, 34px) 0 0; padding-top: clamp(22px, 2.6vw, 28px); border-top: 1px solid rgba(255, 255, 255, 0.09); text-align: center; font-size: clamp(1.12rem, 1.9vw, 1.42rem); line-height: 1.5; font-weight: 500; color: #eef6fc; text-wrap: balance; }
-  .cstudy__quote cite { display: block; margin-top: 11px; font-size: 13px; font-style: normal; font-weight: 600; color: var(--td-faint); }
-
-  .cstudy__note { position: relative; z-index: 5; margin: clamp(26px, 3.5vw, 40px) auto 0; text-align: center; font-size: 13.5px; color: var(--td-faint); }
-  .cstudy__note a { color: var(--sky-300); text-decoration: none; font-weight: 600; white-space: nowrap; }
-  .cstudy__note a:hover { text-decoration: underline; }
-</style>
-<section class="cstudy dark-section noise" id="proof" aria-labelledby="cstudy-title">
-  <div class="cstudy__inner">
-    <header class="cstudy__head">
-      <p class="eyebrow eyebrow--dark" data-reveal>Case study</p>
-      <h2 id="cstudy-title" data-reveal style="--i:1">How Keller Plumbing got its <span class="serif-grad">nights back.</span></h2>
-    </header>
-
-    <div class="cstudy__card" data-reveal style="--i:2">
-      <span class="cstudy__glow" aria-hidden="true"></span>
-
-      <div class="cstudy__top">
-        <span class="cstudy__avatar" aria-hidden="true">KP</span>
-        <div class="cstudy__who">
-          <strong>Keller Plumbing &amp; Air</strong>
-          <span>Columbus, OH</span>
-        </div>
-        <span class="cstudy__tag">Home services</span>
-      </div>
-
-      <div class="cstudy__story">
-        <div class="cstudy__block">
-          <span class="cstudy__lbl">The challenge</span>
-          <p>Leads came in after hours and went cold by morning. Ryan was answering texts from the truck between jobs and still losing work to whoever called back first.</p>
-        </div>
-        <div class="cstudy__block">
-          <span class="cstudy__lbl">What Rain runs</span>
-          <p>Rain answers every inquiry in seconds, qualifies the job, sends a quote, and books it straight into the calendar. Day and night, no app to check.</p>
-        </div>
-      </div>
-
-      <div class="cstudy__results">
-        <span class="cstudy__results-lbl">The results · first 90 days</span>
-        <div class="cstudy__metrics">
-          <div class="cstudy__metric"><b>100%</b><span>after-hours leads answered</span><em>up from 62%</em></div>
-          <div class="cstudy__metric"><b>+9</b><span>new jobs booked a month</span></div>
-          <div class="cstudy__metric"><b>&lt;2 hrs</b><span>a week on follow-ups</span><em>down from 10</em></div>
-          <div class="cstudy__metric"><b>41 sec</b><span>average reply, day or night</span></div>
-        </div>
-      </div>
-
-      <blockquote class="cstudy__quote">
-        "I never touch my phone after six, and the calendar still fills up."
-        <cite>Ryan Keller, owner</cite>
-      </blockquote>
-    </div>
-
-    <p class="cstudy__note" data-reveal>This is what Rain runs for a business like yours. <a href="#contact">Get a setup like this →</a></p>
   </div>
   <div class="merge-water" data-merge-water aria-hidden="true"><canvas></canvas></div>
 </section>
+<script>
+/* PROOF reveal (isolated attr so the site's [data-reveal] system does not clash) */
+(function () {
+  var els = document.querySelectorAll("[data-px-reveal]");
+  if (!("IntersectionObserver" in window)) { els.forEach(function (el) { el.classList.add("is-in"); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+  }, { threshold: 0.2 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+/* PROOF terminal: type the command, then reveal the working steps and result in sequence, once, when scrolled into view. */
+(function () {
+  var panel = document.querySelector("[data-proofx]");
+  if (!panel) return;
+  var typeEl = panel.querySelector("[data-proof-type]");
+  var steps = panel.querySelectorAll(".proofx__step");
+  var result = panel.querySelector(".proofx__result");
+  var full = "Follow up with every lead who didn't book this week.";
+  var played = false;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function reveal() {
+    panel.classList.add("is-playing");
+    var base = 360, gap = 540;
+    for (var i = 0; i < steps.length; i++) {
+      (function (el, idx) { window.setTimeout(function () { el.classList.add("is-on"); }, base + idx * gap); })(steps[i], i);
+    }
+    window.setTimeout(function () { result.classList.add("is-on"); }, base + steps.length * gap + 240);
+  }
+  function play() {
+    if (played) return;
+    played = true;
+    if (reduce) {
+      typeEl.textContent = full;
+      for (var i = 0; i < steps.length; i++) steps[i].classList.add("is-on");
+      panel.classList.add("is-playing");
+      result.classList.add("is-on");
+      return;
+    }
+    var i = 0;
+    (function tick() {
+      typeEl.textContent = full.slice(0, i);
+      if (i < full.length) { i++; window.setTimeout(tick, 32 + Math.random() * 42); }
+      else { window.setTimeout(reveal, 420); }
+    })();
+  }
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { play(); io.disconnect(); } });
+    }, { threshold: 0.35 });
+    io.observe(panel);
+  } else { play(); }
+})();
+</script>
 
 <div class="seam seam--to-paper"></div>
 
