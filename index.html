@@ -857,7 +857,8 @@
   .process::before { display: none !important; }
 
   /* ===== alternate "Pick a problem": horizontal tabs + split stage (compare) ===== */
-  .c2-sec { padding: 72px 24px; }
+  .c2-sec { padding: 28px 24px 72px; }
+  .c2-sec .ed-head { padding-top: 8px; }
   .c2 { max-width: var(--maxw); margin: 0 auto; }
   @keyframes c2-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .c2__r { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -889,10 +890,10 @@
   .c2__id h3 { font-size: 24px; letter-spacing: -.02em; color: var(--t-strong); }
   .c2__id p { margin-top: 3px; font-size: 15px; color: var(--t-faint); }
   .c2__pain { flex-basis: 100%; margin-top: 0; padding: 16px 18px; border-radius: 12px; border: 1px solid rgba(253, 230, 138, .7); background: linear-gradient(135deg, #fffbeb, rgba(255, 251, 235, .4)); }
-  .c2__pain b { display: block; font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: #b45309; }
+  .c2__pain b { display: block; font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: #b45309; }
   .c2__pain p { margin-top: 7px; font-size: 17px; line-height: 1.5; font-weight: 500; color: #44403c; }
   .c2__fix { padding: 36px; display: flex; flex-direction: column; }
-  .c2__fix > b { display: block; font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: #047857; }
+  .c2__fix > b { display: block; font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: #047857; }
   .c2__fix ul { display: grid; gap: 14px; margin-top: 16px; padding: 0; list-style: none; }
   .c2__fix li { display: flex; gap: 11px; font-size: 16px; line-height: 1.5; color: #44403c; }
   .c2__outcome { margin-top: 24px; padding: 14px 18px; font-size: 15px; font-weight: 500; color: #fff; border-radius: 12px; background: linear-gradient(to right, var(--ink-900), var(--ink-800)); }
@@ -930,7 +931,7 @@
     .c2__tabs { grid-template-columns: repeat(3, 1fr); }
     .c2__panel { grid-template-columns: 1fr; }
     .c2__lead { border-right: none; border-bottom: 1px solid rgba(15, 23, 42, 0.06); }
-    .c2-sec { padding: 56px 20px; }
+    .c2-sec { padding: 22px 20px 56px; }
   }
   @media (max-width: 460px) { .c2__tabs { grid-template-columns: repeat(2, 1fr); } .c2__tab-tt { font-size: 13px; } }
 </style>
@@ -1582,47 +1583,61 @@
   }, { threshold: 0.2 });
   els.forEach(function (el) { io.observe(el); });
 })();
-/* PROOF terminal: type the command, then reveal the working steps and result in sequence, once, when scrolled into view. */
+/* PROOF terminal: types the command, reveals the steps + result, then LOOPS so it always reads live and working. Only animates while in view. */
 (function () {
   var panel = document.querySelector("[data-proofx]");
   if (!panel) return;
   var typeEl = panel.querySelector("[data-proof-type]");
-  var steps = panel.querySelectorAll(".proofx__step");
+  var steps = [].slice.call(panel.querySelectorAll(".proofx__step"));
   var result = panel.querySelector(".proofx__result");
   var full = "Follow up with every lead who didn't book this week.";
-  var played = false;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function reveal() {
-    panel.classList.add("is-playing");
-    var base = 360, gap = 540;
-    for (var i = 0; i < steps.length; i++) {
-      (function (el, idx) { window.setTimeout(function () { el.classList.add("is-on"); }, base + idx * gap); })(steps[i], i);
-    }
-    window.setTimeout(function () { result.classList.add("is-on"); }, base + steps.length * gap + 240);
+  var timers = [], inView = false, running = false;
+  function t(fn, ms) { var id = window.setTimeout(fn, ms); timers.push(id); return id; }
+  function clearTimers() { for (var k = 0; k < timers.length; k++) window.clearTimeout(timers[k]); timers = []; }
+  function clearState() {
+    panel.classList.remove("is-playing");
+    steps.forEach(function (s) { s.classList.remove("is-on"); });
+    result.classList.remove("is-on");
+    typeEl.textContent = "";
   }
-  function play() {
-    if (played) return;
-    played = true;
-    if (reduce) {
-      typeEl.textContent = full;
-      for (var i = 0; i < steps.length; i++) steps[i].classList.add("is-on");
-      panel.classList.add("is-playing");
-      result.classList.add("is-on");
-      return;
-    }
+  function runCycle() {
+    typeEl.textContent = "";
     var i = 0;
     (function tick() {
       typeEl.textContent = full.slice(0, i);
-      if (i < full.length) { i++; window.setTimeout(tick, 32 + Math.random() * 42); }
-      else { window.setTimeout(reveal, 420); }
+      if (i < full.length) { i++; t(tick, 32 + Math.random() * 42); return; }
+      t(function () {
+        panel.classList.add("is-playing");
+        var base = 360, gap = 540, doneAt = base + steps.length * gap + 240;
+        steps.forEach(function (el, idx) { t(function () { el.classList.add("is-on"); }, base + idx * gap); });
+        t(function () { result.classList.add("is-on"); }, doneAt);
+        t(function () {                 // hold on the finished state, fade out, then loop
+          panel.classList.remove("is-playing");
+          steps.forEach(function (s) { s.classList.remove("is-on"); });
+          result.classList.remove("is-on");
+          t(function () { if (inView) runCycle(); else running = false; }, 700);
+        }, doneAt + 3200);
+      }, 420);
     })();
   }
+  function start() { if (running) return; running = true; clearTimers(); clearState(); runCycle(); }
+  if (reduce) {                          // reduced motion: static finished state, no loop
+    typeEl.textContent = full;
+    panel.classList.add("is-playing");
+    steps.forEach(function (s) { s.classList.add("is-on"); });
+    result.classList.add("is-on");
+    return;
+  }
   if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { play(); io.disconnect(); } });
-    }, { threshold: 0.35 });
-    io.observe(panel);
-  } else { play(); }
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        inView = e.isIntersecting;
+        if (inView) start();
+        else { running = false; clearTimers(); }
+      });
+    }, { threshold: 0.3 }).observe(panel);
+  } else { inView = true; start(); }
 })();
 </script>
 
