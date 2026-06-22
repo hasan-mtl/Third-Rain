@@ -276,7 +276,7 @@
 /* keep the static fallback logo in sync with the live particle logo position
    (the engine hides this once the canvas is live) */
 .hero--storm .water-scene__mark {
-  top: 41%;
+  top: 27%;
   left: 70%;
   transform: translate(-50%, -50%);
   font-size: clamp(5rem, 13.5vw, 13.5rem);

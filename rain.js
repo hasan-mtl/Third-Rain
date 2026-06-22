@@ -30,7 +30,7 @@
     cycleMs: 3600,     // story pace between phrases (ms)
     noOcean: false,    // rain-logo-only mode: drop the WebGL ocean, rain falls into the dark
     markX: 0.7,        // horizontal center of the particle wordmark (0..1) - right-middle, matches the storm fallback
-    markY: 0.38,       // vertical center of the wordmark (0..1) - nudged a bit higher (Mike)
+    markY: 0.26,       // vertical center of the wordmark (0..1) - up near the headline level (Mike)
     markScale: 1.35,   // size multiplier for the wordmark (~50px bigger, Mike)
     rainMul: 1,        // rain density multiplier
     splashMul: 1,      // splash/ripple size multiplier
