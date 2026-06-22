@@ -31,7 +31,7 @@
     noOcean: false,    // rain-logo-only mode: drop the WebGL ocean, rain falls into the dark
     markX: 0.5,        // horizontal center of the particle wordmark (0..1 of width)
     markY: 0,          // vertical center of the wordmark (0..1); 0 = engine default (upper)
-    markScale: 1,      // size multiplier for the wordmark
+    markScale: 1.1,    // size multiplier for the wordmark (a touch bolder)
     rainMul: 1,        // rain density multiplier
     splashMul: 1,      // splash/ripple size multiplier
     waterY: 0,         // splash line as a fraction of height; 0 = auto

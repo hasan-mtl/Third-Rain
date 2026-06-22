@@ -175,6 +175,10 @@
   line-height: 1.6;
   color: var(--td-body);
 }
+/* one line on desktop (Mike); wraps below 1000px where it would not fit */
+@media (min-width: 1000px) {
+  .statement__sub { max-width: none; white-space: nowrap; }
+}
 /* a faint horizon band of light under the statement */
 .statement::after {
   content: "";
