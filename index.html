@@ -171,7 +171,7 @@
   .merge-water--top { top: 0; bottom: auto; }
   .contact__inner { padding-top: var(--water-room); position: relative; z-index: 5; }
   /* Demo opens with the flipped water merging down from the paper section above. */
-  #demo { padding-top: var(--water-room); padding-bottom: 56px; }
+  #demo { --water-room: 100px; --water-band: 96px; padding-top: var(--water-room); padding-bottom: 56px; }
   #demo .ed-head,
   #demo .demo__inner { position: relative; z-index: 5; }
   .merge-water canvas { display: block; width: 100%; height: 100%; }
@@ -1645,8 +1645,8 @@
   <header class="ed-head" data-reveal data-comment-anchor="f05478bf85-header">
     <p class="eyebrow">How we work</p>
     <div class="ed-head__body">
-      <h2 id="process-title">We build it, <span class="serif-grad serif-grad--light">then we run it.</span></h2>
-      <p class="lede">Three simple steps. You own everything we build.</p>
+      <h2 id="process-title">We build your agent, <span class="serif-grad serif-grad--light">then run it for you.</span></h2>
+      <p class="lede">Three simple steps, and the busywork is off your plate for good.</p>
     </div>
   </header>
 
@@ -1664,7 +1664,7 @@
           <span class="pwork-card__no" aria-hidden="true">01</span>
         </div>
         <p class="pwork-card__label">Discover</p>
-        <h3 class="pwork-card__title">We find the work that's taking up all your time.</h3>
+        <h3 class="pwork-card__title">We find what's taking up all your time.</h3>
         <p class="pwork-card__body">We spend a few days inside your business and list the repetitive jobs costing you the most - the reports you rebuild, the replies you retype, the numbers you move by hand.</p>
         <hr class="pwork-card__rule" />
         <ul class="pwork-card__list">
@@ -1680,7 +1680,7 @@
           <span class="pwork-card__no" aria-hidden="true">02</span>
         </div>
         <p class="pwork-card__label">Build &amp; connect</p>
-        <h3 class="pwork-card__title">We build it and plug it into your tools.</h3>
+        <h3 class="pwork-card__title">We build your agent and plug in your tools.</h3>
         <p class="pwork-card__body" data-comment-anchor="8b518bc858-p">We build the system that handles those jobs and connect it to the tools you already run - your inbox, your spreadsheets, your CRM. Your team logs into nothing new.</p>
         <hr class="pwork-card__rule" />
         <ul class="pwork-card__list">
