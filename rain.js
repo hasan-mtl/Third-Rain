@@ -29,8 +29,8 @@
     couple: true,      // ripple across the basin on each phrase swap
     cycleMs: 3600,     // story pace between phrases (ms)
     noOcean: false,    // rain-logo-only mode: drop the WebGL ocean, rain falls into the dark
-    markX: 0.5,        // horizontal center of the particle wordmark (0..1 of width)
-    markY: 0,          // vertical center of the wordmark (0..1); 0 = engine default (upper)
+    markX: 0.7,        // horizontal center of the particle wordmark (0..1) - right-middle, matches the storm fallback
+    markY: 0.42,       // vertical center of the wordmark (0..1) - centered, nudged up (Mike)
     markScale: 1.1,    // size multiplier for the wordmark (a touch bolder)
     rainMul: 1,        // rain density multiplier
     splashMul: 1,      // splash/ripple size multiplier
