@@ -136,7 +136,7 @@
   .btn--xl { height: 58px; padding: 0 34px; font-size: 16.5px; border-radius: 15px; }
 
   /* ===== Rain Agent platform: copy left, the connected-tools circuit + run log right (Mike's reference) ===== */
-  #platform .pf2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); align-items: center; gap: clamp(30px, 4.6vw, 70px); max-width: 1140px; margin: 0 auto; }
+  #platform .pf2, #platform-2 .pf2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); align-items: center; gap: clamp(30px, 4.6vw, 70px); max-width: 1140px; margin: 0 auto; }
   .pf2__copy { max-width: 520px; }
   .pf2__copy .eyebrow { margin-bottom: 18px; }
   .pf2__copy h2 { font-size: clamp(2rem, 3.3vw, 2.85rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 18px; max-width: 16ch; text-wrap: balance; }
@@ -150,13 +150,15 @@
   .pf2__cta { font-size: 16.5px; padding: 16px 32px; gap: 11px; border-radius: 16px; }
   .pf2__cta .btn__icon { width: 18px; height: 18px; }
   .pf2__visual { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .pf2__visual--terminal { display: block; }
+  .pf2__visual--terminal .proofx { max-width: 100%; margin: 0; }
   .pf2__visual .circuit { width: 100%; max-width: 470px; }
   /* the Rain logo sits in the core where the mockup had a watch */
   .ra-core-logo { width: 86px; height: auto; position: relative; z-index: 1; }
   /* the live run log, dressed as a macOS window with traffic-light dots (see .pf2__visual .runlog) */
   #platform .runlog__title { text-transform: uppercase; letter-spacing: 0.12em; }
   @media (max-width: 960px) {
-    #platform .pf2 { grid-template-columns: 1fr; gap: 36px; max-width: 540px; padding: 0 22px; }
+    #platform .pf2, #platform-2 .pf2 { grid-template-columns: 1fr; gap: 36px; max-width: 540px; padding: 0 22px; }
     .pf2__copy { max-width: none; }
   }
   .merge-water {
@@ -1457,75 +1459,65 @@
       </div>
     </div>
 
-    <div class="pf2__visual">
-      <div class="circuit">
-        <span class="circuit__halo" aria-hidden="true"></span>
-        <span class="circuit__ring" aria-hidden="true"></span>
-        <svg class="circuit__svg" viewBox="0 0 520 440" fill="none" aria-hidden="true">
-          <path class="trace" d="M260 220 H360 V70.4 H423.8"/>
-          <path class="trace" d="M260 220 H160 V70.4 H96.2"/>
-          <path class="trace" d="M260 220 H457.6"/>
-          <path class="trace" d="M260 220 H62.4"/>
-          <path class="trace" d="M260 220 H360 V369.6 H423.8"/>
-          <path class="trace" d="M260 220 H160 V369.6 H96.2"/>
-          <g class="circuit__pulses">
-            <circle class="pulse" r="3.2"><animateMotion dur="3s" repeatCount="indefinite" path="M260 220 H360 V70.4 H423.8"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M260 220 H160 V70.4 H96.2"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="2.4s" begin="1.1s" repeatCount="indefinite" path="M260 220 H457.6"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="2.6s" begin="0.3s" repeatCount="indefinite" path="M260 220 H62.4"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite" path="M260 220 H360 V369.6 H423.8"/></circle>
-            <circle class="pulse" r="3.2"><animateMotion dur="3s" begin="0.9s" repeatCount="indefinite" path="M260 220 H160 V369.6 H96.2"/></circle>
-          </g>
-        </svg>
+    <div class="pf2__visual pf2__visual--terminal">
+<div class="proofx" data-proofx data-px-reveal style="--i:1">
+      <span class="proofx__corner proofx__corner--tl" aria-hidden="true"></span>
+      <span class="proofx__corner proofx__corner--tr" aria-hidden="true"></span>
+      <span class="proofx__corner proofx__corner--bl" aria-hidden="true"></span>
+      <span class="proofx__corner proofx__corner--br" aria-hidden="true"></span>
 
-        <div class="circuit__core" aria-hidden="true">
-          <span class="ra-glow" aria-hidden="true"></span>
-          <span class="ra-ripple" aria-hidden="true"></span>
-          <span class="ra-ripple ra-ripple--2" aria-hidden="true"></span>
-          <span class="ra-ring--track" aria-hidden="true"></span>
-          <span class="ra-ring--inner" aria-hidden="true"></span>
-          <svg class="ra-seal" viewBox="0 0 168 168" aria-hidden="true">
-            <defs><path id="raSealPath2" d="M 84,18 a 66,66 0 1 1 -0.01 0"/></defs>
-            <text><textPath href="#raSealPath2" startOffset="0" textLength="415">RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON · RAIN AGENT · ALWAYS ON · </textPath></text>
-          </svg>
-          <span class="ra-core-disk">
-            <img class="ra-core-logo" src="assets/rain-logo.png?v=141" alt="" width="600" height="237" decoding="async" />
-          </span>
-        </div>
-
-        <span class="circuit__node" style="--x:18.5%;--y:16%" aria-hidden="true">
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></i>Calls
-        </span>
-        <span class="circuit__node" style="--x:81.5%;--y:16%" aria-hidden="true">
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 18.5l-5.8 3 1.1-6.45-4.7-4.6 6.5-.95z"/></svg></i>Reviews
-        </span>
-        <span class="circuit__node" style="--x:12%;--y:50%" aria-hidden="true">
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8 20.5h8M12 16.5v4"/></svg></i>Website
-        </span>
-        <span class="circuit__node" style="--x:88%;--y:50%" aria-hidden="true">
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9h17M8 3v3M16 3v3"/></svg></i>Schedule
-        </span>
-        <span class="circuit__node" style="--x:18.5%;--y:84%" aria-hidden="true">
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s-6.5-5.8-6.5-10.6a6.5 6.5 0 0 1 13 0c0 4.8-6.5 10.6-6.5 10.6Z"/><circle cx="12" cy="11" r="2.3"/></svg></i>Google
-        </span>
-        <span class="circuit__node" style="--x:81.5%;--y:84%" aria-hidden="true">
-          <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3h13v18l-2.2-1.4-2.2 1.4-2.1-1.4-2.1 1.4-2.2-1.4L5.5 21z"/><path d="M9 8.5h6M9 12h6"/></svg></i>Invoices
-        </span>
+      <div class="proofx__bar">
+        <span class="proofx__status"><i class="proofx__live" aria-hidden="true"></i>Session active</span>
+        <span class="proofx__agent">Rain Agent</span>
+        <span class="proofx__time">9:42 PM</span>
       </div>
 
-      <div class="runlog pf2__runlog">
-        <div class="runlog__bar">
-          <span class="runlog__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="runlog__title">live run log</span>
-          <span class="runlog__day">today</span>
+      <div class="proofx__body">
+        <div class="proofx__user">
+          <span class="proofx__avatar" aria-hidden="true">RK</span>
+          <span class="proofx__who">Ryan &middot; Owner</span>
         </div>
-        <ul class="runlog__lines" data-runlog aria-live="off">
-          <li><span>10:05</span>Review request sent to the Garcias</li>
-          <li><span>06:12</span>After-hours lead &rarr; water heater quote drafted</li>
-          <li><span>07:58</span>Morning report sent: jobs, revenue, leads</li>
-          <li><span>08:40</span>Estimate follow-up: Hendersons reminded (day 3)</li>
-        </ul>
+
+        <div class="proofx__cmd">
+          <span class="proofx__prompt" aria-hidden="true">&gt;</span>
+          <span class="proofx__type" data-proof-type></span><span class="proofx__caret" aria-hidden="true"></span>
+          <button class="proofx__send" type="button" aria-hidden="true" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+
+        <div class="proofx__work">
+          <p class="proofx__working"><span class="proofx__spin" aria-hidden="true"></span>Rain &middot; working</p>
+          <ul class="proofx__steps">
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Pulled <b>14 leads</b> from this week&rsquo;s missed calls and form fills</span>
+            </li>
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Wrote a personal follow-up for each one</span>
+            </li>
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Sent by text, then followed up by email</span>
+            </li>
+            <li class="proofx__step">
+              <span class="proofx__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+              <span class="proofx__txt">Booked <b>3 jobs</b>, two more asked for a quote</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="proofx__result">
+          <span class="proofx__resicon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+          <div class="proofx__resbody">
+            <b>3 jobs booked, 2 quotes out.</b>
+            <span>In the 20 minutes after one command. Ryan was at dinner.</span>
+          </div>
+          <span class="proofx__resshine" aria-hidden="true"></span>
+        </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1673,61 +1665,63 @@
   }, { threshold: 0.2 });
   els.forEach(function (el) { io.observe(el); });
 })();
-/* PROOF terminal: types the command, reveals the steps + result, then LOOPS so it always reads live and working. Only animates while in view. */
+/* PROOF terminal: types the command, reveals the steps + result, then LOOPS so it always reads live. Drives EVERY [data-proofx] panel (proof section + merged platform), each on its own loop, only while in view. */
 (function () {
-  var panel = document.querySelector("[data-proofx]");
-  if (!panel) return;
-  var typeEl = panel.querySelector("[data-proof-type]");
-  var steps = [].slice.call(panel.querySelectorAll(".proofx__step"));
-  var result = panel.querySelector(".proofx__result");
-  var full = "Follow up with every lead who didn't book this week.";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var timers = [], inView = false, running = false;
-  function t(fn, ms) { var id = window.setTimeout(fn, ms); timers.push(id); return id; }
-  function clearTimers() { for (var k = 0; k < timers.length; k++) window.clearTimeout(timers[k]); timers = []; }
-  function clearState() {
-    panel.classList.remove("is-playing");
-    steps.forEach(function (s) { s.classList.remove("is-on"); });
-    result.classList.remove("is-on");
-    typeEl.textContent = "";
+  function setup(panel) {
+    var typeEl = panel.querySelector("[data-proof-type]");
+    var steps = [].slice.call(panel.querySelectorAll(".proofx__step"));
+    var result = panel.querySelector(".proofx__result");
+    if (!typeEl || !result) return;
+    var full = "Follow up with every lead who didn't book this week.";
+    var timers = [], inView = false, running = false;
+    function t(fn, ms) { var id = window.setTimeout(fn, ms); timers.push(id); return id; }
+    function clearTimers() { for (var k = 0; k < timers.length; k++) window.clearTimeout(timers[k]); timers = []; }
+    function clearState() {
+      panel.classList.remove("is-playing");
+      steps.forEach(function (sx) { sx.classList.remove("is-on"); });
+      result.classList.remove("is-on");
+      typeEl.textContent = "";
+    }
+    function runCycle() {
+      typeEl.textContent = "";
+      var i = 0;
+      (function tick() {
+        typeEl.textContent = full.slice(0, i);
+        if (i < full.length) { i++; t(tick, 32 + Math.random() * 42); return; }
+        t(function () {
+          panel.classList.add("is-playing");
+          var base = 360, gap = 540, doneAt = base + steps.length * gap + 240;
+          steps.forEach(function (el, idx) { t(function () { el.classList.add("is-on"); }, base + idx * gap); });
+          t(function () { result.classList.add("is-on"); }, doneAt);
+          t(function () {
+            panel.classList.remove("is-playing");
+            steps.forEach(function (sx) { sx.classList.remove("is-on"); });
+            result.classList.remove("is-on");
+            t(function () { if (inView) runCycle(); else running = false; }, 700);
+          }, doneAt + 3200);
+        }, 420);
+      })();
+    }
+    function start() { if (running) return; running = true; clearTimers(); clearState(); runCycle(); }
+    if (reduce) {
+      typeEl.textContent = full;
+      panel.classList.add("is-playing");
+      steps.forEach(function (sx) { sx.classList.add("is-on"); });
+      result.classList.add("is-on");
+      return;
+    }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          inView = e.isIntersecting;
+          if (inView) start();
+          else { running = false; clearTimers(); }
+        });
+      }, { threshold: 0.3 }).observe(panel);
+    } else { inView = true; start(); }
   }
-  function runCycle() {
-    typeEl.textContent = "";
-    var i = 0;
-    (function tick() {
-      typeEl.textContent = full.slice(0, i);
-      if (i < full.length) { i++; t(tick, 32 + Math.random() * 42); return; }
-      t(function () {
-        panel.classList.add("is-playing");
-        var base = 360, gap = 540, doneAt = base + steps.length * gap + 240;
-        steps.forEach(function (el, idx) { t(function () { el.classList.add("is-on"); }, base + idx * gap); });
-        t(function () { result.classList.add("is-on"); }, doneAt);
-        t(function () {                 // hold on the finished state, fade out, then loop
-          panel.classList.remove("is-playing");
-          steps.forEach(function (s) { s.classList.remove("is-on"); });
-          result.classList.remove("is-on");
-          t(function () { if (inView) runCycle(); else running = false; }, 700);
-        }, doneAt + 3200);
-      }, 420);
-    })();
-  }
-  function start() { if (running) return; running = true; clearTimers(); clearState(); runCycle(); }
-  if (reduce) {                          // reduced motion: static finished state, no loop
-    typeEl.textContent = full;
-    panel.classList.add("is-playing");
-    steps.forEach(function (s) { s.classList.add("is-on"); });
-    result.classList.add("is-on");
-    return;
-  }
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        inView = e.isIntersecting;
-        if (inView) start();
-        else { running = false; clearTimers(); }
-      });
-    }, { threshold: 0.3 }).observe(panel);
-  } else { inView = true; start(); }
+  [].slice.call(document.querySelectorAll("[data-proofx]")).forEach(setup);
 })();
 </script>
 
