@@ -10,3 +10,4 @@ pnpm-debug.log*
 
 # original heavy footage (compressed copy lives in assets/)
 Rain CEO BG.mp4
+.env*

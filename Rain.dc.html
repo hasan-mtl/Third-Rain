@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#02050a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:auto}
+body{margin:0;background:#02050a;color:#e8f1ff;font-family:'Geist',system-ui,sans-serif;--accent:#56b9ff;--accent-soft:rgba(86,185,255,.13);--accent-glow:rgba(86,185,255,.3);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+*,*::before,*::after{box-sizing:border-box}
+a{color:#bfd9ff;text-decoration:none;transition:color .25s ease}
+a:hover{color:var(--accent)}
+::selection{background:rgba(86,185,255,.32);color:#fff}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:#03060b}
+::-webkit-scrollbar-thumb{background:#13223a;border-radius:8px;border:2px solid #03060b}
+::-webkit-scrollbar-thumb:hover{background:#1d3253}
+body::after{content:'';position:fixed;inset:0;z-index:44;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes heroRise{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:translateY(0)}}
+@keyframes letterDrop{0%{transform:translateY(-92vh) scaleY(1.7);opacity:0}8%{opacity:1}58%{transform:translateY(0) scaleY(1)}72%{transform:translateY(-1.8%) scaleY(.985)}86%{transform:translateY(0) scaleY(1)}100%{transform:translateY(0)}}
+@keyframes waveA{from{background-position-x:0}to{background-position-x:900px}}
+@keyframes waveB{from{background-position-x:0}to{background-position-x:-700px}}
+@keyframes waveC{from{background-position-x:0}to{background-position-x:520px}}
+@keyframes bobA{from{transform:translateY(0)}to{transform:translateY(10px)}}
+@keyframes bobB{from{transform:translateY(6px)}to{transform:translateY(-6px)}}
+@keyframes bobC{from{transform:translateY(-5px)}to{transform:translateY(7px)}}
+@keyframes sheenDrift{0%,100%{transform:translateX(-18%);opacity:.5}50%{transform:translateX(18%);opacity:1}}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes scanMove{from{top:-30%}to{top:120%}}
+@keyframes blinkCur{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes flowDot{0%{left:-2%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:101%;opacity:0}}
+@keyframes caseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes logoScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes stepPulse{0%{opacity:.5;text-shadow:none}5%,28%{opacity:1;text-shadow:0 0 22px var(--accent-glow)}36%,100%{opacity:.5;text-shadow:none}}
+@keyframes stepBar{0%{width:0%;opacity:.9}30%{width:100%;opacity:.9}34%{width:100%;opacity:0}35%,100%{width:0%;opacity:0}}
+@keyframes chargePulse{0%,100%{box-shadow:0 8px 34px var(--accent-glow)}50%{box-shadow:0 10px 58px rgba(86,185,255,.5),0 0 28px var(--accent-glow)}}
+@keyframes dripSlide{0%{top:-3%;opacity:0}10%{opacity:.75}85%{opacity:.75}100%{top:101%;opacity:0}}
+@keyframes poolRing{0%{transform:scale(.1);opacity:.55}100%{transform:scale(1);opacity:0}}
+@keyframes dripFall{0%{transform:translateY(0) scale(.5);opacity:0}14%{opacity:1;transform:translateY(.06em) scale(1)}72%{transform:translateY(.5em) scale(1);opacity:1}80%,100%{transform:translateY(.54em) scale(.35);opacity:0}}
+@keyframes dripRipple{0%,74%{transform:scale(.12);opacity:0}80%{opacity:.65}100%{transform:scale(1);opacity:0}}
+input::placeholder{color:#647fa5;font-weight:300}
+@keyframes glintFloat{0%,100%{opacity:.25;transform:translateX(0)}50%{opacity:.7;transform:translateX(18px)}}
+@keyframes fogDrift{from{transform:translate3d(-5%,0,0)}to{transform:translate3d(5%,-3%,0)}}
+@keyframes cueDrop{0%{transform:translateY(-8px);opacity:0}35%{opacity:1}100%{transform:translateY(12px);opacity:0}}
+@keyframes clickRipple{0%{transform:translate(-50%,-50%) scale(.12);opacity:.75}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@keyframes glowPulse{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes svcKen{from{transform:scale(1) translateY(0)}to{transform:scale(1.09) translateY(-1.5%)}}
+@keyframes svcSheen{0%{transform:translateX(-130%) skewX(-18deg)}55%,100%{transform:translateX(230%) skewX(-18deg)}}
+@keyframes holoLines{from{background-position:0 0}to{background-position:0 10px}}
+@keyframes holoSweep{0%{transform:translateY(-140%)}60%,100%{transform:translateY(640%)}}
+@keyframes holoFlick{0%,86%,90%,100%{opacity:1}87%{opacity:.78}88%{opacity:.96}89%{opacity:.85}95%{opacity:.93}96%{opacity:1}}
+@keyframes holoDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes railDrop{0%{top:2%;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:96%;opacity:0}}
+@keyframes trackFill{0%{width:0}86%,100%{width:100%}}
+@keyframes nodeRip1{0%{opacity:.85;transform:scale(.25)}13%{opacity:0;transform:scale(2.6)}14%,100%{opacity:0;transform:scale(.25)}}
+@keyframes nodeRip2{0%,28%{opacity:0;transform:scale(.25)}29%{opacity:.85}42%{opacity:0;transform:scale(2.6)}43%,100%{opacity:0;transform:scale(.25)}}
+@keyframes nodeRip3{0%,56%{opacity:0;transform:scale(.25)}57%{opacity:.85}70%{opacity:0;transform:scale(2.6)}71%,100%{opacity:0;transform:scale(.25)}}
+@keyframes microRain{0%,58%{opacity:0;transform:translateY(0)}63%{opacity:.9}76%{opacity:0;transform:translateY(15px)}77%,100%{opacity:0;transform:translateY(0)}}
+@keyframes labelWake{0%,57%{color:#7c9bc4;text-shadow:none}62%,94%{color:#eef5ff;text-shadow:0 0 18px var(--accent-glow)}100%{color:#7c9bc4}}
+@keyframes trackHead{0%{left:0;opacity:0}3%{opacity:1}83%{opacity:1}86%,100%{left:100%;opacity:0}}
+@keyframes nodeL1{0%{background:#0a1526;box-shadow:none}3%,96%{background:#cfe8ff;box-shadow:0 0 13px var(--accent)}100%{background:#0a1526;box-shadow:none}}
+@keyframes nodeL2{0%,28%{background:#0a1526;box-shadow:none}32%,96%{background:#cfe8ff;box-shadow:0 0 13px var(--accent)}100%{background:#0a1526;box-shadow:none}}
+@keyframes nodeL3{0%,56%{background:#0a1526;box-shadow:none}60%,96%{background:#cfe8ff;box-shadow:0 0 13px var(--accent)}100%{background:#0a1526;box-shadow:none}}
+@keyframes waveSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001s !important;animation-iteration-count:1 !important}}
+html{-webkit-tap-highlight-color:transparent}
+.fc-bar{position:relative;height:100%;border-radius:3px;overflow:hidden;background:linear-gradient(90deg, rgba(46,96,180,.45), var(--accent) 78%, #d9edff);box-shadow:0 0 14px var(--accent-glow)}
+.fc-bar::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg, transparent 32%, rgba(255,255,255,.32) 50%, transparent 68%);transform:translateX(-110%);animation:barSheen 4.2s ease-in-out var(--sheen-delay,0s) infinite}
+@keyframes barSheen{0%{transform:translateX(-110%)}60%,100%{transform:translateX(110%)}}
+@media (max-width: 740px){
+  .nav-links{gap:0 !important}
+  .nav-links a:not(.nav-cta){display:none !important}
+  .nav-cta{padding:10px 18px !important;font-size:10px !important;letter-spacing:.14em !important}
+  .ft-tag{white-space:normal !important;padding:0 14px;text-wrap:balance}
+  .step-label{font-size:9px !important;letter-spacing:.1em !important}
+  .fc-pct{flex:none}
+  .svc-card{height:clamp(360px,54vh,480px) !important}
+  input,textarea{font-size:16px !important}
+  .cta-storm{order:1}
+  .inquiry-head{flex-direction:column !important;align-items:flex-start !important;gap:12px !important;padding:20px 18px 16px !important}
+  .inquiry-title{font-size:20px !important;letter-spacing:.1em !important;line-height:1.2 !important;white-space:nowrap !important}
+  .inquiry-priority{font-size:11px !important;letter-spacing:.16em !important;white-space:nowrap !important}
+  .cta-start{order:2}
+  .pl-label{font-size:7.5px !important;letter-spacing:.08em !important}
+  .ft-bottom{flex-direction:column;justify-content:center;text-align:center;gap:8px;padding:22px 14px 26px !important}
+}
+.forecast-phases{display:flex;flex-direction:column}
+.fc-stage{display:grid;grid-template-columns:minmax(112px,148px) minmax(0,1fr);gap:clamp(18px,2.5vw,32px);padding:clamp(22px,2.8vw,32px) clamp(20px,2.6vw,32px);border-top:1px dashed rgba(120,170,255,.12);align-items:start}
+.fc-stage:first-of-type{border-top:none}
+.fc-week{margin:0;font-family:'Geist Mono',monospace;font-size:clamp(13px,1.35vw,15px);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);line-height:1.35;padding:6px 0 6px 16px;border-left:3px solid var(--accent);text-shadow:0 0 18px rgba(86,185,255,.25)}
+.fc-stage-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:0}
+.fc-name{margin:0;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(1.85rem,2.5vw,2.25rem);line-height:1.08;letter-spacing:-.01em;color:#f2f8ff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.fc-kicker{margin:8px 0 0;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#a9c2e2}
+.fc-body{margin:12px 0 16px;max-width:58ch;font-weight:300;font-size:15.5px;line-height:1.68;color:#b0c8e4;text-wrap:pretty}
+.fc-track{height:7px;border-radius:4px;background:rgba(120,170,255,.12);overflow:hidden}
+.fc-pct{font-family:'Geist Mono',monospace;font-size:15px;font-weight:500;color:var(--accent);text-shadow:0 0 16px var(--accent-glow);flex:none}
+.contact-invite{display:inline-flex;align-items:flex-start;gap:11px;max-width:100%;font-family:'Geist Mono',monospace;font-size:13.5px;letter-spacing:.26em;text-transform:uppercase;color:#e6f2ff;text-shadow:0 0 18px var(--accent-glow)}
+.contact-invite-dot{width:10px;height:10px;flex:none;margin-top:4px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent);animation:glowPulse 2s ease-in-out infinite}
+.contact-invite-text{display:block;line-height:1.45;text-wrap:balance}
+@media (max-width: 740px){
+  .fc-stage{grid-template-columns:1fr;gap:12px;padding:22px 18px}
+  .fc-week{padding-left:14px;font-size:14px;letter-spacing:.16em}
+  .fc-name{font-size:1.75rem}
+  .fc-body{font-size:15px;margin-bottom:14px}
+  .contact-invite{align-items:center;font-size:clamp(8.5px,2.65vw,11.5px);letter-spacing:.075em;gap:9px}
+  .contact-invite-dot{margin-top:0}
+  .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
+}
+</style>
+<script src="./image-slot.js"></script>
+<script src="./rainfall.js" defer></script>
+</helmet>
+<canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
+<div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
+<div ref="{{ rippleLayer }}" style="position:fixed;inset:0;z-index:47;pointer-events:none;"></div>
+<nav ref="{{ navRef }}" style="position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,4vw,44px);border-bottom:1px solid transparent;transition:background .4s ease, border-color .4s ease;">
+  <a href="#" onClick="{{ goTop }}" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:38px;line-height:1;color:#eef5ff;display:inline-flex;align-items:baseline;">ra<span style="position:relative;display:inline-block;">ı<svg aria-hidden="true" viewBox="0 0 10 14" style="position:absolute;top:0;left:57%;transform:translateX(-50%);width:8px;height:11px;overflow:visible;filter:drop-shadow(0 0 6px var(--accent-glow));"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></a>
+  <div class="nav-links" style="display:flex;align-items:center;gap:clamp(14px,2.6vw,32px);flex-wrap:wrap;justify-content:flex-end;">
+    <a href="#" onClick="{{ goServices }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.services">Services</a>
+    <a href="#" onClick="{{ goAI }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.ai">AI</a>
+    <a href="#" onClick="{{ goWork }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.work">Work</a>
+    <a href="#" onClick="{{ goFounder }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.founder">Founder</a>
+    <a href="#" class="nav-cta" onClick="{{ goContact }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#dcecff;border:1px solid rgba(120,180,255,.35);padding:11px 22px;border-radius:999px;transition:all .3s ease;" style-hover="background:var(--accent-soft);border-color:var(--accent);box-shadow:0 0 24px var(--accent-glow);color:#ffffff;" data-rf="nav.cta">Start a project</a>
+  </div>
+</nav>
+<section ref="{{ heroRef }}" data-screen-label="Hero" style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:150px 20px 200px;">
+  <div style="position:absolute;top:-14%;left:-10%;right:-10%;height:48%;background:radial-gradient(60% 55% at 25% 20%, rgba(10,18,34,.95), transparent 70%), radial-gradient(55% 60% at 70% 10%, rgba(6,12,24,.95), transparent 72%), radial-gradient(80% 50% at 50% 0%, rgba(3,7,14,.98), transparent 80%);pointer-events:none;"></div>
+  <div style="position:absolute;top:5%;right:10%;width:min(340px,40vw);height:min(340px,40vw);background:radial-gradient(circle, rgba(190,215,255,.10), rgba(140,180,255,.04) 40%, transparent 68%);border-radius:50%;pointer-events:none;animation:glowPulse 9s ease-in-out infinite;"></div>
+  <div style="position:absolute;top:30%;left:-20%;width:80%;height:36%;background:radial-gradient(50% 50% at 50% 50%, rgba(100,150,230,.05), transparent 70%);pointer-events:none;animation:fogDrift 32s ease-in-out infinite alternate;"></div>
+  <div style="position:absolute;top:48%;right:-25%;width:85%;height:40%;background:radial-gradient(50% 50% at 50% 50%, rgba(90,140,220,.06), transparent 70%);pointer-events:none;animation:fogDrift 44s ease-in-out infinite alternate-reverse;"></div>
+  <div ref="{{ heroContent }}" style="position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;will-change:transform,opacity;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:clamp(18px,3vw,30px);">
+      <span style="display:block;width:52px;height:1px;background:linear-gradient(90deg,transparent,rgba(140,190,255,.6));"></span>
+      <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:#8fb0d8;" data-rf="hero.kicker">A digital studio by Michael Cassella</span>
+      <span style="display:block;width:52px;height:1px;background:linear-gradient(90deg,rgba(140,190,255,.6),transparent);"></span>
+    </div>
+    <div ref="{{ tiltRef }}" style="will-change:transform;">
+      <h1 ref="{{ wordRef }}" data-rf-pre="hero.title.pre" data-rf-post="hero.title.post" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(3.6rem,8.5vw,8rem);line-height:1.04;letter-spacing:-.02em;color:#f2f8ff;text-shadow:0 12px 60px rgba(0,0,0,.75);animation:heroRise 1.3s cubic-bezier(.17,.84,.3,1) .2s both;">Your forecast just <em data-rf="hero.word" style="background:linear-gradient(178deg,#eaf5ff 15%,#8ec4ff 60%,#56b9ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 6px 28px rgba(86,150,255,.4));">changed</em>.</h1>
+
+    </div>
+    <div style="display:flex;align-items:center;gap:clamp(12px,1.8vw,22px);flex-wrap:wrap;justify-content:center;margin-top:34px;font-family:'Geist Mono',monospace;font-size:clamp(9.5px,1vw,11px);letter-spacing:.26em;text-transform:uppercase;color:#8fb0d8;text-shadow:0 2px 16px rgba(0,0,0,.8);animation:heroRise 1.3s cubic-bezier(.17,.84,.3,1) .4s both;">
+      <span data-rf="hero.tag.1">Bespoke websites</span><span style="color:#46618a;">·</span>
+      <span data-rf="hero.tag.2">Web &amp; mobile apps</span><span style="color:#46618a;">·</span>
+      <span data-rf="hero.tag.3">Revenue consulting</span><span style="color:#46618a;">·</span>
+      <span data-rf="hero.tag.4">AI automation</span>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;justify-content:center;animation:heroRise 1.3s cubic-bezier(.17,.84,.3,1) .55s both;">
+      <a href="#" class="cta-start" onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:10px;padding:17px 34px;border-radius:999px;background:linear-gradient(120deg,var(--accent),#7d8cff);color:#04101c;font-weight:600;font-size:14px;box-shadow:0 8px 34px var(--accent-glow);animation:chargePulse 3.4s ease-in-out infinite;transition:transform .3s ease, filter .3s ease;" style-hover="transform:translateY(-2px);filter:brightness(1.12);color:#04101c;" data-rf="hero.cta.primary">Start a project</a>
+      <a href="#" class="cta-storm" onClick="{{ goServices }}" style="display:inline-flex;align-items:center;gap:10px;padding:17px 34px;border-radius:999px;border:1px solid rgba(140,185,255,.3);color:#d7e7fc;background:rgba(8,16,30,.35);backdrop-filter:blur(6px);font-weight:500;font-size:14px;transition:all .3s ease;" style-hover="border-color:var(--accent);background:var(--accent-soft);color:#ffffff;" data-rf="hero.cta.secondary">Pick your storm ↓</a>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;">
+    <div style="width:22px;height:34px;border:1px solid rgba(140,180,255,.35);border-radius:12px;display:flex;justify-content:center;padding-top:6px;">
+      <div style="width:3px;height:8px;border-radius:3px;background:var(--accent);animation:cueDrop 1.8s ease-in-out infinite;"></div>
+    </div>
+    <span style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:#6e8db4;" data-rf="hero.scroll">Scroll</span>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:170px;pointer-events:none;background:linear-gradient(180deg, rgba(6,12,22,0) 0%, rgba(8,18,34,.5) 26%, rgba(4,9,17,.88) 62%, rgba(2,5,10,.98) 100%);"></div>
+  <div style="position:absolute;bottom:168px;left:0;right:0;height:1px;pointer-events:none;background:linear-gradient(90deg, transparent 5%, rgba(140,200,255,.28) 50%, transparent 95%);"></div>
+</section>
+
+<section ref="{{ servicesRef }}" data-screen-label="Services" style="position:relative;z-index:1;background:linear-gradient(180deg, rgba(3,7,13,.92), rgba(4,9,17,.9));padding:clamp(90px,12vw,150px) clamp(20px,6vw,80px);">
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+    <div style="position:absolute;top:-6%;left:-15%;width:70%;height:40%;background:radial-gradient(50% 50% at 50% 50%, rgba(100,150,230,.05), transparent 70%);animation:fogDrift 38s ease-in-out infinite alternate;"></div>
+    <div style="position:absolute;top:30%;right:-20%;width:75%;height:45%;background:radial-gradient(50% 50% at 50% 50%, rgba(90,140,220,.055), transparent 70%);animation:fogDrift 47s ease-in-out infinite alternate-reverse;"></div>
+  </div>
+  <div style="max-width:1240px;margin:0 auto;">
+    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:clamp(40px,6vw,70px);">
+      <div>
+        <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="services.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Capabilities</p>
+        <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.5rem,5.5vw,4.3rem);line-height:1.04;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;" data-rf-pre="services.title.pre" data-rf-post="services.title.post">Pick your <em data-rf="services.word" style="color:var(--accent);">storm</em>.</h2>
+        <p style="margin:18px 0 0;max-width:52ch;font-weight:300;font-size:16px;line-height:1.7;color:#8fa9c9;text-wrap:pretty;" data-rf-pre="services.intro.pre">Five disciplines, one mandate: <span data-rf="services.intro.em" style="color:#dcebff;">revenue you can measure.</span></p>
+      </div>
+    </div>
+    <div data-reveal="" style="position:sticky;top:84px;margin-bottom:34px;">
+      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
+        <canvas ref="{{ webCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
+        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">01</span>
+        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.web.kicker">01 · Design &amp; build</span>
+          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.web.title.pre">Bespoke <em data-rf="services.card.web.word" style="color:#a8d2ff;">Websites</em></h3>
+          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.web.desc">Hand-built, award-bait sites. No templates, no page builders — every pixel poured for your brand, engineered to convert.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.web.tag.1">Art direction</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.web.tag.2">Custom build</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.web.tag.3">CMS &amp; motion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="position:sticky;top:96px;margin-bottom:34px;">
+      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
+        <canvas ref="{{ appsCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
+        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">02</span>
+        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.apps.kicker">02 · Product engineering</span>
+          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.apps.title.pre">Web &amp; Mobile <em data-rf="services.card.apps.word" style="color:#a8d2ff;">Applications</em></h3>
+          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.apps.desc">Product-grade application development, end to end — web, iOS, Android — from first wireframe to the app store.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.apps.tag.1">Product design</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.apps.tag.2">Full-stack</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.apps.tag.3">iOS · Android</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="position:sticky;top:108px;margin-bottom:34px;">
+      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
+        <canvas ref="{{ revCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
+        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">03</span>
+        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.revenue.kicker">03 · Strategy</span>
+          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.revenue.title.pre">Revenue <em data-rf="services.card.revenue.word" style="color:#a8d2ff;">Consulting</em></h3>
+          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.revenue.desc">We find where your business leaks money — positioning, pricing, funnels — and turn the drip into a downpour.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.revenue.tag.1">Positioning</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.revenue.tag.2">Pricing</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.revenue.tag.3">Funnels</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="position:sticky;top:120px;margin-bottom:34px;">
+      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
+        <canvas ref="{{ aiCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
+        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">04</span>
+        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.ai.kicker">04 · Systems &amp; agents</span>
+          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.ai.title.pre">AI <em data-rf="services.card.ai.word" style="color:#a8d2ff;">Automation</em></h3>
+          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.ai.desc">Agents and automations wired into sales, support, and operations — so AI runs your company, not you.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.ai.tag.1">AI agents</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.ai.tag.2">Workflows</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.ai.tag.3">Integrations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="position:sticky;top:132px;margin-bottom:0;">
+      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
+        <canvas ref="{{ growthCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
+        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">05</span>
+        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.growth.kicker">05 · Retainer</span>
+          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.growth.title.pre">Growth &amp; <em data-rf="services.card.growth.word" style="color:#a8d2ff;">Search</em></h3>
+          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.growth.desc">Traffic engineering after launch — SEO, conversion optimization, analytics — a steady rainfall of qualified leads.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.growth.tag.1">SEO</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.growth.tag.2">CRO</span>
+            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.growth.tag.3">Analytics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-screen-label="The Forecast" style="position:relative;z-index:1;background:rgba(3,7,16,.95);padding:clamp(90px,12vw,150px) clamp(20px,6vw,80px);overflow:hidden;">
+  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
+  <div style="position:absolute;top:-25%;right:8%;width:55%;height:75%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-10%;left:-18%;width:70%;height:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(90,140,220,.05), transparent 70%);pointer-events:none;animation:fogDrift 42s ease-in-out infinite alternate;"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;">
+    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:clamp(40px,6vw,64px);">
+      <div>
+        <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="forecast.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>The process</p>
+        <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.5rem,5.5vw,4.3rem);line-height:1.04;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;" data-rf-pre="forecast.title.pre" data-rf-post="forecast.title.post">Every engagement is a <em data-rf="forecast.word" style="color:var(--accent);">forecast</em>.</h2>
+        <p style="margin:18px 0 0;max-width:52ch;font-weight:300;font-size:16px;line-height:1.7;color:#8fa9c9;text-wrap:pretty;" data-rf-pre="forecast.intro.pre" data-rf-post="forecast.intro.post">Four phases. <span data-rf="forecast.intro.em" style="color:#dcebff;">Zero guesswork on timing or deliverables.</span></p>
+      </div>
+    </div>
+    <div data-reveal="">
+      <div style="position:relative;border:1px solid rgba(120,170,255,.14);border-radius:20px;overflow:hidden;background:linear-gradient(165deg, #070e1a, #03070e);box-shadow:0 40px 90px rgba(0,0,0,.45);">
+        <div style="position:absolute;left:10px;top:-3%;width:4px;height:13px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.7), rgba(120,180,255,.25) 70%, transparent);pointer-events:none;z-index:2;animation:dripSlide 9s linear 2s infinite;"></div>
+        <div style="position:absolute;right:14px;top:-3%;width:3.5px;height:11px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.6), rgba(120,180,255,.2) 70%, transparent);pointer-events:none;z-index:2;animation:dripSlide 13s linear 6.5s infinite;"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 26px;border-bottom:1px solid rgba(120,170,255,.1);">
+          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.26em;color:#8fb0d8;" data-rf="forecast.panel.title">THE ENGAGEMENT TIMELINE</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#5d7ca6;" data-rf="forecast.panel.updated">START TO FINISH</span>
+        </div>
+        <div class="forecast-phases">
+            <article class="fc-stage">
+              <p class="fc-week" data-rf="forecast.stage.1.week">Week 1</p>
+              <div>
+                <div class="fc-stage-head">
+                  <h3 class="fc-name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
+                  <span class="fc-pct" data-rf="forecast.stage.1.pct">20%</span>
+                </div>
+                <p class="fc-kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
+                <p class="fc-body" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking — then lock the plan for the next five weeks.</p>
+                <div class="fc-track"><div class="fc-bar" style="width:20%;--sheen-delay:0s;"></div></div>
+              </div>
+            </article>
+            <article class="fc-stage">
+              <p class="fc-week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
+              <div>
+                <div class="fc-stage-head">
+                  <h3 class="fc-name" data-rf="forecast.stage.2.name">Formation</h3>
+                  <span class="fc-pct" data-rf="forecast.stage.2.pct">45%</span>
+                </div>
+                <p class="fc-kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
+                <p class="fc-body" data-rf="forecast.stage.2.body">You see the storm before we build it — brand, UX, and art direction, reviewed with you before a line of production work.</p>
+                <div class="fc-track"><div class="fc-bar" style="width:45%;--sheen-delay:.5s;"></div></div>
+              </div>
+            </article>
+            <article class="fc-stage">
+              <p class="fc-week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
+              <div>
+                <div class="fc-stage-head">
+                  <h3 class="fc-name" data-rf="forecast.stage.3.name">Downpour</h3>
+                  <span class="fc-pct" data-rf="forecast.stage.3.pct">90%</span>
+                </div>
+                <p class="fc-kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
+                <p class="fc-body" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live — not a deck, the real thing.</p>
+                <div class="fc-track"><div class="fc-bar" style="width:90%;--sheen-delay:1s;"></div></div>
+              </div>
+            </article>
+            <article class="fc-stage">
+              <p class="fc-week" data-rf="forecast.stage.4.week">Ongoing</p>
+              <div>
+                <div class="fc-stage-head">
+                  <h3 class="fc-name" data-rf="forecast.stage.4.name">Steady rain</h3>
+                  <span class="fc-pct" data-rf="forecast.stage.4.pct">100%</span>
+                </div>
+                <p class="fc-kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
+                <p class="fc-body" data-rf="forecast.stage.4.body">After landfall we stay on: automation, search, and optimization so the system keeps raining without you running it.</p>
+                <div class="fc-track"><div class="fc-bar" style="width:100%;--sheen-delay:1.5s;"></div></div>
+              </div>
+            </article>
+          </div>
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 26px;"><span style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;color:#46618a;" data-rf="forecast.footer.source">NO HANDOFFS · NO JUNIORS</span><span style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;color:#46618a;" data-rf="forecast.footer.accuracy">REPLY WITHIN 24H</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section ref="{{ aiRef }}" data-screen-label="AI Automation" style="position:relative;z-index:1;background:rgba(3,6,11,.93);padding:clamp(90px,12vw,150px) clamp(20px,6vw,80px);overflow:hidden;">
+  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
+  <div style="position:absolute;top:-20%;left:30%;width:60%;height:80%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);pointer-events:none;"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,6vw,90px);align-items:center;">
+    <div data-reveal="">
+      <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="ai.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>AI automation</p>
+      <h2 style="margin:0 0 24px;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.5rem,5.5vw,4.3rem);line-height:1.04;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;"><span data-rf="ai.title.line1" style="display:block;white-space:nowrap;">AI runs the company.</span><em data-rf="ai.title.line2" style="color:var(--accent);">Not you.</em></h2>
+      <p style="margin:0 0 30px;max-width:56ch;font-weight:300;font-size:16.5px;line-height:1.75;color:#93aecd;text-wrap:pretty;" data-rf="ai.body">We wire agents and automations into the guts of your business — lead follow-up, support, scheduling, invoicing, reporting — so the machine works around the clock and you don't have to. You set the direction. It handles the weather.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <span style="border:1px solid rgba(130,180,255,.18);padding:7px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;" data-rf="ai.badge.1">AI agents</span>
+        <span style="border:1px solid rgba(130,180,255,.18);padding:7px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;" data-rf="ai.badge.2">Workflow automation</span>
+        <span style="border:1px solid rgba(130,180,255,.18);padding:7px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;" data-rf="ai.badge.3">Custom integrations</span>
+      </div>
+    </div>
+    <div data-reveal="" style="position:relative;overflow:hidden;background:linear-gradient(160deg, rgba(8,15,28,.9), rgba(4,9,17,.92));border:1px solid rgba(130,180,255,.16);border-radius:18px;padding:26px 28px 22px;box-shadow:0 40px 90px rgba(0,0,0,.5);font-family:'Geist Mono',monospace;font-size:12.5px;animation:cardFloat 7s ease-in-out infinite;">
+      <div style="position:absolute;left:0;right:0;height:34%;top:-30%;pointer-events:none;background:linear-gradient(180deg, transparent, rgba(86,185,255,.05) 45%, rgba(86,185,255,.11) 50%, rgba(86,185,255,.05) 55%, transparent);animation:scanMove 5.5s linear infinite;"></div>
+      <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="display:flex;gap:7px;">
+          <span style="width:9px;height:9px;border-radius:50%;background:#2a3b57;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#2a3b57;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:var(--accent);opacity:.7;"></span>
+        </div>
+        <span style="font-size:10px;letter-spacing:.25em;color:#5d7ca6;" data-rf="ai.terminal.title">RAIN·OPS — LIVE</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(120,170,255,.14);border-radius:12px;background:rgba(86,185,255,.05);">
+        <span style="font-size:9.5px;letter-spacing:.24em;color:#8fb0d8;" data-rf="ai.terminal.counter.label">TASKS EXECUTED TODAY</span>
+        <span ref="{{ aiCounter }}" style="font-family:'Geist',sans-serif;font-weight:600;font-size:26px;line-height:1;color:var(--accent);text-shadow:0 0 18px var(--accent-glow);">1,284</span>
+      </div>
+      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.1.time" style="color:#46618a;">07:00</span><span data-rf="ai.terminal.row.1.text" style="color:#93b1d6;">agent · morning pipeline report sent</span></div>
+      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.2.time" style="color:#46618a;">09:12</span><span data-rf="ai.terminal.row.2.text" style="color:#93b1d6;">workflow · 3 proposals generated &amp; delivered</span></div>
+      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.3.time" style="color:#46618a;">11:47</span><span data-rf="ai.terminal.row.3.text" style="color:#93b1d6;">agent · 14 leads qualified, 5 calls booked</span></div>
+      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.4.time" style="color:#46618a;">13:05</span><span data-rf="ai.terminal.row.4.text" style="color:#93b1d6;">workflow · invoices reconciled — $18,420 collected</span></div>
+      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.5.time" style="color:#46618a;">16:20</span><span data-rf="ai.terminal.row.5.text" style="color:#93b1d6;">agent · support inbox cleared, avg reply 38s</span></div>
+      <div style="display:flex;gap:12px;padding:14px 0 4px;align-items:center;">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:glowPulse 1.6s ease-in-out infinite;"></span>
+        <span ref="{{ aiLog }}" style="color:#cfe3fb;">listening for new leads…</span>
+        <span style="display:inline-block;width:7px;height:14px;background:var(--accent);animation:blinkCur 1.1s steps(1) infinite;"></span>
+      </div>
+    </div>
+  </div>
+  <div data-reveal="" style="position:relative;max-width:1240px;margin:clamp(48px,6vw,80px) auto 0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;position:relative;padding:0 6px;">
+      <div style="position:absolute;left:0;right:0;top:5px;height:1px;background:linear-gradient(90deg, transparent, rgba(120,170,255,.3) 12%, rgba(120,170,255,.3) 88%, transparent);"></div>
+      <div style="position:absolute;top:1px;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent), 0 0 4px #fff;animation:flowDot 4.5s linear infinite;"></div>
+      <div style="position:absolute;top:1px;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent), 0 0 4px #fff;animation:flowDot 4.5s linear 2.25s infinite;"></div>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid var(--accent);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#8fb0d8;white-space:nowrap;" data-rf="ai.pipeline.1">LEADS IN</span></div>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid rgba(140,190,255,.5);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#5d7ca6;white-space:nowrap;" data-rf="ai.pipeline.2">QUALIFIED</span></div>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid rgba(140,190,255,.5);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#5d7ca6;white-space:nowrap;" data-rf="ai.pipeline.3">BOOKED</span></div>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid rgba(140,190,255,.5);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#5d7ca6;white-space:nowrap;" data-rf="ai.pipeline.4">DELIVERED</span></div>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#e6f2ff;text-shadow:0 0 12px var(--accent-glow);white-space:nowrap;" data-rf="ai.pipeline.5">REVENUE OUT</span></div>
+    </div>
+  </div>
+</section>
+<section ref="{{ workRef }}" data-screen-label="Selected Work" style="position:relative;z-index:1;background:linear-gradient(180deg, rgba(3,7,13,.94), rgba(4,9,17,.92));padding:clamp(90px,12vw,150px) clamp(20px,6vw,80px);overflow:hidden;">
+  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
+  <div style="max-width:1240px;margin:0 auto;">
+    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px 56px;flex-wrap:wrap;margin-bottom:clamp(40px,6vw,64px);">
+      <div style="flex:1 1 0;min-width:min(540px,100%);">
+        <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="work.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Selected work</p>
+        <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.5rem,5.5vw,4.3rem);line-height:1.04;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;" data-rf-pre="work.title.pre">Work that made it <em data-rf="work.title.em" style="color:var(--accent);">rain.</em></h2>
+        <p style="margin:18px 0 0;max-width:52ch;font-weight:300;font-size:16px;line-height:1.7;color:#8fa9c9;text-wrap:pretty;" data-rf-pre="work.intro.pre">A selection of recent engagements — <span data-rf="work.intro.em" style="color:#dcebff;">and the results they produced.</span></p>
+      </div>
+    </div>
+    <div data-reveal="" style="position:relative;overflow:hidden;margin-bottom:clamp(30px,4vw,48px);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);">
+      <div style="display:flex;width:max-content;animation:logoScroll 46s linear infinite;" style-hover="animation-play-state:paused;">
+        <div style="display:flex;align-items:center;gap:clamp(44px,5.5vw,80px);padding-right:clamp(44px,5.5vw,80px);white-space:nowrap;">
+          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.1">Blueharbor Capital</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.2">Voltage</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.3">Lumière</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.4">Vetta Motorcars</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.08em;color:#7d97ba;" data-rf="work.logo.5">Sterling &amp; Vane</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.6">Ironpeak</span>
+          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.7">Solara Health</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.8">Copperline Hotels</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.9">Duskworth</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.10">Meridian Yachts</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.11">Atlas &amp; Finch</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.12">Pinnacle Ortho</span>
+          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.13">Harbor &amp; Oak</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:clamp(44px,5.5vw,80px);padding-right:clamp(44px,5.5vw,80px);white-space:nowrap;">
+          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.1">Blueharbor Capital</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.2">Voltage</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.3">Lumière</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.4">Vetta Motorcars</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.08em;color:#7d97ba;" data-rf="work.logo.5">Sterling &amp; Vane</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.6">Ironpeak</span>
+          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.7">Solara Health</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.8">Copperline Hotels</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.9">Duskworth</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.10">Meridian Yachts</span>
+          <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.11">Atlas &amp; Finch</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.12">Pinnacle Ortho</span>
+          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.13">Harbor &amp; Oak</span>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="border:1px solid rgba(120,170,255,.14);border-radius:20px;overflow:hidden;background:linear-gradient(165deg, #070e1a, #03070e);box-shadow:0 40px 90px rgba(0,0,0,.45);position:relative;">
+      <div style="position:absolute;left:12px;top:-3%;width:4px;height:13px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.65), rgba(120,180,255,.22) 70%, transparent);pointer-events:none;z-index:3;animation:dripSlide 11s linear 4s infinite;"></div>
+      <div style="position:absolute;right:10px;top:-3%;width:3.5px;height:11px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.55), rgba(120,180,255,.2) 70%, transparent);pointer-events:none;z-index:3;animation:dripSlide 14s linear 1.5s infinite;"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:1px;background:rgba(120,170,255,.1);border-bottom:1px solid rgba(120,170,255,.1);">
+        <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="4">
+          <a href="#" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}" style-hover="background:rgba(9,20,38,.5);">
+            <span data-case-prog="t" style="position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);opacity:.75;pointer-events:none;"></span>
+            <span style="display:flex;align-items:center;gap:11px;width:100%;">
+              <span data-case-ic="t" style="flex:none;width:36px;height:36px;border:1px solid rgba(130,180,255,.22);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#8fb0d8;transition:all .3s ease;">{{ cs.icon }}</span>
+              <span style="min-width:0;flex:1;">
+                <span style="{{ cs.nameStyle }}">{{ cs.name }}</span>
+                <span style="display:block;margin-top:4px;font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.18em;color:#7d97ba;">{{ cs.head }}</span>
+              </span>
+            </span>
+            <span data-case-lead="t" style="display:block;font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.12em;color:{{ cs.leadColor }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;">{{ cs.lead }}</span>
+          </a>
+        </sc-for>
+      </div>
+      <div ref="{{ caseStage }}" style="position:relative;overflow:hidden;padding:clamp(28px,3.6vw,48px) clamp(24px,3vw,44px);">
+        <div style="position:absolute;left:0;right:0;height:36%;top:-40%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(86,185,255,.04) 45%,rgba(86,185,255,.1) 50%,rgba(86,185,255,.04) 55%,transparent);animation:scanMove 6.5s linear infinite;"></div>
+        <div style="{{ activeWash }}"></div>
+        <div style="position:absolute;top:14px;right:18px;pointer-events:none;opacity:.13;">{{ activeGhost }}</div>
+        <div style="position:relative;display:flex;flex-wrap:wrap;gap:clamp(28px,4.5vw,64px);align-items:flex-start;">
+          <div style="flex:1.15 1 320px;min-width:0;">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+              <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.26em;color:#5d7ca6;">{{ activeKicker }}</span>
+              <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
+              <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
+            </div>
+            <h3 style="{{ activeNameStyle }}">{{ activeName }}</h3>
+            <p style="margin:14px 0 0;max-width:54ch;font-weight:300;font-size:15px;line-height:1.7;color:#93aecd;text-wrap:pretty;">{{ activeDesc }}</p>
+          </div>
+          <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px);">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-bottom:1px solid rgba(120,170,255,.1);padding-bottom:clamp(18px,2.4vw,24px);">
+              <div>
+                <p style="{{ activeM1Style }}">{{ activeM1v }}</p>
+                <p style="margin:9px 0 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8fa9c9;">{{ activeM1l }}</p>
+              </div>
+              <div>
+                <p style="margin:0;font-weight:600;font-size:clamp(24px,2.4vw,32px);line-height:1;color:#eaf3ff;">{{ activeM2v }}</p>
+                <p style="margin:9px 0 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8fa9c9;">{{ activeM2l }}</p>
+              </div>
+              <div>
+                <p style="margin:0;font-weight:600;font-size:clamp(24px,2.4vw,32px);line-height:1;color:#eaf3ff;">{{ activeM3v }}</p>
+                <p style="margin:9px 0 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8fa9c9;">{{ activeM3l }}</p>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:flex-end;gap:4px;height:58px;">
+                <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between;gap:10px;margin-top:9px;">
+                <p style="margin:0;font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;color:#46618a;" data-rf="work.chart.left">REVENUE — 12-MONTH INDEX</p>
+                <p style="margin:0;font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;color:#46618a;" data-rf="work.chart.right">MO 01 → MO 12</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;padding:13px clamp(20px,2.6vw,32px);border-top:1px solid rgba(120,170,255,.1);">
+        <span style="font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.22em;color:#46618a;" data-rf="work.ledger.left">CLIENT LEDGER — SHOWING 04 / 32</span>
+        <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--accent);text-shadow:0 0 12px var(--accent-glow);" data-rf="work.ledger.right">SEASON TOTAL: $11M+ MADE IT RAIN</span>
+      </div>
+    </div>
+    <p data-reveal="" style="margin:26px 0 0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#46618a;" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
+  </div>
+</section>
+<section ref="{{ founderRef }}" data-screen-label="Founder" class="founder-sec" style="position:relative;z-index:1;background:#05080d;padding:clamp(56px,7vw,88px) clamp(20px,6vw,80px);overflow:hidden;">
+  <div style="position:absolute;inset:0;pointer-events:none;opacity:.45;background:
+    radial-gradient(60% 50% at 72% 40%, rgba(86,185,255,.06), transparent 62%),
+    radial-gradient(45% 35% at 16% 18%, rgba(70,120,200,.035), transparent 70%);"></div>
+  <div class="founder-rain" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:screen;background-image:repeating-linear-gradient(112deg, transparent 0 11px, rgba(150,210,255,.055) 11px 12px), repeating-linear-gradient(108deg, transparent 0 17px, rgba(120,190,255,.03) 17px 18px);"></div>
+  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.18) 50%,transparent);pointer-events:none;"></div>
+  <div class="founder-grid" style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;">
+    <div data-reveal="" class="founder-intro" style="min-width:0;">
+      <p style="margin:0 0 14px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#8ea8c8;" data-rf-post="founder.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>The founder</p>
+      <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.2rem,4.6vw,3.6rem);line-height:1.06;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;" data-rf-pre="founder.title.pre" data-rf-post="founder.title.post">The man behind the <em data-rf="founder.word" style="font-style:italic;color:var(--accent);">storm</em>.</h2>
+    </div>
+    <div data-reveal="" class="founder-body" style="min-width:0;display:flex;flex-direction:column;">
+      <p style="margin:0 0 12px;font-weight:300;font-size:16px;line-height:1.65;color:#8fa9c9;text-wrap:pretty;" data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+      <p style="margin:0;font-weight:300;font-size:16px;line-height:1.65;color:#8fa9c9;text-wrap:pretty;" data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
+      <div class="founder-quote" style="margin-top:22px;padding-top:20px;border-top:1px solid rgba(120,160,210,.14);display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:52px;line-height:.7;color:var(--accent);flex:none;margin-top:2px;" aria-hidden="true">“</span>
+        <blockquote style="margin:0;padding:0;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(1.25rem,2vw,1.7rem);line-height:1.4;color:#e4edf8;" data-rf-pre="founder.quote.pre" data-rf-post="founder.quote.post">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em" style="font-style:italic;color:var(--accent);">that takes decades</em>.</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+<section ref="{{ contactRef }}" data-screen-label="Contact" style="position:relative;z-index:1;background:rgba(2,5,9,.92);padding:clamp(70px,9vw,120px) clamp(20px,6vw,80px) clamp(90px,10vw,140px);overflow:hidden;">
+  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-30%;left:8%;width:55%;height:75%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;top:-20%;right:-8%;width:45%;height:70%;background:radial-gradient(50% 50% at 50% 50%, rgba(125,140,255,.08), transparent 70%);pointer-events:none;"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:clamp(48px,7vw,100px);align-items:stretch;">
+    <div data-reveal="" style="display:flex;flex-direction:column;align-items:flex-start;padding:6px 0;">
+      <p style="margin:6px 0 26px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="contact.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Storm dispatch</p>
+      <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;line-height:1;letter-spacing:-.02em;color:#eef5ff;font-size:clamp(3rem,4.6vw,4.6rem);text-wrap:balance;" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word" style="background:linear-gradient(178deg,#f7fbff 30%,#bcd8ff 62%,#5f9fe6 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;">pour.</em></h2>
+      <p style="margin:24px 0 0;max-width:44ch;font-weight:300;font-size:17px;line-height:1.75;color:#9db8d9;text-wrap:pretty;" data-rf="contact.intro">Tell us what you're building and where it's stuck. No sales team, no runaround — you talk to the studio directly.</p>
+      <div style="align-self:stretch;margin-top:auto;">
+        <div style="position:relative;height:22px;margin-bottom:18px;">
+          <span style="position:absolute;left:0;right:0;top:10.5px;height:1px;background:rgba(130,180,255,.14);"></span>
+          <span style="position:absolute;left:0;top:10px;height:2px;width:0;background:linear-gradient(90deg, transparent 30%, var(--accent));box-shadow:0 0 12px var(--accent-glow);animation:trackFill 7.5s cubic-bezier(.45,.08,.55,.92) infinite;"></span>
+          <span style="position:absolute;top:6px;left:0;width:10px;height:10px;margin-left:-5px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#cfe8ff;box-shadow:0 0 16px var(--accent), 0 0 34px var(--accent-glow);animation:trackHead 7.5s cubic-bezier(.45,.08,.55,.92) infinite;"></span>
+          <span style="position:absolute;left:0;top:-2px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:1.5px solid rgba(175,218,255,.75);opacity:0;animation:nodeRip1 7.5s linear infinite;"></span>
+          <span style="position:absolute;left:33.333%;top:-2px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:1.5px solid rgba(175,218,255,.75);opacity:0;animation:nodeRip2 7.5s linear infinite;"></span>
+          <span style="position:absolute;left:66.666%;top:-2px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:1.5px solid rgba(175,218,255,.75);opacity:0;animation:nodeRip3 7.5s linear infinite;"></span>
+          <span style="position:absolute;left:0;top:6.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1px solid rgba(140,190,255,.45);background:#0a1526;animation:nodeL1 7.5s infinite;"></span>
+          <span style="position:absolute;left:33.333%;top:6.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1px solid rgba(140,190,255,.45);background:#0a1526;animation:nodeL2 7.5s infinite;"></span>
+          <span style="position:absolute;left:66.666%;top:6.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1px solid rgba(140,190,255,.45);background:#0a1526;animation:nodeL3 7.5s infinite;"></span>
+          <span style="position:absolute;left:calc(66.666% + 16px);top:13px;width:1.5px;height:7px;border-radius:2px;background:rgba(175,218,255,.85);opacity:0;animation:microRain 7.5s linear infinite;"></span>
+          <span style="position:absolute;left:calc(66.666% + 30px);top:12px;width:1.5px;height:6px;border-radius:2px;background:rgba(175,218,255,.7);opacity:0;animation:microRain 7.5s linear .45s infinite;"></span>
+          <span style="position:absolute;left:calc(66.666% + 46px);top:13px;width:1.5px;height:7px;border-radius:2px;background:rgba(175,218,255,.8);opacity:0;animation:microRain 7.5s linear .9s infinite;"></span>
+          <span style="position:absolute;left:calc(66.666% + 61px);top:12px;width:1.5px;height:6px;border-radius:2px;background:rgba(175,218,255,.65);opacity:0;animation:microRain 7.5s linear 1.35s infinite;"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px);">
+          <div style="padding-right:8px;">
+            <p class="step-label" style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7c9bc4;white-space:nowrap;animation:labelWake 7.5s linear -4.35s infinite;" data-rf-post="contact.step.1"><span style="color:var(--accent);">01</span>&nbsp;&nbsp;You write</p>
+          </div>
+          <div style="padding-right:8px;">
+            <p class="step-label" style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7c9bc4;white-space:nowrap;animation:labelWake 7.5s linear -2.25s infinite;" data-rf-post="contact.step.2"><span style="color:var(--accent);">02</span>&nbsp;&nbsp;Answer in 24h</p>
+          </div>
+          <div style="padding-right:8px;">
+            <p class="step-label" style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7c9bc4;white-space:nowrap;animation:labelWake 7.5s linear infinite;" data-rf-post="contact.step.3"><span style="color:var(--accent);">03</span>&nbsp;&nbsp;It rains</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;margin-top:auto;padding-top:clamp(28px,3.5vw,40px);flex-wrap:wrap;">
+        <span class="contact-invite" data-rf-post="contact.invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></span>
+      </div>
+    </div>
+    <div data-reveal="" style="position:relative;overflow:hidden;border:1px solid rgba(140,190,255,.2);border-radius:20px;background:linear-gradient(165deg, rgba(8,16,30,.92), rgba(4,9,17,.96));box-shadow:0 50px 110px rgba(0,0,0,.6);">
+      <div style="position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
+      <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
+      <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
+      <div class="inquiry-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid rgba(120,170,255,.12);">
+        <span class="inquiry-title" style="font-family:'Geist Mono',monospace;font-size:18px;font-weight:500;letter-spacing:.16em;line-height:1.2;color:#eef5ff;white-space:nowrap;" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
+        <span class="inquiry-priority" style="display:flex;align-items:center;gap:8px;flex:none;font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.22em;color:#ff8a92;white-space:nowrap;" data-rf-post="contact.form.priority"><span style="width:9px;height:9px;border-radius:50%;background:#ff4d58;box-shadow:0 0 12px rgba(255,77,88,.8);animation:glowPulse 1.5s ease-in-out infinite;"></span>PRIORITY: SEVERE</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px;padding:24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.name">NAME</label>
+            <input ref="{{ nameRef }}" type="text" placeholder="Jane Carter" style="width:100%;box-sizing:border-box;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.18);border-radius:10px;outline:none;color:#e8f1ff;font-family:'Geist',sans-serif;font-weight:300;font-size:14px;padding:12px 14px;transition:border-color .25s ease;" style-focus="border-color:var(--accent);"></input>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.email">EMAIL</label>
+            <input ref="{{ emailRef }}" type="email" placeholder="you@company.com" style="width:100%;box-sizing:border-box;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.18);border-radius:10px;outline:none;color:#e8f1ff;font-family:'Geist',sans-serif;font-weight:300;font-size:14px;padding:12px 14px;transition:border-color .25s ease;" style-focus="border-color:var(--accent);"></input>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button data-chip="Website" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">Website</button>
+            <button data-chip="App" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">App</button>
+            <button data-chip="Revenue" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">Revenue</button>
+            <button data-chip="AI automation" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">AI automation</button>
+            <button data-chip="Everything" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">Everything</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.situation">THE SITUATION</label>
+          <textarea ref="{{ msgRef }}" rows="3" placeholder="How can Rain make your business better?" style="width:100%;box-sizing:border-box;resize:vertical;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.18);border-radius:10px;outline:none;color:#e8f1ff;font-family:'Geist',sans-serif;font-weight:300;font-size:14px;line-height:1.6;padding:12px 14px;transition:border-color .25s ease;" style-focus="border-color:var(--accent);"></textarea>
+        </div>
+        <a href="#" onClick="{{ sendStorm }}" style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border-radius:12px;background:linear-gradient(120deg,var(--accent),#7d8cff);color:#04101c;font-weight:600;font-size:14.5px;box-shadow:0 10px 34px var(--accent-glow);animation:chargePulse 3.4s ease-in-out infinite;transition:transform .3s ease, filter .3s ease;" style-hover="transform:translateY(-2px);filter:brightness(1.12);color:#04101c;">
+          <span ref="{{ btnWater }}" style="position:absolute;left:0;right:0;bottom:0;height:0%;pointer-events:none;background:linear-gradient(180deg, rgba(170,228,255,.5), rgba(38,96,200,.72));transition:height .7s cubic-bezier(.3,.8,.3,1);">
+            <span style="position:absolute;top:-12px;left:-55%;width:110%;height:24px;border-radius:44%;background:rgba(228,245,255,.38);animation:waveSpin 6.5s linear infinite;"></span>
+            <span style="position:absolute;top:-10px;right:-55%;width:110%;height:22px;border-radius:42%;background:rgba(160,215,255,.32);animation:waveSpin 8.5s linear infinite reverse;"></span>
+          </span>
+          <span data-send-label="t" style="position:relative;z-index:1;">Send it</span>
+          <span ref="{{ btnCond }}" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:1;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:rgba(4,16,28,.62);">DRY</span>
+        </a>
+        <p style="margin:0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#46618a;" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer data-screen-label="Footer" style="position:relative;z-index:1;background:rgba(2,4,8,.97);border-top:1px solid rgba(120,170,255,.08);padding:clamp(32px,4vw,44px) clamp(20px,5vw,60px) 0;">
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+    <div style="position:absolute;bottom:-55%;left:15%;width:70%;height:90%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);"></div>
+    <div style="position:absolute;top:8%;left:-20%;width:70%;height:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(100,150,230,.05), transparent 70%);animation:fogDrift 36s ease-in-out infinite alternate;"></div>
+  </div>
+  <canvas ref="{{ footerCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
+  <div style="position:relative;max-width:1240px;margin:0 auto;">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(14px,1.8vw,20px);padding-bottom:clamp(30px,4vw,46px);">
+      <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(3.4rem,7vw,5.6rem);line-height:1;color:#eef5ff;display:inline-flex;align-items:baseline;filter:drop-shadow(0 14px 50px rgba(80,150,255,.25));">ra<span style="position:relative;display:inline-block;">ı<svg aria-hidden="true" viewBox="0 0 10 14" style="position:absolute;top:.04em;left:57%;transform:translateX(-50%);width:.16em;height:.22em;overflow:visible;filter:drop-shadow(0 0 12px var(--accent-glow));"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></span>
+      <p class="ft-tag" data-rf="footer.tagline" style="margin:0;font-weight:300;font-size:13.5px;line-height:1.7;color:#8fa9c9;white-space:nowrap;">Bespoke websites, applications, and AI automation — a downpour, not a drizzle.</p>
+      <div style="display:flex;align-items:center;gap:clamp(18px,3vw,34px);flex-wrap:wrap;justify-content:center;">
+        <a href="#" onClick="{{ goServices }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.services">Services</a>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
+        <a href="#" onClick="{{ goWork }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.work">Work</a>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
+        <a href="#" onClick="{{ goAI }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.ai">AI</a>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
+        <a href="#" onClick="{{ goFounder }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.founder">Founder</a>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
+        <a href="#" onClick="{{ goContact }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#dcecff;border:1px solid rgba(120,180,255,.35);padding:10px 20px;border-radius:999px;transition:all .3s ease;" style-hover="background:var(--accent-soft);border-color:var(--accent);color:#ffffff;" data-rf="footer.cta">Start a project</a>
+      </div>
+    </div>
+    <div class="ft-bottom" style="border-top:1px solid rgba(120,170,255,.08);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 26px;">
+      <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#46618a;" data-rf="footer.legal">© 2026 RAIN. ALL RIGHTS RESERVED.</span>
+      <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#46618a;" data-rf="footer.location">EAST COAST, USA — FORECAST: RAIN</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;rainIntensity&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 70, &quot;min&quot;: 0, &quot;max&quot;: 100, &quot;step&quot;: 5, &quot;unit&quot;: &quot;%&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Weather&quot;},
+  &quot;lightning&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Weather&quot;},
+  &quot;accent&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#56b9ff&quot;, &quot;options&quot;: [&quot;#56b9ff&quot;, &quot;#7d8cff&quot;, &quot;#3fe0c8&quot;, &quot;#b7c9ff&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot;}
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rainCanvas = React.createRef();
+    this.heroRef = React.createRef();
+    this.heroContent = React.createRef();
+    this.tiltRef = React.createRef();
+    this.wordRef = React.createRef();
+    this.navRef = React.createRef();
+    this.flashRef = React.createRef();
+    this.rippleLayer = React.createRef();
+    this.aiLog = React.createRef();
+    this.aiCardCanvas = React.createRef();
+    this.webCardCanvas = React.createRef();
+    this.appsCardCanvas = React.createRef();
+    this.revCardCanvas = React.createRef();
+    this.growthCardCanvas = React.createRef();
+    this.fx = {};
+    this.svcPreview = React.createRef();
+    this.svcPreviewImg = React.createRef();
+    this.servicesRef = React.createRef();
+    this.aiRef = React.createRef();
+    this.founderRef = React.createRef();
+    this.workRef = React.createRef();
+    this.contactRef = React.createRef();
+    this.radarCanvas = React.createRef();
+    this.emailRef = React.createRef();
+    this.waterCanvas = React.createRef();
+    this.nameRef = React.createRef();
+    this.msgRef = React.createRef();
+    this.btnWater = React.createRef();
+    this.formFxCanvas = React.createRef();
+    this.formFlash = React.createRef();
+    this.btnCond = React.createRef();
+    this.formStorm = 0;
+    this.aiCounter = React.createRef();
+    this.caseStage = React.createRef();
+    this.footerCanvas = React.createRef();
+    this.userLocked = false;
+    this.chipSet = new Set();
+    this.state = { caseIdx: 0 };
+    this.CASES = [
+      { num: 'CASE Nº 001', head: 'PRIVATE EQUITY', name: 'Blueharbor Capital', cat: 'CAT 5', hot: true, hue: '86,185,255', cond: 'SUPERCELL', paths: ['M3 21h18', 'M5 21V9.5', 'M9.7 21V9.5', 'M14.3 21V9.5', 'M19 21V9.5', 'M2.5 9 12 3.5 21.5 9'], lead: '$6.8M ATTRIBUTED', desc: 'Full rebrand, deal-room platform, and AI-automated investor pipeline for a $2B fund.', m: [['$6.8M', 'ATTRIBUTED REVENUE'], ['+312%', 'QUALIFIED LEADS'], ['6 wks', 'TO LAUNCH']], bars: [12, 18, 15, 26, 34, 30, 48, 58, 52, 72, 86, 100] },
+      { num: 'CASE Nº 002', head: 'NIGHTLIFE', name: 'Voltage After Dark', cat: 'CAT 4', hot: true, hue: '125,140,255', cond: 'NIGHT STORM', paths: ['M13 2 4.5 13.5h6L10 22l8.5-11.5h-6L13 2z'], lead: 'SOLD OUT 11 WKS STRAIGHT', desc: 'Full brand, site, and bottle-service booking engine for a 1,200-cap nightclub — with AI running VIP outreach, guest lists, and event drops.', m: [['+189%', 'TABLE REVENUE'], ['11 wks', 'SOLD OUT STREAK'], ['7 wks', 'TO LAUNCH']], bars: [20, 14, 30, 24, 42, 38, 56, 50, 66, 78, 70, 94] },
+      { num: 'CASE Nº 003', head: 'MEDICAL AESTHETICS', name: 'Lumière Aesthetics', cat: 'CAT 4', hot: true, hue: '63,224,200', cond: 'STEADY RAIN', paths: ['M12 21c4.5-2.6 7-6.2 7-9.8A7 7 0 0 0 12 4a7 7 0 0 0-7 7.2c0 3.6 2.5 7.2 7 9.8z', 'M9.5 11h5', 'M12 8.5v5'], lead: '9,400 BOOKINGS / MO', desc: 'Brand, site, and booking platform for a med-spa group — an AI front desk quotes treatments, books consults, and fills cancelled slots automatically.', m: [['9,400', 'BOOKINGS / MONTH'], ['–68%', 'NO-SHOWS'], ['8 wks', 'TO LAUNCH']], bars: [16, 24, 20, 34, 44, 40, 52, 64, 58, 74, 88, 100] },
+      { num: 'CASE Nº 004', head: 'EXOTIC AUTOMOTIVE', name: 'Vetta Motorcars', cat: 'CAT 3', hot: false, hue: '183,201,255', cond: 'THUNDERHEAD', paths: ['M4 16.5 5.8 10a2 2 0 0 1 1.9-1.5h8.6a2 2 0 0 1 1.9 1.5l1.8 6.5', 'M2.5 16.5h19', 'M6.5 20a1.9 1.9 0 1 0 0-3.8 1.9 1.9 0 0 0 0 3.8', 'M17.5 20a1.9 1.9 0 1 0 0-3.8 1.9 1.9 0 0 0 0 3.8', 'M8 12.5h8'], lead: '$4.2M IN ALLOCATIONS', desc: 'Digital showroom and allocation-request platform for a Lamborghini dealership — every car filmed, every inquiry answered in under a minute, waitlist automated.', m: [['$4.2M', 'ALLOCATION REQUESTS'], ['58s', 'INQUIRY RESPONSE'], ['6 wks', 'TO LAUNCH']], bars: [10, 22, 18, 30, 26, 40, 50, 44, 60, 56, 72, 84] }
+    ];
+    this.cleanup = [];
+  }
+  componentDidMount() { this.applyAccent(); this.initEngine(); this.initUX(); this.initRadar(); this.initFooterPool(); }
+  initFooterPool() {
+    let cv = this.footerCanvas.current;
+    if (!cv) { const t = setTimeout(() => this.initFooterPool(), 300); this.cleanup.push(() => clearTimeout(t)); return; }
+    let ctx = cv.getContext('2d'), W = 0, H = 0, prev = performance.now();
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const rips = [];
+    const loop = (now) => {
+      this.footRaf = requestAnimationFrame(loop);
+      const cur = this.footerCanvas.current;
+      if (!cur) return;
+      const r = cur.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight || r.width < 4) { prev = now; return; }
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const bw = Math.round(r.width * dpr);
+      if (cur !== cv || cv.width !== bw) { cv = cur; cv.width = bw; cv.height = Math.round(r.height * dpr); ctx = cv.getContext('2d'); }
+      W = r.width; H = r.height;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const dt = Math.min(50, now - prev) / 1000; prev = now;
+      ctx.clearRect(0, 0, W, H);
+      const [ar, ag, ab] = this.accentRGB();
+      const waterTop = H * 0.72;
+      if (!RM && Math.random() < 8 * dt) rips.push({ x: Math.random() * W, y: waterTop + Math.random() * (H - waterTop) * .7, r: 1, vr: 60 + Math.random() * 70, a: .5 });
+      for (let i = rips.length - 1; i >= 0; i--) {
+        const rp = rips[i];
+        rp.r += rp.vr * dt; rp.vr *= Math.pow(.5, dt); rp.a -= dt * .42;
+        if (rp.a <= 0) { rips.splice(i, 1); continue; }
+        const rr = Math.max(.01, rp.r);
+        ctx.strokeStyle = `rgba(${ar},${ag},${ab},${rp.a * .55})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.ellipse(rp.x, rp.y, rr, rr * .22, 0, 0, 6.283); ctx.stroke();
+      }
+      for (let i = 0; i < 4; i++) {
+        const y = waterTop + Math.random() * (H - waterTop);
+        ctx.fillStyle = `rgba(150,195,250,${Math.random() * .04})`;
+        ctx.fillRect(Math.random() * W, y, 8 + Math.random() * 40, 1);
+      }
+    };
+    this.footRaf = requestAnimationFrame(loop);
+    this.cleanup.push(() => cancelAnimationFrame(this.footRaf));
+  }
+  initWater() {
+    const cv = this.waterCanvas.current;
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, H = 0;
+    const fit = () => { const r = cv.getBoundingClientRect(); W = Math.max(10, r.width); H = Math.max(10, r.height); const dpr = Math.min(devicePixelRatio || 1, 2); cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    fit();
+    addEventListener('resize', fit);
+    this.cleanup.push(() => removeEventListener('resize', fit));
+    const drops = [], rips = [], sparks = [];
+    let prev = performance.now(), t = 0;
+    const [arF, agF, abF] = [86, 185, 255];
+    const splash = (x, y, big) => {
+      rips.push({ x, y, r: 2, vr: (big ? 130 : 75) + Math.random() * 60, a: big ? .6 : .45 });
+      const n = big ? 7 : 3 + (Math.random() * 3 | 0);
+      for (let i = 0; i < n; i++) sparks.push({ x, y, vx: (Math.random() - .5) * (big ? 220 : 140), vy: -(70 + Math.random() * (big ? 240 : 160)), a: .95, r: .8 + Math.random() * 1.3 });
+    };
+    const mdown = (e) => { const r = cv.getBoundingClientRect(); if (e.clientY > r.top && e.clientY < r.bottom) { const wl = H * .42; splash(e.clientX - r.left, wl + Math.random() * (H - wl) * .5, true); } };
+    addEventListener('mousedown', mdown);
+    this.cleanup.push(() => removeEventListener('mousedown', mdown));
+    const loop = (now) => {
+      this.waterRaf = requestAnimationFrame(loop);
+      const dt = Math.min(50, now - prev) / 1000; prev = now; t += dt;
+      const vr = cv.getBoundingClientRect();
+      if (vr.bottom < -40 || vr.top > innerHeight + 40) return;
+      const [ar, ag, ab] = this.accentRGB();
+      const wl = H * .42;
+      ctx.clearRect(0, 0, W, H);
+      const g = ctx.createLinearGradient(0, wl - 6, 0, H);
+      g.addColorStop(0, 'rgba(22,48,92,.6)'); g.addColorStop(1, 'rgba(4,12,26,.95)');
+      ctx.fillStyle = g; ctx.fillRect(0, wl, W, H - wl);
+      ctx.fillStyle = 'rgba(150,205,255,.3)';
+      for (let i = 0; i < Math.ceil(W / 90); i++) {
+        const sx = i * 90 + ((t * 22) % 90);
+        ctx.globalAlpha = .35 + .3 * Math.sin(t * 1.3 + i * 1.7);
+        ctx.fillRect(sx, wl + Math.sin(t * .9 + i) * 1.4, 44, 1);
+      }
+      ctx.globalAlpha = 1;
+      for (let i = 0; i < 5; i++) {
+        ctx.fillStyle = `rgba(150,195,250,${Math.random() * .045})`;
+        ctx.fillRect(Math.random() * W, wl + 6 + Math.random() * (H - wl - 12), 10 + Math.random() * 50, 1);
+      }
+      const rate = ((this.props.rainIntensity ?? 70) / 70) * (RM ? 3 : 30);
+      if (Math.random() < rate * dt) drops.push({ x: Math.random() * W, y: -14, v: 560 + Math.random() * 420, wl: wl + Math.random() * (H - wl) * .75 });
+      ctx.lineCap = 'round';
+      for (let i = drops.length - 1; i >= 0; i--) {
+        const d = drops[i];
+        d.y += d.v * dt;
+        if (d.y >= d.wl) { splash(d.x, d.wl, Math.random() < .25); drops.splice(i, 1); continue; }
+        ctx.strokeStyle = 'rgba(172,205,250,.4)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x + 1.5, d.y - 16); ctx.stroke();
+      }
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const p = sparks[i];
+        p.vy += 780 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.a -= dt * 1.5;
+        if (p.a <= 0) { sparks.splice(i, 1); continue; }
+        ctx.fillStyle = `rgba(190,220,255,${p.a * .85})`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      }
+      for (let i = rips.length - 1; i >= 0; i--) {
+        const rp = rips[i];
+        rp.r += rp.vr * dt; rp.vr *= Math.pow(.42, dt); rp.a -= dt * .6;
+        if (rp.a <= 0) { rips.splice(i, 1); continue; }
+        ctx.strokeStyle = `rgba(${ar},${ag},${ab},${rp.a})`;
+        ctx.lineWidth = 1.2;
+        const rr2 = Math.max(0.01, rp.r);
+        ctx.beginPath(); ctx.ellipse(rp.x, rp.y, rr2, rr2 * .26, 0, 0, 6.283); ctx.stroke();
+      }
+    };
+    this.waterRaf = requestAnimationFrame(loop);
+    this.cleanup.push(() => cancelAnimationFrame(this.waterRaf));
+  }
+  initRadar() {
+    if (!this.radarCanvas.current) {
+      this.radarTries = (this.radarTries || 0) + 1;
+      if (this.radarTries < 60) { const t = setTimeout(() => this.initRadar(), 250); this.cleanup.push(() => clearTimeout(t)); }
+      return;
+    }
+    let cv = null, ctx = null, sz = 0;
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cells = [];
+    const cluster = (ca, cr, n, base) => { for (let i = 0; i < n; i++) cells.push({ a: ca + (Math.random() - .5) * 1.15, r: Math.min(.9, Math.max(.12, cr + (Math.random() - .5) * .34)), s: .045 + Math.random() * .09, i: Math.min(1, base + Math.random() * .45), da: (Math.random() - .5) * .05 }); };
+    cluster(0.6, .55, 26, .45); cluster(2.8, .32, 18, .65); cluster(4.6, .72, 22, .3);
+    let ang = 0, prev = performance.now();
+    const draw = (now) => {
+      this.radarRaf = requestAnimationFrame(draw);
+      const dt = Math.min(50, now - prev) / 1000; prev = now;
+      const cur = this.radarCanvas.current;
+      if (!cur) return;
+      const rct = cur.getBoundingClientRect();
+      if (rct.width < 4) return;
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const bw = Math.round(rct.width * dpr);
+      if (cur !== cv || cv.width !== bw) { cv = cur; cv.width = bw; cv.height = bw; ctx = cv.getContext('2d'); }
+      sz = rct.width;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ang += dt * (RM ? .12 : 1.35);
+      const [ar, ag, ab] = this.accentRGB();
+      const col = (i, a) => i > .8 ? `rgba(240,250,255,${a})` : i > .55 ? `rgba(${ar},${ag},${ab},${a})` : i > .3 ? `rgba(60,120,220,${a})` : `rgba(40,80,160,${a})`;
+      const c = sz / 2, R = c - 6;
+      ctx.clearRect(0, 0, sz, sz);
+      ctx.save();
+      ctx.beginPath(); ctx.arc(c, c, R, 0, 7); ctx.clip();
+      const bg = ctx.createRadialGradient(c, c, 0, c, c, R);
+      bg.addColorStop(0, '#081627'); bg.addColorStop(1, '#03080f');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, sz, sz);
+      for (const s of cells) {
+        s.a += s.da * dt;
+        const x = c + Math.cos(s.a) * s.r * R, y = c + Math.sin(s.a) * s.r * R, rad = s.s * R;
+        let d = (ang - s.a) % 6.2832; if (d < 0) d += 6.2832;
+        const boost = Math.max(0, 1 - d / 1.2);
+        const alpha = .1 + s.i * .22 + boost * .55 * s.i;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
+        g.addColorStop(0, col(s.i, alpha)); g.addColorStop(1, col(s.i, 0));
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, rad, 0, 7); ctx.fill();
+      }
+      ctx.strokeStyle = 'rgba(120,175,255,.14)'; ctx.lineWidth = 1;
+      for (let i = 1; i <= 4; i++) { ctx.beginPath(); ctx.arc(c, c, R * i / 4, 0, 7); ctx.stroke(); }
+      ctx.beginPath(); ctx.moveTo(c - R, c); ctx.lineTo(c + R, c); ctx.moveTo(c, c - R); ctx.lineTo(c, c + R); ctx.stroke();
+      ctx.strokeStyle = 'rgba(120,175,255,.3)';
+      for (let i = 0; i < 24; i++) { const a = i * Math.PI / 12; ctx.beginPath(); ctx.moveTo(c + Math.cos(a) * (R - 6), c + Math.sin(a) * (R - 6)); ctx.lineTo(c + Math.cos(a) * R, c + Math.sin(a) * R); ctx.stroke(); }
+      if (ctx.createConicGradient) {
+        const trail = 1.15, f = trail / 6.2832;
+        const cg = ctx.createConicGradient(ang - trail, c, c);
+        cg.addColorStop(0, `rgba(${ar},${ag},${ab},0)`);
+        cg.addColorStop(f * .999, `rgba(${ar},${ag},${ab},.3)`);
+        cg.addColorStop(f, `rgba(${ar},${ag},${ab},0)`);
+        cg.addColorStop(1, `rgba(${ar},${ag},${ab},0)`);
+        ctx.fillStyle = cg; ctx.beginPath(); ctx.moveTo(c, c); ctx.arc(c, c, R, 0, 7); ctx.fill();
+      }
+      ctx.strokeStyle = 'rgba(200,230,255,.9)'; ctx.lineWidth = 1.6;
+      ctx.shadowColor = `rgba(${ar},${ag},${ab},.9)`; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.moveTo(c, c); ctx.lineTo(c + Math.cos(ang) * R, c + Math.sin(ang) * R); ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(140,190,255,.32)'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(c, c, R, 0, 7); ctx.stroke();
+      ctx.fillStyle = 'rgba(200,230,255,.9)'; ctx.beginPath(); ctx.arc(c, c, 2.2, 0, 7); ctx.fill();
+    };
+    this.radarRaf = requestAnimationFrame(draw);
+    this.cleanup.push(() => cancelAnimationFrame(this.radarRaf));
+  }
+  componentDidUpdate() { this.applyAccent(); }
+  componentWillUnmount() { if (this.scrollAnim) cancelAnimationFrame(this.scrollAnim); this.cleanup.forEach(fn => fn()); this.cleanup = []; }
+  accent() { return this.props.accent ?? '#56b9ff'; }
+  accentRGB() {
+    let h = this.accent().replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const n = parseInt(h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  applyAccent() {
+    const [r, g, b] = this.accentRGB();
+    const s = document.body.style;
+    s.setProperty('--accent', this.accent());
+    s.setProperty('--accent-soft', `rgba(${r},${g},${b},0.13)`);
+    s.setProperty('--accent-glow', `rgba(${r},${g},${b},0.3)`);
+  }
+  pickCase(i) {
+    this.setState({ caseIdx: i });
+    this.syncTabs(i);
+    const el = this.caseStage.current;
+    if (el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'caseIn .55s cubic-bezier(.2,.8,.25,1) both'; }
+  }
+  syncTabs(ci) {
+    [...document.querySelectorAll('[data-case-tab]')].forEach((el, i) => {
+      const hue = (this.CASES[i] || {}).hue || '86,185,255';
+      const on = i === ci;
+      el.style.borderTop = on ? '3px solid rgb(' + hue + ')' : '3px solid transparent';
+      el.style.background = on ? 'rgba(9,20,38,.72)' : 'rgba(5,11,20,.55)';
+      const ld = el.querySelector('[data-case-lead]');
+      if (ld) ld.style.color = on ? 'rgb(' + hue + ')' : '#5d7ca6';
+      const ic = el.querySelector('[data-case-ic]');
+      if (ic) { ic.style.color = on ? 'rgb(' + hue + ')' : 'rgba(' + hue + ',.55)'; ic.style.borderColor = on ? 'rgba(' + hue + ',.6)' : 'rgba(' + hue + ',.22)'; ic.style.boxShadow = on ? '0 0 16px rgba(' + hue + ',.25)' : 'none'; }
+      const pg = el.querySelector('[data-case-prog]');
+      if (pg) {
+        pg.style.background = 'rgb(' + hue + ')';
+        pg.style.transition = 'none'; pg.style.width = '0';
+        if (on && !this.userLocked) { void pg.offsetWidth; pg.style.transition = 'width 6.4s linear'; pg.style.width = '100%'; }
+      }
+    });
+  }
+  makeIcon(paths, size) {
+    return React.createElement('svg', { viewBox: '0 0 24 24', width: size, height: size, fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' }, paths.map((d, k) => React.createElement('path', { d, key: k })));
+  }
+  smoothTo(target) {
+    if (this.scrollAnim) cancelAnimationFrame(this.scrollAnim);
+    const start = scrollY, dist = target - start, dur = Math.min(1100, 350 + Math.abs(dist) * 0.25), t0 = performance.now();
+    const ease = (t) => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / dur);
+      window.scrollTo(0, start + dist * ease(k));
+      if (k < 1) this.scrollAnim = requestAnimationFrame(step);
+    };
+    this.scrollAnim = requestAnimationFrame(step);
+  }
+  goTo(ref) {
+    return (e) => {
+      if (e && e.preventDefault) e.preventDefault();
+      const el = ref.current;
+      if (el) this.smoothTo(el.offsetTop - 56);
+    };
+  }
+  initUX() {
+    const els = [...document.querySelectorAll('[data-reveal]')];
+    const vh = innerHeight;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'translateY(0px)';
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top > vh * 0.92) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(34px)';
+        el.style.transition = 'opacity .9s ease, transform .9s cubic-bezier(.2,.75,.25,1)';
+        io.observe(el);
+      }
+    });
+    this.cleanup.push(() => io.disconnect());
+    const updStorm = () => {
+      const n = this.nameRef.current, e = this.emailRef.current, m = this.msgRef.current;
+      let lv = 0;
+      if (n && n.value.trim()) lv += 1 / 3;
+      if (e && e.value.trim()) lv += 1 / 3;
+      if (m) lv += Math.min(1, m.value.trim().length / 60) / 3;
+      this.formStorm = lv;
+      const w = this.btnWater.current;
+      if (w) w.style.height = (lv * 100).toFixed(1) + '%';
+      const c = this.btnCond.current;
+      if (c) c.textContent = lv <= 0.01 ? 'DRY' : lv < .34 ? 'DRIZZLE' : lv < .7 ? 'SHOWER' : 'DOWNPOUR';
+    };
+    [this.nameRef, this.emailRef, this.msgRef].forEach(r => {
+      const el = r.current;
+      if (el) { el.addEventListener('input', updStorm); this.cleanup.push(() => el.removeEventListener('input', updStorm)); }
+    });
+    updStorm();
+    const svcSec = this.servicesRef.current;
+    if (svcSec) {
+      [...svcSec.querySelectorAll('[data-svc-content]')].forEach(content => {
+        const card = content.closest('div').parentElement ? content.parentElement : content;
+        const num = card.querySelector('[data-svc-num]');
+        const items = [...content.children];
+        items.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; });
+        if (num) { num.style.opacity = '0'; num.style.transform = 'translateX(60px) rotate(2deg)'; num.style.transition = 'opacity 1.1s ease .25s, transform 1.1s cubic-bezier(.19,.8,.28,1) .25s'; }
+        const io2 = new IntersectionObserver(es => es.forEach(en => {
+          if (!en.isIntersecting) return;
+          items.forEach((el, i) => {
+            el.style.transition = `opacity .85s ease ${.12 + i * .13}s, transform .85s cubic-bezier(.19,.8,.28,1) ${.12 + i * .13}s`;
+            el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+          });
+          if (num) { num.style.opacity = '1'; num.style.transform = 'translateX(0) rotate(0deg)'; }
+          io2.disconnect();
+        }), { threshold: 0.45 });
+        io2.observe(card);
+        this.cleanup.push(() => io2.disconnect());
+      });
+    }
+    const md = (e) => {
+      const layer = this.rippleLayer.current;
+      if (!layer) return;
+      const d = document.createElement('div');
+      d.style.cssText = `position:absolute;left:${e.clientX}px;top:${e.clientY}px;width:150px;height:150px;border:1.5px solid var(--accent);border-radius:50%;opacity:.7;pointer-events:none;animation:clickRipple .8s ease-out forwards;`;
+      layer.appendChild(d);
+      setTimeout(() => d.remove(), 830);
+    };
+    addEventListener('mousedown', md);
+    this.cleanup.push(() => removeEventListener('mousedown', md));
+
+    const lines = ['listening for new leads…', 'drafting tomorrow\u2019s follow-ups…', 'watching the calendar…', 'reconciling the books…', 'tuning ad spend…', 'answering support in 38 seconds…'];
+    let li = 0;
+    const el = this.aiLog.current;
+    if (el) el.style.transition = 'opacity .3s ease';
+    const iv = setInterval(() => {
+      if (!el) return;
+      el.style.opacity = '0';
+      setTimeout(() => { li = (li + 1) % lines.length; el.textContent = lines[li]; el.style.opacity = '1'; }, 320);
+    }, 2600);
+    this.cleanup.push(() => clearInterval(iv));
+    let tasks = 1284;
+    const civ = setInterval(() => {
+      const el2 = this.aiCounter.current;
+      if (!el2) return;
+      tasks += 1 + (Math.random() * 3 | 0);
+      el2.textContent = tasks.toLocaleString('en-US');
+    }, 2200);
+    this.cleanup.push(() => clearInterval(civ));
+    const t0 = setTimeout(() => this.syncTabs(this.state.caseIdx), 900);
+    this.cleanup.push(() => clearTimeout(t0));
+    const cyc = setInterval(() => {
+      if (this.userLocked || document.hidden) return;
+      const st = this.caseStage.current;
+      if (st) { const r = st.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; }
+      this.pickCase((this.state.caseIdx + 1) % this.CASES.length);
+    }, 6500);
+    this.cleanup.push(() => clearInterval(cyc));
+  }
+  initEngine() {
+    const canvas = this.rainCanvas.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const S = { W: 0, H: 0, drops: [], ripples: [], sparks: [], wind: -30, mx: -9999, my: -9999, flashStart: -9999, bolt: null, boltAlpha: 0, nextLight: performance.now() + 2600, prev: performance.now(), navSolid: false, turbT: 0, tx: 0, ty: 0 };
+    const resize = () => {
+      S.W = innerWidth; S.H = innerHeight;
+      const dpr = Math.min(devicePixelRatio || 1, 1.75);
+      canvas.width = S.W * dpr; canvas.height = S.H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    addEventListener('resize', resize);
+    this.cleanup.push(() => removeEventListener('resize', resize));
+    const mm = (e) => { S.mx = e.clientX; S.my = e.clientY; };
+    addEventListener('mousemove', mm);
+    this.cleanup.push(() => removeEventListener('mousemove', mm));
+    const intensity = () => { let v = (this.props.rainIntensity ?? 70) / 50 * (1 + (this.formStorm || 0) * 0.7); if (RM) v *= 0.25; return v; };
+    const newDrop = (top) => {
+      const z = 0.3 + Math.random() * 0.7;
+      return { x: Math.random() * (S.W + 240) - 120, y: top ? -30 - Math.random() * S.H * 0.5 : Math.random() * S.H, z, len: 11 + z * 30, spd: 650 + z * 900, gj: Math.random() * 110 };
+    };
+    const splash = (x, y, big) => {
+      S.ripples.push({ x, y, r: big ? 6 : 2, vr: big ? 160 : 70 + Math.random() * 70, a: big ? 0.6 : 0.4 });
+      const n = big ? 8 : 2 + (Math.random() * 3 | 0);
+      for (let i = 0; i < n; i++) S.sparks.push({ x, y, vx: (Math.random() - 0.5) * (big ? 280 : 130), vy: -(60 + Math.random() * (big ? 280 : 150)), a: 0.9, r: 0.8 + Math.random() * 1.4 });
+    };
+    const makeBolt = () => {
+      const pts = [];
+      let x = S.W * (0.15 + Math.random() * 0.7), y = -20;
+      pts.push([x, y]);
+      while (y < S.H * 0.62) { y += 24 + Math.random() * 46; x += (Math.random() - 0.5) * 70; pts.push([x, y]); }
+      return pts;
+    };
+    const flashEnv = (t) => {
+      if (t < 0) return 0;
+      if (t < 70) return 0.95 * (t / 70);
+      if (t < 140) return 0.95 - (t - 70) / 70 * 0.75;
+      if (t < 200) return 0.2;
+      if (t < 300) return 0.2 + (t - 200) / 100 * 0.5;
+      if (t < 520) return 0.7 * (1 - (t - 300) / 220);
+      return 0;
+    };
+    const loop = (now) => {
+      this.raf = requestAnimationFrame(loop);
+      const dt = Math.min(45, now - S.prev) / 1000;
+      S.prev = now;
+      const hero = this.heroRef.current;
+      const rect = hero ? hero.getBoundingClientRect() : { top: 0, bottom: S.H, height: S.H };
+      const heroVis = Math.max(0, Math.min(1, rect.bottom / Math.max(1, rect.height * 0.65)));
+      const m = 0.32 + 0.68 * heroVis;
+      const inten = intensity();
+      const wt = (S.mx > -999 ? ((S.mx / S.W) - 0.5) * 300 : 0) - 40;
+      S.wind += (wt - S.wind) * Math.min(1, dt * 1.6);
+      ctx.clearRect(0, 0, S.W, S.H);
+      const lightOn = (this.props.lightning ?? true) && !RM;
+      if (lightOn && now > S.nextLight) {
+        S.flashStart = now;
+        S.nextLight = now + 5200 + Math.random() * 9000;
+        if (Math.random() < 0.6) { S.bolt = makeBolt(); S.boltAlpha = 1; }
+      }
+      const fa = flashEnv(now - S.flashStart);
+      if (this.flashRef.current) this.flashRef.current.style.opacity = (fa * 0.5).toFixed(3);
+      if (fa > 0) {
+        const g = ctx.createRadialGradient(S.W * 0.5, -S.H * 0.2, 0, S.W * 0.5, -S.H * 0.2, S.H * 1.35);
+        g.addColorStop(0, `rgba(205,228,255,${fa * 0.4})`);
+        g.addColorStop(1, 'rgba(140,180,255,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, S.W, S.H);
+      }
+      if (S.boltAlpha > 0 && S.bolt) {
+        ctx.save();
+        ctx.strokeStyle = `rgba(225,240,255,${Math.max(0, S.boltAlpha)})`;
+        ctx.lineWidth = 2.2;
+        ctx.shadowColor = 'rgba(160,200,255,.9)';
+        ctx.shadowBlur = 22;
+        ctx.beginPath();
+        S.bolt.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+        ctx.stroke();
+        ctx.restore();
+        S.boltAlpha -= dt * 3.4;
+      }
+      const target = Math.round(S.W * S.H / 9500 * inten);
+      while (S.drops.length < target) S.drops.push(newDrop(false));
+      if (S.drops.length > target) S.drops.length = target;
+      const waterTop = rect.bottom - 150;
+      const waterVisible = waterTop < S.H + 60 && rect.bottom > 60;
+      const umbrella = !RM && S.mx > 0 && S.my > 0 && S.my < rect.bottom - 160 && rect.top < 40;
+      ctx.lineCap = 'round';
+      for (const d of S.drops) {
+        d.y += d.spd * d.z * dt * (0.75 + 0.45 * m);
+        d.x += S.wind * d.z * dt;
+        if (d.x > S.W + 120) d.x -= S.W + 240;
+        if (d.x < -120) d.x += S.W + 240;
+        if (umbrella) {
+          const dx = d.x - S.mx, dy = d.y - S.my;
+          if (dx * dx + dy * dy < 5184 && d.y < S.my + 10) {
+            const ang = Math.atan2(dy, dx);
+            splash(S.mx + Math.cos(ang) * 72, S.my + Math.sin(ang) * 72, false);
+            Object.assign(d, newDrop(true));
+            continue;
+          }
+        }
+        const gy = waterTop + d.gj - 40;
+        if (waterVisible && d.z > 0.5 && d.y > gy) {
+          if (Math.random() < 0.5) splash(d.x, gy, false);
+          Object.assign(d, newDrop(true));
+          continue;
+        }
+        if (d.y > S.H + 80) { Object.assign(d, newDrop(true)); continue; }
+        const sl = S.wind * d.z * 0.045;
+        ctx.strokeStyle = `rgba(172,205,250,${(0.09 + 0.28 * d.z) * (0.55 + 0.45 * m) + fa * 0.15})`;
+        ctx.lineWidth = d.z > 0.75 ? 1.6 : 1;
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(d.x - sl, d.y - d.len * (1 + d.z * 0.6));
+        ctx.stroke();
+      }
+      for (let i = S.sparks.length - 1; i >= 0; i--) {
+        const p = S.sparks[i];
+        p.vy += 760 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.a -= dt * 1.7;
+        if (p.a <= 0) { S.sparks.splice(i, 1); continue; }
+        ctx.fillStyle = `rgba(190,220,255,${p.a * 0.8})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        ctx.fill();
+      }
+      for (let i = S.ripples.length - 1; i >= 0; i--) {
+        const r = S.ripples[i];
+        r.r += r.vr * dt; r.vr *= Math.pow(0.4, dt); r.a -= dt * 0.75;
+        if (r.a <= 0) { S.ripples.splice(i, 1); continue; }
+        ctx.strokeStyle = `rgba(185,215,255,${r.a})`;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        const rr1 = Math.max(0.01, r.r);
+        ctx.ellipse(r.x, r.y, rr1, rr1 * 0.24, 0, 0, 6.283);
+        ctx.stroke();
+      }
+      if (waterVisible) {
+        for (let i = 0; i < 10; i++) {
+          const y = waterTop + 20 + Math.random() * 120;
+          if (y > S.H) continue;
+          ctx.fillStyle = `rgba(150,195,250,${Math.random() * 0.05 * m + fa * 0.05})`;
+          ctx.fillRect(Math.random() * S.W, y, 6 + Math.random() * 44, 1);
+        }
+      }
+      if (umbrella) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(150,200,255,.28)';
+        ctx.setLineDash([3, 7]);
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(S.mx, S.my, 72, Math.PI, 2 * Math.PI);
+        ctx.stroke();
+        ctx.restore();
+      }
+      const sc = scrollY;
+      const hc = this.heroContent.current;
+      if (hc) {
+        const k = Math.min(1, sc / Math.max(1, rect.height * 0.9));
+        hc.style.transform = `translateY(${(sc * 0.26).toFixed(1)}px)`;
+        hc.style.opacity = String(Math.max(0, 1 - k * 1.15));
+      }
+      const tw = this.tiltRef.current;
+      if (tw && !RM) {
+        const nx = S.mx > 0 ? (S.mx / S.W - 0.5) : 0;
+        const ny = S.my > 0 ? (S.my / S.H - 0.5) : 0;
+        S.tx += ((ny * -5) - S.tx) * Math.min(1, dt * 3);
+        S.ty += ((nx * 7) - S.ty) * Math.min(1, dt * 3);
+        tw.style.transform = `perspective(1100px) rotateX(${S.tx.toFixed(2)}deg) rotateY(${S.ty.toFixed(2)}deg)`;
+      }
+      this.drawAINet(now, dt, RM);
+      this.drawWebFx(now, dt, RM);
+      this.drawAppsFx(now, dt, RM);
+      this.drawRevFx(now, dt, RM);
+      this.drawGrowthFx(now, dt, RM);
+      const ffx = this.formFxCanvas.current;
+      if (ffx && !RM) {
+        const lv = this.formStorm || 0;
+        const host = ffx.parentElement;
+        const fr = host.getBoundingClientRect();
+        if (fr.bottom > 0 && fr.top < S.H && lv > 0.02) {
+          const fw = host.clientWidth, fh = host.clientHeight;
+          if (ffx.width !== fw || ffx.height !== fh) { ffx.width = fw; ffx.height = fh; }
+          const fc = ffx.getContext('2d');
+          fc.clearRect(0, 0, fw, fh);
+          if (!S.fDrops) S.fDrops = [];
+          const tgt = Math.round(lv * lv * 80);
+          while (S.fDrops.length < tgt) S.fDrops.push({ x: Math.random() * fw, y: Math.random() * fh, z: .4 + Math.random() * .6 });
+          if (S.fDrops.length > tgt) S.fDrops.length = tgt;
+          fc.lineCap = 'round';
+          for (const d of S.fDrops) {
+            d.y += (460 + d.z * 680) * dt; d.x -= 26 * d.z * dt;
+            if (d.y > fh + 20) { d.y = -20 - Math.random() * 40; d.x = Math.random() * (fw + 50); }
+            fc.strokeStyle = `rgba(172,205,250,${((.08 + .3 * d.z) * lv).toFixed(3)})`;
+            fc.lineWidth = d.z > .75 ? 1.4 : 1;
+            fc.beginPath(); fc.moveTo(d.x, d.y); fc.lineTo(d.x + 2, d.y - (9 + d.z * 15)); fc.stroke();
+          }
+          if (!S.fNext) S.fNext = now + 2500;
+          if (lv > .45 && now > S.fNext) {
+            S.fNext = now + (lv >= .95 ? 2000 + Math.random() * 2600 : 4500 + Math.random() * 5000);
+            S.fFlashStart = now;
+            const pts = []; let bx = fw * (.15 + Math.random() * .7), by = -6;
+            pts.push([bx, by]);
+            while (by < fh * .72) { by += 14 + Math.random() * 26; bx += (Math.random() - .5) * 44; pts.push([bx, by]); }
+            S.fBolt = pts; S.fBoltA = 1;
+          }
+          const ffa = flashEnv(now - (S.fFlashStart ?? -9999));
+          if (this.formFlash.current) this.formFlash.current.style.opacity = (ffa * .8).toFixed(3);
+          if (S.fBoltA > 0 && S.fBolt) {
+            fc.save();
+            fc.strokeStyle = `rgba(228,242,255,${Math.max(0, S.fBoltA).toFixed(3)})`;
+            fc.lineWidth = 1.8;
+            fc.shadowColor = 'rgba(160,200,255,.9)';
+            fc.shadowBlur = 14;
+            fc.beginPath();
+            S.fBolt.forEach((p, i) => i ? fc.lineTo(p[0], p[1]) : fc.moveTo(p[0], p[1]));
+            fc.stroke();
+            fc.restore();
+            S.fBoltA -= dt * 3.2;
+          }
+        } else {
+          if (ffx.width > 0 && (this.formStorm || 0) <= 0.02) { ffx.width = 0; ffx.height = 0; S.fDrops = []; }
+          if (this.formFlash.current) this.formFlash.current.style.opacity = '0';
+        }
+      }
+      const nav = this.navRef.current;
+      const solid = sc > 50;
+      if (nav && solid !== S.navSolid) {
+        S.navSolid = solid;
+        nav.style.background = solid ? 'rgba(3,7,13,.72)' : 'transparent';
+        nav.style.backdropFilter = solid ? 'blur(16px)' : 'none';
+        nav.style.webkitBackdropFilter = nav.style.backdropFilter;
+        nav.style.borderBottomColor = solid ? 'rgba(120,170,255,.10)' : 'transparent';
+      }
+    };
+    this.raf = requestAnimationFrame(loop);
+    this.cleanup.push(() => cancelAnimationFrame(this.raf));
+    const word = this.wordRef.current;
+    if (word && !RM) {
+      [...word.querySelectorAll('span')].forEach((s, i) => {
+        const t = setTimeout(() => {
+          const r = s.getBoundingClientRect();
+          splash(r.left + r.width / 2, r.bottom - r.height * 0.12, true);
+        }, 180 + i * 130 + 620);
+        this.cleanup.push(() => clearTimeout(t));
+      });
+    }
+  }
+  svcCard(cv, id) {
+    if (!cv) return null;
+    const r = cv.getBoundingClientRect();
+    if (r.width < 10 || r.bottom < -40 || r.top > innerHeight + 40) return null;
+    const dpr = Math.min(devicePixelRatio || 1, 1.75);
+    const W = Math.round(r.width), H = Math.round(r.height);
+    let S = this.fx[id];
+    let fresh = false;
+    if (!S || S.W !== W || S.H !== H) {
+      S = this.fx[id] = { W, H };
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      fresh = true;
+    }
+    const x = cv.getContext('2d');
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { x, W, H, S, fresh };
+  }
+  cardBg(x, W, H, top, mid, bot) {
+    const g = x.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, top); g.addColorStop(.55, mid); g.addColorStop(1, bot);
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+  }
+  drawWebFx(now, dt, RM) {
+    const c = this.svcCard(this.webCardCanvas.current, 'web');
+    if (!c) return;
+    const { x, W, H, S, fresh } = c;
+    if (fresh) {
+      S.bokeh = []; S.trickles = []; S.micro = [];
+      const cols = [[86,185,255],[125,140,255],[90,225,255],[255,175,95]];
+      for (let i = 0; i < 30; i++) S.bokeh.push({ x: Math.random()*W, y: H*.2+Math.random()*H*.7, r: 12+Math.pow(Math.random(),1.7)*95, c: Math.random()<.13?cols[3]:cols[(Math.random()*3)|0], a: .05+Math.random()*.11, vx: (Math.random()-.5)*5, vy: (Math.random()-.5)*3, ph: Math.random()*7 });
+      for (let i = 0; i < 14; i++) S.trickles.push({ x: Math.random()*W, y: Math.random()*H, spd: 26+Math.random()*70, r: 1.4+Math.random()*1.8, wob: Math.random()*7 });
+      for (let i = 0; i < 70; i++) S.micro.push({ x: Math.random()*W, y: Math.random()*H, r: .8+Math.random()*1.8, ph: Math.random()*7 });
+    }
+    this.cardBg(x, W, H, '#040a15', '#0a1a30', '#03060c');
+    const rg = x.createRadialGradient(W*.55, H*.9, 0, W*.55, H*.9, W*.6);
+    rg.addColorStop(0, 'rgba(70,130,220,.15)'); rg.addColorStop(1, 'rgba(70,130,220,0)');
+    x.fillStyle = rg; x.fillRect(0, 0, W, H);
+    x.globalCompositeOperation = 'lighter';
+    for (const b of S.bokeh) {
+      if (!RM) { b.x += b.vx*dt; b.y += b.vy*dt; if (b.x<-b.r) b.x=W+b.r; if (b.x>W+b.r) b.x=-b.r; if (b.y<H*.1) b.vy*=-1; if (b.y>H+b.r) b.y=H*.2; }
+      const a = b.a*(0.8+0.25*Math.sin(now/1600+b.ph));
+      const g = x.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+      g.addColorStop(0, `rgba(${b.c},${a})`); g.addColorStop(.7, `rgba(${b.c},${a*.55})`); g.addColorStop(1, `rgba(${b.c},0)`);
+      x.fillStyle = g; x.beginPath(); x.arc(b.x, b.y, b.r, 0, 7); x.fill();
+    }
+    x.globalCompositeOperation = 'source-over';
+    for (const m of S.micro) {
+      x.fillStyle = `rgba(205,228,255,${.08+.1*Math.sin(now/900+m.ph)})`;
+      x.beginPath(); x.arc(m.x, m.y, m.r, 0, 7); x.fill();
+    }
+    for (const t of S.trickles) {
+      if (!RM) { t.y += t.spd*dt; t.x += Math.sin(now/700+t.wob)*10*dt; if (t.y > H+8) { t.y = -8; t.x = Math.random()*W; t.spd = 26+Math.random()*70; } }
+      x.strokeStyle = 'rgba(190,220,255,.2)'; x.lineWidth = t.r*.9;
+      x.beginPath(); x.moveTo(t.x, t.y-t.spd*.32); x.lineTo(t.x, t.y); x.stroke();
+      x.fillStyle = 'rgba(210,232,255,.5)'; x.beginPath(); x.arc(t.x, t.y, t.r, 0, 7); x.fill();
+      x.fillStyle = 'rgba(255,255,255,.55)'; x.beginPath(); x.arc(t.x-t.r*.3, t.y-t.r*.3, t.r*.3, 0, 7); x.fill();
+    }
+  }
+  drawAppsFx(now, dt, RM) {
+    const c = this.svcCard(this.appsCardCanvas.current, 'apps');
+    if (!c) return;
+    const { x, W, H, S, fresh } = c;
+    if (fresh) {
+      S.dust = [];
+      for (let i = 0; i < 30; i++) S.dust.push({ x: Math.random()*W, y: Math.random()*H, r: .6+Math.random()*1.6, ph: Math.random()*7, spd: 3+Math.random()*7 });
+    }
+    this.cardBg(x, W, H, '#05091a', '#0b1430', '#04060e');
+    const rg = x.createRadialGradient(W*.2, H*.15, 0, W*.2, H*.15, W*.4);
+    rg.addColorStop(0, 'rgba(100,140,255,.12)'); rg.addColorStop(1, 'rgba(100,140,255,0)');
+    x.fillStyle = rg; x.fillRect(0, 0, W, H);
+    for (const d of S.dust) {
+      if (!RM) { d.y -= d.spd*dt; if (d.y < -4) { d.y = H+4; d.x = Math.random()*W; } }
+      x.fillStyle = `rgba(140,200,255,${.12+.14*Math.sin(now/1100+d.ph)})`;
+      x.beginPath(); x.arc(d.x, d.y, d.r, 0, 7); x.fill();
+    }
+    const rr = (a,b,w,h,r) => { x.beginPath(); x.moveTo(a+r,b); x.arcTo(a+w,b,a+w,b+h,r); x.arcTo(a+w,b+h,a,b+h,r); x.arcTo(a,b+h,a,b,r); x.arcTo(a,b,a+w,b,r); x.closePath(); };
+    x.save();
+    const sc = Math.min(W, 1400)/950;
+    x.translate(W*.54, H*.5); x.rotate(-.18); x.scale(sc, sc);
+    const panel = (a, b, w, h, ph, bright) => {
+      const bob = RM ? 0 : Math.sin(now/1400+ph)*7;
+      b += bob;
+      const g = x.createLinearGradient(a, b, a, b+h);
+      g.addColorStop(0, `rgba(190,220,255,${bright?.5:.35})`); g.addColorStop(1, 'rgba(190,220,255,.06)');
+      rr(a, b, w, h, 14);
+      x.fillStyle = 'rgba(90,150,255,.05)'; x.fill();
+      x.strokeStyle = g; x.lineWidth = 1.1; x.stroke();
+      x.fillStyle = 'rgba(150,200,255,.4)'; rr(a+18, b+16, 52, 4, 2); x.fill();
+      const cyc = ((now/1000)+ph) % 4;
+      for (let j = 0; j < 3; j++) {
+        const p = Math.max(0, Math.min(1, (cyc - j*.8)/.9));
+        const lw = (w*.55 - j*16) * p;
+        x.fillStyle = 'rgba(150,190,240,.24)'; rr(a+18, b+34+j*13, Math.max(2,lw), 3.5, 1.75); x.fill();
+        if (p > 0 && p < 1 && Math.floor(now/380)%2===0) { x.fillStyle = 'rgba(140,210,255,.9)'; x.fillRect(a+18+lw+3, b+32+j*13, 2, 7); }
+      }
+      x.fillStyle = `rgba(86,185,255,${.4+.35*Math.sin(now/600+ph)})`; x.beginPath(); x.arc(a+w-20, b+20, 3.4, 0, 7); x.fill();
+    };
+    panel(-300, -150, 250, 155, 0);
+    panel(-115, -55, 265, 170, 1.6, true);
+    panel(90, 42, 240, 150, 3.1);
+    const pb = RM ? 0 : Math.sin(now/1700+.8)*8;
+    rr(280, -175+pb, 130, 265, 24);
+    x.fillStyle = 'rgba(70,120,210,.07)'; x.fill();
+    x.strokeStyle = 'rgba(200,228,255,.55)'; x.lineWidth = 1.3; x.stroke();
+    x.fillStyle = 'rgba(200,228,255,.5)'; rr(320, -163+pb, 40, 4, 2); x.fill();
+    const pp = (now/2800) % 1;
+    rr(298, 55+pb, 94, 5, 2.5); x.fillStyle = 'rgba(120,170,255,.15)'; x.fill();
+    rr(298, 55+pb, 94*pp, 5, 2.5); x.fillStyle = 'rgba(86,185,255,.85)'; x.fill();
+    x.save(); x.globalCompositeOperation = 'lighter';
+    const gg = x.createRadialGradient(345, -40+pb, 0, 345, -40+pb, 85);
+    gg.addColorStop(0, `rgba(86,195,255,${.1+.06*Math.sin(now/800)})`); gg.addColorStop(1, 'rgba(86,195,255,0)');
+    x.fillStyle = gg; x.fillRect(255, -140+pb, 190, 210);
+    x.restore();
+    x.restore();
+  }
+  drawRevFx(now, dt, RM) {
+    const c = this.svcCard(this.revCardCanvas.current, 'rev');
+    if (!c) return;
+    const { x, W, H, S, fresh } = c;
+    if (fresh) {
+      S.bars = [];
+      const n = 12, bw = (W-120)/n;
+      for (let i = 0; i < n; i++) S.bars.push({ x: 60+i*bw, w: bw-10, t: 34+i*((H*.52)/n)+Math.random()*18 });
+      S.path = [];
+      for (let i = 0; i <= 30; i++) { const t = i/30; S.path.push([70+t*(W-160), H-110-t*(H-230)+Math.sin(t*9)*26]); }
+      S.sparks = [];
+      for (let i = 0; i < 40; i++) S.sparks.push({ t: Math.random(), o: (Math.random()-.5)*70, spd: .05+Math.random()*.1, r: .6+Math.random()*1.8 });
+    }
+    this.cardBg(x, W, H, '#040c18', '#0a1c33', '#030710');
+    for (const b of S.bars) {
+      const h = b.t*(0.82+0.18*Math.sin(now/2600+b.x*.01));
+      x.fillStyle = 'rgba(120,180,255,.05)'; x.fillRect(b.x, H-56-h, b.w, h);
+      x.fillStyle = 'rgba(150,205,255,.32)'; x.fillRect(b.x, H-56-h, b.w, 1.7);
+    }
+    x.globalCompositeOperation = 'lighter';
+    for (const p of S.sparks) {
+      if (!RM) { p.t += p.spd*dt; if (p.t > 1) p.t = 0; }
+      const i = p.t*30, i0 = Math.min(29, i|0), fr = i-i0;
+      const A = S.path[i0], B = S.path[Math.min(30, i0+1)];
+      const px = A[0]+(B[0]-A[0])*fr, py = A[1]+(B[1]-A[1])*fr+p.o;
+      x.fillStyle = `rgba(160,215,255,${.12+.4*p.t})`;
+      x.beginPath(); x.arc(px, py, p.r, 0, 7); x.fill();
+    }
+    const tp = RM ? .8 : (now/4600) % 1;
+    x.strokeStyle = 'rgba(140,205,255,.5)'; x.lineWidth = 1.6;
+    x.beginPath();
+    const lim = tp*30;
+    for (let i = 0; i <= lim; i++) { const P = S.path[Math.min(30,i)]; i ? x.lineTo(P[0], P[1]) : x.moveTo(P[0], P[1]); }
+    const li = Math.min(29, lim|0), lf = lim-li;
+    const LA = S.path[li], LB = S.path[Math.min(30, li+1)];
+    const hx = LA[0]+(LB[0]-LA[0])*lf, hy = LA[1]+(LB[1]-LA[1])*lf;
+    x.lineTo(hx, hy); x.stroke();
+    x.save(); x.shadowColor = 'rgba(150,215,255,.95)'; x.shadowBlur = 16;
+    x.fillStyle = '#dceeff'; x.beginPath(); x.arc(hx, hy, 3.6, 0, 7); x.fill(); x.restore();
+    x.globalCompositeOperation = 'source-over';
+  }
+  drawGrowthFx(now, dt, RM) {
+    const c = this.svcCard(this.growthCardCanvas.current, 'growth');
+    if (!c) return;
+    const { x, W, H, S, fresh } = c;
+    if (fresh) {
+      S.bld = [];
+      let bx = 0;
+      while (bx < W) {
+        const bw = 14+Math.random()*30, bh = 24+Math.random()*110;
+        const wins = [];
+        for (let wy = 8; wy < bh-6; wy += 12) if (Math.random() < .5) wins.push({ wx: 3+Math.random()*(bw-8), wy, on: Math.random()<.4, t: Math.random()*4 });
+        S.bld.push({ x: bx, w: bw, h: bh, wins });
+        bx += bw+6+Math.random()*26;
+      }
+      S.streaks = [];
+      for (let i = 0; i < 60; i++) S.streaks.push({ x: Math.random()*W, y: Math.random()*H, spd: 380+Math.random()*420, len: 30+Math.random()*80 });
+      S.bolt = null; S.boltA = 0; S.flash = 0; S.next = now+1600;
+    }
+    this.cardBg(x, W, H, '#04070f', '#0a1526', '#020409');
+    const rg = x.createRadialGradient(W*.5, H-30, 0, W*.5, H-30, W*.5);
+    rg.addColorStop(0, 'rgba(90,150,255,.13)'); rg.addColorStop(1, 'rgba(90,150,255,0)');
+    x.fillStyle = rg; x.fillRect(0, 0, W, H);
+    if (!RM && now > S.next) {
+      S.next = now+2800+Math.random()*5600;
+      const pts = []; let cx = W*(.2+Math.random()*.6), cy = -10;
+      pts.push([cx, cy]);
+      while (cy < H*.6) { cy += 22+Math.random()*40; cx += (Math.random()-.5)*70; pts.push([cx, cy]); }
+      const brs = [];
+      for (let b = 0; b < 3; b++) {
+        const st = pts[1+((Math.random()*(pts.length-2))|0)], seg = [[st[0], st[1]]];
+        let bx2 = st[0], by2 = st[1];
+        for (let s = 0; s < 4; s++) { bx2 += (Math.random()<.5?-1:1)*(14+Math.random()*38); by2 += 16+Math.random()*30; seg.push([bx2, by2]); }
+        brs.push(seg);
+      }
+      S.bolt = { pts, brs }; S.boltA = 1; S.flash = .55;
+    }
+    if (S.flash > 0) {
+      x.fillStyle = `rgba(170,205,255,${S.flash*.16})`; x.fillRect(0, 0, W, H);
+      S.flash -= dt*1.6;
+    }
+    for (const b of S.bld) {
+      x.fillStyle = 'rgba(8,16,30,.92)'; x.fillRect(b.x, H-36-b.h, b.w, b.h);
+      x.strokeStyle = 'rgba(110,165,245,.14)'; x.lineWidth = 1; x.strokeRect(b.x+.5, H-36-b.h+.5, b.w-1, b.h-1);
+      for (const wn of b.wins) {
+        if (!RM) { wn.t -= dt; if (wn.t < 0) { wn.on = !wn.on ? Math.random()<.6 : Math.random()<.75; wn.t = .8+Math.random()*4; } }
+        if (wn.on) { x.fillStyle = Math.random()<.06 ? 'rgba(255,196,130,.5)' : 'rgba(160,200,255,.4)'; x.fillRect(b.x+wn.wx, H-36-b.h+wn.wy, 2.6, 3.6); }
+      }
+    }
+    x.fillStyle = 'rgba(2,4,9,.9)'; x.fillRect(0, H-36, W, 36);
+    if (S.bolt && S.boltA > 0) {
+      x.save(); x.globalCompositeOperation = 'lighter';
+      x.shadowColor = 'rgba(150,200,255,.9)'; x.shadowBlur = 22;
+      x.strokeStyle = `rgba(190,220,255,${S.boltA*.16})`; x.lineWidth = 8;
+      x.beginPath(); S.bolt.pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke();
+      x.strokeStyle = `rgba(230,243,255,${S.boltA*.9})`; x.lineWidth = 2.2;
+      x.beginPath(); S.bolt.pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke();
+      x.strokeStyle = `rgba(200,228,255,${S.boltA*.5})`; x.lineWidth = 1.2;
+      for (const seg of S.bolt.brs) { x.beginPath(); seg.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); }
+      x.restore();
+      S.boltA -= dt*2.8;
+    }
+    x.lineCap = 'round';
+    for (const st of S.streaks) {
+      if (!RM) { st.y += st.spd*dt; st.x -= st.spd*.06*dt; if (st.y > H+20) { st.y = -30; st.x = Math.random()*(W+60); } }
+      x.strokeStyle = 'rgba(185,214,255,.14)'; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(st.x, st.y); x.lineTo(st.x+st.len*.07, st.y-st.len); x.stroke();
+    }
+  }
+  drawAINet(now, dt, RM) {
+    const cv = this.aiCardCanvas.current;
+    if (!cv) return;
+    const r = cv.getBoundingClientRect();
+    if (r.width < 10 || r.bottom < -40 || r.top > innerHeight + 40) return;
+    const dpr = Math.min(devicePixelRatio || 1, 1.75);
+    const W = Math.round(r.width), H = Math.round(r.height);
+    let N = this.aiNet;
+    if (!N || N.W !== W || N.H !== H) {
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      const nodes = [];
+      for (let i = 0; i < 36; i++) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * 9, vy: (Math.random() - .5) * 9, hub: i % 6 === 0 });
+      N = this.aiNet = { W, H, nodes, packets: [], rings: [], link: Math.min(W, H) * .34 };
+      for (let i = 0; i < 7; i++) N.packets.push({ a: (Math.random() * 36) | 0, b: (Math.random() * 36) | 0, t: Math.random(), spd: .25 + Math.random() * .5 });
+    }
+    const x = cv.getContext('2d');
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const g = x.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#04070f'); g.addColorStop(.55, '#081226'); g.addColorStop(1, '#02040a');
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    const rg = x.createRadialGradient(W * .62, H * .42, 0, W * .62, H * .42, Math.min(W, H) * .7);
+    rg.addColorStop(0, 'rgba(86,185,255,.14)'); rg.addColorStop(1, 'rgba(86,185,255,0)');
+    x.fillStyle = rg; x.fillRect(0, 0, W, H);
+    const ns = N.nodes, L = N.link;
+    if (!RM) for (const n of ns) {
+      n.x += n.vx * dt; n.y += n.vy * dt;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    }
+    for (let i = 0; i < ns.length; i++) for (let j = i + 1; j < ns.length; j++) {
+      const dx = ns[i].x - ns[j].x, dy = ns[i].y - ns[j].y, d = Math.hypot(dx, dy);
+      if (d < L) { x.strokeStyle = `rgba(120,180,255,${(1 - d / L) * .17})`; x.lineWidth = .9; x.beginPath(); x.moveTo(ns[i].x, ns[i].y); x.lineTo(ns[j].x, ns[j].y); x.stroke(); }
+    }
+    for (const n of ns) {
+      if (n.hub) { x.save(); x.shadowColor = 'rgba(120,200,255,.9)'; x.shadowBlur = 16; x.fillStyle = 'rgba(180,225,255,.95)'; x.beginPath(); x.arc(n.x, n.y, 3.4 + Math.sin(now / 500 + n.x) * .8, 0, 7); x.fill(); x.restore(); }
+      else { x.fillStyle = 'rgba(150,200,255,.5)'; x.beginPath(); x.arc(n.x, n.y, 1.5, 0, 7); x.fill(); }
+    }
+    for (const p of N.packets) {
+      p.t += p.spd * dt * (RM ? .3 : 1);
+      const A = ns[p.a], B = ns[p.b];
+      if (p.t >= 1) { N.rings.push({ x: B.x, y: B.y, r: 3, a: .7 }); p.a = p.b; p.b = (Math.random() * ns.length) | 0; p.t = 0; p.spd = .25 + Math.random() * .5; continue; }
+      const px = A.x + (B.x - A.x) * p.t, py = A.y + (B.y - A.y) * p.t;
+      x.strokeStyle = 'rgba(140,205,255,.35)'; x.lineWidth = 1.1;
+      x.beginPath(); x.moveTo(A.x, A.y); x.lineTo(px, py); x.stroke();
+      x.save(); x.shadowColor = 'rgba(140,210,255,.95)'; x.shadowBlur = 12; x.fillStyle = '#cfe8ff';
+      x.beginPath(); x.arc(px, py, 2.3, 0, 7); x.fill(); x.restore();
+    }
+    for (let i = N.rings.length - 1; i >= 0; i--) {
+      const ring = N.rings[i];
+      ring.r += 34 * dt; ring.a -= dt * 1.4;
+      if (ring.a <= 0) { N.rings.splice(i, 1); continue; }
+      x.strokeStyle = `rgba(150,210,255,${ring.a})`; x.lineWidth = 1.2;
+      x.beginPath(); x.arc(ring.x, ring.y, ring.r, 0, 7); x.stroke();
+    }
+  }
+  renderVals() {
+    const ci = this.state.caseIdx || 0;
+    const ac = this.CASES[ci];
+    return {
+      cases: this.CASES.map((c, i) => ({
+        num: c.num, name: c.name, head: c.head,
+        lead: c.lead, leadColor: i === ci ? 'rgb(' + c.hue + ')' : '#5d7ca6',
+        nameStyle: Object.assign({ display: 'block', color: '#f2f8ff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.25 },
+          [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: '19px' },
+           { fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.11em', fontSize: '13.5px' },
+           { fontFamily: "'Geist Mono',monospace", textTransform: 'uppercase', letterSpacing: '.18em', fontSize: '12.5px' },
+           { fontFamily: "'Instrument Serif',serif", fontSize: '18.5px', letterSpacing: '.02em' }][i] || {}),
+        icon: this.makeIcon(c.paths, 18),
+        select: (e) => { e.preventDefault(); this.userLocked = true; this.pickCase(i); },
+        tabStyle: { position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'stretch', padding: '15px 18px 17px', borderTop: i === ci ? '3px solid rgb(' + c.hue + ')' : '3px solid transparent', background: i === ci ? 'rgba(9,20,38,.72)' : 'rgba(5,11,20,.55)', transition: 'all .25s ease', cursor: 'pointer' }
+      })),
+      activeKicker: ac.num + ' — ' + ac.head,
+      activeCat: ac.cat,
+      activeCatStyle: ac.hot
+        ? { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '10px', letterSpacing: '.18em', color: '#04101c', background: 'linear-gradient(120deg, rgb(' + ac.hue + '), #7d8cff)', borderRadius: '6px', padding: '5px 10px', fontWeight: 500, boxShadow: '0 0 18px rgba(' + ac.hue + ',.3)' }
+        : { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '10px', letterSpacing: '.18em', color: '#dcecff', background: 'rgba(' + ac.hue + ',.14)', border: '1px solid rgba(' + ac.hue + ',.4)', borderRadius: '6px', padding: '5px 10px', fontWeight: 500 },
+      activeCond: ac.cond,
+      activeCondStyle: { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '9.5px', letterSpacing: '.22em', color: 'rgb(' + ac.hue + ')', border: '1px solid rgba(' + ac.hue + ',.35)', borderRadius: '999px', padding: '5px 12px' },
+      activeWash: { position: 'absolute', top: '-25%', right: '-15%', width: '75%', height: '95%', background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.09), transparent 70%)', pointerEvents: 'none', transition: 'background .7s ease' },
+      activeGhost: React.createElement('span', { style: { color: 'rgb(' + ac.hue + ')' } }, this.makeIcon(ac.paths, 120)),
+      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(28px,2.8vw,38px)', lineHeight: 1, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
+      activeName: ac.name, activeDesc: ac.desc,
+      activeNameStyle: Object.assign({ margin: '18px 0 0', color: '#f2f8ff', lineHeight: 1.06, textShadow: '0 6px 34px rgba(' + ac.hue + ',.25)' },
+        [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(2.2rem,3.6vw,3.3rem)', letterSpacing: '-.01em' },
+         { fontFamily: "'Geist',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.12em', fontSize: 'clamp(1.5rem,2.5vw,2.2rem)' },
+         { fontFamily: "'Geist Mono',monospace", fontWeight: 500, textTransform: 'uppercase', letterSpacing: '.2em', fontSize: 'clamp(1.3rem,2.2vw,1.9rem)' },
+         { fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 'clamp(2rem,3.4vw,3.1rem)', letterSpacing: '.02em' }][ci] || {}),
+      activeM1v: ac.m[0][0], activeM1l: ac.m[0][1],
+      activeM2v: ac.m[1][0], activeM2l: ac.m[1][1],
+      activeM3v: ac.m[2][0], activeM3l: ac.m[2][1],
+      activeBars: ac.bars.map((v, i) => ({ s: { flex: 1, height: v + '%', borderRadius: '2px 2px 0 0', background: 'linear-gradient(180deg, rgb(' + ac.hue + '), rgba(' + ac.hue + ',.2))', opacity: .5 + .45 * (i / 11), boxShadow: i === 11 ? '0 0 14px rgba(' + ac.hue + ',.35)' : 'none', transition: 'height .6s cubic-bezier(.2,.8,.25,1) ' + (i * 38) + 'ms, opacity .6s ease ' + (i * 38) + 'ms, background .5s ease' } })),
+      caseStage: this.caseStage,
+      rainCanvas: this.rainCanvas, heroRef: this.heroRef, heroContent: this.heroContent, tiltRef: this.tiltRef, wordRef: this.wordRef, navRef: this.navRef, flashRef: this.flashRef, rippleLayer: this.rippleLayer, aiLog: this.aiLog, aiCardCanvas: this.aiCardCanvas, btnWater: this.btnWater, btnCond: this.btnCond, webCardCanvas: this.webCardCanvas, appsCardCanvas: this.appsCardCanvas, revCardCanvas: this.revCardCanvas, growthCardCanvas: this.growthCardCanvas, aiCounter: this.aiCounter, svcPreview: this.svcPreview, svcPreviewImg: this.svcPreviewImg, servicesRef: this.servicesRef, aiRef: this.aiRef, founderRef: this.founderRef, contactRef: this.contactRef, radarCanvas: this.radarCanvas, waterCanvas: this.waterCanvas, footerCanvas: this.footerCanvas,
+      goTop: (e) => { e.preventDefault(); this.smoothTo(0); },
+      emailRef: this.emailRef, nameRef: this.nameRef, msgRef: this.msgRef, formFxCanvas: this.formFxCanvas, formFlash: this.formFlash,
+      toggleChip: (e) => {
+        e.preventDefault();
+        const el = e.currentTarget, on = el.dataset.on === '1';
+        el.dataset.on = on ? '' : '1';
+        el.style.background = on ? 'rgba(120,170,255,.05)' : 'var(--accent-soft)';
+        el.style.borderColor = on ? 'rgba(140,190,255,.2)' : 'var(--accent)';
+        el.style.color = on ? '#8fb0d8' : '#e6f2ff';
+        if (on) this.chipSet.delete(el.dataset.chip); else this.chipSet.add(el.dataset.chip);
+      },
+      sendStorm: (e) => {
+        e.preventDefault();
+        if (this.sending) return;
+        const g = (r) => (r.current && r.current.value || '').trim();
+        const nm = g(this.nameRef), em = g(this.emailRef), msg = g(this.msgRef);
+        const needs = [...this.chipSet].join(', ');
+        const label = document.querySelector('[data-send-label]');
+        const flashForm = (o, ms) => { const f = this.formFlash.current; if (f) { f.style.opacity = o; setTimeout(() => { const f2 = this.formFlash.current; if (f2) f2.style.opacity = '0'; }, ms); } };
+        if (!em && !msg) {
+          flashForm('.85', 450);
+          const tgt = this.emailRef.current || this.msgRef.current;
+          if (tgt) tgt.focus();
+          return;
+        }
+        const mailtoHref = 'mailto:hello@rain.studio?subject=' + encodeURIComponent('Storm request' + (nm ? ' — ' + nm : '')) + '&body=' + encodeURIComponent(['Name: ' + (nm || '—'), 'Email: ' + (em || '—'), 'Needs rain: ' + (needs || '—'), '', msg].join('\n'));
+        this.sending = true;
+        if (label) label.textContent = 'Sending\u2026';
+        fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nm, email: em, needs: needs, message: msg, website: '' }) })
+          .then((r) => { if (!r.ok) throw new Error('status ' + r.status); return r.json(); })
+          .then(() => {
+            this.sending = false;
+            if (label) label.textContent = "It's raining — talk in 24h";
+            const c = this.btnCond.current; if (c) c.textContent = 'SENT';
+            const w = this.btnWater.current; if (w) w.style.height = '100%';
+            flashForm('.9', 900);
+            [this.nameRef, this.emailRef, this.msgRef].forEach((r) => { if (r.current) r.current.value = ''; });
+            this.chipSet.clear();
+            document.querySelectorAll('[data-chip]').forEach((el) => { el.dataset.on = ''; el.style.background = 'rgba(120,170,255,.05)'; el.style.borderColor = 'rgba(140,190,255,.2)'; el.style.color = '#8fb0d8'; });
+            setTimeout(() => {
+              const l2 = document.querySelector('[data-send-label]'); if (l2) l2.textContent = 'Send it';
+              const w2 = this.btnWater.current; if (w2) w2.style.height = '0%';
+              const c2 = this.btnCond.current; if (c2) c2.textContent = 'DRY';
+              this.formStorm = 0;
+            }, 6000);
+          })
+          .catch(() => {
+            this.sending = false;
+            if (label) label.textContent = 'Send it';
+            location.href = mailtoHref;
+          });
+      },
+      goServices: this.goTo(this.servicesRef),
+      goAI: this.goTo(this.aiRef),
+      goFounder: this.goTo(this.founderRef),
+      goWork: this.goTo(this.workRef), workRef: this.workRef,
+      goContact: this.goTo(this.contactRef)
+    };
+  }
+}
+</script>
+</body>
+</html>
