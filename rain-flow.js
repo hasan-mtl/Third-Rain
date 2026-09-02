@@ -1,125 +1,98 @@
 (function () {
   'use strict';
 
-  const PHASE_PCT = [20, 45, 90, 100];
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function initFlowPhases() {
-    const phases = document.querySelectorAll('.flow-phase');
-    const panels = document.querySelectorAll('.flow-phase-panel');
-    const tideFill = document.querySelector('[data-tide-fill]');
-    const tideGlow = document.querySelector('[data-tide-glow]');
-    const tidePct = document.querySelector('[data-tide-pct]');
-    if (!phases.length) return;
-
-    function activate(idx) {
-      phases.forEach((p, i) => {
-        const on = i === idx;
-        p.classList.toggle('is-active', on);
-        p.setAttribute('aria-selected', on ? 'true' : 'false');
-      });
-      panels.forEach((panel) => {
-        const on = Number(panel.dataset.panel) === idx;
-        panel.classList.toggle('is-active', on);
-        panel.hidden = !on;
-      });
-      const pct = PHASE_PCT[idx] || 20;
-      if (tideFill) tideFill.style.height = pct + '%';
-      if (tideGlow) tideGlow.style.height = Math.max(8, pct * 0.12) + '%';
-      if (tidePct) tidePct.textContent = pct + '%';
-    }
-
-    phases.forEach((phase, i) => {
-      phase.addEventListener('click', () => activate(i));
-    });
-
-    activate(0);
-  }
-
-  function initFlowRiver() {
-    const river = document.querySelector('.flow-river');
+  function initPlunge() {
+    const nums = document.querySelectorAll('.plunge-num');
     const layer = document.getElementById('rain-ripple-layer');
-    if (!river) return;
-
-    river.addEventListener('click', (e) => {
-      const host = layer || document.body;
-      const d = document.createElement('div');
-      d.style.cssText =
-        'position:fixed;left:' +
-        e.clientX +
-        'px;top:' +
-        e.clientY +
-        'px;width:160px;height:160px;margin:-80px;border:2px solid var(--accent);border-radius:50%;opacity:0.7;pointer-events:none;animation:clickRipple .9s ease-out forwards;z-index:48;';
-      host.appendChild(d);
-      setTimeout(() => d.remove(), 950);
-    });
-  }
-
-  function initFlowParallax() {
-    if (RM) return;
-    document.querySelectorAll('[data-flow-parallax]').forEach((el) => {
-      const parent = el.closest('.flow-river, .flow-zone--founder') || el;
-      parent.addEventListener('mousemove', (e) => {
-        const r = parent.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = 'translate(' + x * 12 + 'px, ' + y * 8 + 'px)';
-      });
-      parent.addEventListener('mouseleave', () => {
-        el.style.transform = '';
+    nums.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        nums.forEach((n) => n.classList.remove('is-hit'));
+        btn.classList.add('is-hit');
+        const host = layer || document.body;
+        const d = document.createElement('div');
+        d.style.cssText =
+          'position:fixed;left:' +
+          e.clientX +
+          'px;top:' +
+          e.clientY +
+          'px;width:220px;height:220px;margin:-110px;border:2px solid var(--accent);border-radius:50%;opacity:.75;pointer-events:none;animation:clickRipple .95s ease-out forwards;z-index:48;';
+        host.appendChild(d);
+        setTimeout(() => d.remove(), 1000);
       });
     });
   }
 
-  function initFlowPipeline() {
-    const root = document.querySelector('[data-flow-pipeline]');
-    if (!root || RM) return;
-    const nodes = root.querySelectorAll('[data-pipe-node]');
-    let idx = 0;
+  function initCurrent() {
+    const stations = document.querySelectorAll('[data-station]');
+    const fill = document.querySelector('[data-current-fill]');
+    const pctEl = document.querySelector('[data-current-pct]');
+    if (!stations.length) return;
 
-    setInterval(() => {
-      nodes.forEach((n) => n.classList.remove('is-live'));
-      nodes[idx]?.classList.add('is-live');
-      if (nodes[idx + 1]) nodes[idx + 1].classList.add('is-live');
-      idx = (idx + 1) % nodes.length;
-    }, 2200);
-  }
-
-  function initFormPressure() {
-    const fill = document.querySelector('[data-form-pressure]');
-    if (!fill) return;
-    const card = fill.closest('.flow-form-card');
-    const fields = card?.querySelectorAll('input, textarea');
-    if (!fields?.length) return;
-
-    const update = () => {
-      let score = 0;
-      fields.forEach((f) => {
-        if (f.value.trim()) score += 1;
-        if (f.type === 'email' && f.value.includes('@')) score += 0.5;
-        if (f.tagName === 'TEXTAREA' && f.value.trim().length > 20) score += 0.5;
-      });
-      const chips = card.querySelectorAll('.flow-chips-select button.is-selected');
-      if (chips.length) score += 0.5;
-      const pct = Math.min(100, Math.round((score / (fields.length + 0.5)) * 100));
-      fill.style.height = Math.max(12, pct) + '%';
+    const mark = (el) => {
+      stations.forEach((s) => s.classList.toggle('is-here', s === el));
+      const pct = el.getAttribute('data-pct') || '20';
+      if (fill) fill.style.height = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
     };
 
-    fields.forEach((f) => {
-      f.addEventListener('input', update);
-      f.addEventListener('focus', update);
-    });
-    card.addEventListener('click', () => setTimeout(update, 50));
-    update();
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((en) => en.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) mark(visible.target);
+      },
+      { threshold: [0.35, 0.55, 0.75], rootMargin: '-15% 0px -25% 0px' }
+    );
+
+    stations.forEach((s) => io.observe(s));
+    mark(stations[0]);
+  }
+
+  function initMachine() {
+    const hits = [...document.querySelectorAll('.machine-hit')];
+    if (!hits.length) return;
+    let i = 0;
+    hits[0].classList.add('is-live');
+    if (RM) return;
+    setInterval(() => {
+      hits.forEach((h) => h.classList.remove('is-live'));
+      hits[i].classList.add('is-live');
+      if (window.innerWidth > 740) {
+        hits[(i + 2) % hits.length].classList.add('is-live');
+      }
+      i = (i + 1) % hits.length;
+    }, 2600);
+  }
+
+  function initLandfall() {
+    const form = document.querySelector('.landfall-form');
+    if (!form) return;
+    const fields = form.querySelectorAll('input, textarea');
+    const sync = () => {
+      let lv = 0;
+      fields.forEach((f) => {
+        if (f.value.trim()) lv += 1;
+        if (f.tagName === 'TEXTAREA' && f.value.trim().length > 24) lv += 0.4;
+      });
+      const chips = form.querySelectorAll('[data-chip][data-on="1"]');
+      if (chips.length) lv += 0.4;
+      const pct = Math.min(100, Math.round((lv / (fields.length + 0.4)) * 100));
+      form.style.setProperty('--tide', Math.max(0, pct) + '%');
+    };
+    fields.forEach((f) => f.addEventListener('input', sync));
+    form.addEventListener('click', () => setTimeout(sync, 40));
+    sync();
   }
 
   window.RainFlow = {
     init: function () {
-      initFlowPhases();
-      initFlowRiver();
-      initFlowParallax();
-      initFlowPipeline();
-      initFormPressure();
+      initPlunge();
+      initCurrent();
+      initMachine();
+      initLandfall();
     },
   };
 

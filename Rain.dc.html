@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=5">
+<link rel="stylesheet" href="./rain-flow.css?v=7">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -313,320 +313,154 @@ html{-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 </section>
-<section class="flow-river" data-screen-label="The River" aria-label="Studio impact">
-  <div class="flow-river__depth" aria-hidden="true"></div>
-  <div class="flow-river__caustics" aria-hidden="true"></div>
-  <canvas ref="{{ waterCanvas }}" class="flow-river__canvas" aria-hidden="true"></canvas>
-  <div class="flow-river__inner" data-flow-parallax="">
-    <div class="flow-river__hero" data-reveal="">
-      <p class="flow-river__kicker">Studio depth</p>
-      <h2 class="flow-river__title">Twenty years.<br><em>One downpour.</em></h2>
-      <p class="flow-river__hint">Touch the water. Drag a ripple. Every site we ship should feel this alive.</p>
-    </div>
-    <div class="flow-river__stats" data-reveal="">
-      <article class="flow-buoy" style="--buoy-i:0"><span class="flow-buoy__idx">01</span><span class="flow-buoy__n">$11M+</span><span class="flow-buoy__l">Revenue last season</span></article>
-      <article class="flow-buoy" style="--buoy-i:1"><span class="flow-buoy__idx">02</span><span class="flow-buoy__n">180+</span><span class="flow-buoy__l">Products since 2004</span></article>
-      <article class="flow-buoy" style="--buoy-i:2"><span class="flow-buoy__idx">03</span><span class="flow-buoy__n">48</span><span class="flow-buoy__l">Active engagements</span></article>
-      <article class="flow-buoy" style="--buoy-i:3"><span class="flow-buoy__idx">04</span><span class="flow-buoy__n">24/7</span><span class="flow-buoy__l">AI ops live</span></article>
-    </div>
+<section class="plunge" data-screen-label="The Plunge" aria-label="Studio impact">
+  <canvas ref="{{ waterCanvas }}" class="plunge__canvas" aria-hidden="true"></canvas>
+  <div class="plunge__veil" aria-hidden="true"></div>
+  <div class="plunge__copy">
+    <p class="plunge__whisper">Touch the surface</p>
+    <h2 class="plunge__title">Twenty years.<em>One downpour.</em></h2>
   </div>
-  <svg class="flow-wave-divider" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0,55 C240,95 480,15 720,55 C960,95 1200,25 1440,55 L1440,100 L0,100 Z"/></svg>
+  <div class="plunge__nums">
+    <button type="button" class="plunge-num"><span class="plunge-num__v">$11M+</span><span class="plunge-num__l">Revenue last season</span></button>
+    <button type="button" class="plunge-num"><span class="plunge-num__v">180+</span><span class="plunge-num__l">Products since 2004</span></button>
+    <button type="button" class="plunge-num"><span class="plunge-num__v">48</span><span class="plunge-num__l">Active engagements</span></button>
+    <button type="button" class="plunge-num"><span class="plunge-num__v">24/7</span><span class="plunge-num__l">AI ops live</span></button>
+  </div>
 </section>
 
-<section class="flow-zone flow-zone--forecast" data-screen-label="The Forecast">
-  <div class="flow-wrap flow-forecast">
-    <header class="flow-head" data-reveal="">
-      <p class="flow-eyebrow" data-rf-post="forecast.label">The process</p>
-      <h2 class="flow-title" data-rf-pre="forecast.title.pre" data-rf-post="forecast.title.post">Every engagement is a <em data-rf="forecast.word">forecast</em>.</h2>
-      <p class="flow-lede" data-rf-pre="forecast.intro.pre" data-rf-post="forecast.intro.post">Four phases down one river. <span data-rf="forecast.intro.em" style="color:#dcecff;">You always know the timing, the scope, and who is actually building it.</span></p>
-    </header>
-    <div class="flow-forecast__deck" data-reveal="">
-      <aside class="flow-forecast__radar-panel" aria-label="Forecast radar">
-        <div class="flow-radar-dome">
-          <canvas ref="{{ radarCanvas }}" class="flow-radar" aria-hidden="true"></canvas>
-          <span class="flow-radar-dome__ring" aria-hidden="true"></span>
-        </div>
-        <div class="flow-tide" aria-hidden="true">
-          <span class="flow-tide__label">Storm intensity</span>
-          <div class="flow-tide__tube">
-            <div class="flow-tide__fill" data-tide-fill="" style="height:20%"></div>
-            <div class="flow-tide__glow" data-tide-glow="" style="height:20%"></div>
-          </div>
-          <span class="flow-tide__pct" data-tide-pct="">20%</span>
-        </div>
-      </aside>
-      <div class="flow-forecast__rail">
-        <div class="flow-forecast__nodes" role="tablist" aria-label="Forecast phases">
-          <button type="button" class="flow-phase is-active" data-phase="0" role="tab" aria-selected="true">
-            <span class="flow-phase__num">01</span>
-            <span class="flow-phase__week" data-rf="forecast.stage.1.week">Week 1</span>
-            <span class="flow-phase__name" data-rf="forecast.stage.1.name">Cloudseeding</span>
-          </button>
-          <button type="button" class="flow-phase" data-phase="1" role="tab" aria-selected="false">
-            <span class="flow-phase__num">02</span>
-            <span class="flow-phase__week" data-rf="forecast.stage.2.week">Weeks 2–3</span>
-            <span class="flow-phase__name" data-rf="forecast.stage.2.name">Formation</span>
-          </button>
-          <button type="button" class="flow-phase" data-phase="2" role="tab" aria-selected="false">
-            <span class="flow-phase__num">03</span>
-            <span class="flow-phase__week" data-rf="forecast.stage.3.week">Weeks 4–6</span>
-            <span class="flow-phase__name" data-rf="forecast.stage.3.name">Downpour</span>
-          </button>
-          <button type="button" class="flow-phase" data-phase="3" role="tab" aria-selected="false">
-            <span class="flow-phase__num">04</span>
-            <span class="flow-phase__week" data-rf="forecast.stage.4.week">Ongoing</span>
-            <span class="flow-phase__name" data-rf="forecast.stage.4.name">Steady rain</span>
-          </button>
-        </div>
-        <div class="flow-forecast__stage">
-          <article class="flow-phase-panel is-active" data-panel="0" role="tabpanel">
-            <span class="flow-phase-panel__ghost" aria-hidden="true">01</span>
-            <p class="flow-phase-panel__kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
-            <h3 class="flow-phase-panel__title" data-rf="forecast.stage.1.name">Cloudseeding</h3>
-            <p class="flow-phase-panel__text" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking, then lock the plan for the next five weeks.</p>
-            <div class="flow-meter flow-meter--wide"><div class="flow-meter__fill" style="width:20%"></div></div>
-          </article>
-          <article class="flow-phase-panel" data-panel="1" role="tabpanel" hidden>
-            <span class="flow-phase-panel__ghost" aria-hidden="true">02</span>
-            <p class="flow-phase-panel__kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
-            <h3 class="flow-phase-panel__title" data-rf="forecast.stage.2.name">Formation</h3>
-            <p class="flow-phase-panel__text" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you before production starts.</p>
-            <div class="flow-meter flow-meter--wide"><div class="flow-meter__fill" style="width:45%"></div></div>
-          </article>
-          <article class="flow-phase-panel" data-panel="2" role="tabpanel" hidden>
-            <span class="flow-phase-panel__ghost" aria-hidden="true">03</span>
-            <p class="flow-phase-panel__kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
-            <h3 class="flow-phase-panel__title" data-rf="forecast.stage.3.name">Downpour</h3>
-            <p class="flow-phase-panel__text" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live. Not a deck. The real thing.</p>
-            <div class="flow-meter flow-meter--wide"><div class="flow-meter__fill" style="width:90%"></div></div>
-          </article>
-          <article class="flow-phase-panel" data-panel="3" role="tabpanel" hidden>
-            <span class="flow-phase-panel__ghost" aria-hidden="true">04</span>
-            <p class="flow-phase-panel__kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
-            <h3 class="flow-phase-panel__title" data-rf="forecast.stage.4.name">Steady rain</h3>
-            <p class="flow-phase-panel__text" data-rf="forecast.stage.4.body">After landfall we stay on: automation, search, and optimization so the system keeps raining without you running it.</p>
-            <div class="flow-meter flow-meter--wide"><div class="flow-meter__fill" style="width:100%"></div></div>
-          </article>
-        </div>
-      </div>
+<section class="current" data-screen-label="The Forecast">
+  <div class="current__intro" data-reveal="">
+    <h2 class="current__title" data-rf-pre="forecast.title.pre" data-rf-post="forecast.title.post">Every engagement is a <em data-rf="forecast.word">forecast</em>.</h2>
+    <p class="current__lede" data-rf-pre="forecast.intro.pre" data-rf-post="forecast.intro.post">Four phases down one river. <span data-rf="forecast.intro.em" style="color:#dcecff;">You always know the timing, the scope, and who is actually building it.</span></p>
+  </div>
+  <div class="current__track">
+    <div class="current__spine" aria-hidden="true"><div class="current__fill" data-current-fill=""></div></div>
+    <p class="current__pct" data-current-pct="">20%</p>
+    <article class="station station--shallow is-here" data-station="0" data-pct="20" data-reveal="">
+      <p class="station__week" data-rf="forecast.stage.1.week">Week 1</p>
+      <h3 class="station__name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
+      <p class="station__kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
+      <p class="station__text" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking, then lock the plan for the next five weeks.</p>
+    </article>
+    <article class="station station--form" data-station="1" data-pct="45" data-reveal="">
+      <p class="station__week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
+      <h3 class="station__name" data-rf="forecast.stage.2.name">Formation</h3>
+      <p class="station__kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
+      <p class="station__text" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you before production starts.</p>
+    </article>
+    <article class="station station--downpour" data-station="2" data-pct="90" data-reveal="">
+      <p class="station__week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
+      <h3 class="station__name" data-rf="forecast.stage.3.name">Downpour</h3>
+      <p class="station__kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
+      <p class="station__text" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live. Not a deck. The real thing.</p>
+    </article>
+    <article class="station station--calm" data-station="3" data-pct="100" data-reveal="">
+      <p class="station__week" data-rf="forecast.stage.4.week">Ongoing</p>
+      <h3 class="station__name" data-rf="forecast.stage.4.name">Steady rain</h3>
+      <p class="station__kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
+      <p class="station__text" data-rf="forecast.stage.4.body">After landfall we stay on: automation, search, and optimization so the system keeps raining without you running it.</p>
+    </article>
+  </div>
+</section>
+
+<section class="machine" ref="{{ aiRef }}" data-screen-label="AI Automation">
+  <div class="machine__copy" data-reveal="">
+    <h2 class="machine__title"><span data-rf="ai.title.line1">AI runs the company.</span> <em data-rf="ai.title.line2">Not you.</em></h2>
+    <p class="machine__lede" data-rf="ai.body">Agents and automations wired into sales, support, scheduling, invoicing, and reporting. The machine works around the clock. You set direction. Rain runs the weather.</p>
+  </div>
+  <div class="machine__field">
+    <canvas ref="{{ radarCanvas }}" class="machine__radar" aria-hidden="true"></canvas>
+    <p class="machine-hit" data-rf="ai.terminal.row.1.text">07:00 · morning pipeline report sent</p>
+    <p class="machine-hit" data-rf="ai.terminal.row.2.text">09:12 · 3 proposals generated &amp; delivered</p>
+    <p class="machine-hit" data-rf="ai.terminal.row.3.text">11:47 · 14 leads qualified, 5 calls booked</p>
+    <p class="machine-hit" data-rf="ai.terminal.row.4.text">13:05 · invoices reconciled, $18,420 collected</p>
+    <p class="machine-hit" data-rf="ai.terminal.row.5.text">16:20 · support inbox cleared, avg reply 38s</p>
+  </div>
+  <div class="machine__ops">
+    <div class="machine__count"><span ref="{{ aiCounter }}">1,284</span><small data-rf="ai.terminal.counter.label">TASKS TODAY</small></div>
+    <div class="machine__listen">
+      <span class="machine__pulse" aria-hidden="true"></span>
+      <span ref="{{ aiLog }}">listening for new leads…</span>
+      <span class="machine__cursor" aria-hidden="true"></span>
     </div>
   </div>
 </section>
 
-<section class="flow-zone flow-zone--ai" ref="{{ aiRef }}" data-screen-label="AI Automation">
-  <div class="flow-ai-submerge" aria-hidden="true"></div>
-  <div class="flow-wrap">
-    <div class="flow-ai-theater">
-      <div class="flow-ai-theater__copy" data-reveal="">
-        <p class="flow-eyebrow" data-rf-post="ai.label">AI automation</p>
-        <h2 class="flow-title"><span data-rf="ai.title.line1">AI runs the company.</span> <em data-rf="ai.title.line2">Not you.</em></h2>
-        <p class="flow-lede" data-rf="ai.body">Agents and automations wired into sales, support, scheduling, invoicing, and reporting. The machine works around the clock. You set direction. Rain runs the weather.</p>
-        <div class="flow-ai-orbs">
-          <div class="flow-ai-orb"><span class="flow-ai-orb__v">847</span><span class="flow-ai-orb__l">Leads today</span></div>
-          <div class="flow-ai-orb"><span class="flow-ai-orb__v">38s</span><span class="flow-ai-orb__l">Avg reply</span></div>
-          <div class="flow-ai-orb"><span class="flow-ai-orb__v">$18K</span><span class="flow-ai-orb__l">Collected</span></div>
-        </div>
-        <div class="flow-chips">
-          <span class="flow-chip" data-rf="ai.badge.1">AI agents</span>
-          <span class="flow-chip" data-rf="ai.badge.2">Workflows</span>
-          <span class="flow-chip" data-rf="ai.badge.3">Integrations</span>
-        </div>
-      </div>
-      <div class="flow-terminal-wrap" data-reveal="">
-        <div class="flow-terminal">
-          <div class="flow-terminal__scan" aria-hidden="true"></div>
-          <div class="flow-terminal__chrome">
-            <div class="flow-terminal__dots"><span></span><span></span><span></span></div>
-            <span class="flow-terminal__title" data-rf="ai.terminal.title">RAIN·OPS — LIVE</span>
-            <span class="flow-terminal__live">LIVE</span>
-          </div>
-          <div class="flow-terminal__counter">
-            <span data-rf="ai.terminal.counter.label">TASKS TODAY</span>
-            <span ref="{{ aiCounter }}">1,284</span>
-          </div>
-          <div class="flow-terminal__log">
-            <div class="flow-terminal__row"><time data-rf="ai.terminal.row.1.time">07:00</time><span data-rf="ai.terminal.row.1.text">agent · morning pipeline report sent</span></div>
-            <div class="flow-terminal__row"><time data-rf="ai.terminal.row.2.time">09:12</time><span data-rf="ai.terminal.row.2.text">workflow · 3 proposals generated &amp; delivered</span></div>
-            <div class="flow-terminal__row"><time data-rf="ai.terminal.row.3.time">11:47</time><span data-rf="ai.terminal.row.3.text">agent · 14 leads qualified, 5 calls booked</span></div>
-            <div class="flow-terminal__row"><time data-rf="ai.terminal.row.4.time">13:05</time><span data-rf="ai.terminal.row.4.text">workflow · invoices reconciled, $18,420 collected</span></div>
-            <div class="flow-terminal__row"><time data-rf="ai.terminal.row.5.time">16:20</time><span data-rf="ai.terminal.row.5.text">agent · support inbox cleared, avg reply 38s</span></div>
-          </div>
-          <div class="flow-terminal__prompt">
-            <span class="flow-terminal__pulse" aria-hidden="true"></span>
-            <span ref="{{ aiLog }}">listening for new leads…</span>
-            <span class="flow-terminal__cursor" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
+<section class="flood" ref="{{ workRef }}" data-screen-label="Selected Work">
+  <p class="flood__whisper" data-reveal="">Work that made it rain.</p>
+  <div ref="{{ caseStage }}" class="flood__stage" data-reveal="">
+    <div style="{{ activeWash }}"></div>
+    <div class="flood__tags">
+      <span class="flood__kicker">{{ activeKicker }}</span>
+      <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
+      <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
     </div>
-    <div class="flow-pipeline flow-pipeline--cinematic" data-reveal="" data-flow-pipeline="">
-      <svg class="flow-pipeline__svg" viewBox="0 0 1000 48" preserveAspectRatio="none" aria-hidden="true">
-        <path class="flow-pipeline__path" d="M0,24 H1000" pathLength="100"></path>
-        <path class="flow-pipeline__flow" d="M0,24 H1000" pathLength="100"></path>
-      </svg>
-      <div class="flow-pipeline__nodes">
-        <div class="flow-pipeline__node is-live" data-pipe-node="0"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.1">Leads in</span></div>
-        <div class="flow-pipeline__node" data-pipe-node="1"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.2">Qualified</span></div>
-        <div class="flow-pipeline__node" data-pipe-node="2"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.3">Booked</span></div>
-        <div class="flow-pipeline__node" data-pipe-node="3"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.4">Delivered</span></div>
-        <div class="flow-pipeline__node is-live" data-pipe-node="4"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.5">Revenue out</span></div>
-      </div>
+    <h3 class="flood__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
+    <p class="flood__desc">{{ activeDesc }}</p>
+    <div class="flood__metrics">
+      <div><p class="flood__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="flood__ml">{{ activeM1l }}</p></div>
+      <div><p class="flood__mv">{{ activeM2v }}</p><p class="flood__ml">{{ activeM2l }}</p></div>
+      <div><p class="flood__mv">{{ activeM3v }}</p><p class="flood__ml">{{ activeM3l }}</p></div>
+    </div>
+    <div class="flood__chart">
+      <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
     </div>
   </div>
-</section>
-
-<section class="flow-zone flow-zone--work" ref="{{ workRef }}" data-screen-label="Selected Work">
-  <div class="flow-wrap">
-    <header class="flow-work-head" data-reveal="">
-      <p class="flow-eyebrow" data-rf-post="work.label">Client ledger</p>
-      <h2 class="flow-title" data-rf-pre="work.title.pre">Work that made it <em data-rf="work.title.em">rain.</em></h2>
-      <p class="flow-lede" data-rf-pre="work.intro.pre">Swipe the cases. <span data-rf="work.intro.em" style="color:#dcecff;">Real engagements. Real numbers.</span></p>
-    </header>
-    <div class="flow-logos flow-logos--reflect" data-reveal="">
-      <div class="flow-logos__track">
-        <div class="flow-logos__row">
-          <span class="flow-logos__item flow-logos__item--serif" data-rf="work.logo.1">Blueharbor Capital</span>
-          <span class="flow-logos__item flow-logos__item--bold" data-rf="work.logo.2">Voltage</span>
-          <span class="flow-logos__item flow-logos__item--mono" data-rf="work.logo.3">Lumière</span>
-          <span class="flow-logos__item flow-logos__item--serif" data-rf="work.logo.4">Vetta Motorcars</span>
-          <span class="flow-logos__item flow-logos__item--bold" data-rf="work.logo.5">Sterling &amp; Vane</span>
-          <span class="flow-logos__item flow-logos__item--mono" data-rf="work.logo.6">Ironpeak</span>
-        </div>
-        <div class="flow-logos__row" aria-hidden="true">
-          <span class="flow-logos__item flow-logos__item--serif">Blueharbor Capital</span>
-          <span class="flow-logos__item flow-logos__item--bold">Voltage</span>
-          <span class="flow-logos__item flow-logos__item--mono">Lumière</span>
-          <span class="flow-logos__item flow-logos__item--serif">Vetta Motorcars</span>
-          <span class="flow-logos__item flow-logos__item--bold">Sterling &amp; Vane</span>
-          <span class="flow-logos__item flow-logos__item--mono">Ironpeak</span>
-        </div>
-      </div>
-    </div>
-    <div class="flow-work-theater" data-reveal="">
-      <div class="flow-cases">
-        <div class="flow-cases__filmstrip">
-          <p class="flow-cases__film-label">Select case</p>
-          <div class="flow-cases__tabs">
-            <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
-              <a href="#" class="flow-case-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
-                <span data-case-prog="t" class="flow-case-tab__prog"></span>
-                <span class="flow-case-tab__row">
-                  <span data-case-ic="t" class="flow-case-tab__icon">{{ cs.icon }}</span>
-                  <span class="flow-case-tab__meta">
-                    <span style="{{ cs.nameStyle }}">{{ cs.name }}</span>
-                    <span class="flow-case-tab__head">{{ cs.head }}</span>
-                  </span>
-                </span>
-                <span data-case-lead="t" class="flow-case-tab__lead" style="color:{{ cs.leadColor }};">{{ cs.lead }}</span>
-              </a>
-            </sc-for>
-          </div>
-        </div>
-        <div class="flow-cases__main">
-          <div ref="{{ caseStage }}" class="flow-cases__stage">
-            <div style="{{ activeWash }}"></div>
-            <div class="flow-cases__ghost">{{ activeGhost }}</div>
-            <div class="flow-cases__tags">
-              <span class="flow-cases__kicker">{{ activeKicker }}</span>
-              <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
-              <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
-            </div>
-            <h3 class="flow-cases__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
-            <p class="flow-cases__desc">{{ activeDesc }}</p>
-            <div class="flow-cases__metrics">
-              <div class="flow-cases__metric"><p class="flow-cases__metric-v" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="flow-cases__metric-l">{{ activeM1l }}</p></div>
-              <div class="flow-cases__metric"><p class="flow-cases__metric-v">{{ activeM2v }}</p><p class="flow-cases__metric-l">{{ activeM2l }}</p></div>
-              <div class="flow-cases__metric"><p class="flow-cases__metric-v">{{ activeM3v }}</p><p class="flow-cases__metric-l">{{ activeM3l }}</p></div>
-            </div>
-            <div class="flow-cases__chart">
-              <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
-            </div>
-          </div>
-          <div class="flow-cases__footer">
-            <span data-rf="work.ledger.left">SHOWING 06 / 48 ACTIVE</span>
-            <strong data-rf="work.ledger.right">$11M+ MADE IT RAIN</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="flow-work-disclaimer" data-reveal="" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
-  </div>
-</section>
-
-<section class="flow-zone flow-zone--founder" ref="{{ founderRef }}" data-screen-label="Founder">
-  <div class="flow-founder-rain" aria-hidden="true"></div>
-  <div class="flow-wrap flow-founder-grid" data-reveal="" data-flow-parallax="">
-    <div class="flow-founder__quote-col">
-      <p class="flow-eyebrow" data-rf-post="founder.label">The founder</p>
-      <blockquote class="flow-founder__pull">
-        <span class="flow-founder__pull-mark" aria-hidden="true">“</span>
-        <span data-rf-pre="founder.quote.pre" data-rf-post="founder.quote.post">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</span>
-      </blockquote>
-      <div class="flow-chips">
-        <span class="flow-chip">20+ years building</span>
-        <span class="flow-chip">East Coast EFX</span>
-        <span class="flow-chip">Founder-led</span>
-      </div>
-    </div>
-    <div class="flow-founder__bio-col">
-      <h2 class="flow-title flow-founder__title" data-rf-pre="founder.title.pre" data-rf-post="founder.title.post">The man behind the <em data-rf="founder.word">storm</em>.</h2>
-      <p class="flow-bio" data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-      <p class="flow-bio" data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish.</p>
-      <div class="flow-founder__stamp" aria-hidden="true">20</div>
-    </div>
-  </div>
-</section>
-
-<section class="flow-zone flow-zone--contact" ref="{{ contactRef }}" data-screen-label="Contact">
-  <div class="flow-contact-aurora" aria-hidden="true"></div>
-  <div class="flow-wrap flow-contact-grid">
-    <div class="flow-contact__copy" data-reveal="">
-      <p class="flow-eyebrow" data-rf-post="contact.label">Storm dispatch</p>
-      <h2 class="flow-title" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word" style="color:var(--accent);font-style:italic;">pour.</em></h2>
-      <p class="flow-lede" data-rf="contact.intro">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
-      <p class="contact-invite" data-rf-post="contact.invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
-      <ul class="flow-contact__signals">
-        <li><span>Response</span><strong>Under 24h</strong></li>
-        <li><span>Founder</span><strong>On every call</strong></li>
-        <li><span>Forecast</span><strong>Severe talent</strong></li>
-      </ul>
-    </div>
-    <div class="flow-form-card" data-reveal="">
-      <span class="flow-hud flow-hud--tl" aria-hidden="true"></span>
-      <span class="flow-hud flow-hud--tr" aria-hidden="true"></span>
-      <span class="flow-hud flow-hud--bl" aria-hidden="true"></span>
-      <span class="flow-hud flow-hud--br" aria-hidden="true"></span>
-      <div class="flow-form-pressure" aria-hidden="true"><div class="flow-form-pressure__fill" data-form-pressure=""></div></div>
-      <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
-      <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
-      <div class="flow-form-head">
-        <span class="inquiry-title" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
-        <span class="inquiry-priority" data-rf-post="contact.form.priority"><span class="inquiry-priority__dot"></span>PRIORITY: SEVERE</span>
-      </div>
-      <div class="flow-form-body">
-        <div class="flow-form-row flow-form-row--2">
-          <div><label class="flow-label" data-rf="contact.form.label.name">NAME</label><input ref="{{ nameRef }}" type="text" placeholder="Jane Carter" class="flow-input"></div>
-          <div><label class="flow-label" data-rf="contact.form.label.email">EMAIL</label><input ref="{{ emailRef }}" type="email" placeholder="you@company.com" class="flow-input"></div>
-        </div>
-        <div><label class="flow-label" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
-          <div class="flow-chips-select">
-            <button type="button" data-chip="Website" onClick="{{ toggleChip }}">Website</button>
-            <button type="button" data-chip="App" onClick="{{ toggleChip }}">App</button>
-            <button type="button" data-chip="Revenue" onClick="{{ toggleChip }}">Revenue</button>
-            <button type="button" data-chip="AI automation" onClick="{{ toggleChip }}">AI automation</button>
-            <button type="button" data-chip="Everything" onClick="{{ toggleChip }}">Everything</button>
-          </div>
-        </div>
-        <div><label class="flow-label" data-rf="contact.form.label.situation">THE SITUATION</label><textarea ref="{{ msgRef }}" rows="4" placeholder="How can Rain make your business better?" class="flow-input"></textarea></div>
-        <a href="#" class="flow-send" onClick="{{ sendStorm }}">
-          <span ref="{{ btnWater }}" class="flow-send__water">
-            <span class="flow-send__wave" aria-hidden="true"></span>
-          </span>
-          <span data-send-label="t" class="flow-send__label">Send it</span>
-          <span ref="{{ btnCond }}" class="flow-send__cond">DRY</span>
+  <nav class="flood__current" aria-label="Cases">
+    <div class="flood__tabs">
+      <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
+        <a href="#" class="flood-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
+          <span data-case-prog="t" class="flood-tab__prog"></span>
+          <span class="flood-tab__name" style="{{ cs.nameStyle }}">{{ cs.name }}</span>
+          <span class="flood-tab__head">{{ cs.head }}</span>
         </a>
-        <p class="flow-form-foot" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
+      </sc-for>
+    </div>
+    <p class="flood__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
+  </nav>
+</section>
+
+<section class="clearing" ref="{{ founderRef }}" data-screen-label="Founder">
+  <blockquote class="clearing__quote" data-reveal="" data-rf-pre="founder.quote.pre" data-rf-post="founder.quote.post">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+  <div class="clearing__bio" data-reveal="">
+    <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+    <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish.</p>
+  </div>
+</section>
+
+<section class="landfall" ref="{{ contactRef }}" data-screen-label="Contact">
+  <h2 class="landfall__title" data-reveal="" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word">pour.</em></h2>
+  <p class="landfall__lede" data-reveal="" data-rf="contact.intro">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
+  <p class="contact-invite" data-reveal="" data-rf-post="contact.invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
+  <div class="landfall-form" data-reveal="">
+    <div class="landfall-form__tide" aria-hidden="true"></div>
+    <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
+    <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
+    <div class="landfall-form__head">
+      <span class="inquiry-title" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
+      <span class="inquiry-priority" data-rf-post="contact.form.priority"><span class="inquiry-priority__dot"></span>PRIORITY: SEVERE</span>
+    </div>
+    <div class="landfall-form__body">
+      <div class="flow-form-row flow-form-row--2">
+        <div><label class="flow-label" data-rf="contact.form.label.name">NAME</label><input ref="{{ nameRef }}" type="text" placeholder="Jane Carter" class="flow-input"></div>
+        <div><label class="flow-label" data-rf="contact.form.label.email">EMAIL</label><input ref="{{ emailRef }}" type="email" placeholder="you@company.com" class="flow-input"></div>
       </div>
+      <div><label class="flow-label" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
+        <div class="flow-chips-select">
+          <button type="button" data-chip="Website" onClick="{{ toggleChip }}">Website</button>
+          <button type="button" data-chip="App" onClick="{{ toggleChip }}">App</button>
+          <button type="button" data-chip="Revenue" onClick="{{ toggleChip }}">Revenue</button>
+          <button type="button" data-chip="AI automation" onClick="{{ toggleChip }}">AI automation</button>
+          <button type="button" data-chip="Everything" onClick="{{ toggleChip }}">Everything</button>
+        </div>
+      </div>
+      <div><label class="flow-label" data-rf="contact.form.label.situation">THE SITUATION</label><textarea ref="{{ msgRef }}" rows="3" placeholder="How can Rain make your business better?" class="flow-input"></textarea></div>
+      <a href="#" class="flow-send" onClick="{{ sendStorm }}">
+        <span ref="{{ btnWater }}" class="flow-send__water"><span class="flow-send__wave" aria-hidden="true"></span></span>
+        <span data-send-label="t" class="flow-send__label">Send it</span>
+        <span ref="{{ btnCond }}" class="flow-send__cond">DRY</span>
+      </a>
+      <p class="flow-form-foot" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
     </div>
   </div>
 </section>
@@ -789,7 +623,7 @@ class Component extends DCLogic {
       const n = big ? 7 : 3 + (Math.random() * 3 | 0);
       for (let i = 0; i < n; i++) sparks.push({ x, y, vx: (Math.random() - .5) * (big ? 220 : 140), vy: -(70 + Math.random() * (big ? 240 : 160)), a: .95, r: .8 + Math.random() * 1.3 });
     };
-    const mdown = (e) => { const r = cv.getBoundingClientRect(); if (e.clientY > r.top && e.clientY < r.bottom) { const wl = H * .42; splash(e.clientX - r.left, wl + Math.random() * (H - wl) * .5, true); } };
+    const mdown = (e) => { const r = cv.getBoundingClientRect(); if (e.clientY > r.top && e.clientY < r.bottom) { const wl = H * .52; splash(e.clientX - r.left, wl + Math.random() * (H - wl) * .5, true); } };
     addEventListener('mousedown', mdown);
     this.cleanup.push(() => removeEventListener('mousedown', mdown));
     const loop = (now) => {
@@ -798,7 +632,7 @@ class Component extends DCLogic {
       const vr = cv.getBoundingClientRect();
       if (vr.bottom < -40 || vr.top > innerHeight + 40) return;
       const [ar, ag, ab] = this.accentRGB();
-      const wl = H * .42;
+      const wl = H * .52;
       ctx.clearRect(0, 0, W, H);
       const g = ctx.createLinearGradient(0, wl - 6, 0, H);
       g.addColorStop(0, 'rgba(22,48,92,.6)'); g.addColorStop(1, 'rgba(4,12,26,.95)');
@@ -1015,6 +849,8 @@ class Component extends DCLogic {
       if (e && e.value.trim()) lv += 1 / 3;
       if (m) lv += Math.min(1, m.value.trim().length / 60) / 3;
       this.formStorm = lv;
+      const form = document.querySelector('.landfall-form');
+      if (form) form.style.setProperty('--tide', (lv * 100).toFixed(1) + '%');
       const w = this.btnWater.current;
       if (w) w.style.height = (lv * 100).toFixed(1) + '%';
       const c = this.btnCond.current;
@@ -1628,7 +1464,7 @@ class Component extends DCLogic {
            { fontFamily: "'Instrument Serif',serif", fontSize: '18.5px', letterSpacing: '.02em' }][i] || {}),
         icon: this.makeIcon(c.paths, 18),
         select: (e) => { e.preventDefault(); this.userLocked = true; this.pickCase(i); },
-        tabStyle: { position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'stretch', padding: '16px 18px 18px', borderTop: '3px solid transparent', background: 'transparent', transition: 'all .25s ease', cursor: 'pointer' }
+        tabStyle: { position: 'relative', overflow: 'hidden' }
       })),
       activeKicker: ac.num + ' — ' + ac.head,
       activeCat: ac.cat,
@@ -1639,13 +1475,13 @@ class Component extends DCLogic {
       activeCondStyle: { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '9.5px', letterSpacing: '.22em', color: 'rgb(' + ac.hue + ')', border: '1px solid rgba(' + ac.hue + ',.35)', borderRadius: '999px', padding: '5px 12px' },
       activeWash: { position: 'absolute', top: '-25%', right: '-15%', width: '75%', height: '95%', background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.09), transparent 70%)', pointerEvents: 'none', transition: 'background .7s ease' },
       activeGhost: React.createElement('span', { style: { color: 'rgb(' + ac.hue + ')' } }, this.makeIcon(ac.paths, 120)),
-      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(28px,2.8vw,38px)', lineHeight: 1, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
+      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(2rem,5vw,3.6rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
       activeName: ac.name, activeDesc: ac.desc,
-      activeNameStyle: Object.assign({ margin: '18px 0 0', color: '#f2f8ff', lineHeight: 1.06, textShadow: '0 6px 34px rgba(' + ac.hue + ',.25)' },
-        [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(2.2rem,3.6vw,3.3rem)', letterSpacing: '-.01em' },
-         { fontFamily: "'Geist',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.12em', fontSize: 'clamp(1.5rem,2.5vw,2.2rem)' },
-         { fontFamily: "'Geist Mono',monospace", fontWeight: 500, textTransform: 'uppercase', letterSpacing: '.2em', fontSize: 'clamp(1.3rem,2.2vw,1.9rem)' },
-         { fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 'clamp(2rem,3.4vw,3.1rem)', letterSpacing: '.02em' }][ci] || {}),
+      activeNameStyle: Object.assign({ margin: '18px 0 0', color: '#f2f8ff', lineHeight: 0.98, textShadow: '0 6px 34px rgba(' + ac.hue + ',.25)' },
+        [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(3.2rem,8vw,6.2rem)', letterSpacing: '-.03em' },
+         { fontFamily: "'Geist',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', fontSize: 'clamp(2.4rem,6.5vw,4.6rem)' },
+         { fontFamily: "'Geist Mono',monospace", fontWeight: 500, textTransform: 'uppercase', letterSpacing: '.16em', fontSize: 'clamp(2rem,5.5vw,4rem)' },
+         { fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 'clamp(3rem,7.5vw,5.8rem)', letterSpacing: '-.02em' }][ci] || {}),
       activeM1v: ac.m[0][0], activeM1l: ac.m[0][1],
       activeM2v: ac.m[1][0], activeM2l: ac.m[1][1],
       activeM3v: ac.m[2][0], activeM3l: ac.m[2][1],
