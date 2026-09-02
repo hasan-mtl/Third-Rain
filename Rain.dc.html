@@ -154,8 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
+<link rel="stylesheet" href="./rain-flow.css?v=3">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
+<script src="./rain-flow.js" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -311,191 +313,141 @@ html{-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 </section>
-<section data-screen-label="Scale" class="agency-band" aria-label="Studio scale">
-  <div class="agency-stats" data-reveal="">
-    <div class="agency-stat"><span class="agency-stat__num">$11M+</span><span class="agency-stat__label">Revenue attributed last season</span></div>
-    <div class="agency-stat"><span class="agency-stat__num">180+</span><span class="agency-stat__label">Products shipped since 2004</span></div>
-    <div class="agency-stat"><span class="agency-stat__num">48</span><span class="agency-stat__label">Active enterprise engagements</span></div>
-    <div class="agency-stat"><span class="agency-stat__num">24/7</span><span class="agency-stat__label">AI ops running client systems</span></div>
-  </div>
-  <div class="agency-marquee" aria-hidden="true">
-    <div class="agency-marquee__track">
-      <div class="agency-marquee__row">
-        <span class="agency-marquee__item"><strong>Private equity</strong> · Deal rooms</span>
-        <span class="agency-marquee__item"><strong>Nightlife</strong> · VIP systems</span>
-        <span class="agency-marquee__item"><strong>Medical</strong> · Booking engines</span>
-        <span class="agency-marquee__item"><strong>Automotive</strong> · Digital showrooms</span>
-        <span class="agency-marquee__item"><strong>Hospitality</strong> · Revenue ops</span>
-        <span class="agency-marquee__item"><strong>Healthcare</strong> · Patient intake</span>
-        <span class="agency-marquee__item"><strong>Finance</strong> · Investor pipelines</span>
-        <span class="agency-marquee__item"><strong>Consumer</strong> · Brand platforms</span>
-      </div>
-      <div class="agency-marquee__row">
-        <span class="agency-marquee__item"><strong>Private equity</strong> · Deal rooms</span>
-        <span class="agency-marquee__item"><strong>Nightlife</strong> · VIP systems</span>
-        <span class="agency-marquee__item"><strong>Medical</strong> · Booking engines</span>
-        <span class="agency-marquee__item"><strong>Automotive</strong> · Digital showrooms</span>
-        <span class="agency-marquee__item"><strong>Hospitality</strong> · Revenue ops</span>
-        <span class="agency-marquee__item"><strong>Healthcare</strong> · Patient intake</span>
-        <span class="agency-marquee__item"><strong>Finance</strong> · Investor pipelines</span>
-        <span class="agency-marquee__item"><strong>Consumer</strong> · Brand platforms</span>
-      </div>
+<section class="flow-river" data-screen-label="The River" aria-label="Studio impact">
+  <canvas ref="{{ waterCanvas }}" class="flow-river__canvas" aria-hidden="true"></canvas>
+  <div class="flow-river__inner">
+    <p class="flow-river__hint" data-reveal="">Tap the water. Drag a ripple. This is what we build.</p>
+    <div class="flow-river__stats" data-reveal="">
+      <div class="flow-stat"><span class="flow-stat__n">$11M+</span><span class="flow-stat__l">Revenue last season</span></div>
+      <div class="flow-stat"><span class="flow-stat__n">180+</span><span class="flow-stat__l">Products since 2004</span></div>
+      <div class="flow-stat"><span class="flow-stat__n">48</span><span class="flow-stat__l">Active engagements</span></div>
+      <div class="flow-stat"><span class="flow-stat__n">24/7</span><span class="flow-stat__l">AI ops live</span></div>
     </div>
   </div>
+  <svg class="flow-wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0,40 C360,80 720,0 1080,40 C1260,56 1380,48 1440,40 L1440,80 L0,80 Z"/></svg>
 </section>
-<section data-screen-label="The Forecast" style="position:relative;z-index:1;background:rgba(3,7,16,.95);padding:clamp(100px,12vw,160px) clamp(20px,6vw,80px);overflow:hidden;">
-  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
-  <div style="position:absolute;top:-25%;right:8%;width:55%;height:75%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);pointer-events:none;"></div>
-  <div style="position:absolute;bottom:-10%;left:-18%;width:70%;height:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(90,140,220,.05), transparent 70%);pointer-events:none;animation:fogDrift 42s ease-in-out infinite alternate;"></div>
-  <div style="position:relative;max-width:1320px;margin:0 auto;">
-    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:clamp(48px,7vw,80px);">
-      <div style="max-width:min(100%,780px);">
-        <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="forecast.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Engagement architecture</p>
-        <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.8rem,6vw,5rem);line-height:1.02;letter-spacing:-.02em;color:#eef5ff;text-wrap:balance;" data-rf-pre="forecast.title.pre" data-rf-post="forecast.title.post">Every engagement is a <em data-rf="forecast.word" style="color:var(--accent);">forecast</em>.</h2>
-        <p style="margin:22px 0 0;max-width:62ch;font-weight:300;font-size:clamp(16px,1.6vw,18px);line-height:1.75;color:#8fa9c9;text-wrap:pretty;" data-rf-pre="forecast.intro.pre" data-rf-post="forecast.intro.post">Four phases, one war room. <span data-rf="forecast.intro.em" style="color:#dcebff;">Enterprise clarity on timing, scope, and who is actually building it.</span></p>
-      </div>
-      <div style="flex:none;padding:clamp(18px,2.5vw,24px) clamp(22px,3vw,32px);border:1px solid rgba(120,170,255,.16);border-radius:14px;background:rgba(6,14,28,.65);font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8fb0d8;line-height:1.6;">
-        <span style="display:block;color:var(--accent);margin-bottom:8px;">Studio standard</span>
-        Founder-led · No juniors ·<br>Reply within 24 hours
-      </div>
-    </div>
-    <div data-reveal="">
-      <div style="position:relative;border:1px solid rgba(120,170,255,.14);border-radius:20px;overflow:hidden;background:linear-gradient(165deg, #070e1a, #03070e);box-shadow:0 40px 90px rgba(0,0,0,.45);">
-        <div style="position:absolute;left:10px;top:-3%;width:4px;height:13px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.7), rgba(120,180,255,.25) 70%, transparent);pointer-events:none;z-index:2;animation:dripSlide 9s linear 2s infinite;"></div>
-        <div style="position:absolute;right:14px;top:-3%;width:3.5px;height:11px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.6), rgba(120,180,255,.2) 70%, transparent);pointer-events:none;z-index:2;animation:dripSlide 13s linear 6.5s infinite;"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 26px;border-bottom:1px solid rgba(120,170,255,.1);">
-          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.26em;color:#8fb0d8;" data-rf="forecast.panel.title">THE ENGAGEMENT TIMELINE</span>
-          <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#5d7ca6;" data-rf="forecast.panel.updated">START TO FINISH</span>
+
+<section class="flow-zone flow-zone--forecast" data-screen-label="The Forecast">
+  <div class="flow-wrap">
+    <header class="flow-head" data-reveal="">
+      <p class="flow-eyebrow" data-rf-post="forecast.label">The process</p>
+      <h2 class="flow-title" data-rf-pre="forecast.title.pre" data-rf-post="forecast.title.post">Every engagement is a <em data-rf="forecast.word">forecast</em>.</h2>
+      <p class="flow-lede" data-rf-pre="forecast.intro.pre" data-rf-post="forecast.intro.post">Four phases down one river. <span data-rf="forecast.intro.em" style="color:#dcecff;">You always know the timing, the scope, and who is actually building it.</span></p>
+    </header>
+    <div class="flow-steps" data-reveal="">
+      <article class="flow-step is-open">
+        <button type="button" class="flow-step__head" aria-expanded="true">
+          <span class="flow-step__week" data-rf="forecast.stage.1.week">Week 1</span>
+          <span class="flow-step__name" data-rf="forecast.stage.1.name">Cloudseeding</span>
+          <span class="flow-step__pct" data-rf="forecast.stage.1.pct">20%</span>
+          <span class="flow-step__toggle" aria-hidden="true">↓</span>
+        </button>
+        <div class="flow-step__body">
+          <p class="flow-step__kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
+          <p class="flow-step__text" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking, then lock the plan for the next five weeks.</p>
+          <div class="flow-meter"><div class="flow-meter__fill" data-width="20%" style="width:20%"></div></div>
         </div>
-        <div class="forecast-phases">
-            <article class="fc-stage">
-              <p class="fc-week" data-rf="forecast.stage.1.week">Week 1</p>
-              <div>
-                <div class="fc-stage-head">
-                  <h3 class="fc-name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
-                  <span class="fc-pct" data-rf="forecast.stage.1.pct">20%</span>
-                </div>
-                <p class="fc-kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
-                <p class="fc-body" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking — then lock the plan for the next five weeks.</p>
-                <div class="fc-track"><div class="fc-bar" style="width:20%;--sheen-delay:0s;"></div></div>
-              </div>
-            </article>
-            <article class="fc-stage">
-              <p class="fc-week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
-              <div>
-                <div class="fc-stage-head">
-                  <h3 class="fc-name" data-rf="forecast.stage.2.name">Formation</h3>
-                  <span class="fc-pct" data-rf="forecast.stage.2.pct">45%</span>
-                </div>
-                <p class="fc-kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
-                <p class="fc-body" data-rf="forecast.stage.2.body">You see the storm before we build it — brand, UX, and art direction, reviewed with you before a line of production work.</p>
-                <div class="fc-track"><div class="fc-bar" style="width:45%;--sheen-delay:.5s;"></div></div>
-              </div>
-            </article>
-            <article class="fc-stage">
-              <p class="fc-week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
-              <div>
-                <div class="fc-stage-head">
-                  <h3 class="fc-name" data-rf="forecast.stage.3.name">Downpour</h3>
-                  <span class="fc-pct" data-rf="forecast.stage.3.pct">90%</span>
-                </div>
-                <p class="fc-kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
-                <p class="fc-body" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live — not a deck, the real thing.</p>
-                <div class="fc-track"><div class="fc-bar" style="width:90%;--sheen-delay:1s;"></div></div>
-              </div>
-            </article>
-            <article class="fc-stage">
-              <p class="fc-week" data-rf="forecast.stage.4.week">Ongoing</p>
-              <div>
-                <div class="fc-stage-head">
-                  <h3 class="fc-name" data-rf="forecast.stage.4.name">Steady rain</h3>
-                  <span class="fc-pct" data-rf="forecast.stage.4.pct">100%</span>
-                </div>
-                <p class="fc-kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
-                <p class="fc-body" data-rf="forecast.stage.4.body">After landfall we stay on: automation, search, and optimization so the system keeps raining without you running it.</p>
-                <div class="fc-track"><div class="fc-bar" style="width:100%;--sheen-delay:1.5s;"></div></div>
-              </div>
-            </article>
-          </div>
-      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 26px;"><span style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;color:#46618a;" data-rf="forecast.footer.source">NO HANDOFFS · NO JUNIORS</span><span style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;color:#46618a;" data-rf="forecast.footer.accuracy">REPLY WITHIN 24H</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-<section ref="{{ aiRef }}" data-screen-label="AI Automation" style="position:relative;z-index:1;background:rgba(3,6,11,.93);padding:clamp(100px,12vw,160px) clamp(20px,6vw,80px);overflow:hidden;">
-  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
-  <div style="position:absolute;top:-20%;left:30%;width:60%;height:80%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);pointer-events:none;"></div>
-  <div style="position:relative;max-width:1320px;margin:0 auto;">
-    <div data-reveal="" class="ai-mega-stats">
-      <div class="ai-mega-stat"><p class="ai-mega-stat__v">1.2M+</p><p class="ai-mega-stat__l">Tasks executed / yr</p></div>
-      <div class="ai-mega-stat"><p class="ai-mega-stat__v">38s</p><p class="ai-mega-stat__l">Avg response time</p></div>
-      <div class="ai-mega-stat"><p class="ai-mega-stat__v">14</p><p class="ai-mega-stat__l">Systems integrated</p></div>
-      <div class="ai-mega-stat"><p class="ai-mega-stat__v">0</p><p class="ai-mega-stat__l">Account managers</p></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,6vw,90px);align-items:center;">
-    <div data-reveal="">
-      <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="ai.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>AI automation</p>
-      <h2 style="margin:0 0 24px;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.8rem,6vw,5rem);line-height:1.02;letter-spacing:-.02em;color:#eef5ff;text-wrap:balance;"><span data-rf="ai.title.line1" style="display:block;">AI runs the company.</span><em data-rf="ai.title.line2" style="color:var(--accent);">Not you.</em></h2>
-      <p style="margin:0 0 30px;max-width:58ch;font-weight:300;font-size:clamp(16px,1.6vw,18px);line-height:1.75;color:#93aecd;text-wrap:pretty;" data-rf="ai.body">We wire agents and automations into the guts of your business at enterprise depth: lead follow-up, support, scheduling, invoicing, reporting. The machine works around the clock. You set direction. Rain runs the weather.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <span style="border:1px solid rgba(130,180,255,.18);padding:7px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;" data-rf="ai.badge.1">AI agents</span>
-        <span style="border:1px solid rgba(130,180,255,.18);padding:7px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;" data-rf="ai.badge.2">Workflow automation</span>
-        <span style="border:1px solid rgba(130,180,255,.18);padding:7px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;" data-rf="ai.badge.3">Custom integrations</span>
-      </div>
-    </div>
-    <div data-reveal="" style="position:relative;overflow:hidden;background:linear-gradient(160deg, rgba(8,15,28,.9), rgba(4,9,17,.92));border:1px solid rgba(130,180,255,.16);border-radius:18px;padding:clamp(28px,3.5vw,36px) clamp(28px,3vw,32px) clamp(24px,3vw,28px);box-shadow:0 40px 90px rgba(0,0,0,.5);font-family:'Geist Mono',monospace;font-size:12.5px;animation:cardFloat 7s ease-in-out infinite;min-height:clamp(420px,52vh,520px);">
-      <div style="position:absolute;left:0;right:0;height:34%;top:-30%;pointer-events:none;background:linear-gradient(180deg, transparent, rgba(86,185,255,.05) 45%, rgba(86,185,255,.11) 50%, rgba(86,185,255,.05) 55%, transparent);animation:scanMove 5.5s linear infinite;"></div>
-      <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div style="display:flex;gap:7px;">
-          <span style="width:9px;height:9px;border-radius:50%;background:#2a3b57;"></span>
-          <span style="width:9px;height:9px;border-radius:50%;background:#2a3b57;"></span>
-          <span style="width:9px;height:9px;border-radius:50%;background:var(--accent);opacity:.7;"></span>
+      </article>
+      <article class="flow-step">
+        <button type="button" class="flow-step__head" aria-expanded="false">
+          <span class="flow-step__week" data-rf="forecast.stage.2.week">Weeks 2–3</span>
+          <span class="flow-step__name" data-rf="forecast.stage.2.name">Formation</span>
+          <span class="flow-step__pct" data-rf="forecast.stage.2.pct">45%</span>
+          <span class="flow-step__toggle" aria-hidden="true">↓</span>
+        </button>
+        <div class="flow-step__body">
+          <p class="flow-step__kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
+          <p class="flow-step__text" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you before production starts.</p>
+          <div class="flow-meter"><div class="flow-meter__fill" data-width="45%" style="width:0%"></div></div>
         </div>
-        <span style="font-size:10px;letter-spacing:.25em;color:#5d7ca6;" data-rf="ai.terminal.title">RAIN·OPS — LIVE</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(120,170,255,.14);border-radius:12px;background:rgba(86,185,255,.05);">
-        <span style="font-size:9.5px;letter-spacing:.24em;color:#8fb0d8;" data-rf="ai.terminal.counter.label">TASKS EXECUTED TODAY</span>
-        <span ref="{{ aiCounter }}" style="font-family:'Geist',sans-serif;font-weight:600;font-size:26px;line-height:1;color:var(--accent);text-shadow:0 0 18px var(--accent-glow);">1,284</span>
-      </div>
-      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.1.time" style="color:#46618a;">07:00</span><span data-rf="ai.terminal.row.1.text" style="color:#93b1d6;">agent · morning pipeline report sent</span></div>
-      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.2.time" style="color:#46618a;">09:12</span><span data-rf="ai.terminal.row.2.text" style="color:#93b1d6;">workflow · 3 proposals generated &amp; delivered</span></div>
-      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.3.time" style="color:#46618a;">11:47</span><span data-rf="ai.terminal.row.3.text" style="color:#93b1d6;">agent · 14 leads qualified, 5 calls booked</span></div>
-      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.4.time" style="color:#46618a;">13:05</span><span data-rf="ai.terminal.row.4.text" style="color:#93b1d6;">workflow · invoices reconciled — $18,420 collected</span></div>
-      <div style="display:flex;gap:14px;padding:8px 0;border-bottom:1px dashed rgba(120,170,255,.08);"><span data-rf="ai.terminal.row.5.time" style="color:#46618a;">16:20</span><span data-rf="ai.terminal.row.5.text" style="color:#93b1d6;">agent · support inbox cleared, avg reply 38s</span></div>
-      <div style="display:flex;gap:12px;padding:14px 0 4px;align-items:center;">
-        <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:glowPulse 1.6s ease-in-out infinite;"></span>
-        <span ref="{{ aiLog }}" style="color:#cfe3fb;">listening for new leads…</span>
-        <span style="display:inline-block;width:7px;height:14px;background:var(--accent);animation:blinkCur 1.1s steps(1) infinite;"></span>
-      </div>
+      </article>
+      <article class="flow-step">
+        <button type="button" class="flow-step__head" aria-expanded="false">
+          <span class="flow-step__week" data-rf="forecast.stage.3.week">Weeks 4–6</span>
+          <span class="flow-step__name" data-rf="forecast.stage.3.name">Downpour</span>
+          <span class="flow-step__pct" data-rf="forecast.stage.3.pct">90%</span>
+          <span class="flow-step__toggle" aria-hidden="true">↓</span>
+        </button>
+        <div class="flow-step__body">
+          <p class="flow-step__kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
+          <p class="flow-step__text" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live. Not a deck. The real thing.</p>
+          <div class="flow-meter"><div class="flow-meter__fill" data-width="90%" style="width:0%"></div></div>
+        </div>
+      </article>
+      <article class="flow-step">
+        <button type="button" class="flow-step__head" aria-expanded="false">
+          <span class="flow-step__week" data-rf="forecast.stage.4.week">Ongoing</span>
+          <span class="flow-step__name" data-rf="forecast.stage.4.name">Steady rain</span>
+          <span class="flow-step__pct" data-rf="forecast.stage.4.pct">100%</span>
+          <span class="flow-step__toggle" aria-hidden="true">↓</span>
+        </button>
+        <div class="flow-step__body">
+          <p class="flow-step__kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
+          <p class="flow-step__text" data-rf="forecast.stage.4.body">After landfall we stay on: automation, search, and optimization so the system keeps raining without you running it.</p>
+          <div class="flow-meter"><div class="flow-meter__fill" data-width="100%" style="width:0%"></div></div>
+        </div>
+      </article>
     </div>
-    </div>
-  <div data-reveal="" style="position:relative;max-width:1320px;margin:clamp(48px,6vw,80px) auto 0;">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;position:relative;padding:0 6px;">
-      <div style="position:absolute;left:0;right:0;top:5px;height:1px;background:linear-gradient(90deg, transparent, rgba(120,170,255,.3) 12%, rgba(120,170,255,.3) 88%, transparent);"></div>
-      <div style="position:absolute;top:1px;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent), 0 0 4px #fff;animation:flowDot 4.5s linear infinite;"></div>
-      <div style="position:absolute;top:1px;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent), 0 0 4px #fff;animation:flowDot 4.5s linear 2.25s infinite;"></div>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid var(--accent);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#8fb0d8;white-space:nowrap;" data-rf="ai.pipeline.1">LEADS IN</span></div>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid rgba(140,190,255,.5);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#5d7ca6;white-space:nowrap;" data-rf="ai.pipeline.2">QUALIFIED</span></div>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid rgba(140,190,255,.5);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#5d7ca6;white-space:nowrap;" data-rf="ai.pipeline.3">BOOKED</span></div>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:#0a1626;border:1.5px solid rgba(140,190,255,.5);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#5d7ca6;white-space:nowrap;" data-rf="ai.pipeline.4">DELIVERED</span></div>
-      <div style="position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:12px;"><span style="width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);"></span><span class="pl-label" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:#e6f2ff;text-shadow:0 0 12px var(--accent-glow);white-space:nowrap;" data-rf="ai.pipeline.5">REVENUE OUT</span></div>
-    </div>
-  </div>
   </div>
 </section>
-<section ref="{{ workRef }}" data-screen-label="Selected Work" style="position:relative;z-index:1;background:linear-gradient(180deg, rgba(3,7,13,.94), rgba(4,9,17,.92));padding:clamp(100px,12vw,160px) clamp(20px,6vw,80px);overflow:hidden;">
-  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
-  <div style="max-width:1320px;margin:0 auto;">
-    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px 56px;flex-wrap:wrap;margin-bottom:clamp(48px,7vw,72px);">
-      <div style="flex:1 1 0;min-width:min(540px,100%);">
-        <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="work.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Client ledger</p>
-        <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.8rem,6vw,5rem);line-height:1.02;letter-spacing:-.02em;color:#eef5ff;text-wrap:balance;" data-rf-pre="work.title.pre">Work that made it <em data-rf="work.title.em" style="color:var(--accent);">rain.</em></h2>
-        <p style="margin:22px 0 0;max-width:62ch;font-weight:300;font-size:clamp(16px,1.6vw,18px);line-height:1.75;color:#8fa9c9;text-wrap:pretty;" data-rf-pre="work.intro.pre">A cross-section of recent engagements across finance, nightlife, medical, and automotive. <span data-rf="work.intro.em" style="color:#dcebff;">The full ledger runs deeper than we show on the homepage.</span></p>
+
+<section class="flow-zone flow-zone--ai" ref="{{ aiRef }}" data-screen-label="AI Automation">
+  <div class="flow-wrap">
+    <div class="flow-ai-grid">
+      <div data-reveal="">
+        <p class="flow-eyebrow" data-rf-post="ai.label">AI automation</p>
+        <h2 class="flow-title"><span data-rf="ai.title.line1">AI runs the company.</span> <em data-rf="ai.title.line2">Not you.</em></h2>
+        <p class="flow-lede" data-rf="ai.body">Agents and automations wired into sales, support, scheduling, invoicing, and reporting. The machine works around the clock. You set direction. Rain runs the weather.</p>
+        <div class="flow-chips">
+          <span class="flow-chip" data-rf="ai.badge.1">AI agents</span>
+          <span class="flow-chip" data-rf="ai.badge.2">Workflows</span>
+          <span class="flow-chip" data-rf="ai.badge.3">Integrations</span>
+        </div>
+      </div>
+      <div class="flow-terminal" data-reveal="">
+        <div class="flow-terminal__scan" aria-hidden="true"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;position:relative;z-index:1;">
+          <div style="display:flex;gap:7px;"><span style="width:9px;height:9px;border-radius:50%;background:#ff5f57;"></span><span style="width:9px;height:9px;border-radius:50%;background:#febc2e;"></span><span style="width:9px;height:9px;border-radius:50%;background:#28c840;"></span></div>
+          <span style="font-size:10px;letter-spacing:.25em;color:#5d7ca6;" data-rf="ai.terminal.title">RAIN·OPS — LIVE</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(120,170,255,.14);border-radius:12px;background:rgba(86,185,255,.06);position:relative;z-index:1;">
+          <span style="font-size:9.5px;letter-spacing:.24em;color:#8fb0d8;" data-rf="ai.terminal.counter.label">TASKS TODAY</span>
+          <span ref="{{ aiCounter }}" style="font-family:'Geist',sans-serif;font-weight:600;font-size:28px;line-height:1;color:var(--accent);text-shadow:0 0 18px var(--accent-glow);">1,284</span>
+        </div>
+        <div class="flow-terminal__row" style="position:relative;z-index:1;"><time data-rf="ai.terminal.row.1.time">07:00</time><span data-rf="ai.terminal.row.1.text">agent · morning pipeline report sent</span></div>
+        <div class="flow-terminal__row" style="position:relative;z-index:1;"><time data-rf="ai.terminal.row.2.time">09:12</time><span data-rf="ai.terminal.row.2.text">workflow · 3 proposals generated &amp; delivered</span></div>
+        <div class="flow-terminal__row" style="position:relative;z-index:1;"><time data-rf="ai.terminal.row.3.time">11:47</time><span data-rf="ai.terminal.row.3.text">agent · 14 leads qualified, 5 calls booked</span></div>
+        <div class="flow-terminal__row" style="position:relative;z-index:1;"><time data-rf="ai.terminal.row.4.time">13:05</time><span data-rf="ai.terminal.row.4.text">workflow · invoices reconciled, $18,420 collected</span></div>
+        <div class="flow-terminal__row" style="position:relative;z-index:1;"><time data-rf="ai.terminal.row.5.time">16:20</time><span data-rf="ai.terminal.row.5.text">agent · support inbox cleared, avg reply 38s</span></div>
+        <div style="display:flex;gap:12px;padding:14px 0 4px;align-items:center;position:relative;z-index:1;">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:glowPulse 1.6s ease-in-out infinite;"></span>
+          <span ref="{{ aiLog }}" style="color:#cfe3fb;">listening for new leads…</span>
+          <span style="display:inline-block;width:7px;height:14px;background:var(--accent);animation:blinkCur 1.1s steps(1) infinite;"></span>
+        </div>
       </div>
     </div>
-    <div data-reveal="" style="position:relative;overflow:hidden;margin-bottom:clamp(30px,4vw,48px);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);">
-      <div style="display:flex;width:max-content;animation:logoScroll 46s linear infinite;" style-hover="animation-play-state:paused;">
+    <div class="flow-pipeline" data-reveal="">
+      <div class="flow-pipeline__line" aria-hidden="true"></div>
+      <div class="flow-pipeline__nodes">
+        <div class="flow-pipeline__node"><span class="flow-pipeline__dot is-live"></span><span class="flow-pipeline__label is-live" data-rf="ai.pipeline.1">Leads in</span></div>
+        <div class="flow-pipeline__node"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.2">Qualified</span></div>
+        <div class="flow-pipeline__node"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.3">Booked</span></div>
+        <div class="flow-pipeline__node"><span class="flow-pipeline__dot"></span><span class="flow-pipeline__label" data-rf="ai.pipeline.4">Delivered</span></div>
+        <div class="flow-pipeline__node"><span class="flow-pipeline__dot is-live"></span><span class="flow-pipeline__label is-live" data-rf="ai.pipeline.5">Revenue out</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flow-zone flow-zone--work" ref="{{ workRef }}" data-screen-label="Selected Work">
+  <div class="flow-wrap">
+    <header data-reveal="">
+      <p class="flow-eyebrow" data-rf-post="work.label">Client ledger</p>
+      <h2 class="flow-title" data-rf-pre="work.title.pre">Work that made it <em data-rf="work.title.em">rain.</em></h2>
+      <p class="flow-lede" data-rf-pre="work.intro.pre">Swipe the cases. <span data-rf="work.intro.em" style="color:#dcecff;">Real engagements. Real numbers.</span></p>
+    </header>
+    <div class="flow-logos" data-reveal="" style="position:relative;overflow:hidden;margin-top:clamp(32px,5vw,48px);">
+      <div style="display:flex;width:max-content;animation:logoScroll 46s linear infinite;">
         <div style="display:flex;align-items:center;gap:clamp(44px,5.5vw,80px);padding-right:clamp(44px,5.5vw,80px);white-space:nowrap;">
           <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.1">Blueharbor Capital</span>
           <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.2">Voltage</span>
@@ -503,13 +455,6 @@ html{-webkit-tap-highlight-color:transparent}
           <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.4">Vetta Motorcars</span>
           <span style="font-weight:600;font-size:14px;letter-spacing:.08em;color:#7d97ba;" data-rf="work.logo.5">Sterling &amp; Vane</span>
           <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.6">Ironpeak</span>
-          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.7">Solara Health</span>
-          <span style="font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.8">Copperline Hotels</span>
-          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.9">Duskworth</span>
-          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.10">Meridian Yachts</span>
-          <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.11">Atlas &amp; Finch</span>
-          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.12">Pinnacle Ortho</span>
-          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.13">Harbor &amp; Oak</span>
         </div>
         <div style="display:flex;align-items:center;gap:clamp(44px,5.5vw,80px);padding-right:clamp(44px,5.5vw,80px);white-space:nowrap;">
           <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.1">Blueharbor Capital</span>
@@ -518,22 +463,13 @@ html{-webkit-tap-highlight-color:transparent}
           <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.4">Vetta Motorcars</span>
           <span style="font-weight:600;font-size:14px;letter-spacing:.08em;color:#7d97ba;" data-rf="work.logo.5">Sterling &amp; Vane</span>
           <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.6">Ironpeak</span>
-          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.7">Solara Health</span>
-          <span style="font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.8">Copperline Hotels</span>
-          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.9">Duskworth</span>
-          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#7d97ba;" data-rf="work.logo.10">Meridian Yachts</span>
-          <span style="font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.11">Atlas &amp; Finch</span>
-          <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:#7d97ba;" data-rf="work.logo.12">Pinnacle Ortho</span>
-          <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:21px;color:#7d97ba;" data-rf="work.logo.13">Harbor &amp; Oak</span>
         </div>
       </div>
     </div>
-    <div data-reveal="" style="border:1px solid rgba(120,170,255,.14);border-radius:20px;overflow:hidden;background:linear-gradient(165deg, #070e1a, #03070e);box-shadow:0 40px 90px rgba(0,0,0,.45);position:relative;">
-      <div style="position:absolute;left:12px;top:-3%;width:4px;height:13px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.65), rgba(120,180,255,.22) 70%, transparent);pointer-events:none;z-index:3;animation:dripSlide 11s linear 4s infinite;"></div>
-      <div style="position:absolute;right:10px;top:-3%;width:3.5px;height:11px;border-radius:40% 40% 55% 55%;background:radial-gradient(60% 40% at 35% 30%, rgba(220,240,255,.55), rgba(120,180,255,.2) 70%, transparent);pointer-events:none;z-index:3;animation:dripSlide 14s linear 1.5s infinite;"></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:1px;background:rgba(120,170,255,.1);border-bottom:1px solid rgba(120,170,255,.1);">
+    <div class="flow-cases" data-reveal="" style="margin-top:clamp(28px,4vw,40px);">
+      <div class="flow-cases__tabs">
         <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
-          <a href="#" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}" style-hover="background:rgba(9,20,38,.5);">
+          <a href="#" class="flow-case-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
             <span data-case-prog="t" style="position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);opacity:.75;pointer-events:none;"></span>
             <span style="display:flex;align-items:center;gap:11px;width:100%;">
               <span data-case-ic="t" style="flex:none;width:36px;height:36px;border:1px solid rgba(130,180,255,.22);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#8fb0d8;transition:all .3s ease;">{{ cs.icon }}</span>
@@ -546,195 +482,90 @@ html{-webkit-tap-highlight-color:transparent}
           </a>
         </sc-for>
       </div>
-      <div ref="{{ caseStage }}" style="position:relative;overflow:hidden;padding:clamp(28px,3.6vw,48px) clamp(24px,3vw,44px);">
-        <div style="position:absolute;left:0;right:0;height:36%;top:-40%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(86,185,255,.04) 45%,rgba(86,185,255,.1) 50%,rgba(86,185,255,.04) 55%,transparent);animation:scanMove 6.5s linear infinite;"></div>
+      <div ref="{{ caseStage }}" class="flow-cases__stage">
         <div style="{{ activeWash }}"></div>
-        <div style="position:absolute;top:14px;right:18px;pointer-events:none;opacity:.13;">{{ activeGhost }}</div>
-        <div style="position:relative;display:flex;flex-wrap:wrap;gap:clamp(28px,4.5vw,64px);align-items:flex-start;">
-          <div style="flex:1.15 1 320px;min-width:0;">
-            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-              <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.26em;color:#5d7ca6;">{{ activeKicker }}</span>
-              <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
-              <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
-            </div>
-            <h3 style="{{ activeNameStyle }}">{{ activeName }}</h3>
-            <p style="margin:14px 0 0;max-width:54ch;font-weight:300;font-size:15px;line-height:1.7;color:#93aecd;text-wrap:pretty;">{{ activeDesc }}</p>
-          </div>
-          <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px);">
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-bottom:1px solid rgba(120,170,255,.1);padding-bottom:clamp(18px,2.4vw,24px);">
-              <div>
-                <p style="{{ activeM1Style }}">{{ activeM1v }}</p>
-                <p style="margin:9px 0 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8fa9c9;">{{ activeM1l }}</p>
-              </div>
-              <div>
-                <p style="margin:0;font-weight:600;font-size:clamp(24px,2.4vw,32px);line-height:1;color:#eaf3ff;">{{ activeM2v }}</p>
-                <p style="margin:9px 0 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8fa9c9;">{{ activeM2l }}</p>
-              </div>
-              <div>
-                <p style="margin:0;font-weight:600;font-size:clamp(24px,2.4vw,32px);line-height:1;color:#eaf3ff;">{{ activeM3v }}</p>
-                <p style="margin:9px 0 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;color:#8fa9c9;">{{ activeM3l }}</p>
-              </div>
-            </div>
-            <div>
-              <div style="display:flex;align-items:flex-end;gap:4px;height:58px;">
-                <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
-              </div>
-              <div style="display:flex;justify-content:space-between;gap:10px;margin-top:9px;">
-                <p style="margin:0;font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;color:#46618a;" data-rf="work.chart.left">REVENUE — 12-MONTH INDEX</p>
-                <p style="margin:0;font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;color:#46618a;" data-rf="work.chart.right">MO 01 → MO 12</p>
-              </div>
-            </div>
-          </div>
+        <div style="position:absolute;top:14px;right:18px;pointer-events:none;opacity:.12;">{{ activeGhost }}</div>
+        <div style="position:relative;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+          <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.26em;color:#5d7ca6;">{{ activeKicker }}</span>
+          <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
+          <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
+        </div>
+        <h3 style="{{ activeNameStyle }}">{{ activeName }}</h3>
+        <p style="margin:14px 0 0;font-size:17px;line-height:1.65;color:#b0c8e4;max-width:52ch;">{{ activeDesc }}</p>
+        <div class="flow-cases__metrics" style="margin-top:28px;">
+          <div><p class="flow-cases__metric-v" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="flow-cases__metric-l">{{ activeM1l }}</p></div>
+          <div><p class="flow-cases__metric-v">{{ activeM2v }}</p><p class="flow-cases__metric-l">{{ activeM2l }}</p></div>
+          <div><p class="flow-cases__metric-v">{{ activeM3v }}</p><p class="flow-cases__metric-l">{{ activeM3l }}</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:4px;height:64px;">
+          <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
         </div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;padding:13px clamp(20px,2.6vw,32px);border-top:1px solid rgba(120,170,255,.1);">
-        <span style="font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.22em;color:#46618a;" data-rf="work.ledger.left">CLIENT LEDGER — SHOWING 06 / 48 ACTIVE</span>
-        <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--accent);text-shadow:0 0 12px var(--accent-glow);" data-rf="work.ledger.right">SEASON TOTAL: $11M+ MADE IT RAIN</span>
+      <div class="flow-cases__footer">
+        <span data-rf="work.ledger.left">SHOWING 06 / 48 ACTIVE</span>
+        <strong data-rf="work.ledger.right">$11M+ MADE IT RAIN</strong>
       </div>
     </div>
-    <p data-reveal="" style="margin:26px 0 0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#46618a;" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
-    <div data-reveal="" class="sectors-grid">
-      <span class="sector-pill">Private equity</span>
-      <span class="sector-pill">Nightlife &amp; hospitality</span>
-      <span class="sector-pill">Medical aesthetics</span>
-      <span class="sector-pill">Exotic automotive</span>
-      <span class="sector-pill">Healthcare systems</span>
-      <span class="sector-pill">Consumer brands</span>
-      <span class="sector-pill">Financial services</span>
-      <span class="sector-pill">Real estate</span>
-      <span class="sector-pill">Professional services</span>
-      <span class="sector-pill">E-commerce</span>
-      <span class="sector-pill">SaaS platforms</span>
-      <span class="sector-pill">Entertainment</span>
+    <p data-reveal="" style="margin:20px 0 0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#5d7ca6;" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
+  </div>
+</section>
+
+<section class="flow-zone flow-zone--founder" ref="{{ founderRef }}" data-screen-label="Founder">
+  <div class="flow-wrap flow-founder" data-reveal="">
+    <p class="flow-eyebrow" data-rf-post="founder.label">The founder</p>
+    <h2 class="flow-title" data-rf-pre="founder.title.pre" data-rf-post="founder.title.post">The man behind the <em data-rf="founder.word">storm</em>.</h2>
+    <div class="flow-chips">
+      <span class="flow-chip">20+ years building</span>
+      <span class="flow-chip">East Coast EFX</span>
+      <span class="flow-chip">Founder-led</span>
+    </div>
+    <p class="flow-bio" style="margin-top:24px;" data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+    <p class="flow-bio" data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish.</p>
+    <div class="flow-quote">
+      <span class="flow-quote__mark" aria-hidden="true">“</span>
+      <blockquote data-rf-pre="founder.quote.pre" data-rf-post="founder.quote.post">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em" style="color:var(--accent);font-style:italic;">that takes decades</em>.</blockquote>
     </div>
   </div>
 </section>
-<section data-screen-label="Global Studio" class="global-studio">
-  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.22) 50%,transparent);pointer-events:none;"></div>
-  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(50% 40% at 80% 20%,rgba(86,185,255,.06),transparent 60%);"></div>
-  <div style="max-width:1320px;margin:0 auto;">
-    <div data-reveal="" style="margin-bottom:clamp(48px,7vw,72px);max-width:780px;">
-      <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Global delivery</p>
-      <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.8rem,6vw,5rem);line-height:1.02;color:#eef5ff;text-wrap:balance;">One studio. <em style="color:var(--accent);font-style:italic;">Every timezone.</em></h2>
-      <p style="margin:22px 0 0;font-weight:300;font-size:clamp(16px,1.6vw,18px);line-height:1.75;color:#8fa9c9;max-width:62ch;">Rain runs as a distributed product studio with founder oversight on every build. Same standard whether you are in New York, Miami, or London.</p>
+
+<section class="flow-zone flow-zone--contact" ref="{{ contactRef }}" data-screen-label="Contact">
+  <div class="flow-wrap flow-contact-grid">
+    <div data-reveal="">
+      <p class="flow-eyebrow" data-rf-post="contact.label">Storm dispatch</p>
+      <h2 class="flow-title" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word" style="color:var(--accent);font-style:italic;">pour.</em></h2>
+      <p class="flow-lede" data-rf="contact.intro">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
+      <p class="contact-invite" data-rf-post="contact.invite" style="margin-top:32px;"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
     </div>
-    <div data-reveal="" class="global-grid">
-      <article class="global-node"><p class="global-node__city">HQ · East Coast</p><h3 class="global-node__title">Strategy &amp; build</h3><p class="global-node__meta">Founder-led discovery, design systems, and production engineering.</p></article>
-      <article class="global-node"><p class="global-node__city">Americas</p><h3 class="global-node__title">Launch operations</h3><p class="global-node__meta">Go-live, conversion tuning, and revenue systems for US &amp; LATAM clients.</p></article>
-      <article class="global-node"><p class="global-node__city">Europe</p><h3 class="global-node__title">Brand &amp; product</h3><p class="global-node__meta">Luxury positioning, multilingual sites, and regulated-industry builds.</p></article>
-      <article class="global-node"><p class="global-node__city">Always on</p><h3 class="global-node__title">Rain Agent ops</h3><p class="global-node__meta">24/7 automations monitoring leads, support, and client systems worldwide.</p></article>
-    </div>
-  </div>
-</section>
-<section ref="{{ founderRef }}" data-screen-label="Founder" class="founder-sec" style="position:relative;z-index:1;background:#05080d;padding:clamp(72px,9vw,110px) clamp(20px,6vw,80px);overflow:hidden;">
-  <div style="position:absolute;inset:0;pointer-events:none;opacity:.45;background:
-    radial-gradient(60% 50% at 72% 40%, rgba(86,185,255,.06), transparent 62%),
-    radial-gradient(45% 35% at 16% 18%, rgba(70,120,200,.035), transparent 70%);"></div>
-  <div class="founder-rain" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:screen;background-image:repeating-linear-gradient(112deg, transparent 0 11px, rgba(150,210,255,.055) 11px 12px), repeating-linear-gradient(108deg, transparent 0 17px, rgba(120,190,255,.03) 17px 18px);"></div>
-  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.18) 50%,transparent);pointer-events:none;"></div>
-  <div class="founder-grid" style="position:relative;max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:22px;">
-    <div data-reveal="" class="founder-intro" style="min-width:0;">
-      <p style="margin:0 0 14px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#8ea8c8;" data-rf-post="founder.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>The founder</p>
-      <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.4rem,5vw,4rem);line-height:1.06;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;" data-rf-pre="founder.title.pre" data-rf-post="founder.title.post">The man behind the <em data-rf="founder.word" style="font-style:italic;color:var(--accent);">storm</em>.</h2>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
-        <span style="border:1px solid rgba(120,170,255,.18);padding:8px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8fb0d8;">20+ years building</span>
-        <span style="border:1px solid rgba(120,170,255,.18);padding:8px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8fb0d8;">East Coast EFX founder</span>
-        <span style="border:1px solid rgba(120,170,255,.18);padding:8px 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8fb0d8;">Founder-led delivery</span>
-      </div>
-    </div>
-    <div data-reveal="" class="founder-body" style="min-width:0;display:flex;flex-direction:column;">
-      <p style="margin:0 0 12px;font-weight:300;font-size:16px;line-height:1.65;color:#8fa9c9;text-wrap:pretty;" data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-      <p style="margin:0;font-weight:300;font-size:16px;line-height:1.65;color:#8fa9c9;text-wrap:pretty;" data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
-      <div class="founder-quote" style="margin-top:22px;padding-top:20px;border-top:1px solid rgba(120,160,210,.14);display:flex;gap:14px;align-items:flex-start;">
-        <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:52px;line-height:.7;color:var(--accent);flex:none;margin-top:2px;" aria-hidden="true">“</span>
-        <blockquote style="margin:0;padding:0;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(1.25rem,2vw,1.7rem);line-height:1.4;color:#e4edf8;" data-rf-pre="founder.quote.pre" data-rf-post="founder.quote.post">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em" style="font-style:italic;color:var(--accent);">that takes decades</em>.</blockquote>
-      </div>
-    </div>
-  </div>
-</section>
-<section ref="{{ contactRef }}" data-screen-label="Contact" style="position:relative;z-index:1;background:rgba(2,5,9,.92);padding:clamp(90px,11vw,140px) clamp(20px,6vw,80px) clamp(100px,12vw,160px);overflow:hidden;">
-  <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(140,200,255,.25) 50%,transparent);pointer-events:none;"></div>
-  <div style="position:absolute;bottom:-30%;left:8%;width:55%;height:75%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);pointer-events:none;"></div>
-  <div style="position:absolute;top:-20%;right:-8%;width:45%;height:70%;background:radial-gradient(50% 50% at 50% 50%, rgba(125,140,255,.08), transparent 70%);pointer-events:none;"></div>
-  <div style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:clamp(48px,7vw,100px);align-items:stretch;">
-    <div data-reveal="" style="display:flex;flex-direction:column;align-items:flex-start;padding:6px 0;">
-      <p style="margin:6px 0 26px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="contact.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Storm dispatch</p>
-      <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;line-height:1;letter-spacing:-.02em;color:#eef5ff;font-size:clamp(3.2rem,5.5vw,5.2rem);text-wrap:balance;" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word" style="background:linear-gradient(178deg,#f7fbff 30%,#bcd8ff 62%,#5f9fe6 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;">pour.</em></h2>
-      <p style="margin:24px 0 0;max-width:48ch;font-weight:300;font-size:clamp(17px,1.7vw,19px);line-height:1.75;color:#9db8d9;text-wrap:pretty;" data-rf="contact.intro">Enterprise projects start with a direct conversation. No sales team, no runaround. You talk to the studio that will actually build it.</p>
-      <div style="align-self:stretch;margin-top:auto;">
-        <div style="position:relative;height:22px;margin-bottom:18px;">
-          <span style="position:absolute;left:0;right:0;top:10.5px;height:1px;background:rgba(130,180,255,.14);"></span>
-          <span style="position:absolute;left:0;top:10px;height:2px;width:0;background:linear-gradient(90deg, transparent 30%, var(--accent));box-shadow:0 0 12px var(--accent-glow);animation:trackFill 7.5s cubic-bezier(.45,.08,.55,.92) infinite;"></span>
-          <span style="position:absolute;top:6px;left:0;width:10px;height:10px;margin-left:-5px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#cfe8ff;box-shadow:0 0 16px var(--accent), 0 0 34px var(--accent-glow);animation:trackHead 7.5s cubic-bezier(.45,.08,.55,.92) infinite;"></span>
-          <span style="position:absolute;left:0;top:-2px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:1.5px solid rgba(175,218,255,.75);opacity:0;animation:nodeRip1 7.5s linear infinite;"></span>
-          <span style="position:absolute;left:33.333%;top:-2px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:1.5px solid rgba(175,218,255,.75);opacity:0;animation:nodeRip2 7.5s linear infinite;"></span>
-          <span style="position:absolute;left:66.666%;top:-2px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:1.5px solid rgba(175,218,255,.75);opacity:0;animation:nodeRip3 7.5s linear infinite;"></span>
-          <span style="position:absolute;left:0;top:6.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1px solid rgba(140,190,255,.45);background:#0a1526;animation:nodeL1 7.5s infinite;"></span>
-          <span style="position:absolute;left:33.333%;top:6.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1px solid rgba(140,190,255,.45);background:#0a1526;animation:nodeL2 7.5s infinite;"></span>
-          <span style="position:absolute;left:66.666%;top:6.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1px solid rgba(140,190,255,.45);background:#0a1526;animation:nodeL3 7.5s infinite;"></span>
-          <span style="position:absolute;left:calc(66.666% + 16px);top:13px;width:1.5px;height:7px;border-radius:2px;background:rgba(175,218,255,.85);opacity:0;animation:microRain 7.5s linear infinite;"></span>
-          <span style="position:absolute;left:calc(66.666% + 30px);top:12px;width:1.5px;height:6px;border-radius:2px;background:rgba(175,218,255,.7);opacity:0;animation:microRain 7.5s linear .45s infinite;"></span>
-          <span style="position:absolute;left:calc(66.666% + 46px);top:13px;width:1.5px;height:7px;border-radius:2px;background:rgba(175,218,255,.8);opacity:0;animation:microRain 7.5s linear .9s infinite;"></span>
-          <span style="position:absolute;left:calc(66.666% + 61px);top:12px;width:1.5px;height:6px;border-radius:2px;background:rgba(175,218,255,.65);opacity:0;animation:microRain 7.5s linear 1.35s infinite;"></span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px);">
-          <div style="padding-right:8px;">
-            <p class="step-label" style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7c9bc4;white-space:nowrap;animation:labelWake 7.5s linear -4.35s infinite;" data-rf-post="contact.step.1"><span style="color:var(--accent);">01</span>&nbsp;&nbsp;You write</p>
-          </div>
-          <div style="padding-right:8px;">
-            <p class="step-label" style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7c9bc4;white-space:nowrap;animation:labelWake 7.5s linear -2.25s infinite;" data-rf-post="contact.step.2"><span style="color:var(--accent);">02</span>&nbsp;&nbsp;Answer in 24h</p>
-          </div>
-          <div style="padding-right:8px;">
-            <p class="step-label" style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7c9bc4;white-space:nowrap;animation:labelWake 7.5s linear infinite;" data-rf-post="contact.step.3"><span style="color:var(--accent);">03</span>&nbsp;&nbsp;It rains</p>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:18px;margin-top:auto;padding-top:clamp(28px,3.5vw,40px);flex-wrap:wrap;">
-        <span class="contact-invite" data-rf-post="contact.invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></span>
-      </div>
-    </div>
-    <div data-reveal="" style="position:relative;overflow:hidden;border:1px solid rgba(140,190,255,.2);border-radius:20px;background:linear-gradient(165deg, rgba(8,16,30,.92), rgba(4,9,17,.96));box-shadow:0 50px 110px rgba(0,0,0,.6);">
-      <div style="position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
+    <div class="flow-form-card" data-reveal="">
       <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
       <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
-      <div class="inquiry-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid rgba(120,170,255,.12);">
-        <span class="inquiry-title" style="font-family:'Geist Mono',monospace;font-size:18px;font-weight:500;letter-spacing:.16em;line-height:1.2;color:#eef5ff;white-space:nowrap;" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
-        <span class="inquiry-priority" style="display:flex;align-items:center;gap:8px;flex:none;font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.22em;color:#ff8a92;white-space:nowrap;" data-rf-post="contact.form.priority"><span style="width:9px;height:9px;border-radius:50%;background:#ff4d58;box-shadow:0 0 12px rgba(255,77,88,.8);animation:glowPulse 1.5s ease-in-out infinite;"></span>PRIORITY: SEVERE</span>
+      <div class="flow-form-head">
+        <span class="inquiry-title" style="font-family:'Geist Mono',monospace;font-size:16px;font-weight:500;letter-spacing:.14em;color:#eef5ff;" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
+        <span class="inquiry-priority" style="display:flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.2em;color:#ff8a92;" data-rf-post="contact.form.priority"><span style="width:9px;height:9px;border-radius:50%;background:#ff4d58;box-shadow:0 0 12px rgba(255,77,88,.8);animation:glowPulse 1.5s ease-in-out infinite;"></span>PRIORITY: SEVERE</span>
       </div>
-      <div style="display:flex;flex-direction:column;gap:18px;padding:24px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.name">NAME</label>
-            <input ref="{{ nameRef }}" type="text" placeholder="Jane Carter" style="width:100%;box-sizing:border-box;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.18);border-radius:10px;outline:none;color:#e8f1ff;font-family:'Geist',sans-serif;font-weight:300;font-size:14px;padding:12px 14px;transition:border-color .25s ease;" style-focus="border-color:var(--accent);"></input>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.email">EMAIL</label>
-            <input ref="{{ emailRef }}" type="email" placeholder="you@company.com" style="width:100%;box-sizing:border-box;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.18);border-radius:10px;outline:none;color:#e8f1ff;font-family:'Geist',sans-serif;font-weight:300;font-size:14px;padding:12px 14px;transition:border-color .25s ease;" style-focus="border-color:var(--accent);"></input>
-          </div>
+      <div class="flow-form-body">
+        <div class="flow-form-row flow-form-row--2">
+          <div><label class="flow-label" data-rf="contact.form.label.name">NAME</label><input ref="{{ nameRef }}" type="text" placeholder="Jane Carter"></div>
+          <div><label class="flow-label" data-rf="contact.form.label.email">EMAIL</label><input ref="{{ emailRef }}" type="email" placeholder="you@company.com"></div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button data-chip="Website" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">Website</button>
-            <button data-chip="App" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">App</button>
-            <button data-chip="Revenue" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">Revenue</button>
-            <button data-chip="AI automation" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">AI automation</button>
-            <button data-chip="Everything" onClick="{{ toggleChip }}" style="cursor:pointer;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.2);border-radius:999px;padding:8px 16px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8fb0d8;transition:all .25s ease;">Everything</button>
+        <div><label class="flow-label" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
+          <div class="flow-chips-select">
+            <button type="button" data-chip="Website" onClick="{{ toggleChip }}">Website</button>
+            <button type="button" data-chip="App" onClick="{{ toggleChip }}">App</button>
+            <button type="button" data-chip="Revenue" onClick="{{ toggleChip }}">Revenue</button>
+            <button type="button" data-chip="AI automation" onClick="{{ toggleChip }}">AI automation</button>
+            <button type="button" data-chip="Everything" onClick="{{ toggleChip }}">Everything</button>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;color:#5d7ca6;" data-rf="contact.form.label.situation">THE SITUATION</label>
-          <textarea ref="{{ msgRef }}" rows="3" placeholder="How can Rain make your business better?" style="width:100%;box-sizing:border-box;resize:vertical;background:rgba(120,170,255,.05);border:1px solid rgba(140,190,255,.18);border-radius:10px;outline:none;color:#e8f1ff;font-family:'Geist',sans-serif;font-weight:300;font-size:14px;line-height:1.6;padding:12px 14px;transition:border-color .25s ease;" style-focus="border-color:var(--accent);"></textarea>
-        </div>
-        <a href="#" onClick="{{ sendStorm }}" style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border-radius:12px;background:linear-gradient(120deg,var(--accent),#7d8cff);color:#04101c;font-weight:600;font-size:14.5px;box-shadow:0 10px 34px var(--accent-glow);animation:chargePulse 3.4s ease-in-out infinite;transition:transform .3s ease, filter .3s ease;" style-hover="transform:translateY(-2px);filter:brightness(1.12);color:#04101c;">
+        <div><label class="flow-label" data-rf="contact.form.label.situation">THE SITUATION</label><textarea ref="{{ msgRef }}" rows="4" placeholder="How can Rain make your business better?"></textarea></div>
+        <a href="#" class="flow-send" onClick="{{ sendStorm }}">
           <span ref="{{ btnWater }}" style="position:absolute;left:0;right:0;bottom:0;height:0%;pointer-events:none;background:linear-gradient(180deg, rgba(170,228,255,.5), rgba(38,96,200,.72));transition:height .7s cubic-bezier(.3,.8,.3,1);">
             <span style="position:absolute;top:-12px;left:-55%;width:110%;height:24px;border-radius:44%;background:rgba(228,245,255,.38);animation:waveSpin 6.5s linear infinite;"></span>
-            <span style="position:absolute;top:-10px;right:-55%;width:110%;height:22px;border-radius:42%;background:rgba(160,215,255,.32);animation:waveSpin 8.5s linear infinite reverse;"></span>
           </span>
           <span data-send-label="t" style="position:relative;z-index:1;">Send it</span>
           <span ref="{{ btnCond }}" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:1;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:rgba(4,16,28,.62);">DRY</span>
         </a>
-        <p style="margin:0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#46618a;" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
+        <p style="margin:0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#5d7ca6;" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
       </div>
     </div>
   </div>
@@ -746,7 +577,7 @@ html{-webkit-tap-highlight-color:transparent}
   </div>
   <canvas ref="{{ footerCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
   <div style="position:relative;max-width:1240px;margin:0 auto;">
-    <div class="ft-stats" data-reveal="">
+    <div class="flow-ft-stats" data-reveal="">
       <div><p class="ft-stat__v">180+</p><p class="ft-stat__l">Shipped products</p></div>
       <div><p class="ft-stat__v">48</p><p class="ft-stat__l">Active clients</p></div>
       <div><p class="ft-stat__v">$11M+</p><p class="ft-stat__l">Season revenue</p></div>
@@ -830,7 +661,16 @@ class Component extends DCLogic {
     ];
     this.cleanup = [];
   }
-  componentDidMount() { this.applyAccent(); this.initEngine(); this.initUX(); this.initRadar(); this.initFooterPool(); }
+  componentDidMount() {
+    this.applyAccent();
+    this.initEngine();
+    this.initUX();
+    this.initRadar();
+    this.initFooterPool();
+    this.initWater();
+    if (window.RainFlow) window.RainFlow.init();
+    setTimeout(() => this.syncTabs(this.state.caseIdx || 0), 120);
+  }
   initFooterPool() {
     let cv = this.footerCanvas.current;
     if (!cv) { const t = setTimeout(() => this.initFooterPool(), 300); this.cleanup.push(() => clearTimeout(t)); return; }
@@ -1041,17 +881,26 @@ class Component extends DCLogic {
     [...document.querySelectorAll('[data-case-tab]')].forEach((el, i) => {
       const hue = (this.CASES[i] || {}).hue || '86,185,255';
       const on = i === ci;
-      el.style.borderTop = on ? '3px solid rgb(' + hue + ')' : '3px solid transparent';
-      el.style.background = on ? 'rgba(9,20,38,.72)' : 'rgba(5,11,20,.55)';
+      el.classList.toggle('is-active', on);
+      el.style.borderTopColor = on ? 'rgb(' + hue + ')' : 'transparent';
       const ld = el.querySelector('[data-case-lead]');
       if (ld) ld.style.color = on ? 'rgb(' + hue + ')' : '#5d7ca6';
       const ic = el.querySelector('[data-case-ic]');
-      if (ic) { ic.style.color = on ? 'rgb(' + hue + ')' : 'rgba(' + hue + ',.55)'; ic.style.borderColor = on ? 'rgba(' + hue + ',.6)' : 'rgba(' + hue + ',.22)'; ic.style.boxShadow = on ? '0 0 16px rgba(' + hue + ',.25)' : 'none'; }
+      if (ic) {
+        ic.style.color = on ? 'rgb(' + hue + ')' : 'rgba(' + hue + ',.55)';
+        ic.style.borderColor = on ? 'rgba(' + hue + ',.6)' : 'rgba(' + hue + ',.22)';
+        ic.style.boxShadow = on ? '0 0 16px rgba(' + hue + ',.25)' : 'none';
+      }
       const pg = el.querySelector('[data-case-prog]');
       if (pg) {
         pg.style.background = 'rgb(' + hue + ')';
-        pg.style.transition = 'none'; pg.style.width = '0';
-        if (on && !this.userLocked) { void pg.offsetWidth; pg.style.transition = 'width 6.4s linear'; pg.style.width = '100%'; }
+        pg.style.transition = 'none';
+        pg.style.width = '0';
+        if (on && !this.userLocked) {
+          void pg.offsetWidth;
+          pg.style.transition = 'width 6.4s linear';
+          pg.style.width = '100%';
+        }
       }
     });
   }
@@ -1718,7 +1567,7 @@ class Component extends DCLogic {
            { fontFamily: "'Instrument Serif',serif", fontSize: '18.5px', letterSpacing: '.02em' }][i] || {}),
         icon: this.makeIcon(c.paths, 18),
         select: (e) => { e.preventDefault(); this.userLocked = true; this.pickCase(i); },
-        tabStyle: { position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'stretch', padding: '15px 18px 17px', borderTop: i === ci ? '3px solid rgb(' + c.hue + ')' : '3px solid transparent', background: i === ci ? 'rgba(9,20,38,.72)' : 'rgba(5,11,20,.55)', transition: 'all .25s ease', cursor: 'pointer' }
+        tabStyle: { position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'stretch', padding: '16px 18px 18px', borderTop: '3px solid transparent', background: 'transparent', transition: 'all .25s ease', cursor: 'pointer' }
       })),
       activeKicker: ac.num + ' — ' + ac.head,
       activeCat: ac.cat,
