@@ -5,11 +5,15 @@
 
   function initPlunge() {
     const nums = document.querySelectorAll('.plunge-num');
+    const lead = document.querySelector('[data-plunge-lead]');
+    const sub = document.querySelector('.plunge__lead-l');
     const layer = document.getElementById('rain-ripple-layer');
     nums.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         nums.forEach((n) => n.classList.remove('is-hit'));
         btn.classList.add('is-hit');
+        if (lead && btn.dataset.plungeN) lead.textContent = btn.dataset.plungeN;
+        if (sub && btn.dataset.plungeL) sub.textContent = btn.dataset.plungeL;
         const host = layer || document.body;
         const d = document.createElement('div');
         d.style.cssText =
