@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=10">
+<link rel="stylesheet" href="./rain-flow.css?v=11">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -623,7 +623,7 @@ class Component extends DCLogic {
       const n = big ? 7 : 3 + (Math.random() * 3 | 0);
       for (let i = 0; i < n; i++) sparks.push({ x, y, vx: (Math.random() - .5) * (big ? 220 : 140), vy: -(70 + Math.random() * (big ? 240 : 160)), a: .95, r: .8 + Math.random() * 1.3 });
     };
-    const mdown = (e) => { const r = cv.getBoundingClientRect(); if (e.clientY > r.top && e.clientY < r.bottom) { const wl = H * .52; splash(e.clientX - r.left, wl + Math.random() * (H - wl) * .5, true); } };
+    const mdown = (e) => { const r = cv.getBoundingClientRect(); if (e.clientY > r.top && e.clientY < r.bottom) { const wl = H * .68; splash(e.clientX - r.left, wl + Math.random() * (H - wl) * .5, true); } };
     addEventListener('mousedown', mdown);
     this.cleanup.push(() => removeEventListener('mousedown', mdown));
     const loop = (now) => {
@@ -632,7 +632,7 @@ class Component extends DCLogic {
       const vr = cv.getBoundingClientRect();
       if (vr.bottom < -40 || vr.top > innerHeight + 40) return;
       const [ar, ag, ab] = this.accentRGB();
-      const wl = H * .52;
+      const wl = H * .68;
       ctx.clearRect(0, 0, W, H);
       const g = ctx.createLinearGradient(0, wl - 6, 0, H);
       g.addColorStop(0, 'rgba(22,48,92,.6)'); g.addColorStop(1, 'rgba(4,12,26,.95)');
