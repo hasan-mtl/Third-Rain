@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=16-20260903">
+<link rel="stylesheet" href="./rain-flow.css?v=17-flood">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -390,37 +390,39 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="flood" ref="{{ workRef }}" data-screen-label="Selected Work">
-  <p class="flood__whisper">Work that made it rain.</p>
-  <div ref="{{ caseStage }}" class="flood__stage">
-    <div style="{{ activeWash }}"></div>
-    <div class="flood__tags">
-      <span class="flood__kicker">{{ activeKicker }}</span>
-      <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
-      <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
+  <div class="flood__shell">
+    <p class="flood__whisper">Work that made it rain.</p>
+    <div ref="{{ caseStage }}" class="flood__stage">
+      <div style="{{ activeWash }}"></div>
+      <div class="flood__tags">
+        <span class="flood__kicker">{{ activeKicker }}</span>
+        <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
+        <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
+      </div>
+      <h3 class="flood__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
+      <p class="flood__desc">{{ activeDesc }}</p>
+      <div class="flood__metrics">
+        <div><p class="flood__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="flood__ml">{{ activeM1l }}</p></div>
+        <div><p class="flood__mv">{{ activeM2v }}</p><p class="flood__ml">{{ activeM2l }}</p></div>
+        <div><p class="flood__mv">{{ activeM3v }}</p><p class="flood__ml">{{ activeM3l }}</p></div>
+      </div>
+      <div class="flood__chart">
+        <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
+      </div>
     </div>
-    <h3 class="flood__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
-    <p class="flood__desc">{{ activeDesc }}</p>
-    <div class="flood__metrics">
-      <div><p class="flood__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="flood__ml">{{ activeM1l }}</p></div>
-      <div><p class="flood__mv">{{ activeM2v }}</p><p class="flood__ml">{{ activeM2l }}</p></div>
-      <div><p class="flood__mv">{{ activeM3v }}</p><p class="flood__ml">{{ activeM3l }}</p></div>
-    </div>
-    <div class="flood__chart">
-      <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
-    </div>
+    <nav class="flood__current" aria-label="Cases">
+      <div class="flood__tabs">
+        <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
+          <a href="#" class="flood-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
+            <span data-case-prog="t" class="flood-tab__prog"></span>
+            <span class="flood-tab__name" style="{{ cs.nameStyle }}">{{ cs.name }}</span>
+            <span class="flood-tab__head">{{ cs.head }}</span>
+          </a>
+        </sc-for>
+      </div>
+      <p class="flood__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
+    </nav>
   </div>
-  <nav class="flood__current" aria-label="Cases">
-    <div class="flood__tabs">
-      <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
-        <a href="#" class="flood-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
-          <span data-case-prog="t" class="flood-tab__prog"></span>
-          <span class="flood-tab__name" style="{{ cs.nameStyle }}">{{ cs.name }}</span>
-          <span class="flood-tab__head">{{ cs.head }}</span>
-        </a>
-      </sc-for>
-    </div>
-    <p class="flood__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
-  </nav>
 </section>
 
 <section class="clearing" ref="{{ founderRef }}" data-screen-label="Founder">
@@ -1480,13 +1482,14 @@ class Component extends DCLogic {
       activeCondStyle: { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '9.5px', letterSpacing: '.22em', color: 'rgb(' + ac.hue + ')', border: '1px solid rgba(' + ac.hue + ',.35)', borderRadius: '999px', padding: '5px 12px' },
       activeWash: { position: 'absolute', top: '-25%', right: '-15%', width: '75%', height: '95%', background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.09), transparent 70%)', pointerEvents: 'none', transition: 'background .7s ease' },
       activeGhost: React.createElement('span', { style: { color: 'rgb(' + ac.hue + ')' } }, this.makeIcon(ac.paths, 120)),
-      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(2rem,5vw,3.6rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
-      activeName: ac.name, activeDesc: ac.desc,
-      activeNameStyle: Object.assign({ margin: '18px 0 0', color: '#f2f8ff', lineHeight: 0.98, textShadow: '0 6px 34px rgba(' + ac.hue + ',.25)' },
-        [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(3.2rem,8vw,6.2rem)', letterSpacing: '-.03em' },
-         { fontFamily: "'Geist',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', fontSize: 'clamp(2.4rem,6.5vw,4.6rem)' },
-         { fontFamily: "'Geist Mono',monospace", fontWeight: 500, textTransform: 'uppercase', letterSpacing: '.16em', fontSize: 'clamp(2rem,5.5vw,4rem)' },
-         { fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 'clamp(3rem,7.5vw,5.8rem)', letterSpacing: '-.02em' }][ci] || {}),
+      activeName: ac.name,
+      activeDesc: ac.desc,
+      activeNameStyle: Object.assign({ margin: '14px 0 0', color: '#f2f8ff', lineHeight: 0.98, textShadow: '0 6px 34px rgba(' + ac.hue + ',.25)' },
+        [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(2.6rem,6vw,4.6rem)', letterSpacing: '-.03em' },
+         { fontFamily: "'Geist',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', fontSize: 'clamp(2rem,5vw,3.6rem)' },
+         { fontFamily: "'Geist Mono',monospace", fontWeight: 500, textTransform: 'uppercase', letterSpacing: '.12em', fontSize: 'clamp(1.7rem,4.4vw,3rem)' },
+         { fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 'clamp(2.4rem,5.8vw,4.2rem)', letterSpacing: '-.02em' }][ci] || {}),
+      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(2rem,4vw,3rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
       activeM1v: ac.m[0][0], activeM1l: ac.m[0][1],
       activeM2v: ac.m[1][0], activeM2l: ac.m[1][1],
       activeM3v: ac.m[2][0], activeM3l: ac.m[2][1],
