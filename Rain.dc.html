@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=12">
+<link rel="stylesheet" href="./rain-flow.css?v=13">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -432,6 +432,7 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="landfall" ref="{{ contactRef }}" data-screen-label="Contact">
+  <div class="landfall__shell">
   <h2 class="landfall__title">Let it <em>pour.</em></h2>
   <p class="landfall__lede">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
   <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
@@ -465,6 +466,7 @@ html{-webkit-tap-highlight-color:transparent}
       </a>
       <p class="flow-form-foot" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
     </div>
+  </div>
   </div>
 </section>
 <footer data-screen-label="Footer" style="position:relative;z-index:1;background:rgba(2,4,8,.97);border-top:1px solid rgba(120,170,255,.08);padding:clamp(32px,4vw,44px) clamp(20px,5vw,60px) 0;">
