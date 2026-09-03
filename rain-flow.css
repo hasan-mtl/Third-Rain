@@ -10,6 +10,16 @@
   z-index: 1;
 }
 
+.plunge [data-reveal],
+.current [data-reveal],
+.machine [data-reveal],
+.flood [data-reveal],
+.clearing [data-reveal],
+.landfall [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* —— PLUNGE —— */
 .plunge {
   min-height: 100vh;
@@ -44,7 +54,7 @@
   justify-content: flex-end;
   min-height: 100vh;
   padding: 120px 24px clamp(36px, 6vh, 64px);
-  width: min(1200px, 100%);
+  width: min(1100px, calc(100% - 40px));
   margin: 0 auto;
   pointer-events: none;
 }
@@ -62,9 +72,9 @@
   margin: 0;
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
-  font-size: clamp(5.4rem, 18vw, 13.5rem);
-  line-height: 0.78;
-  letter-spacing: -0.055em;
+  font-size: clamp(4.6rem, 14vw, 10rem);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
   background: linear-gradient(180deg, #f7fbff 38%, #8ec4ff 56%, #2a6fb8 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -204,8 +214,8 @@
 
 .station {
   position: relative;
-  padding: clamp(48px, 8vw, 80px) 0 clamp(64px, 10vw, 120px);
-  min-height: 68vh;
+  padding: clamp(36px, 6vw, 56px) 0 clamp(40px, 7vw, 72px);
+  min-height: 0;
 }
 
 .station::before {
@@ -378,30 +388,24 @@
   transform: translateY(0);
 }
 
-.machine-hit:nth-child(1) { top: 12%; left: 6%; }
-.machine-hit:nth-child(2) { top: 22%; right: 6%; }
-.machine-hit:nth-child(3) { bottom: 28%; left: 4%; }
-.machine-hit:nth-child(4) { bottom: 18%; right: 8%; }
-.machine-hit:nth-child(5) { top: 48%; left: 2%; }
+.machine-hit:nth-child(n) {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  max-width: min(520px, 92vw);
+  margin: 8px auto 0;
+}
 
-@media (max-width: 740px) {
-  .machine-hit:nth-child(n) {
-    position: relative;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    max-width: none;
-    margin: 8px 20px 0;
-  }
+.machine__field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .machine__field {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .machine-hit:not(.is-live) { display: none; }
+.machine-hit:not(.is-live) {
+  display: none;
 }
 
 .machine__ops {

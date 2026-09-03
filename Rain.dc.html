@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=8">
+<link rel="stylesheet" href="./rain-flow.css?v=9">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -329,32 +329,32 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="current" data-screen-label="The Forecast">
-  <div class="current__intro" data-reveal="">
-    <h2 class="current__title" data-rf-pre="forecast.title.pre" data-rf-post="forecast.title.post">Every engagement is a <em data-rf="forecast.word">forecast</em>.</h2>
-    <p class="current__lede" data-rf-pre="forecast.intro.pre" data-rf-post="forecast.intro.post">Four phases down one river. <span data-rf="forecast.intro.em" style="color:#dcecff;">You always know the timing, the scope, and who is actually building it.</span></p>
+  <div class="current__intro">
+    <h2 class="current__title">Every engagement is a <em>forecast</em>.</h2>
+    <p class="current__lede">Four phases down one river. <span style="color:#dcecff;">You always know the timing, the scope, and who is actually building it.</span></p>
   </div>
   <div class="current__track">
     <div class="current__spine" aria-hidden="true"><div class="current__fill" data-current-fill=""></div></div>
     <p class="current__pct" data-current-pct="">20%</p>
-    <article class="station station--shallow is-here" data-station="0" data-pct="20" data-reveal="">
+    <article class="station station--shallow is-here" data-station="0" data-pct="20">
       <p class="station__week" data-rf="forecast.stage.1.week">Week 1</p>
       <h3 class="station__name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
       <p class="station__kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
       <p class="station__text" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking, then lock the plan for the next five weeks.</p>
     </article>
-    <article class="station station--form" data-station="1" data-pct="45" data-reveal="">
+    <article class="station station--form" data-station="1" data-pct="45">
       <p class="station__week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
       <h3 class="station__name" data-rf="forecast.stage.2.name">Formation</h3>
       <p class="station__kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
       <p class="station__text" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you before production starts.</p>
     </article>
-    <article class="station station--downpour" data-station="2" data-pct="90" data-reveal="">
+    <article class="station station--downpour" data-station="2" data-pct="90">
       <p class="station__week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
       <h3 class="station__name" data-rf="forecast.stage.3.name">Downpour</h3>
       <p class="station__kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
       <p class="station__text" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live. Not a deck. The real thing.</p>
     </article>
-    <article class="station station--calm" data-station="3" data-pct="100" data-reveal="">
+    <article class="station station--calm" data-station="3" data-pct="100">
       <p class="station__week" data-rf="forecast.stage.4.week">Ongoing</p>
       <h3 class="station__name" data-rf="forecast.stage.4.name">Steady rain</h3>
       <p class="station__kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
@@ -364,7 +364,7 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="machine" ref="{{ aiRef }}" data-screen-label="AI Automation">
-  <div class="machine__copy" data-reveal="">
+  <div class="machine__copy">
     <h2 class="machine__title"><span data-rf="ai.title.line1">AI runs the company.</span> <em data-rf="ai.title.line2">Not you.</em></h2>
     <p class="machine__lede" data-rf="ai.body">Agents and automations wired into sales, support, scheduling, invoicing, and reporting. The machine works around the clock. You set direction. Rain runs the weather.</p>
   </div>
@@ -387,8 +387,8 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="flood" ref="{{ workRef }}" data-screen-label="Selected Work">
-  <p class="flood__whisper" data-reveal="">Work that made it rain.</p>
-  <div ref="{{ caseStage }}" class="flood__stage" data-reveal="">
+  <p class="flood__whisper">Work that made it rain.</p>
+  <div ref="{{ caseStage }}" class="flood__stage">
     <div style="{{ activeWash }}"></div>
     <div class="flood__tags">
       <span class="flood__kicker">{{ activeKicker }}</span>
@@ -421,18 +421,18 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="clearing" ref="{{ founderRef }}" data-screen-label="Founder">
-  <blockquote class="clearing__quote" data-reveal="" data-rf-pre="founder.quote.pre" data-rf-post="founder.quote.post">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
-  <div class="clearing__bio" data-reveal="">
+  <blockquote class="clearing__quote">Anyone can build with AI. Talent, creativity, and purpose: <em>that takes decades</em>.</blockquote>
+  <div class="clearing__bio">
     <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
     <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish.</p>
   </div>
 </section>
 
 <section class="landfall" ref="{{ contactRef }}" data-screen-label="Contact">
-  <h2 class="landfall__title" data-reveal="" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word">pour.</em></h2>
-  <p class="landfall__lede" data-reveal="" data-rf="contact.intro">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
-  <p class="contact-invite" data-reveal="" data-rf-post="contact.invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
-  <div class="landfall-form" data-reveal="">
+  <h2 class="landfall__title">Let it <em>pour.</em></h2>
+  <p class="landfall__lede">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
+  <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
+  <div class="landfall-form">
     <div class="landfall-form__tide" aria-hidden="true"></div>
     <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
     <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
