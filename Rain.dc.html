@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=11">
+<link rel="stylesheet" href="./rain-flow.css?v=12">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -317,11 +317,14 @@ html{-webkit-tap-highlight-color:transparent}
   <canvas ref="{{ waterCanvas }}" class="plunge__canvas" aria-hidden="true"></canvas>
   <div class="plunge__veil" aria-hidden="true"></div>
   <div class="plunge__stage">
-    <p class="plunge__whisper">Twenty years under</p>
-    <p class="plunge__lead" data-plunge-lead="">$11M+</p>
-    <p class="plunge__lead-l">Revenue last season. Touch the water.</p>
+    <div class="plunge__horizon">
+      <p class="plunge__whisper">Revenue last season</p>
+      <p class="plunge__lead" data-plunge-lead="">$11M+</p>
+      <p class="plunge__lead-l">The studio's scale sits in the water. Touch a number. It becomes the horizon.</p>
+    </div>
     <div class="plunge__drift">
       <button type="button" class="plunge-num" data-plunge-n="180+" data-plunge-l="Products shipped since 2004."><span>180+</span><small>products since 2004</small></button>
+      <button type="button" class="plunge-num is-hit" data-plunge-n="$11M+" data-plunge-l="Revenue last season. Touch the water."><span>$11M+</span><small>revenue last season</small></button>
       <button type="button" class="plunge-num" data-plunge-n="48" data-plunge-l="Active engagements. Still raining."><span>48</span><small>active now</small></button>
       <button type="button" class="plunge-num" data-plunge-n="24/7" data-plunge-l="AI ops. The machine does not sleep."><span>24/7</span><small>AI ops live</small></button>
     </div>
