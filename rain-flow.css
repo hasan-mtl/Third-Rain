@@ -6,8 +6,29 @@
 .flood,
 .clearing,
 .landfall {
+  --rail: min(1080px, calc(100% - 48px));
   position: relative;
   z-index: 1;
+}
+
+.plunge__stage,
+.current__intro,
+.current__track,
+.machine__copy,
+.machine__ops,
+.flood__whisper,
+.flood__stage,
+.clearing__quote,
+.clearing__bio,
+.landfall__title,
+.landfall__lede,
+.landfall .contact-invite,
+.landfall-form {
+  width: var(--rail);
+  max-width: var(--rail);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .plunge [data-reveal],
@@ -53,9 +74,7 @@
   flex-direction: column;
   justify-content: flex-end;
   min-height: 100vh;
-  padding: 120px 24px clamp(36px, 6vh, 64px);
-  width: min(1100px, calc(100% - 40px));
-  margin: 0 auto;
+  padding: 120px 0 32px;
   pointer-events: none;
 }
 
@@ -138,12 +157,11 @@
 /* —— CURRENT (process as depth) —— */
 .current {
   background: #040a14;
-  padding: clamp(72px, 10vw, 120px) 0 clamp(100px, 14vw, 160px);
+  padding: 28px 0 80px;
 }
 
 .current__intro {
-  width: min(720px, 100% - 40px);
-  margin: 0 auto clamp(48px, 7vw, 80px);
+  margin-bottom: 32px;
 }
 
 .current__title {
@@ -171,16 +189,14 @@
 
 .current__track {
   position: relative;
-  width: min(880px, 100% - 40px);
-  margin: 0 auto;
-  padding-left: 28px;
+  padding-left: 36px;
 }
 
 .current__spine {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
   width: 2px;
   background: rgba(120, 170, 255, 0.12);
   overflow: hidden;
@@ -202,7 +218,7 @@
   top: 96px;
   z-index: 2;
   display: inline-block;
-  margin: 0 0 28px -4px;
+  margin: 0 0 12px;
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
   letter-spacing: 0.22em;
@@ -214,7 +230,7 @@
 
 .station {
   position: relative;
-  padding: clamp(36px, 6vw, 56px) 0 clamp(40px, 7vw, 72px);
+  padding: 28px 0 36px;
   min-height: 0;
 }
 
@@ -222,7 +238,7 @@
   content: '';
   position: absolute;
   left: -32px;
-  top: 42px;
+  top: 36px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -318,8 +334,6 @@
 }
 
 .machine__copy {
-  width: min(1100px, 100% - 40px);
-  margin: 0 auto;
   padding: clamp(64px, 8vw, 96px) 0 0;
   position: relative;
   z-index: 2;
@@ -414,8 +428,6 @@
   align-items: baseline;
   gap: 16px;
   flex-wrap: wrap;
-  width: min(1100px, 100% - 40px);
-  margin: 0 auto;
   padding: 0 0 clamp(48px, 7vw, 72px);
   font-family: 'Geist Mono', monospace;
 }
@@ -474,8 +486,7 @@
 }
 
 .flood__whisper {
-  width: min(1100px, 100% - 40px);
-  margin: 0 auto 20px;
+  margin-bottom: 20px;
   font-family: 'Geist Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.34em;
@@ -485,8 +496,6 @@
 
 .flood__stage {
   position: relative;
-  width: min(1100px, 100% - 40px);
-  margin: 0 auto;
   min-height: clamp(420px, 62vh, 620px);
   padding: 8px 0 32px;
   overflow: hidden;
@@ -631,12 +640,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(80px, 12vw, 140px) 24px;
+  padding: clamp(80px, 12vw, 140px) 0;
 }
 
 .clearing__quote {
-  margin: 0 auto;
-  max-width: 18ch;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-weight: 400;
@@ -653,12 +660,12 @@
 }
 
 .clearing__bio {
-  width: min(640px, 100%);
-  margin: clamp(40px, 6vw, 64px) auto 0;
+  margin-top: clamp(40px, 6vw, 64px);
 }
 
 .clearing__bio p {
   margin: 0 0 16px;
+  max-width: 62ch;
   font-size: 18px;
   line-height: 1.7;
   color: #b7c8dc;
@@ -669,12 +676,11 @@
 /* —— LANDFALL —— */
 .landfall {
   background: #020408;
-  padding: clamp(72px, 10vw, 120px) 20px clamp(100px, 14vw, 150px);
+  padding: clamp(72px, 10vw, 120px) 0 clamp(100px, 14vw, 150px);
 }
 
 .landfall__title {
-  margin: 0 auto 12px;
-  max-width: 720px;
+  margin-bottom: 12px;
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
   font-size: clamp(3.2rem, 8vw, 6rem);
@@ -689,22 +695,18 @@
 }
 
 .landfall__lede {
-  margin: 0 auto 28px;
-  max-width: 720px;
+  margin-bottom: 28px;
   font-size: 18px;
   line-height: 1.6;
   color: #b8cce4;
 }
 
 .landfall .contact-invite {
-  margin: 0 auto 40px;
-  max-width: 720px;
+  margin-bottom: 40px;
 }
 
 .landfall-form {
   position: relative;
-  width: min(720px, 100%);
-  margin: 0 auto;
   overflow: hidden;
   border-radius: 4px;
 }
