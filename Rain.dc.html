@@ -154,7 +154,7 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=26-wide">
+<link rel="stylesheet" href="./rain-flow.css?v=27-basin">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js?v=25" defer></script>
@@ -429,13 +429,25 @@ html{-webkit-tap-highlight-color:transparent}
 
 <section class="basin" ref="{{ founderRef }}" data-screen-label="Founder">
   <div class="basin__rail">
-    <p class="basin__eyebrow" data-rf="founder.label">The founder</p>
-    <blockquote class="basin__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
-    <div class="basin__bio">
-      <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-      <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
+    <div class="basin__grid">
+      <div class="basin__left">
+        <p class="basin__eyebrow" data-rf="founder.label">The founder</p>
+        <h2 class="basin__name">Michael<br><em>Cassella</em></h2>
+        <p class="basin__role">Every project. Start to finish.<br>No handoffs, no juniors.</p>
+      </div>
+      <div class="basin__right">
+        <blockquote class="basin__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+        <div class="basin__bio">
+          <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+          <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
+        </div>
+        <ul class="basin__facts">
+          <li class="basin__fact"><span class="basin__fact-k">East Coast EFX</span><span class="basin__fact-v">Founder &amp; CEO — two decades building for elite nightlife and A-list celebrities</span></li>
+          <li class="basin__fact"><span class="basin__fact-k">The exit</span><span class="basin__fact-v">Sold the company after accomplishing everything he set out to do</span></li>
+          <li class="basin__fact"><span class="basin__fact-k">Rain</span><span class="basin__fact-v">The comeback — one studio, one standard, zero delegation</span></li>
+        </ul>
+      </div>
     </div>
-    <p class="basin__sign">— <span data-rf="founder.badge">Michael Cassella</span></p>
   </div>
   <div class="basin__pool" aria-hidden="true">
     <canvas ref="{{ waterCanvas }}"></canvas>
