@@ -21,9 +21,76 @@
     sync();
   }
 
+  function initStormline() {
+    const track = document.querySelector('[data-stormline]');
+    if (!track) return;
+    const fill = track.querySelector('[data-stormline-fill]');
+    const steps = [...track.querySelectorAll('[data-stormline-step]')];
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const r = track.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Progress: 0 when track top hits 75% of viewport, 1 when track bottom hits 45%.
+      const start = vh * 0.75;
+      const end = vh * 0.45;
+      const total = r.height + (start - end);
+      const done = Math.min(1, Math.max(0, (start - r.top) / Math.max(1, total)));
+      const px = done * r.height;
+      if (fill) fill.style.height = px.toFixed(1) + 'px';
+      steps.forEach((st) => {
+        const sr = st.getBoundingClientRect();
+        const nodeY = sr.top - r.top + 6;
+        st.classList.toggle('is-lit', nodeY <= px);
+      });
+    };
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    update();
+  }
+
+  function initGale() {
+    const strip = document.querySelector('[data-gale]');
+    if (!strip) return;
+    const fill = document.querySelector('[data-gale-fill]');
+    const meter = () => {
+      if (!fill) return;
+      const max = strip.scrollWidth - strip.clientWidth;
+      const p = max > 0 ? strip.scrollLeft / max : 0;
+      fill.style.width = (8 + p * 92).toFixed(2) + '%';
+    };
+    strip.addEventListener('scroll', meter, { passive: true });
+    addEventListener('resize', meter);
+    meter();
+    // Drag-to-scroll for mouse users.
+    let down = false, startX = 0, startL = 0, moved = false;
+    strip.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      down = true; moved = false;
+      startX = e.clientX; startL = strip.scrollLeft;
+      strip.classList.add('is-grabbing');
+    });
+    addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      strip.scrollLeft = startL - dx;
+    });
+    addEventListener('pointerup', () => {
+      down = false;
+      strip.classList.remove('is-grabbing');
+    });
+    strip.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+  }
+
   window.RainFlow = {
     init: function () {
       initDispatch();
+      initStormline();
+      initGale();
     },
   };
 
