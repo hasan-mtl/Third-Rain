@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=20-studio">
+<link rel="stylesheet" href="./rain-flow.css?v=21-clean">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=20" defer></script>
+<script src="./rain-flow.js?v=21" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -316,69 +316,52 @@ html{-webkit-tap-highlight-color:transparent}
 
 <section class="proof" ref="{{ workRef }}" data-screen-label="Selected Work">
   <div class="proof__shell">
-    <header class="proof__head">
-      <p class="proof__eyebrow">Selected work</p>
-      <h2 class="proof__title">Proof it <em>poured.</em></h2>
-      <p class="proof__lede">Real engagements. Real outcomes. Names changed to protect the very profitable.</p>
-    </header>
-    <div class="proof__body">
-      <nav class="proof__rail" aria-label="Cases">
-        <div class="proof__tabs">
-          <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
-            <a href="#" class="proof-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
-              <span data-case-prog="t" class="proof-tab__prog"></span>
-              <span class="proof-tab__num">{{ cs.num }}</span>
-              <span class="proof-tab__name">{{ cs.name }}</span>
-              <span class="proof-tab__head">{{ cs.head }}</span>
-            </a>
-          </sc-for>
-        </div>
-        <p class="proof__note" data-rf="work.disclaimer">Confidential client work</p>
-      </nav>
-      <div ref="{{ caseStage }}" class="proof__stage">
-        <div class="proof__wash" style="{{ activeWash }}"></div>
-        <div class="proof__meta">
-          <span class="proof__kicker">{{ activeKicker }}</span>
-          <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
-          <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
-        </div>
-        <p class="proof__lead" style="{{ activeLeadStyle }}">{{ activeLead }}</p>
-        <h3 class="proof__name">{{ activeName }}</h3>
-        <p class="proof__desc">{{ activeDesc }}</p>
-        <div class="proof__metrics">
-          <div><p class="proof__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="proof__ml">{{ activeM1l }}</p></div>
-          <div><p class="proof__mv">{{ activeM2v }}</p><p class="proof__ml">{{ activeM2l }}</p></div>
-          <div><p class="proof__mv">{{ activeM3v }}</p><p class="proof__ml">{{ activeM3l }}</p></div>
-        </div>
+    <p class="proof__eyebrow">Selected work</p>
+    <h2 class="proof__title">Work that made it <em>rain.</em></h2>
+    <div ref="{{ caseStage }}" class="proof__stage">
+      <div class="proof__wash" style="{{ activeWash }}"></div>
+      <p class="proof__kicker">{{ activeKicker }}</p>
+      <h3 class="proof__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
+      <p class="proof__desc">{{ activeDesc }}</p>
+      <div class="proof__metrics">
+        <div><p class="proof__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="proof__ml">{{ activeM1l }}</p></div>
+        <div><p class="proof__mv">{{ activeM2v }}</p><p class="proof__ml">{{ activeM2l }}</p></div>
+        <div><p class="proof__mv">{{ activeM3v }}</p><p class="proof__ml">{{ activeM3l }}</p></div>
       </div>
     </div>
+    <nav class="proof__index" aria-label="Cases">
+      <div class="proof__tabs">
+        <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
+          <a href="#" class="proof-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
+            <span data-case-prog="t" class="proof-tab__prog"></span>
+            <span class="proof-tab__name">{{ cs.name }}</span>
+            <span class="proof-tab__head">{{ cs.head }}</span>
+          </a>
+        </sc-for>
+      </div>
+      <p class="proof__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
+    </nav>
   </div>
 </section>
 
 <section class="studio" ref="{{ founderRef }}" data-screen-label="Founder">
   <div class="studio__shell">
-    <div class="studio__copy">
-      <p class="studio__eyebrow" data-rf="founder.label">The founder</p>
-      <blockquote class="studio__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
-      <div class="studio__bio">
-        <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-        <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
-      </div>
+    <p class="studio__eyebrow" data-rf="founder.label">The founder</p>
+    <blockquote class="studio__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+    <div class="studio__bio">
+      <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+      <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
     </div>
-    <div class="studio__portrait">
-      <img src="/assets/founder-portrait.jpg" alt="Michael Cassella" width="720" height="900" loading="lazy" decoding="async">
-      <span class="studio__badge" data-rf="founder.badge">Michael Cassella — Founder</span>
-      <span class="studio__glow" aria-hidden="true"></span>
-    </div>
+    <p class="studio__sign" data-rf="founder.badge">Michael Cassella</p>
   </div>
 </section>
 
 <section class="dispatch" ref="{{ contactRef }}" data-screen-label="Contact">
   <div class="dispatch__shell">
     <div class="dispatch__intro">
-      <p class="dispatch__eyebrow">Storm dispatch</p>
+      <p class="dispatch__eyebrow">Contact</p>
       <h2 class="dispatch__title">Let it <em>pour.</em></h2>
-      <p class="dispatch__lede">Tell us what you're building and where it's stuck. No sales team. You talk to the studio that ships it.</p>
+      <p class="dispatch__lede">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
       <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
     </div>
     <div class="landfall-form">
@@ -721,33 +704,22 @@ class Component extends DCLogic {
     if (el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'caseIn .55s cubic-bezier(.2,.8,.25,1) both'; }
   }
   syncTabs(ci) {
-    const vertical = window.innerWidth > 900;
     [...document.querySelectorAll('[data-case-tab]')].forEach((el, i) => {
       const hue = (this.CASES[i] || {}).hue || '86,185,255';
       const on = i === ci;
       el.classList.toggle('is-active', on);
-      el.style.borderTopColor = (!vertical && on) ? 'rgb(' + hue + ')' : 'transparent';
-      el.style.borderLeftColor = (vertical && on) ? 'rgb(' + hue + ')' : 'transparent';
+      el.style.borderTopColor = on ? 'rgb(' + hue + ')' : 'transparent';
+      el.style.borderLeftColor = 'transparent';
       const pg = el.querySelector('[data-case-prog]');
       if (pg) {
         pg.style.background = 'rgb(' + hue + ')';
         pg.style.transition = 'none';
-        if (vertical) {
-          pg.style.width = '2px';
-          pg.style.height = '0';
-          if (on && !this.userLocked) {
-            void pg.offsetWidth;
-            pg.style.transition = 'height 6.4s linear';
-            pg.style.height = '100%';
-          }
-        } else {
-          pg.style.height = '2px';
-          pg.style.width = '0';
-          if (on && !this.userLocked) {
-            void pg.offsetWidth;
-            pg.style.transition = 'width 6.4s linear';
-            pg.style.width = '100%';
-          }
+        pg.style.height = '2px';
+        pg.style.width = '0';
+        if (on && !this.userLocked) {
+          void pg.offsetWidth;
+          pg.style.transition = 'width 6.4s linear';
+          pg.style.width = '100%';
         }
       }
     });
@@ -1399,18 +1371,11 @@ class Component extends DCLogic {
         tabStyle: { position: 'relative', overflow: 'hidden' }
       })),
       activeKicker: ac.num + ' — ' + ac.head,
-      activeCat: ac.cat,
-      activeCatStyle: ac.hot
-        ? { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '10px', letterSpacing: '.18em', color: '#04101c', background: 'linear-gradient(120deg, rgb(' + ac.hue + '), #7d8cff)', borderRadius: '6px', padding: '5px 10px', fontWeight: 500, boxShadow: '0 0 18px rgba(' + ac.hue + ',.3)' }
-        : { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '10px', letterSpacing: '.18em', color: '#dcecff', background: 'rgba(' + ac.hue + ',.14)', border: '1px solid rgba(' + ac.hue + ',.4)', borderRadius: '6px', padding: '5px 10px', fontWeight: 500 },
-      activeCond: ac.cond,
-      activeCondStyle: { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '9.5px', letterSpacing: '.22em', color: 'rgb(' + ac.hue + ')', border: '1px solid rgba(' + ac.hue + ',.35)', borderRadius: '999px', padding: '5px 12px' },
-      activeWash: { background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.14), transparent 70%)' },
-      activeLead: ac.lead,
-      activeLeadStyle: { color: 'rgb(' + ac.hue + ')', textShadow: '0 8px 48px rgba(' + ac.hue + ',.35)' },
+      activeWash: { background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.12), transparent 70%)' },
       activeName: ac.name,
       activeDesc: ac.desc,
-      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(1.65rem,3vw,2.25rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
+      activeNameStyle: { color: '#f2f8ff', textShadow: '0 6px 34px rgba(' + ac.hue + ',.22)' },
+      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(1.8rem,3.4vw,2.5rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
       activeM1v: ac.m[0][0], activeM1l: ac.m[0][1],
       activeM2v: ac.m[1][0], activeM2l: ac.m[1][1],
       activeM3v: ac.m[2][0], activeM3l: ac.m[2][1],
