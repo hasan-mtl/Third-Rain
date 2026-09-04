@@ -3,31 +3,6 @@
 
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function initPlunge() {
-    const nums = document.querySelectorAll('.plunge-num');
-    const lead = document.querySelector('[data-plunge-lead]');
-    const sub = document.querySelector('.plunge__lead-l');
-    const layer = document.getElementById('rain-ripple-layer');
-    nums.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        nums.forEach((n) => n.classList.remove('is-hit'));
-        btn.classList.add('is-hit');
-        if (lead && btn.dataset.plungeN) lead.textContent = btn.dataset.plungeN;
-        if (sub && btn.dataset.plungeL) sub.textContent = btn.dataset.plungeL;
-        const host = layer || document.body;
-        const d = document.createElement('div');
-        d.style.cssText =
-          'position:fixed;left:' +
-          e.clientX +
-          'px;top:' +
-          e.clientY +
-          'px;width:220px;height:220px;margin:-110px;border:2px solid var(--accent);border-radius:50%;opacity:.75;pointer-events:none;animation:clickRipple .95s ease-out forwards;z-index:48;';
-        host.appendChild(d);
-        setTimeout(() => d.remove(), 1000);
-      });
-    });
-  }
-
   function initCurrent() {
     const stations = document.querySelectorAll('[data-station]');
     const fill = document.querySelector('[data-current-fill]');
@@ -93,7 +68,6 @@
 
   window.RainFlow = {
     init: function () {
-      initPlunge();
       initCurrent();
       initMachine();
       initLandfall();

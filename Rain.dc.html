@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=18-plunge">
+<link rel="stylesheet" href="./rain-flow.css?v=19-no-plunge">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js" defer></script>
+<script src="./rain-flow.js?v=19" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -313,28 +313,12 @@ html{-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 </section>
-<section class="plunge" data-screen-label="The Plunge" aria-label="Studio impact">
-  <canvas ref="{{ waterCanvas }}" class="plunge__canvas" aria-hidden="true"></canvas>
-  <div class="plunge__veil" aria-hidden="true"></div>
-  <div class="plunge__stage">
-    <div class="plunge__horizon">
-      <p class="plunge__whisper">Revenue last season</p>
-      <p class="plunge__lead" data-plunge-lead="">$11M+</p>
-      <p class="plunge__lead-l">Touch a number. It becomes the horizon.</p>
-    </div>
-    <div class="plunge__drift">
-      <button type="button" class="plunge-num" data-plunge-n="180+" data-plunge-l="Products shipped since 2004."><span>180+</span><small>products since 2004</small></button>
-      <button type="button" class="plunge-num is-hit" data-plunge-n="$11M+" data-plunge-l="Revenue last season. Touch the water."><span>$11M+</span><small>revenue last season</small></button>
-      <button type="button" class="plunge-num" data-plunge-n="48" data-plunge-l="Active engagements. Still raining."><span>48</span><small>active now</small></button>
-      <button type="button" class="plunge-num" data-plunge-n="24/7" data-plunge-l="AI ops. The machine does not sleep."><span>24/7</span><small>AI ops live</small></button>
-    </div>
-  </div>
-</section>
 
 <section class="current" data-screen-label="The Forecast">
   <div class="current__intro">
+    <p class="current__eyebrow">After you pick the storm</p>
     <h2 class="current__title">Every engagement is a <em>forecast</em>.</h2>
-    <p class="current__lede">Four phases down one river. <span style="color:#dcecff;">You always know the timing, the scope, and who is actually building it.</span></p>
+    <p class="current__lede">Four phases. One river. You always know the timing, the scope, and who is actually building it.</p>
   </div>
   <div class="current__track">
     <div class="current__spine" aria-hidden="true"><div class="current__fill" data-current-fill=""></div></div>
