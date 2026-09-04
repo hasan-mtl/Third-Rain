@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=19-no-plunge">
+<link rel="stylesheet" href="./rain-flow.css?v=20-studio">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=19" defer></script>
+<script src="./rain-flow.js?v=20" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -314,145 +314,104 @@ html{-webkit-tap-highlight-color:transparent}
   </div>
 </section>
 
-<section class="current" data-screen-label="The Forecast">
-  <div class="current__intro">
-    <p class="current__eyebrow">After you pick the storm</p>
-    <h2 class="current__title">Every engagement is a <em>forecast</em>.</h2>
-    <p class="current__lede">Four phases. One river. You always know the timing, the scope, and who is actually building it.</p>
-  </div>
-  <div class="current__track">
-    <div class="current__spine" aria-hidden="true"><div class="current__fill" data-current-fill=""></div></div>
-    <p class="current__pct" data-current-pct="">20%</p>
-    <article class="station station--shallow is-here" data-station="0" data-pct="20">
-      <p class="station__week" data-rf="forecast.stage.1.week">Week 1</p>
-      <h3 class="station__name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
-      <p class="station__kicker" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
-      <p class="station__text" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking, then lock the plan for the next five weeks.</p>
-    </article>
-    <article class="station station--form" data-station="1" data-pct="45">
-      <p class="station__week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
-      <h3 class="station__name" data-rf="forecast.stage.2.name">Formation</h3>
-      <p class="station__kicker" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
-      <p class="station__text" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you before production starts.</p>
-    </article>
-    <article class="station station--downpour" data-station="2" data-pct="90">
-      <p class="station__week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
-      <h3 class="station__name" data-rf="forecast.stage.3.name">Downpour</h3>
-      <p class="station__kicker" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
-      <p class="station__text" data-rf="forecast.stage.3.body">Engineering, content, and launch. The site, product, or system goes live. Not a deck. The real thing.</p>
-    </article>
-    <article class="station station--calm" data-station="3" data-pct="100">
-      <p class="station__week" data-rf="forecast.stage.4.week">Ongoing</p>
-      <h3 class="station__name" data-rf="forecast.stage.4.name">Steady rain</h3>
-      <p class="station__kicker" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
-      <p class="station__text" data-rf="forecast.stage.4.body">After landfall we stay on: automation, search, and optimization so the system keeps raining without you running it.</p>
-    </article>
-  </div>
-</section>
-
-<section class="machine" ref="{{ aiRef }}" data-screen-label="AI Automation">
-  <div class="machine__copy">
-    <h2 class="machine__title"><span data-rf="ai.title.line1">AI runs the company.</span> <em data-rf="ai.title.line2">Not you.</em></h2>
-    <p class="machine__lede" data-rf="ai.body">Agents and automations wired into sales, support, scheduling, invoicing, and reporting. The machine works around the clock. You set direction. Rain runs the weather.</p>
-  </div>
-  <div class="machine__field">
-    <canvas ref="{{ radarCanvas }}" class="machine__radar" aria-hidden="true"></canvas>
-    <p class="machine-hit" data-rf="ai.terminal.row.1.text">07:00 · morning pipeline report sent</p>
-    <p class="machine-hit" data-rf="ai.terminal.row.2.text">09:12 · 3 proposals generated &amp; delivered</p>
-    <p class="machine-hit" data-rf="ai.terminal.row.3.text">11:47 · 14 leads qualified, 5 calls booked</p>
-    <p class="machine-hit" data-rf="ai.terminal.row.4.text">13:05 · invoices reconciled, $18,420 collected</p>
-    <p class="machine-hit" data-rf="ai.terminal.row.5.text">16:20 · support inbox cleared, avg reply 38s</p>
-  </div>
-  <div class="machine__ops">
-    <div class="machine__count"><span ref="{{ aiCounter }}">1,284</span><small data-rf="ai.terminal.counter.label">TASKS TODAY</small></div>
-    <div class="machine__listen">
-      <span class="machine__pulse" aria-hidden="true"></span>
-      <span ref="{{ aiLog }}">listening for new leads…</span>
-      <span class="machine__cursor" aria-hidden="true"></span>
-    </div>
-  </div>
-</section>
-
-<section class="flood" ref="{{ workRef }}" data-screen-label="Selected Work">
-  <div class="flood__shell">
-    <p class="flood__whisper">Work that made it rain.</p>
-    <div ref="{{ caseStage }}" class="flood__stage">
-      <div style="{{ activeWash }}"></div>
-      <div class="flood__tags">
-        <span class="flood__kicker">{{ activeKicker }}</span>
-        <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
-        <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
-      </div>
-      <h3 class="flood__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
-      <p class="flood__desc">{{ activeDesc }}</p>
-      <div class="flood__metrics">
-        <div><p class="flood__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="flood__ml">{{ activeM1l }}</p></div>
-        <div><p class="flood__mv">{{ activeM2v }}</p><p class="flood__ml">{{ activeM2l }}</p></div>
-        <div><p class="flood__mv">{{ activeM3v }}</p><p class="flood__ml">{{ activeM3l }}</p></div>
-      </div>
-      <div class="flood__chart">
-        <sc-for list="{{ activeBars }}" as="b" hint-placeholder-count="12"><span style="{{ b.s }}"></span></sc-for>
-      </div>
-    </div>
-    <nav class="flood__current" aria-label="Cases">
-      <div class="flood__tabs">
-        <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
-          <a href="#" class="flood-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
-            <span data-case-prog="t" class="flood-tab__prog"></span>
-            <span class="flood-tab__name" style="{{ cs.nameStyle }}">{{ cs.name }}</span>
-            <span class="flood-tab__head">{{ cs.head }}</span>
-          </a>
-        </sc-for>
-      </div>
-      <p class="flood__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
-    </nav>
-  </div>
-</section>
-
-<section class="clearing" ref="{{ founderRef }}" data-screen-label="Founder">
-  <blockquote class="clearing__quote">Anyone can build with AI. Talent, creativity, and purpose: <em>that takes decades</em>.</blockquote>
-  <div class="clearing__bio">
-    <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-    <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish.</p>
-  </div>
-</section>
-
-<section class="landfall" ref="{{ contactRef }}" data-screen-label="Contact">
-  <div class="landfall__shell">
-  <h2 class="landfall__title">Let it <em>pour.</em></h2>
-  <p class="landfall__lede">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
-  <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
-  <div class="landfall-form">
-    <div class="landfall-form__tide" aria-hidden="true"></div>
-    <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
-    <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
-    <div class="landfall-form__head">
-      <span class="inquiry-title" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
-      <span class="inquiry-priority" data-rf-post="contact.form.priority"><span class="inquiry-priority__dot"></span>PRIORITY: SEVERE</span>
-    </div>
-    <div class="landfall-form__body">
-      <div class="flow-form-row flow-form-row--2">
-        <div><label class="flow-label" data-rf="contact.form.label.name">NAME</label><input ref="{{ nameRef }}" type="text" placeholder="Jane Carter" class="flow-input"></div>
-        <div><label class="flow-label" data-rf="contact.form.label.email">EMAIL</label><input ref="{{ emailRef }}" type="email" placeholder="you@company.com" class="flow-input"></div>
-      </div>
-      <div><label class="flow-label" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
-        <div class="flow-chips-select">
-          <button type="button" data-chip="Website" onClick="{{ toggleChip }}">Website</button>
-          <button type="button" data-chip="App" onClick="{{ toggleChip }}">App</button>
-          <button type="button" data-chip="Revenue" onClick="{{ toggleChip }}">Revenue</button>
-          <button type="button" data-chip="AI automation" onClick="{{ toggleChip }}">AI automation</button>
-          <button type="button" data-chip="Everything" onClick="{{ toggleChip }}">Everything</button>
+<section class="proof" ref="{{ workRef }}" data-screen-label="Selected Work">
+  <div class="proof__shell">
+    <header class="proof__head">
+      <p class="proof__eyebrow">Selected work</p>
+      <h2 class="proof__title">Proof it <em>poured.</em></h2>
+      <p class="proof__lede">Real engagements. Real outcomes. Names changed to protect the very profitable.</p>
+    </header>
+    <div class="proof__body">
+      <nav class="proof__rail" aria-label="Cases">
+        <div class="proof__tabs">
+          <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
+            <a href="#" class="proof-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
+              <span data-case-prog="t" class="proof-tab__prog"></span>
+              <span class="proof-tab__num">{{ cs.num }}</span>
+              <span class="proof-tab__name">{{ cs.name }}</span>
+              <span class="proof-tab__head">{{ cs.head }}</span>
+            </a>
+          </sc-for>
+        </div>
+        <p class="proof__note" data-rf="work.disclaimer">Confidential client work</p>
+      </nav>
+      <div ref="{{ caseStage }}" class="proof__stage">
+        <div class="proof__wash" style="{{ activeWash }}"></div>
+        <div class="proof__meta">
+          <span class="proof__kicker">{{ activeKicker }}</span>
+          <span style="{{ activeCatStyle }}">{{ activeCat }}</span>
+          <span style="{{ activeCondStyle }}">{{ activeCond }}</span>
+        </div>
+        <p class="proof__lead" style="{{ activeLeadStyle }}">{{ activeLead }}</p>
+        <h3 class="proof__name">{{ activeName }}</h3>
+        <p class="proof__desc">{{ activeDesc }}</p>
+        <div class="proof__metrics">
+          <div><p class="proof__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="proof__ml">{{ activeM1l }}</p></div>
+          <div><p class="proof__mv">{{ activeM2v }}</p><p class="proof__ml">{{ activeM2l }}</p></div>
+          <div><p class="proof__mv">{{ activeM3v }}</p><p class="proof__ml">{{ activeM3l }}</p></div>
         </div>
       </div>
-      <div><label class="flow-label" data-rf="contact.form.label.situation">THE SITUATION</label><textarea ref="{{ msgRef }}" rows="3" placeholder="How can Rain make your business better?" class="flow-input"></textarea></div>
-      <a href="#" class="flow-send" onClick="{{ sendStorm }}">
-        <span ref="{{ btnWater }}" class="flow-send__water"><span class="flow-send__wave" aria-hidden="true"></span></span>
-        <span data-send-label="t" class="flow-send__label">Send it</span>
-        <span ref="{{ btnCond }}" class="flow-send__cond">DRY</span>
-      </a>
-      <p class="flow-form-foot" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
     </div>
   </div>
+</section>
+
+<section class="studio" ref="{{ founderRef }}" data-screen-label="Founder">
+  <div class="studio__shell">
+    <div class="studio__copy">
+      <p class="studio__eyebrow" data-rf="founder.label">The founder</p>
+      <blockquote class="studio__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+      <div class="studio__bio">
+        <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+        <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
+      </div>
+    </div>
+    <div class="studio__portrait">
+      <img src="/assets/founder-portrait.jpg" alt="Michael Cassella" width="720" height="900" loading="lazy" decoding="async">
+      <span class="studio__badge" data-rf="founder.badge">Michael Cassella — Founder</span>
+      <span class="studio__glow" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<section class="dispatch" ref="{{ contactRef }}" data-screen-label="Contact">
+  <div class="dispatch__shell">
+    <div class="dispatch__intro">
+      <p class="dispatch__eyebrow">Storm dispatch</p>
+      <h2 class="dispatch__title">Let it <em>pour.</em></h2>
+      <p class="dispatch__lede">Tell us what you're building and where it's stuck. No sales team. You talk to the studio that ships it.</p>
+      <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
+    </div>
+    <div class="landfall-form">
+      <div class="landfall-form__tide" aria-hidden="true"></div>
+      <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
+      <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
+      <div class="landfall-form__head">
+        <span class="inquiry-title" data-rf="contact.form.title">NEW PROJECT INQUIRY</span>
+        <span class="inquiry-priority" data-rf-post="contact.form.priority"><span class="inquiry-priority__dot"></span>PRIORITY: SEVERE</span>
+      </div>
+      <div class="landfall-form__body">
+        <div class="flow-form-row flow-form-row--2">
+          <div><label class="flow-label" data-rf="contact.form.label.name">NAME</label><input ref="{{ nameRef }}" type="text" placeholder="Jane Carter" class="flow-input"></div>
+          <div><label class="flow-label" data-rf="contact.form.label.email">EMAIL</label><input ref="{{ emailRef }}" type="email" placeholder="you@company.com" class="flow-input"></div>
+        </div>
+        <div><label class="flow-label" data-rf="contact.form.label.need">WHAT NEEDS RAIN?</label>
+          <div class="flow-chips-select">
+            <button type="button" data-chip="Website" onClick="{{ toggleChip }}">Website</button>
+            <button type="button" data-chip="App" onClick="{{ toggleChip }}">App</button>
+            <button type="button" data-chip="Revenue" onClick="{{ toggleChip }}">Revenue</button>
+            <button type="button" data-chip="AI automation" onClick="{{ toggleChip }}">AI automation</button>
+            <button type="button" data-chip="Everything" onClick="{{ toggleChip }}">Everything</button>
+          </div>
+        </div>
+        <div><label class="flow-label" data-rf="contact.form.label.situation">THE SITUATION</label><textarea ref="{{ msgRef }}" rows="3" placeholder="How can Rain make your business better?" class="flow-input"></textarea></div>
+        <a href="#" class="flow-send" onClick="{{ sendStorm }}">
+          <span ref="{{ btnWater }}" class="flow-send__water"><span class="flow-send__wave" aria-hidden="true"></span></span>
+          <span data-send-label="t" class="flow-send__label">Send it</span>
+          <span ref="{{ btnCond }}" class="flow-send__cond">DRY</span>
+        </a>
+        <p class="flow-form-foot" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
+      </div>
+    </div>
   </div>
 </section>
 <footer data-screen-label="Footer" style="position:relative;z-index:1;background:rgba(2,4,8,.97);border-top:1px solid rgba(120,170,255,.08);padding:clamp(32px,4vw,44px) clamp(20px,5vw,60px) 0;">
@@ -550,7 +509,6 @@ class Component extends DCLogic {
     this.applyAccent();
     this.initEngine();
     this.initUX();
-    this.initRadar();
     this.initFooterPool();
     this.initWater();
     if (window.RainFlow) window.RainFlow.init();
@@ -763,29 +721,33 @@ class Component extends DCLogic {
     if (el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'caseIn .55s cubic-bezier(.2,.8,.25,1) both'; }
   }
   syncTabs(ci) {
+    const vertical = window.innerWidth > 900;
     [...document.querySelectorAll('[data-case-tab]')].forEach((el, i) => {
       const hue = (this.CASES[i] || {}).hue || '86,185,255';
       const on = i === ci;
       el.classList.toggle('is-active', on);
-      el.style.borderTopColor = on ? 'rgb(' + hue + ')' : 'transparent';
-      el.style.borderLeftColor = on ? 'rgb(' + hue + ')' : 'transparent';
-      const ld = el.querySelector('[data-case-lead]');
-      if (ld) ld.style.color = on ? 'rgb(' + hue + ')' : '#5d7ca6';
-      const ic = el.querySelector('[data-case-ic]');
-      if (ic) {
-        ic.style.color = on ? 'rgb(' + hue + ')' : 'rgba(' + hue + ',.55)';
-        ic.style.borderColor = on ? 'rgba(' + hue + ',.6)' : 'rgba(' + hue + ',.22)';
-        ic.style.boxShadow = on ? '0 0 16px rgba(' + hue + ',.25)' : 'none';
-      }
+      el.style.borderTopColor = (!vertical && on) ? 'rgb(' + hue + ')' : 'transparent';
+      el.style.borderLeftColor = (vertical && on) ? 'rgb(' + hue + ')' : 'transparent';
       const pg = el.querySelector('[data-case-prog]');
       if (pg) {
         pg.style.background = 'rgb(' + hue + ')';
         pg.style.transition = 'none';
-        pg.style.width = '0';
-        if (on && !this.userLocked) {
-          void pg.offsetWidth;
-          pg.style.transition = 'width 6.4s linear';
-          pg.style.width = '100%';
+        if (vertical) {
+          pg.style.width = '2px';
+          pg.style.height = '0';
+          if (on && !this.userLocked) {
+            void pg.offsetWidth;
+            pg.style.transition = 'height 6.4s linear';
+            pg.style.height = '100%';
+          }
+        } else {
+          pg.style.height = '2px';
+          pg.style.width = '0';
+          if (on && !this.userLocked) {
+            void pg.offsetWidth;
+            pg.style.transition = 'width 6.4s linear';
+            pg.style.width = '100%';
+          }
         }
       }
     });
@@ -884,24 +846,10 @@ class Component extends DCLogic {
     addEventListener('mousedown', md);
     this.cleanup.push(() => removeEventListener('mousedown', md));
 
-    const lines = ['listening for new leads…', 'drafting tomorrow\u2019s follow-ups…', 'watching the calendar…', 'reconciling the books…', 'tuning ad spend…', 'answering support in 38 seconds…'];
-    let li = 0;
-    const el = this.aiLog.current;
-    if (el) el.style.transition = 'opacity .3s ease';
-    const iv = setInterval(() => {
-      if (!el) return;
-      el.style.opacity = '0';
-      setTimeout(() => { li = (li + 1) % lines.length; el.textContent = lines[li]; el.style.opacity = '1'; }, 320);
-    }, 2600);
-    this.cleanup.push(() => clearInterval(iv));
-    let tasks = 1284;
-    const civ = setInterval(() => {
-      const el2 = this.aiCounter.current;
-      if (!el2) return;
-      tasks += 1 + (Math.random() * 3 | 0);
-      el2.textContent = tasks.toLocaleString('en-US');
-    }, 2200);
-    this.cleanup.push(() => clearInterval(civ));
+    const onResize = () => this.syncTabs(this.state.caseIdx || 0);
+    addEventListener('resize', onResize);
+    this.cleanup.push(() => removeEventListener('resize', onResize));
+
     const t0 = setTimeout(() => this.syncTabs(this.state.caseIdx), 900);
     this.cleanup.push(() => clearTimeout(t0));
     const cyc = setInterval(() => {
@@ -1447,13 +1395,6 @@ class Component extends DCLogic {
     return {
       cases: this.CASES.map((c, i) => ({
         num: c.num, name: c.name, head: c.head,
-        lead: c.lead, leadColor: i === ci ? 'rgb(' + c.hue + ')' : '#5d7ca6',
-        nameStyle: Object.assign({ display: 'block', color: '#f2f8ff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.25 },
-          [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: '19px' },
-           { fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.11em', fontSize: '13.5px' },
-           { fontFamily: "'Geist Mono',monospace", textTransform: 'uppercase', letterSpacing: '.18em', fontSize: '12.5px' },
-           { fontFamily: "'Instrument Serif',serif", fontSize: '18.5px', letterSpacing: '.02em' }][i] || {}),
-        icon: this.makeIcon(c.paths, 18),
         select: (e) => { e.preventDefault(); this.userLocked = true; this.pickCase(i); },
         tabStyle: { position: 'relative', overflow: 'hidden' }
       })),
@@ -1464,20 +1405,15 @@ class Component extends DCLogic {
         : { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '10px', letterSpacing: '.18em', color: '#dcecff', background: 'rgba(' + ac.hue + ',.14)', border: '1px solid rgba(' + ac.hue + ',.4)', borderRadius: '6px', padding: '5px 10px', fontWeight: 500 },
       activeCond: ac.cond,
       activeCondStyle: { flex: 'none', fontFamily: "'Geist Mono',monospace", fontSize: '9.5px', letterSpacing: '.22em', color: 'rgb(' + ac.hue + ')', border: '1px solid rgba(' + ac.hue + ',.35)', borderRadius: '999px', padding: '5px 12px' },
-      activeWash: { position: 'absolute', top: '-25%', right: '-15%', width: '75%', height: '95%', background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.09), transparent 70%)', pointerEvents: 'none', transition: 'background .7s ease' },
-      activeGhost: React.createElement('span', { style: { color: 'rgb(' + ac.hue + ')' } }, this.makeIcon(ac.paths, 120)),
+      activeWash: { background: 'radial-gradient(50% 50% at 60% 30%, rgba(' + ac.hue + ',.14), transparent 70%)' },
+      activeLead: ac.lead,
+      activeLeadStyle: { color: 'rgb(' + ac.hue + ')', textShadow: '0 8px 48px rgba(' + ac.hue + ',.35)' },
       activeName: ac.name,
       activeDesc: ac.desc,
-      activeNameStyle: Object.assign({ margin: '14px 0 0', color: '#f2f8ff', lineHeight: 0.98, textShadow: '0 6px 34px rgba(' + ac.hue + ',.25)' },
-        [{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(2.6rem,6vw,4.6rem)', letterSpacing: '-.03em' },
-         { fontFamily: "'Geist',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', fontSize: 'clamp(2rem,5vw,3.6rem)' },
-         { fontFamily: "'Geist Mono',monospace", fontWeight: 500, textTransform: 'uppercase', letterSpacing: '.12em', fontSize: 'clamp(1.7rem,4.4vw,3rem)' },
-         { fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 'clamp(2.4rem,5.8vw,4.2rem)', letterSpacing: '-.02em' }][ci] || {}),
-      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(2rem,4vw,3rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
+      activeM1Style: { margin: 0, fontWeight: 600, fontSize: 'clamp(1.65rem,3vw,2.25rem)', lineHeight: 0.95, color: 'rgb(' + ac.hue + ')', textShadow: '0 0 24px rgba(' + ac.hue + ',.35)' },
       activeM1v: ac.m[0][0], activeM1l: ac.m[0][1],
       activeM2v: ac.m[1][0], activeM2l: ac.m[1][1],
       activeM3v: ac.m[2][0], activeM3l: ac.m[2][1],
-      activeBars: ac.bars.map((v, i) => ({ s: { flex: 1, height: v + '%', borderRadius: '2px 2px 0 0', background: 'linear-gradient(180deg, rgb(' + ac.hue + '), rgba(' + ac.hue + ',.2))', opacity: .5 + .45 * (i / 11), boxShadow: i === 11 ? '0 0 14px rgba(' + ac.hue + ',.35)' : 'none', transition: 'height .6s cubic-bezier(.2,.8,.25,1) ' + (i * 38) + 'ms, opacity .6s ease ' + (i * 38) + 'ms, background .5s ease' } })),
       caseStage: this.caseStage,
       rainCanvas: this.rainCanvas, heroRef: this.heroRef, heroContent: this.heroContent, tiltRef: this.tiltRef, wordRef: this.wordRef, navRef: this.navRef, flashRef: this.flashRef, rippleLayer: this.rippleLayer, aiLog: this.aiLog, aiCardCanvas: this.aiCardCanvas, btnWater: this.btnWater, btnCond: this.btnCond, webCardCanvas: this.webCardCanvas, appsCardCanvas: this.appsCardCanvas, revCardCanvas: this.revCardCanvas, growthCardCanvas: this.growthCardCanvas, aiCounter: this.aiCounter, svcPreview: this.svcPreview, svcPreviewImg: this.svcPreviewImg, servicesRef: this.servicesRef, aiRef: this.aiRef, founderRef: this.founderRef, contactRef: this.contactRef, radarCanvas: this.radarCanvas, waterCanvas: this.waterCanvas, footerCanvas: this.footerCanvas,
       goTop: (e) => { e.preventDefault(); this.smoothTo(0); },
@@ -1533,7 +1469,7 @@ class Component extends DCLogic {
           });
       },
       goServices: this.goTo(this.servicesRef),
-      goAI: this.goTo(this.aiRef),
+      goAI: this.goTo(this.servicesRef),
       goFounder: this.goTo(this.founderRef),
       goWork: this.goTo(this.workRef), workRef: this.workRef,
       goContact: this.goTo(this.contactRef)
