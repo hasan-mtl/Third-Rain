@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=23-full">
+<link rel="stylesheet" href="./rain-flow.css?v=24-index">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=23" defer></script>
+<script src="./rain-flow.js?v=24" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -207,192 +207,184 @@ html{-webkit-tap-highlight-color:transparent}
   <div style="position:absolute;bottom:168px;left:0;right:0;height:1px;pointer-events:none;background:linear-gradient(90deg, transparent 5%, rgba(140,200,255,.28) 50%, transparent 95%);"></div>
 </section>
 
-<section class="storms" ref="{{ servicesRef }}" data-screen-label="Services">
-  <div class="storms__shell">
-    <div class="storms__intro" data-reveal="">
-      <p class="storms__eyebrow" data-rf-post="services.label">Capabilities</p>
-      <h2 class="storms__title" data-rf-pre="services.title.pre" data-rf-post="services.title.post">Pick your <em data-rf="services.word">storm</em>.</h2>
-      <p class="storms__lede" data-rf-pre="services.intro.pre">Five disciplines, one mandate: <span data-rf="services.intro.em">revenue you can measure.</span></p>
-    </div>
-    <div class="storms__stack">
-      <div class="storms__pin" data-reveal="">
-        <div class="svc-card">
-          <canvas ref="{{ webCardCanvas }}"></canvas>
-          <div class="storms__sheen" aria-hidden="true"></div>
-          <div class="storms__veil" aria-hidden="true"></div>
-          <span data-svc-num="">01</span>
-          <div data-svc-content="">
-            <span class="storms__kicker" data-rf="services.card.web.kicker">01 · Design &amp; build</span>
-            <h3 class="storms__name" data-rf-pre="services.card.web.title.pre">Bespoke <em data-rf="services.card.web.word">Websites</em></h3>
-            <p class="storms__desc" data-rf="services.card.web.desc">Hand-built, award-bait sites. No templates, no page builders — every pixel poured for your brand, engineered to convert.</p>
-            <div class="storms__tags">
-              <span class="storms__tag" data-rf="services.card.web.tag.1">Art direction</span>
-              <span class="storms__tag" data-rf="services.card.web.tag.2">Custom build</span>
-              <span class="storms__tag" data-rf="services.card.web.tag.3">CMS &amp; motion</span>
-            </div>
-          </div>
+<section class="index" ref="{{ servicesRef }}" data-screen-label="Services">
+  <div class="rail">
+    <header class="sec-head">
+      <span class="sec-no">01</span>
+      <span class="sec-label" data-rf-post="services.label">Capabilities</span>
+      <span class="sec-line" aria-hidden="true"></span>
+    </header>
+    <h2 class="index__title" data-rf-pre="services.title.pre" data-rf-post="services.title.post">Pick your <em data-rf="services.word">storm</em>.</h2>
+    <div class="index__rows">
+      <article class="idx" style="--hue:86,185,255;">
+        <span class="idx__no">01</span>
+        <div class="idx__main">
+          <h3 class="idx__name" data-rf-pre="services.card.web.title.pre">Bespoke <em data-rf="services.card.web.word">Websites</em></h3>
+          <p class="idx__desc" data-rf="services.card.web.desc">Hand-built, award-bait sites. No templates, no page builders — every pixel poured for your brand, engineered to convert.</p>
         </div>
-      </div>
-      <div class="storms__pin" data-reveal="">
-        <div class="svc-card">
-          <canvas ref="{{ appsCardCanvas }}"></canvas>
-          <div class="storms__sheen" aria-hidden="true"></div>
-          <div class="storms__veil" aria-hidden="true"></div>
-          <span data-svc-num="">02</span>
-          <div data-svc-content="">
-            <span class="storms__kicker" data-rf="services.card.apps.kicker">02 · Product engineering</span>
-            <h3 class="storms__name" data-rf-pre="services.card.apps.title.pre">Web &amp; Mobile <em data-rf="services.card.apps.word">Applications</em></h3>
-            <p class="storms__desc" data-rf="services.card.apps.desc">Product-grade application development, end to end — web, iOS, Android — from first wireframe to the app store.</p>
-            <div class="storms__tags">
-              <span class="storms__tag" data-rf="services.card.apps.tag.1">Product design</span>
-              <span class="storms__tag" data-rf="services.card.apps.tag.2">Full-stack</span>
-              <span class="storms__tag" data-rf="services.card.apps.tag.3">iOS · Android</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="storms__pin" data-reveal="">
-        <div class="svc-card">
-          <canvas ref="{{ revCardCanvas }}"></canvas>
-          <div class="storms__sheen" aria-hidden="true"></div>
-          <div class="storms__veil" aria-hidden="true"></div>
-          <span data-svc-num="">03</span>
-          <div data-svc-content="">
-            <span class="storms__kicker" data-rf="services.card.revenue.kicker">03 · Strategy</span>
-            <h3 class="storms__name" data-rf-pre="services.card.revenue.title.pre">Revenue <em data-rf="services.card.revenue.word">Consulting</em></h3>
-            <p class="storms__desc" data-rf="services.card.revenue.desc">We find where your business leaks money — positioning, pricing, funnels — and turn the drip into a downpour.</p>
-            <div class="storms__tags">
-              <span class="storms__tag" data-rf="services.card.revenue.tag.1">Positioning</span>
-              <span class="storms__tag" data-rf="services.card.revenue.tag.2">Pricing</span>
-              <span class="storms__tag" data-rf="services.card.revenue.tag.3">Funnels</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="storms__pin" data-reveal="" ref="{{ aiRef }}">
-        <div class="svc-card">
-          <canvas ref="{{ aiCardCanvas }}"></canvas>
-          <div class="storms__sheen" aria-hidden="true"></div>
-          <div class="storms__veil" aria-hidden="true"></div>
-          <span data-svc-num="">04</span>
-          <div data-svc-content="">
-            <span class="storms__kicker" data-rf="services.card.ai.kicker">04 · Systems &amp; agents</span>
-            <h3 class="storms__name" data-rf-pre="services.card.ai.title.pre">AI <em data-rf="services.card.ai.word">Automation</em></h3>
-            <p class="storms__desc" data-rf="services.card.ai.desc">Agents and automations wired into sales, support, and operations — so AI runs your company, not you.</p>
-            <div class="storms__tags">
-              <span class="storms__tag" data-rf="services.card.ai.tag.1">AI agents</span>
-              <span class="storms__tag" data-rf="services.card.ai.tag.2">Workflows</span>
-              <span class="storms__tag" data-rf="services.card.ai.tag.3">Integrations</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="storms__pin" data-reveal="">
-        <div class="svc-card">
-          <canvas ref="{{ growthCardCanvas }}"></canvas>
-          <div class="storms__sheen" aria-hidden="true"></div>
-          <div class="storms__veil" aria-hidden="true"></div>
-          <span data-svc-num="">05</span>
-          <div data-svc-content="">
-            <span class="storms__kicker" data-rf="services.card.growth.kicker">05 · Retainer</span>
-            <h3 class="storms__name" data-rf-pre="services.card.growth.title.pre">Growth &amp; <em data-rf="services.card.growth.word">Search</em></h3>
-            <p class="storms__desc" data-rf="services.card.growth.desc">Traffic engineering after launch — SEO, conversion optimization, analytics — a steady rainfall of qualified leads.</p>
-            <div class="storms__tags">
-              <span class="storms__tag" data-rf="services.card.growth.tag.1">SEO</span>
-              <span class="storms__tag" data-rf="services.card.growth.tag.2">CRO</span>
-              <span class="storms__tag" data-rf="services.card.growth.tag.3">Analytics</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="method" data-screen-label="How We Work">
-  <div class="method__shell">
-    <p class="method__eyebrow">The engagement</p>
-    <h2 class="method__title">Six weeks to landfall.<br><em>Then the rain keeps falling.</em></h2>
-    <div class="method__grid">
-      <article class="method__phase">
-        <p class="method__week" data-rf="forecast.stage.1.week">Week 1</p>
-        <h3 class="method__name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
-        <p class="method__role" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
-        <p class="method__body" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking — then lock the plan.</p>
+        <p class="idx__meta"><span data-rf="services.card.web.tag.1">Art direction</span><span class="idx__sep">·</span><span data-rf="services.card.web.tag.2">Custom build</span><span class="idx__sep">·</span><span data-rf="services.card.web.tag.3">CMS &amp; motion</span></p>
       </article>
-      <article class="method__phase">
-        <p class="method__week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
-        <h3 class="method__name" data-rf="forecast.stage.2.name">Formation</h3>
-        <p class="method__role" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
-        <p class="method__body" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you first.</p>
+      <article class="idx" style="--hue:125,140,255;">
+        <span class="idx__no">02</span>
+        <div class="idx__main">
+          <h3 class="idx__name" data-rf-pre="services.card.apps.title.pre">Web &amp; Mobile <em data-rf="services.card.apps.word">Applications</em></h3>
+          <p class="idx__desc" data-rf="services.card.apps.desc">Product-grade application development, end to end — web, iOS, Android — from first wireframe to the app store.</p>
+        </div>
+        <p class="idx__meta"><span data-rf="services.card.apps.tag.1">Product design</span><span class="idx__sep">·</span><span data-rf="services.card.apps.tag.2">Full-stack</span><span class="idx__sep">·</span><span data-rf="services.card.apps.tag.3">iOS · Android</span></p>
       </article>
-      <article class="method__phase">
-        <p class="method__week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
-        <h3 class="method__name" data-rf="forecast.stage.3.name">Downpour</h3>
-        <p class="method__role" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
-        <p class="method__body" data-rf="forecast.stage.3.body">Engineering, content, and launch. Not a deck. The real thing goes live.</p>
+      <article class="idx" style="--hue:63,224,200;">
+        <span class="idx__no">03</span>
+        <div class="idx__main">
+          <h3 class="idx__name" data-rf-pre="services.card.revenue.title.pre">Revenue <em data-rf="services.card.revenue.word">Consulting</em></h3>
+          <p class="idx__desc" data-rf="services.card.revenue.desc">We find where your business leaks money — positioning, pricing, funnels — and turn the drip into a downpour.</p>
+        </div>
+        <p class="idx__meta"><span data-rf="services.card.revenue.tag.1">Positioning</span><span class="idx__sep">·</span><span data-rf="services.card.revenue.tag.2">Pricing</span><span class="idx__sep">·</span><span data-rf="services.card.revenue.tag.3">Funnels</span></p>
       </article>
-      <article class="method__phase">
-        <p class="method__week" data-rf="forecast.stage.4.week">Ongoing</p>
-        <h3 class="method__name" data-rf="forecast.stage.4.name">Steady rain</h3>
-        <p class="method__role" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
-        <p class="method__body" data-rf="forecast.stage.4.body">Automation, search, and optimization so the system keeps raining without you running it.</p>
+      <article class="idx" style="--hue:100,180,255;" ref="{{ aiRef }}">
+        <span class="idx__no">04</span>
+        <div class="idx__main">
+          <h3 class="idx__name" data-rf-pre="services.card.ai.title.pre">AI <em data-rf="services.card.ai.word">Automation</em></h3>
+          <p class="idx__desc" data-rf="services.card.ai.desc">Agents and automations wired into sales, support, and operations — so AI runs your company, not you.</p>
+        </div>
+        <p class="idx__meta"><span data-rf="services.card.ai.tag.1">AI agents</span><span class="idx__sep">·</span><span data-rf="services.card.ai.tag.2">Workflows</span><span class="idx__sep">·</span><span data-rf="services.card.ai.tag.3">Integrations</span></p>
+      </article>
+      <article class="idx" style="--hue:183,201,255;">
+        <span class="idx__no">05</span>
+        <div class="idx__main">
+          <h3 class="idx__name" data-rf-pre="services.card.growth.title.pre">Growth &amp; <em data-rf="services.card.growth.word">Search</em></h3>
+          <p class="idx__desc" data-rf="services.card.growth.desc">Traffic engineering after launch — SEO, conversion optimization, analytics — a steady rainfall of qualified leads.</p>
+        </div>
+        <p class="idx__meta"><span data-rf="services.card.growth.tag.1">SEO</span><span class="idx__sep">·</span><span data-rf="services.card.growth.tag.2">CRO</span><span class="idx__sep">·</span><span data-rf="services.card.growth.tag.3">Analytics</span></p>
       </article>
     </div>
   </div>
 </section>
 
-<section class="proof" ref="{{ workRef }}" data-screen-label="Selected Work">
-  <div class="proof__shell">
-    <p class="proof__eyebrow">Selected work</p>
-    <h2 class="proof__title">Work that made it <em>rain.</em></h2>
-    <div ref="{{ caseStage }}" class="proof__stage">
-      <div class="proof__wash" style="{{ activeWash }}"></div>
-      <p class="proof__kicker">{{ activeKicker }}</p>
-      <h3 class="proof__name" style="{{ activeNameStyle }}">{{ activeName }}</h3>
-      <p class="proof__desc">{{ activeDesc }}</p>
-      <div class="proof__metrics">
-        <div><p class="proof__mv" style="{{ activeM1Style }}">{{ activeM1v }}</p><p class="proof__ml">{{ activeM1l }}</p></div>
-        <div><p class="proof__mv">{{ activeM2v }}</p><p class="proof__ml">{{ activeM2l }}</p></div>
-        <div><p class="proof__mv">{{ activeM3v }}</p><p class="proof__ml">{{ activeM3l }}</p></div>
-      </div>
+<section class="phases" data-screen-label="How We Work">
+  <div class="rail">
+    <header class="sec-head">
+      <span class="sec-no">02</span>
+      <span class="sec-label">The engagement</span>
+      <span class="sec-line" aria-hidden="true"></span>
+    </header>
+    <h2 class="phases__title">Six weeks to landfall. <em>Then the rain keeps falling.</em></h2>
+    <div class="phases__row">
+      <article class="phase">
+        <p class="phase__wk" data-rf="forecast.stage.1.week">Week 1</p>
+        <h3 class="phase__nm" data-rf="forecast.stage.1.name">Cloudseeding</h3>
+        <p class="phase__do" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking — then lock the plan.</p>
+      </article>
+      <article class="phase">
+        <p class="phase__wk" data-rf="forecast.stage.2.week">Weeks 2–3</p>
+        <h3 class="phase__nm" data-rf="forecast.stage.2.name">Formation</h3>
+        <p class="phase__do" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you first.</p>
+      </article>
+      <article class="phase">
+        <p class="phase__wk" data-rf="forecast.stage.3.week">Weeks 4–6</p>
+        <h3 class="phase__nm" data-rf="forecast.stage.3.name">Downpour</h3>
+        <p class="phase__do" data-rf="forecast.stage.3.body">Engineering, content, and launch. Not a deck. The real thing goes live.</p>
+      </article>
+      <article class="phase">
+        <p class="phase__wk" data-rf="forecast.stage.4.week">Ongoing</p>
+        <h3 class="phase__nm" data-rf="forecast.stage.4.name">Steady rain</h3>
+        <p class="phase__do" data-rf="forecast.stage.4.body">Automation, search, and optimization so the system keeps raining without you running it.</p>
+      </article>
     </div>
-    <nav class="proof__index" aria-label="Cases">
-      <div class="proof__tabs">
-        <sc-for list="{{ cases }}" as="cs" hint-placeholder-count="6">
-          <a href="#" class="proof-tab" data-case-tab="t" onClick="{{ cs.select }}" style="{{ cs.tabStyle }}">
-            <span data-case-prog="t" class="proof-tab__prog"></span>
-            <span class="proof-tab__name">{{ cs.name }}</span>
-            <span class="proof-tab__head">{{ cs.head }}</span>
-          </a>
-        </sc-for>
-      </div>
-      <p class="proof__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
-    </nav>
   </div>
 </section>
 
-<section class="studio" ref="{{ founderRef }}" data-screen-label="Founder">
-  <div class="studio__shell">
-    <p class="studio__eyebrow" data-rf="founder.label">The founder</p>
-    <blockquote class="studio__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
-    <div class="studio__bio">
+<section class="ledger" ref="{{ workRef }}" data-screen-label="Selected Work">
+  <div class="rail">
+    <header class="sec-head">
+      <span class="sec-no">03</span>
+      <span class="sec-label">Selected work</span>
+      <span class="sec-line" aria-hidden="true"></span>
+    </header>
+    <h2 class="ledger__title">Work that made it <em>rain.</em></h2>
+    <div class="ledger__rows">
+      <article class="lg" style="--hue:86,185,255;">
+        <div class="lg__id"><span class="lg__no">001</span><span class="lg__ind">Private equity</span></div>
+        <div class="lg__body">
+          <h3 class="lg__name">Blueharbor Capital</h3>
+          <p class="lg__desc">Full rebrand, deal-room platform, and an AI-automated investor pipeline for a $2B fund.</p>
+        </div>
+        <div class="lg__out"><p class="lg__val">$6.8M</p><p class="lg__lab">Attributed revenue</p></div>
+      </article>
+      <article class="lg" style="--hue:125,140,255;">
+        <div class="lg__id"><span class="lg__no">002</span><span class="lg__ind">Nightlife</span></div>
+        <div class="lg__body">
+          <h3 class="lg__name">Voltage After Dark</h3>
+          <p class="lg__desc">Brand, site, and a table-booking system with dynamic pricing for a three-venue nightlife group.</p>
+        </div>
+        <div class="lg__out"><p class="lg__val">+189%</p><p class="lg__lab">Table revenue</p></div>
+      </article>
+      <article class="lg" style="--hue:63,224,200;">
+        <div class="lg__id"><span class="lg__no">003</span><span class="lg__ind">Medical aesthetics</span></div>
+        <div class="lg__body">
+          <h3 class="lg__name">Lumière Aesthetics</h3>
+          <p class="lg__desc">Booking platform and AI concierge that fills the calendar while the clinic sleeps.</p>
+        </div>
+        <div class="lg__out"><p class="lg__val">9,400</p><p class="lg__lab">Bookings a month</p></div>
+      </article>
+      <article class="lg" style="--hue:183,201,255;">
+        <div class="lg__id"><span class="lg__no">004</span><span class="lg__ind">Exotic automotive</span></div>
+        <div class="lg__body">
+          <h3 class="lg__name">Vetta Motorcars</h3>
+          <p class="lg__desc">Digital showroom with allocation requests for a dealer whose cars sell before they land.</p>
+        </div>
+        <div class="lg__out"><p class="lg__val">$4.2M</p><p class="lg__lab">Allocation requests</p></div>
+      </article>
+      <article class="lg" style="--hue:100,180,255;">
+        <div class="lg__id"><span class="lg__no">005</span><span class="lg__ind">Hospitality</span></div>
+        <div class="lg__body">
+          <h3 class="lg__name">Copperline Hotels</h3>
+          <p class="lg__desc">Direct-booking engine and brand site that cut the OTA middlemen out of the picture.</p>
+        </div>
+        <div class="lg__out"><p class="lg__val">+214%</p><p class="lg__lab">Direct bookings</p></div>
+      </article>
+      <article class="lg" style="--hue:63,224,200;">
+        <div class="lg__id"><span class="lg__no">006</span><span class="lg__ind">Health systems</span></div>
+        <div class="lg__body">
+          <h3 class="lg__name">Solara Health</h3>
+          <p class="lg__desc">One scheduling and records platform rolled out across a twelve-clinic network.</p>
+        </div>
+        <div class="lg__out"><p class="lg__val">12</p><p class="lg__lab">Clinics live</p></div>
+      </article>
+    </div>
+    <p class="ledger__note" data-rf="work.disclaimer">Names changed to protect the very profitable</p>
+  </div>
+</section>
+
+<section class="voice" ref="{{ founderRef }}" data-screen-label="Founder">
+  <div class="rail">
+    <header class="sec-head">
+      <span class="sec-no">04</span>
+      <span class="sec-label" data-rf="founder.label">The founder</span>
+      <span class="sec-line" aria-hidden="true"></span>
+    </header>
+    <blockquote class="voice__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+    <div class="voice__bio">
       <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
       <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
     </div>
-    <p class="studio__sign" data-rf="founder.badge">Michael Cassella</p>
+    <p class="voice__sign" data-rf="founder.badge">Michael Cassella</p>
   </div>
 </section>
 
-<section class="dispatch" ref="{{ contactRef }}" data-screen-label="Contact">
-  <div class="dispatch__shell">
-    <div class="dispatch__intro">
-      <p class="dispatch__eyebrow">Contact</p>
-      <h2 class="dispatch__title">Let it <em>pour.</em></h2>
-      <p class="dispatch__lede">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
-      <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
-    </div>
-    <div class="landfall-form">
+<section class="pour" ref="{{ contactRef }}" data-screen-label="Contact">
+  <div class="rail">
+    <header class="sec-head">
+      <span class="sec-no">05</span>
+      <span class="sec-label">Contact</span>
+      <span class="sec-line" aria-hidden="true"></span>
+    </header>
+    <h2 class="pour__title">Let it <em>pour.</em></h2>
+    <div class="pour__grid">
+      <div class="pour__aside">
+        <p class="pour__lede">Tell us what you're building. No sales team — you talk to the studio that ships it.</p>
+        <p class="contact-invite"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
+      </div>
+      <div class="landfall-form">
       <div class="landfall-form__tide" aria-hidden="true"></div>
       <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
       <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
@@ -421,6 +413,7 @@ html{-webkit-tap-highlight-color:transparent}
           <span ref="{{ btnCond }}" class="flow-send__cond">DRY</span>
         </a>
         <p class="flow-form-foot" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
+      </div>
       </div>
     </div>
   </div>
@@ -515,7 +508,6 @@ class Component extends DCLogic {
     this.initFooterPool();
     this.initWater();
     if (window.RainFlow) window.RainFlow.init();
-    setTimeout(() => this.syncTabs(this.state.caseIdx || 0), 120);
   }
   initFooterPool() {
     let cv = this.footerCanvas.current;
@@ -838,19 +830,6 @@ class Component extends DCLogic {
     addEventListener('mousedown', md);
     this.cleanup.push(() => removeEventListener('mousedown', md));
 
-    const onResize = () => this.syncTabs(this.state.caseIdx || 0);
-    addEventListener('resize', onResize);
-    this.cleanup.push(() => removeEventListener('resize', onResize));
-
-    const t0 = setTimeout(() => this.syncTabs(this.state.caseIdx), 900);
-    this.cleanup.push(() => clearTimeout(t0));
-    const cyc = setInterval(() => {
-      if (this.userLocked || document.hidden) return;
-      const st = this.caseStage.current;
-      if (st) { const r = st.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; }
-      this.pickCase((this.state.caseIdx + 1) % this.CASES.length);
-    }, 6500);
-    this.cleanup.push(() => clearInterval(cyc));
   }
   initEngine() {
     const canvas = this.rainCanvas.current;
@@ -1024,11 +1003,6 @@ class Component extends DCLogic {
         S.ty += ((nx * 7) - S.ty) * Math.min(1, dt * 3);
         tw.style.transform = `perspective(1100px) rotateX(${S.tx.toFixed(2)}deg) rotateY(${S.ty.toFixed(2)}deg)`;
       }
-      this.drawAINet(now, dt, RM);
-      this.drawWebFx(now, dt, RM);
-      this.drawAppsFx(now, dt, RM);
-      this.drawRevFx(now, dt, RM);
-      this.drawGrowthFx(now, dt, RM);
       const ffx = this.formFxCanvas.current;
       if (ffx && !RM) {
         const lv = this.formStorm || 0;
