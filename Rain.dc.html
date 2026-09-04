@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=21-clean">
+<link rel="stylesheet" href="./rain-flow.css?v=23-full">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=21" defer></script>
+<script src="./rain-flow.js?v=23" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -166,7 +166,6 @@ html{-webkit-tap-highlight-color:transparent}
   <a href="#" onClick="{{ goTop }}" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:38px;line-height:1;color:#eef5ff;display:inline-flex;align-items:baseline;">ra<span style="position:relative;display:inline-block;">ı<svg aria-hidden="true" viewBox="0 0 10 14" style="position:absolute;top:0;left:57%;transform:translateX(-50%);width:8px;height:11px;overflow:visible;filter:drop-shadow(0 0 6px var(--accent-glow));"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></a>
   <div class="nav-links" style="display:flex;align-items:center;gap:clamp(14px,2.6vw,32px);flex-wrap:wrap;justify-content:flex-end;">
     <a href="#" onClick="{{ goServices }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.services">Services</a>
-    <a href="#" onClick="{{ goAI }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.ai">AI</a>
     <a href="#" onClick="{{ goWork }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.work">Work</a>
     <a href="#" onClick="{{ goFounder }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#93aecd;" data-rf="nav.link.founder">Founder</a>
     <a href="#" class="nav-cta" onClick="{{ goContact }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#dcecff;border:1px solid rgba(120,180,255,.35);padding:11px 22px;border-radius:999px;transition:all .3s ease;" style-hover="background:var(--accent-soft);border-color:var(--accent);box-shadow:0 0 24px var(--accent-glow);color:#ffffff;" data-rf="nav.cta">Start a project</a>
@@ -208,108 +207,137 @@ html{-webkit-tap-highlight-color:transparent}
   <div style="position:absolute;bottom:168px;left:0;right:0;height:1px;pointer-events:none;background:linear-gradient(90deg, transparent 5%, rgba(140,200,255,.28) 50%, transparent 95%);"></div>
 </section>
 
-<section ref="{{ servicesRef }}" data-screen-label="Services" style="position:relative;z-index:1;background:linear-gradient(180deg, rgba(3,7,13,.92), rgba(4,9,17,.9));padding:clamp(90px,12vw,150px) clamp(20px,6vw,80px);">
-  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
-    <div style="position:absolute;top:-6%;left:-15%;width:70%;height:40%;background:radial-gradient(50% 50% at 50% 50%, rgba(100,150,230,.05), transparent 70%);animation:fogDrift 38s ease-in-out infinite alternate;"></div>
-    <div style="position:absolute;top:30%;right:-20%;width:75%;height:45%;background:radial-gradient(50% 50% at 50% 50%, rgba(90,140,220,.055), transparent 70%);animation:fogDrift 47s ease-in-out infinite alternate-reverse;"></div>
+<section class="storms" ref="{{ servicesRef }}" data-screen-label="Services">
+  <div class="storms__shell">
+    <div class="storms__intro" data-reveal="">
+      <p class="storms__eyebrow" data-rf-post="services.label">Capabilities</p>
+      <h2 class="storms__title" data-rf-pre="services.title.pre" data-rf-post="services.title.post">Pick your <em data-rf="services.word">storm</em>.</h2>
+      <p class="storms__lede" data-rf-pre="services.intro.pre">Five disciplines, one mandate: <span data-rf="services.intro.em">revenue you can measure.</span></p>
+    </div>
+    <div class="storms__stack">
+      <div class="storms__pin" data-reveal="">
+        <div class="svc-card">
+          <canvas ref="{{ webCardCanvas }}"></canvas>
+          <div class="storms__sheen" aria-hidden="true"></div>
+          <div class="storms__veil" aria-hidden="true"></div>
+          <span data-svc-num="">01</span>
+          <div data-svc-content="">
+            <span class="storms__kicker" data-rf="services.card.web.kicker">01 · Design &amp; build</span>
+            <h3 class="storms__name" data-rf-pre="services.card.web.title.pre">Bespoke <em data-rf="services.card.web.word">Websites</em></h3>
+            <p class="storms__desc" data-rf="services.card.web.desc">Hand-built, award-bait sites. No templates, no page builders — every pixel poured for your brand, engineered to convert.</p>
+            <div class="storms__tags">
+              <span class="storms__tag" data-rf="services.card.web.tag.1">Art direction</span>
+              <span class="storms__tag" data-rf="services.card.web.tag.2">Custom build</span>
+              <span class="storms__tag" data-rf="services.card.web.tag.3">CMS &amp; motion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="storms__pin" data-reveal="">
+        <div class="svc-card">
+          <canvas ref="{{ appsCardCanvas }}"></canvas>
+          <div class="storms__sheen" aria-hidden="true"></div>
+          <div class="storms__veil" aria-hidden="true"></div>
+          <span data-svc-num="">02</span>
+          <div data-svc-content="">
+            <span class="storms__kicker" data-rf="services.card.apps.kicker">02 · Product engineering</span>
+            <h3 class="storms__name" data-rf-pre="services.card.apps.title.pre">Web &amp; Mobile <em data-rf="services.card.apps.word">Applications</em></h3>
+            <p class="storms__desc" data-rf="services.card.apps.desc">Product-grade application development, end to end — web, iOS, Android — from first wireframe to the app store.</p>
+            <div class="storms__tags">
+              <span class="storms__tag" data-rf="services.card.apps.tag.1">Product design</span>
+              <span class="storms__tag" data-rf="services.card.apps.tag.2">Full-stack</span>
+              <span class="storms__tag" data-rf="services.card.apps.tag.3">iOS · Android</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="storms__pin" data-reveal="">
+        <div class="svc-card">
+          <canvas ref="{{ revCardCanvas }}"></canvas>
+          <div class="storms__sheen" aria-hidden="true"></div>
+          <div class="storms__veil" aria-hidden="true"></div>
+          <span data-svc-num="">03</span>
+          <div data-svc-content="">
+            <span class="storms__kicker" data-rf="services.card.revenue.kicker">03 · Strategy</span>
+            <h3 class="storms__name" data-rf-pre="services.card.revenue.title.pre">Revenue <em data-rf="services.card.revenue.word">Consulting</em></h3>
+            <p class="storms__desc" data-rf="services.card.revenue.desc">We find where your business leaks money — positioning, pricing, funnels — and turn the drip into a downpour.</p>
+            <div class="storms__tags">
+              <span class="storms__tag" data-rf="services.card.revenue.tag.1">Positioning</span>
+              <span class="storms__tag" data-rf="services.card.revenue.tag.2">Pricing</span>
+              <span class="storms__tag" data-rf="services.card.revenue.tag.3">Funnels</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="storms__pin" data-reveal="" ref="{{ aiRef }}">
+        <div class="svc-card">
+          <canvas ref="{{ aiCardCanvas }}"></canvas>
+          <div class="storms__sheen" aria-hidden="true"></div>
+          <div class="storms__veil" aria-hidden="true"></div>
+          <span data-svc-num="">04</span>
+          <div data-svc-content="">
+            <span class="storms__kicker" data-rf="services.card.ai.kicker">04 · Systems &amp; agents</span>
+            <h3 class="storms__name" data-rf-pre="services.card.ai.title.pre">AI <em data-rf="services.card.ai.word">Automation</em></h3>
+            <p class="storms__desc" data-rf="services.card.ai.desc">Agents and automations wired into sales, support, and operations — so AI runs your company, not you.</p>
+            <div class="storms__tags">
+              <span class="storms__tag" data-rf="services.card.ai.tag.1">AI agents</span>
+              <span class="storms__tag" data-rf="services.card.ai.tag.2">Workflows</span>
+              <span class="storms__tag" data-rf="services.card.ai.tag.3">Integrations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="storms__pin" data-reveal="">
+        <div class="svc-card">
+          <canvas ref="{{ growthCardCanvas }}"></canvas>
+          <div class="storms__sheen" aria-hidden="true"></div>
+          <div class="storms__veil" aria-hidden="true"></div>
+          <span data-svc-num="">05</span>
+          <div data-svc-content="">
+            <span class="storms__kicker" data-rf="services.card.growth.kicker">05 · Retainer</span>
+            <h3 class="storms__name" data-rf-pre="services.card.growth.title.pre">Growth &amp; <em data-rf="services.card.growth.word">Search</em></h3>
+            <p class="storms__desc" data-rf="services.card.growth.desc">Traffic engineering after launch — SEO, conversion optimization, analytics — a steady rainfall of qualified leads.</p>
+            <div class="storms__tags">
+              <span class="storms__tag" data-rf="services.card.growth.tag.1">SEO</span>
+              <span class="storms__tag" data-rf="services.card.growth.tag.2">CRO</span>
+              <span class="storms__tag" data-rf="services.card.growth.tag.3">Analytics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div style="max-width:1240px;margin:0 auto;">
-    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:clamp(40px,6vw,70px);">
-      <div>
-        <p style="margin:0 0 20px;display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);" data-rf-post="services.label"><span style="display:block;width:34px;height:1px;background:var(--accent);"></span>Capabilities</p>
-        <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.5rem,5.5vw,4.3rem);line-height:1.04;letter-spacing:-.01em;color:#eef5ff;text-wrap:balance;" data-rf-pre="services.title.pre" data-rf-post="services.title.post">Pick your <em data-rf="services.word" style="color:var(--accent);">storm</em>.</h2>
-        <p style="margin:18px 0 0;max-width:52ch;font-weight:300;font-size:16px;line-height:1.7;color:#8fa9c9;text-wrap:pretty;" data-rf-pre="services.intro.pre">Five disciplines, one mandate: <span data-rf="services.intro.em" style="color:#dcebff;">revenue you can measure.</span></p>
-      </div>
-    </div>
-    <div data-reveal="" style="position:sticky;top:84px;margin-bottom:34px;">
-      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
-        <canvas ref="{{ webCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
-        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
-        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
-        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">01</span>
-        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.web.kicker">01 · Design &amp; build</span>
-          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.web.title.pre">Bespoke <em data-rf="services.card.web.word" style="color:#a8d2ff;">Websites</em></h3>
-          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.web.desc">Hand-built, award-bait sites. No templates, no page builders — every pixel poured for your brand, engineered to convert.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.web.tag.1">Art direction</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.web.tag.2">Custom build</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.web.tag.3">CMS &amp; motion</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div data-reveal="" style="position:sticky;top:96px;margin-bottom:34px;">
-      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
-        <canvas ref="{{ appsCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
-        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
-        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
-        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">02</span>
-        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.apps.kicker">02 · Product engineering</span>
-          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.apps.title.pre">Web &amp; Mobile <em data-rf="services.card.apps.word" style="color:#a8d2ff;">Applications</em></h3>
-          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.apps.desc">Product-grade application development, end to end — web, iOS, Android — from first wireframe to the app store.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.apps.tag.1">Product design</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.apps.tag.2">Full-stack</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.apps.tag.3">iOS · Android</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div data-reveal="" style="position:sticky;top:108px;margin-bottom:34px;">
-      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
-        <canvas ref="{{ revCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
-        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
-        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
-        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">03</span>
-        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.revenue.kicker">03 · Strategy</span>
-          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.revenue.title.pre">Revenue <em data-rf="services.card.revenue.word" style="color:#a8d2ff;">Consulting</em></h3>
-          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.revenue.desc">We find where your business leaks money — positioning, pricing, funnels — and turn the drip into a downpour.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.revenue.tag.1">Positioning</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.revenue.tag.2">Pricing</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.revenue.tag.3">Funnels</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div data-reveal="" style="position:sticky;top:120px;margin-bottom:34px;">
-      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
-        <canvas ref="{{ aiCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
-        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
-        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
-        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">04</span>
-        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.ai.kicker">04 · Systems &amp; agents</span>
-          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.ai.title.pre">AI <em data-rf="services.card.ai.word" style="color:#a8d2ff;">Automation</em></h3>
-          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.ai.desc">Agents and automations wired into sales, support, and operations — so AI runs your company, not you.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.ai.tag.1">AI agents</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.ai.tag.2">Workflows</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.ai.tag.3">Integrations</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div data-reveal="" style="position:sticky;top:132px;margin-bottom:0;">
-      <div class="svc-card" style="position:relative;height:clamp(440px,72vh,640px);border-radius:26px;overflow:hidden;border:1px solid rgba(140,190,255,.16);box-shadow:0 60px 120px rgba(0,0,0,.65);background:#050b16;">
-        <canvas ref="{{ growthCardCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
-        <div style="position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg, transparent, rgba(160,200,255,.05) 45%, transparent);mix-blend-mode:screen;animation:svcSheen 9s ease-in-out infinite;"></div>
-        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(78deg, rgba(2,6,12,.93) 0%, rgba(3,8,16,.68) 42%, rgba(4,10,20,.1) 78%), linear-gradient(0deg, rgba(2,5,10,.88), transparent 48%);"></div>
-        <span data-svc-num="" style="position:absolute;top:-4%;right:26px;pointer-events:none;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(8rem,18vw,15rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(150,195,255,.18);">05</span>
-        <div data-svc-content="" style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
-          <span style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);text-shadow:0 2px 14px rgba(0,0,0,.8);" data-rf="services.card.growth.kicker">05 · Retainer</span>
-          <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1;letter-spacing:-.015em;color:#f4f9ff;text-shadow:0 8px 44px rgba(0,0,0,.65);text-wrap:balance;" data-rf-pre="services.card.growth.title.pre">Growth &amp; <em data-rf="services.card.growth.word" style="color:#a8d2ff;">Search</em></h3>
-          <p style="margin:0;max-width:54ch;font-weight:300;font-size:clamp(14.5px,1.5vw,17px);line-height:1.7;color:#c9dcf4;text-shadow:0 2px 18px rgba(0,0,0,.8);text-wrap:pretty;" data-rf="services.card.growth.desc">Traffic engineering after launch — SEO, conversion optimization, analytics — a steady rainfall of qualified leads.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.growth.tag.1">SEO</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.growth.tag.2">CRO</span>
-            <span style="background:rgba(4,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(150,195,255,.28);padding:7px 15px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfe2fa;" data-rf="services.card.growth.tag.3">Analytics</span>
-          </div>
-        </div>
-      </div>
+</section>
+
+<section class="method" data-screen-label="How We Work">
+  <div class="method__shell">
+    <p class="method__eyebrow">The engagement</p>
+    <h2 class="method__title">Six weeks to landfall.<br><em>Then the rain keeps falling.</em></h2>
+    <div class="method__grid">
+      <article class="method__phase">
+        <p class="method__week" data-rf="forecast.stage.1.week">Week 1</p>
+        <h3 class="method__name" data-rf="forecast.stage.1.name">Cloudseeding</h3>
+        <p class="method__role" data-rf="forecast.stage.1.desc">Discovery &amp; strategy</p>
+        <p class="method__body" data-rf="forecast.stage.1.body">We diagnose the business, the offer, and where revenue is leaking — then lock the plan.</p>
+      </article>
+      <article class="method__phase">
+        <p class="method__week" data-rf="forecast.stage.2.week">Weeks 2–3</p>
+        <h3 class="method__name" data-rf="forecast.stage.2.name">Formation</h3>
+        <p class="method__role" data-rf="forecast.stage.2.desc">Design &amp; art direction</p>
+        <p class="method__body" data-rf="forecast.stage.2.body">You see the storm before we build it: brand, UX, and art direction, reviewed with you first.</p>
+      </article>
+      <article class="method__phase">
+        <p class="method__week" data-rf="forecast.stage.3.week">Weeks 4–6</p>
+        <h3 class="method__name" data-rf="forecast.stage.3.name">Downpour</h3>
+        <p class="method__role" data-rf="forecast.stage.3.desc">Build &amp; launch</p>
+        <p class="method__body" data-rf="forecast.stage.3.body">Engineering, content, and launch. Not a deck. The real thing goes live.</p>
+      </article>
+      <article class="method__phase">
+        <p class="method__week" data-rf="forecast.stage.4.week">Ongoing</p>
+        <h3 class="method__name" data-rf="forecast.stage.4.name">Steady rain</h3>
+        <p class="method__role" data-rf="forecast.stage.4.desc">Automate &amp; grow</p>
+        <p class="method__body" data-rf="forecast.stage.4.body">Automation, search, and optimization so the system keeps raining without you running it.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -397,37 +425,29 @@ html{-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 </section>
-<footer data-screen-label="Footer" style="position:relative;z-index:1;background:rgba(2,4,8,.97);border-top:1px solid rgba(120,170,255,.08);padding:clamp(32px,4vw,44px) clamp(20px,5vw,60px) 0;">
-  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
-    <div style="position:absolute;bottom:-55%;left:15%;width:70%;height:90%;background:radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);"></div>
-    <div style="position:absolute;top:8%;left:-20%;width:70%;height:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(100,150,230,.05), transparent 70%);animation:fogDrift 36s ease-in-out infinite alternate;"></div>
+<footer class="site-ft" data-screen-label="Footer">
+  <div class="site-ft__glow" aria-hidden="true">
+    <div class="site-ft__glow-a"></div>
+    <div class="site-ft__glow-b"></div>
   </div>
-  <canvas ref="{{ footerCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
-  <div style="position:relative;max-width:1240px;margin:0 auto;">
-    <div class="flow-ft-stats" data-reveal="">
-      <div><p class="ft-stat__v">180+</p><p class="ft-stat__l">Shipped products</p></div>
-      <div><p class="ft-stat__v">48</p><p class="ft-stat__l">Active clients</p></div>
-      <div><p class="ft-stat__v">$11M+</p><p class="ft-stat__l">Season revenue</p></div>
-      <div><p class="ft-stat__v">20 yr</p><p class="ft-stat__l">Founder tenure</p></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(14px,1.8vw,20px);padding-bottom:clamp(30px,4vw,46px);">
-      <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(3.4rem,7vw,5.6rem);line-height:1;color:#eef5ff;display:inline-flex;align-items:baseline;filter:drop-shadow(0 14px 50px rgba(80,150,255,.25));">ra<span style="position:relative;display:inline-block;">ı<svg aria-hidden="true" viewBox="0 0 10 14" style="position:absolute;top:.04em;left:57%;transform:translateX(-50%);width:.16em;height:.22em;overflow:visible;filter:drop-shadow(0 0 12px var(--accent-glow));"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></span>
-      <p class="ft-tag" data-rf="footer.tagline" style="margin:0;font-weight:300;font-size:clamp(14px,1.5vw,15.5px);line-height:1.7;color:#8fa9c9;max-width:52ch;text-wrap:balance;">A global product studio for bespoke websites, applications, and AI automation. A downpour, not a drizzle.</p>
-      <div style="display:flex;align-items:center;gap:clamp(18px,3vw,34px);flex-wrap:wrap;justify-content:center;">
-        <a href="#" onClick="{{ goServices }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.services">Services</a>
-        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
-        <a href="#" onClick="{{ goWork }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.work">Work</a>
-        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
-        <a href="#" onClick="{{ goAI }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.ai">AI</a>
-        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
-        <a href="#" onClick="{{ goFounder }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a9c2e2;" data-rf="footer.link.founder">Founder</a>
-        <span style="width:4px;height:4px;border-radius:50%;background:#2a3b57;"></span>
-        <a href="#" onClick="{{ goContact }}" style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#dcecff;border:1px solid rgba(120,180,255,.35);padding:10px 20px;border-radius:999px;transition:all .3s ease;" style-hover="background:var(--accent-soft);border-color:var(--accent);color:#ffffff;" data-rf="footer.cta">Start a project</a>
+  <canvas ref="{{ footerCanvas }}" class="site-ft__canvas"></canvas>
+  <div class="site-ft__shell">
+    <div class="site-ft__inner">
+      <span class="site-ft__mark">ra<span class="site-ft__mark-i">ı<svg class="site-ft__drop" aria-hidden="true" viewBox="0 0 10 14"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></span>
+      <p class="site-ft__tag" data-rf="footer.tagline">A global product studio for bespoke websites, applications, and AI automation. A downpour, not a drizzle.</p>
+      <div class="site-ft__nav">
+        <a href="#" onClick="{{ goServices }}" data-rf="footer.link.services">Services</a>
+        <span class="site-ft__dot" aria-hidden="true"></span>
+        <a href="#" onClick="{{ goWork }}" data-rf="footer.link.work">Work</a>
+        <span class="site-ft__dot" aria-hidden="true"></span>
+        <a href="#" onClick="{{ goFounder }}" data-rf="footer.link.founder">Founder</a>
+        <span class="site-ft__dot" aria-hidden="true"></span>
+        <a href="#" class="site-ft__cta" onClick="{{ goContact }}" data-rf="footer.cta">Start a project</a>
       </div>
     </div>
-    <div class="ft-bottom" style="border-top:1px solid rgba(120,170,255,.08);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 26px;">
-      <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#46618a;" data-rf="footer.legal">© 2026 RAIN. ALL RIGHTS RESERVED.</span>
-      <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#46618a;" data-rf="footer.location">EAST COAST, USA — FORECAST: RAIN</span>
+    <div class="site-ft__bottom">
+      <span data-rf="footer.legal">© 2026 RAIN. ALL RIGHTS RESERVED.</span>
+      <span data-rf="footer.location">EAST COAST, USA — FORECAST: RAIN</span>
     </div>
   </div>
 </footer>
@@ -1434,7 +1454,7 @@ class Component extends DCLogic {
           });
       },
       goServices: this.goTo(this.servicesRef),
-      goAI: this.goTo(this.servicesRef),
+      goAI: this.goTo(this.aiRef),
       goFounder: this.goTo(this.founderRef),
       goWork: this.goTo(this.workRef), workRef: this.workRef,
       goContact: this.goTo(this.contactRef)
