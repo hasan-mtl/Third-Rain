@@ -690,41 +690,14 @@
   background: var(--accent);
 }
 
-.basin__name {
-  margin: 0;
-  font-family: 'Instrument Serif', serif;
-  font-weight: 400;
-  font-size: clamp(3.6rem, 8.5vw, 8rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  color: #f2f8ff;
-}
-
-.basin__name em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.basin__role {
-  margin: clamp(20px, 3vw, 32px) 0 0;
-  font-family: 'Geist Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  line-height: 2;
-  color: #7d97ba;
-}
-
 .basin__quote {
   margin: 0;
-  padding-left: clamp(20px, 2.5vw, 32px);
-  border-left: 2px solid var(--accent);
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(1.7rem, 2.8vw, 2.5rem);
-  line-height: 1.25;
-  letter-spacing: -0.015em;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
   color: #f3f8ff;
   text-wrap: balance;
 }
@@ -733,8 +706,17 @@
   color: var(--accent);
 }
 
+.basin__role {
+  margin: clamp(24px, 3.5vw, 36px) 0 0;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7d97ba;
+}
+
 .basin__bio {
-  margin: clamp(28px, 4vw, 44px) 0 0;
+  margin: 0;
   display: grid;
   gap: 16px;
 }
