@@ -44,8 +44,7 @@
 
 /* —— PLUNGE —— */
 .plunge {
-  height: min(100svh, 860px);
-  min-height: 620px;
+  height: clamp(520px, 68svh, 640px);
   background: #01040a;
   overflow: hidden;
   isolation: isolate;
@@ -65,8 +64,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(60% 40% at 50% 68%, rgba(86, 185, 255, 0.16), transparent 60%),
-    linear-gradient(180deg, rgba(2, 6, 14, 0.2) 0%, transparent 40%, rgba(2, 10, 22, 0.4) 100%);
+    radial-gradient(70% 55% at 50% 42%, rgba(86, 185, 255, 0.18), transparent 58%),
+    linear-gradient(180deg, rgba(2, 6, 14, 0.35) 0%, transparent 28%, rgba(2, 10, 22, 0.25) 100%);
 }
 
 .plunge__stage {
@@ -75,22 +74,20 @@
   width: var(--rf-rail);
   height: 100%;
   margin: 0 auto;
-  padding: 96px 0 32px;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  align-content: end;
+  padding: 72px 0 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   gap: 28px;
   pointer-events: none;
 }
 
 .plunge__horizon {
   text-align: center;
-  align-self: end;
-  padding-bottom: 1vh;
 }
 
 .plunge__whisper {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-family: 'Geist Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.34em;
@@ -102,7 +99,7 @@
   margin: 0;
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
-  font-size: clamp(5rem, 14vw, 11rem);
+  font-size: clamp(4.8rem, 12vw, 9rem);
   line-height: 0.8;
   letter-spacing: -0.05em;
   background: linear-gradient(180deg, #f7fbff 34%, #8ec4ff 54%, #2a6fb8 100%);
@@ -113,10 +110,10 @@
 }
 
 .plunge__lead-l {
-  margin: 18px auto 0;
-  max-width: 34ch;
-  font-size: clamp(15px, 1.5vw, 18px);
-  line-height: 1.5;
+  margin: 14px auto 0;
+  max-width: 32ch;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.45;
   color: #c5d8ee;
 }
 
