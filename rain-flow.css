@@ -317,28 +317,15 @@
 .stormline__drop {
   position: absolute;
   left: 0.5px;
-  top: -5px;
-  width: 11px;
-  height: 11px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
   opacity: 0;
-  border-radius: 50% 50% 50% 0;
-  rotate: -45deg;
-  background: radial-gradient(circle at 35% 35%, #eaf5ff, var(--accent) 60%, rgba(125, 140, 255, 0.9));
-  box-shadow: 0 0 22px var(--accent), 0 0 8px var(--accent), 0 0 46px var(--accent-glow);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #ffffff, var(--accent) 70%);
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-glow);
   transition: transform 0.28s cubic-bezier(0.25, 0.7, 0.3, 1), opacity 0.4s ease;
   pointer-events: none;
-}
-
-.stormline__drop::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  width: 2px;
-  height: 46px;
-  transform: translateX(-50%) rotate(45deg);
-  transform-origin: bottom center;
-  background: linear-gradient(0deg, rgba(160, 205, 255, 0.55), transparent);
 }
 
 .stormline__steps {
