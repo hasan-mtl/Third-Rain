@@ -669,6 +669,100 @@
   color: #7d97ba;
 }
 
+.gale__panel--live {
+  flex-basis: min(620px, 88vw);
+}
+
+.gale__shot {
+  position: relative;
+  display: block;
+  flex: 1;
+  min-height: 250px;
+  margin: 20px 0 22px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(var(--hue), 0.32);
+  background: #0a0508;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+
+.gale__shot-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  background: rgba(12, 7, 9, 0.94);
+  border-bottom: 1px solid rgba(var(--hue), 0.22);
+}
+
+.gale__shot-bar i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(var(--hue), 0.4);
+}
+
+.gale__shot-bar em {
+  margin-left: 8px;
+  font-style: normal;
+  font-family: 'Geist Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: #8fa9c9;
+}
+
+.gale__shot-view {
+  position: absolute;
+  inset: 31px 0 0;
+  overflow: hidden;
+}
+
+.gale__shot-view img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: translateY(0);
+  transition: transform 10s cubic-bezier(0.3, 0.4, 0.35, 0.95);
+  will-change: transform;
+}
+
+.gale__panel--live:hover .gale__shot-view img,
+.gale__panel--live:focus-within .gale__shot-view img {
+  transform: translateY(calc(-100% + 300px));
+}
+
+@media (hover: none) {
+  .gale__shot-view img {
+    animation: shotPan 30s ease-in-out 1.5s infinite alternate;
+  }
+}
+
+@keyframes shotPan {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% + 300px)); }
+}
+
+.gale__visit {
+  display: inline-block;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  letter-spacing: -0.01em;
+  color: rgb(var(--hue));
+  text-decoration: none;
+  text-shadow: 0 0 26px rgba(var(--hue), 0.4);
+  transition: text-shadow 0.3s ease;
+}
+
+.gale__visit:hover {
+  text-shadow: 0 0 38px rgba(var(--hue), 0.8);
+}
+
 .gale__meter {
   width: min(1240px, calc(100% - 48px));
   margin: clamp(24px, 3vw, 36px) auto 0;
@@ -1387,6 +1481,11 @@
 
   .stormline__fill,
   .stormline__drop {
+    transition: none;
+  }
+
+  .gale__shot-view img {
+    animation: none;
     transition: none;
   }
 }
