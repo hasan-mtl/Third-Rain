@@ -25,6 +25,7 @@
     const track = document.querySelector('[data-stormline]');
     if (!track) return;
     const fill = track.querySelector('[data-stormline-fill]');
+    const drop = track.querySelector('[data-stormline-drop]');
     const steps = [...track.querySelectorAll('[data-stormline-step]')];
     let ticking = false;
     const update = () => {
@@ -38,6 +39,10 @@
       const done = Math.min(1, Math.max(0, (start - r.top) / Math.max(1, total)));
       const px = done * r.height;
       if (fill) fill.style.height = px.toFixed(1) + 'px';
+      if (drop) {
+        drop.style.transform = 'translate(-50%,' + px.toFixed(1) + 'px)';
+        drop.style.opacity = done > 0.005 && done < 0.995 ? '1' : '0';
+      }
       steps.forEach((st) => {
         const sr = st.getBoundingClientRect();
         const nodeY = sr.top - r.top + 6;

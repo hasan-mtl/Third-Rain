@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=28b-quiet">
+<link rel="stylesheet" href="./rain-flow.css?v=29-anim">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=25" defer></script>
+<script src="./rain-flow.js?v=29" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -315,7 +315,7 @@ html{-webkit-tap-highlight-color:transparent}
     <h2 class="stormline__title">Six weeks to landfall.<br><em>Then the rain keeps falling.</em></h2>
   </div>
   <div class="stormline__track" data-stormline="">
-    <div class="stormline__spine" aria-hidden="true"><span class="stormline__fill" data-stormline-fill=""></span></div>
+    <div class="stormline__spine" aria-hidden="true"><span class="stormline__fill" data-stormline-fill=""></span><span class="stormline__drop" data-stormline-drop=""></span></div>
     <ol class="stormline__steps">
       <li class="stormline__step" data-stormline-step="">
         <span class="stormline__node" aria-hidden="true"></span>
