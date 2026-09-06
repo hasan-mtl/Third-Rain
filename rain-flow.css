@@ -1144,9 +1144,9 @@
   row-gap: 4px;
   align-items: center;
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   margin: 26px auto 0;
-  padding: 16px 18px;
+  padding: 20px 22px;
   border: 1px solid rgba(160, 205, 255, 0.26);
   border-radius: 10px;
   background: rgba(4, 10, 20, 0.72);
@@ -1189,14 +1189,60 @@
   color: #f2f7ff;
 }
 
-.advisory__invite-meta {
+.advisory__invite-sub {
   grid-column: 1 / -1;
-  margin: 2px 0 0;
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: #a8bdd4;
+  text-wrap: pretty;
+}
+
+.advisory__invite-rows {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px solid rgba(120, 170, 255, 0.14);
+}
+
+.advisory__invite-rows li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed rgba(120, 170, 255, 0.1);
+}
+
+.advisory__invite-rows li:last-child {
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+
+.advisory__row-k {
   font-family: 'Geist Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
+  font-size: 9px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #7ea0c8;
+  color: #5d7ca6;
+  flex: none;
+}
+
+.advisory__row-leader {
+  flex: 1;
+  min-width: 16px;
+  border-bottom: 1px dotted rgba(120, 170, 255, 0.22);
+  transform: translateY(-3px);
+}
+
+.advisory__row-v {
+  font-family: 'Geist Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #dcecff;
+  text-align: right;
 }
 
 .landfall-form {
