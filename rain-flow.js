@@ -91,11 +91,82 @@
     strip.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
   }
 
+  function initBasin() {
+    const section = document.querySelector('[data-basin]');
+    if (!section) return;
+    const quote = section.querySelector('[data-basin-quote]');
+    const pin = section.querySelector('.basin__pin');
+    if (!quote || !pin) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      section.classList.add('basin--static', 'is-signed');
+      return;
+    }
+
+    let words = [];
+    const split = () => {
+      words = [];
+      const walk = (node) => {
+        [...node.childNodes].forEach((n) => {
+          if (n.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            n.nodeValue.split(/(\s+)/).forEach((part) => {
+              if (!part) return;
+              if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(part));
+                return;
+              }
+              const s = document.createElement('span');
+              s.className = 'basin__w';
+              s.textContent = part;
+              frag.appendChild(s);
+              words.push(s);
+            });
+            node.replaceChild(frag, n);
+          } else if (n.nodeType === 1) {
+            if (n.classList.contains('basin__w')) words.push(n);
+            else walk(n);
+          }
+        });
+      };
+      walk(quote);
+    };
+    split();
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const r = pin.getBoundingClientRect();
+      const total = Math.max(1, r.height - window.innerHeight);
+      // Small pre-roll so the first words catch light as the stage settles.
+      const p = Math.min(1, Math.max(0, (-r.top + window.innerHeight * 0.1) / total));
+      const lit = Math.round(p * 1.1 * words.length);
+      words.forEach((w, i) => w.classList.toggle('is-lit', i < lit));
+      section.classList.toggle('is-signed', p > 0.88);
+    };
+
+    // CMS hydration can replace the quote's text nodes — re-split when it does.
+    const mo = new MutationObserver(() => {
+      mo.disconnect();
+      split();
+      update();
+      mo.observe(quote, { childList: true, subtree: true });
+    });
+    mo.observe(quote, { childList: true, subtree: true });
+
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    update();
+  }
+
   window.RainFlow = {
     init: function () {
       initDispatch();
       initStormline();
       initGale();
+      initBasin();
     },
   };
 

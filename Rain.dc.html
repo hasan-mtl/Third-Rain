@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=31-portfolio">
+<link rel="stylesheet" href="./rain-flow.css?v=32-founder">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=29" defer></script>
+<script src="./rain-flow.js?v=32-founder" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -441,25 +441,37 @@ html{-webkit-tap-highlight-color:transparent}
   <p class="gale__note" data-rf="work.disclaimer">Castle of Chaos shown live — other names changed to protect the very profitable</p>
 </section>
 
-<section class="basin" ref="{{ founderRef }}" data-screen-label="Founder">
-  <div class="basin__rail">
-    <div class="basin__grid">
-      <div class="basin__left">
-        <p class="basin__eyebrow" data-rf="founder.label">The founder</p>
-        <blockquote class="basin__quote">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
-        <p class="basin__role"><span data-rf="founder.badge">Michael Cassella — Founder</span></p>
+<section class="basin" ref="{{ founderRef }}" data-screen-label="Founder" data-basin="">
+  <div class="basin__pin">
+    <div class="basin__stage">
+      <p class="basin__eyebrow" data-rf="founder.label">The founder</p>
+      <blockquote class="basin__quote" data-basin-quote="">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+      <p class="basin__role"><span data-rf="founder.badge">Michael Cassella — Founder</span></p>
+    </div>
+  </div>
+  <div class="basin__story">
+    <div class="basin__srail">
+      <div class="basin__bio">
+        <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
+        <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
       </div>
-      <div class="basin__right">
-        <div class="basin__bio">
-          <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-          <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
-        </div>
-        <ul class="basin__facts">
-          <li class="basin__fact"><span class="basin__fact-k">East Coast EFX</span><span class="basin__fact-v">Founder &amp; CEO — two decades building for elite nightlife and A-list celebrities</span></li>
-          <li class="basin__fact"><span class="basin__fact-k">The exit</span><span class="basin__fact-v">Sold the company after accomplishing everything he set out to do</span></li>
-          <li class="basin__fact"><span class="basin__fact-k">Rain</span><span class="basin__fact-v">The comeback — one studio, one standard, zero delegation</span></li>
-        </ul>
-      </div>
+      <ol class="basin__acts">
+        <li class="basin__act">
+          <span class="basin__act-no" aria-hidden="true">01</span>
+          <h3 class="basin__act-k">East Coast EFX</h3>
+          <p class="basin__act-v">Founder &amp; CEO — two decades building for elite nightlife and A-list celebrities</p>
+        </li>
+        <li class="basin__act">
+          <span class="basin__act-no" aria-hidden="true">02</span>
+          <h3 class="basin__act-k">The exit</h3>
+          <p class="basin__act-v">Sold the company after accomplishing everything he set out to do</p>
+        </li>
+        <li class="basin__act">
+          <span class="basin__act-no" aria-hidden="true">03</span>
+          <h3 class="basin__act-k">Rain</h3>
+          <p class="basin__act-v">The comeback — one studio, one standard, zero delegation</p>
+        </li>
+      </ol>
     </div>
   </div>
   <div class="basin__pool" aria-hidden="true">
