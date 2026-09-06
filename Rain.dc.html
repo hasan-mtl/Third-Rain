@@ -154,10 +154,10 @@ html{-webkit-tap-highlight-color:transparent}
   .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=33-lastcall">
+<link rel="stylesheet" href="./rain-flow.css?v=49-art">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
-<script src="./rain-flow.js?v=32-founder" defer></script>
+<script src="./rain-flow.js?v=49-art" defer></script>
 </helmet>
 <canvas ref="{{ rainCanvas }}" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
 <div ref="{{ flashRef }}" style="position:fixed;inset:0;z-index:46;pointer-events:none;opacity:0;background:radial-gradient(120% 90% at 50% -10%, rgba(215,232,255,.9), rgba(120,170,255,.25) 45%, transparent 70%);mix-blend-mode:screen;"></div>
@@ -442,69 +442,45 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="basin" ref="{{ founderRef }}" data-screen-label="Founder" data-basin="">
-  <div class="basin__pin">
-    <div class="basin__stage">
-      <p class="basin__eyebrow" data-rf="founder.label">The founder</p>
-      <blockquote class="basin__quote" data-basin-quote="">Anyone can build with AI. Talent, creativity, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
+  <div class="basin__stage">
+    <p class="basin__eyebrow" data-rf="founder.label">The founder</p>
+    <div class="basin__copy">
+      <blockquote class="basin__quote" data-basin-quote="">Anyone can build with AI.<br><span class="basin__keep">Talent, creativity</span>, and purpose: <em data-rf="founder.quote.em">that takes decades</em>.</blockquote>
       <p class="basin__role"><span data-rf="founder.badge">Michael Cassella — Founder</span></p>
-    </div>
-  </div>
-  <div class="basin__story">
-    <div class="basin__srail">
-      <div class="basin__bio">
-        <p data-rf="founder.bio.1">For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list celebrities as founder and CEO of East Coast EFX. When he'd accomplished everything he set out to do, he sold the company and walked away.</p>
-        <p data-rf="founder.bio.2">The break lasted two years. Clients kept calling: nobody could match the quality they'd gotten used to. Rain is his answer: every project run by Michael himself, start to finish. No account managers, no handoffs, no juniors learning on your dime.</p>
+      <div class="basin__story">
+        <p>For two decades, Michael Cassella built high-end apps and websites for elite nightlife and A-list clients as founder and CEO of East Coast EFX. The work was always the same promise: one person, start to finish, nothing handed off.</p>
+        <p>Rain is that practice, continued. Every project is run by Michael himself — no account managers, no juniors learning on a client's dime. The standard that took decades to earn is the only one in the building.</p>
       </div>
-      <ol class="basin__acts">
-        <li class="basin__act">
-          <span class="basin__act-no" aria-hidden="true">01</span>
-          <h3 class="basin__act-k">East Coast EFX</h3>
-          <p class="basin__act-v">Founder &amp; CEO — two decades building for elite nightlife and A-list celebrities</p>
-        </li>
-        <li class="basin__act">
-          <span class="basin__act-no" aria-hidden="true">02</span>
-          <h3 class="basin__act-k">The exit</h3>
-          <p class="basin__act-v">Sold the company after accomplishing everything he set out to do</p>
-        </li>
-        <li class="basin__act">
-          <span class="basin__act-no" aria-hidden="true">03</span>
-          <h3 class="basin__act-k">Rain</h3>
-          <p class="basin__act-v">The comeback — one studio, one standard, zero delegation</p>
-        </li>
-      </ol>
     </div>
-  </div>
-  <div class="basin__pool" aria-hidden="true">
-    <canvas ref="{{ waterCanvas }}"></canvas>
-    <div class="basin__pool-fade"></div>
+    <div class="basin__pool" aria-hidden="true">
+      <canvas ref="{{ waterCanvas }}"></canvas>
+      <div class="basin__pool-fade"></div>
+    </div>
   </div>
 </section>
 
 <section class="advisory" ref="{{ contactRef }}" data-screen-label="Contact">
-  <div class="advisory__ticker" aria-hidden="true">
-    <div class="advisory__tape">
-      <span class="advisory__tape-seg">Severe weather advisory ◆ Now accepting new projects ◆ Response within 24 hours ◆ Invitation only ◆&nbsp;</span>
-      <span class="advisory__tape-seg">Severe weather advisory ◆ Now accepting new projects ◆ Response within 24 hours ◆ Invitation only ◆&nbsp;</span>
-      <span class="advisory__tape-seg">Severe weather advisory ◆ Now accepting new projects ◆ Response within 24 hours ◆ Invitation only ◆&nbsp;</span>
-    </div>
+  <div class="advisory__sky" aria-hidden="true">
+    <div class="advisory__sheet"></div>
+    <div class="advisory__pool"></div>
+    <p class="advisory__ghost">pour.</p>
   </div>
-  <div class="advisory__rail">
-    <div class="advisory__intro">
-      <p class="advisory__eyebrow" data-rf-post="contact.label">Last call</p>
-      <h2 class="advisory__title" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word">pour.</em></h2>
-      <p class="advisory__lede" data-rf="contact.intro">Tell us what you're building. No sales team — you talk to the studio that ships it.</p>
-      <div class="advisory__window">
-        <div class="advisory__window-head">
-          <span class="contact-invite-dot" aria-hidden="true"></span>
-          <span class="advisory__window-status" data-rf="contact.window">Open window</span>
+  <div class="advisory__frame">
+    <div class="advisory__copy">
+      <p class="advisory__eyebrow">Last call</p>
+      <h2 class="advisory__title">Let it <em>pour.</em></h2>
+      <p class="advisory__art" aria-label="Let it rain">
+        <span class="advisory__art-line" aria-hidden="true"></span>
+        <span class="advisory__art-text">Let it <i>rain</i></span>
+        <span class="advisory__art-line" aria-hidden="true"></span>
+      </p>
+      <div class="advisory__invite">
+        <div class="advisory__invite-row">
+          <span class="advisory__invite-dot" aria-hidden="true"></span>
+          <span class="advisory__invite-live">Open window</span>
         </div>
-        <p class="advisory__window-title" data-rf-post="contact.invite">Invitation only</p>
-        <p class="advisory__window-sub" data-rf="contact.invite.sub">Rain takes a handful of projects at a time, each run by the founder from first call to launch. If it's a fit, your invitation lands within a day.</p>
-        <ul class="advisory__window-rows">
-          <li><span class="advisory__row-k" data-rf="contact.row.1.k">Response</span><span class="advisory__row-leader" aria-hidden="true"></span><span class="advisory__row-v" data-rf="contact.row.1.v">Within 24 hours</span></li>
-          <li><span class="advisory__row-k" data-rf="contact.row.2.k">Sales team</span><span class="advisory__row-leader" aria-hidden="true"></span><span class="advisory__row-v" data-rf="contact.row.2.v">None</span></li>
-          <li><span class="advisory__row-k" data-rf="contact.row.3.k">Run by</span><span class="advisory__row-leader" aria-hidden="true"></span><span class="advisory__row-v" data-rf="contact.row.3.v">The founder</span></li>
-        </ul>
+        <p class="advisory__invite-title">Invitation only</p>
+        <p class="advisory__invite-meta">Response within 24 hours</p>
       </div>
     </div>
     <div class="landfall-form">
@@ -539,32 +515,14 @@ html{-webkit-tap-highlight-color:transparent}
       </div>
     </div>
   </div>
+  <div class="advisory__end">
+    <span class="advisory__mark">ra<span class="advisory__mark-i">ı<svg class="advisory__drop" aria-hidden="true" viewBox="0 0 10 14"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></span>
+    <span class="advisory__meta" data-rf="footer.legal">© 2026 Rain</span>
+    <span class="advisory__meta" data-rf="footer.location">East Coast — Forecast: Rain</span>
+  </div>
 </section>
-<footer class="site-ft" data-screen-label="Footer">
-  <div class="site-ft__glow" aria-hidden="true">
-    <div class="site-ft__glow-a"></div>
-    <div class="site-ft__glow-b"></div>
-  </div>
+<footer class="site-ft" hidden aria-hidden="true">
   <canvas ref="{{ footerCanvas }}" class="site-ft__canvas"></canvas>
-  <div class="site-ft__shell">
-    <div class="site-ft__inner">
-      <span class="site-ft__mark">ra<span class="site-ft__mark-i">ı<svg class="site-ft__drop" aria-hidden="true" viewBox="0 0 10 14"><path d="M5 0C5 0 .8 5.6 .8 8.8a4.2 4.2 0 0 0 8.4 0C9.2 5.6 5 0 5 0Z" fill="var(--accent)"></path></svg></span>n<span style="color:var(--accent);">.</span></span>
-      <p class="site-ft__tag" data-rf="footer.tagline">A global product studio for bespoke websites, applications, and AI automation. A downpour, not a drizzle.</p>
-      <div class="site-ft__nav">
-        <a href="#" onClick="{{ goServices }}" data-rf="footer.link.services">Services</a>
-        <span class="site-ft__dot" aria-hidden="true"></span>
-        <a href="#" onClick="{{ goWork }}" data-rf="footer.link.work">Work</a>
-        <span class="site-ft__dot" aria-hidden="true"></span>
-        <a href="#" onClick="{{ goFounder }}" data-rf="footer.link.founder">Founder</a>
-        <span class="site-ft__dot" aria-hidden="true"></span>
-        <a href="#" class="site-ft__cta" onClick="{{ goContact }}" data-rf="footer.cta">Start a project</a>
-      </div>
-    </div>
-    <div class="site-ft__bottom">
-      <span data-rf="footer.legal">© 2026 RAIN. ALL RIGHTS RESERVED.</span>
-      <span data-rf="footer.location">EAST COAST, USA — FORECAST: RAIN</span>
-    </div>
-  </div>
 </footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{

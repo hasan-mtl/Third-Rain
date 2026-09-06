@@ -95,8 +95,7 @@
     const section = document.querySelector('[data-basin]');
     if (!section) return;
     const quote = section.querySelector('[data-basin-quote]');
-    const pin = section.querySelector('.basin__pin');
-    if (!quote || !pin) return;
+    if (!quote) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
       section.classList.add('basin--static', 'is-signed');
       return;
@@ -132,33 +131,28 @@
     };
     split();
 
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const r = pin.getBoundingClientRect();
-      const total = Math.max(1, r.height - window.innerHeight);
-      // Small pre-roll so the first words catch light as the stage settles.
-      const p = Math.min(1, Math.max(0, (-r.top + window.innerHeight * 0.1) / total));
-      const lit = Math.round(p * 1.1 * words.length);
-      words.forEach((w, i) => w.classList.toggle('is-lit', i < lit));
-      section.classList.toggle('is-signed', p > 0.88);
+    let lit = false;
+    const ignite = () => {
+      if (lit) return;
+      lit = true;
+      words.forEach((w, i) => {
+        setTimeout(() => w.classList.add('is-lit'), i * 70);
+      });
+      setTimeout(() => section.classList.add('is-signed'), words.length * 70 + 120);
     };
 
-    // CMS hydration can replace the quote's text nodes — re-split when it does.
     const mo = new MutationObserver(() => {
       mo.disconnect();
+      lit = false;
       split();
-      update();
       mo.observe(quote, { childList: true, subtree: true });
     });
     mo.observe(quote, { childList: true, subtree: true });
 
-    const onScroll = () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    };
-    addEventListener('scroll', onScroll, { passive: true });
-    addEventListener('resize', onScroll);
-    update();
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((en) => en.isIntersecting)) ignite();
+    }, { threshold: 0.35 });
+    io.observe(section);
   }
 
   window.RainFlow = {
