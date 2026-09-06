@@ -141,20 +141,14 @@ html{-webkit-tap-highlight-color:transparent}
 .fc-body{margin:12px 0 16px;max-width:58ch;font-weight:300;font-size:15.5px;line-height:1.68;color:#b0c8e4;text-wrap:pretty}
 .fc-track{height:7px;border-radius:4px;background:rgba(120,170,255,.12);overflow:hidden}
 .fc-pct{font-family:'Geist Mono',monospace;font-size:15px;font-weight:500;color:var(--accent);text-shadow:0 0 16px var(--accent-glow);flex:none}
-.contact-invite{display:inline-flex;align-items:flex-start;gap:11px;max-width:100%;font-family:'Geist Mono',monospace;font-size:13.5px;letter-spacing:.26em;text-transform:uppercase;color:#e6f2ff;text-shadow:0 0 18px var(--accent-glow)}
-.contact-invite-dot{width:10px;height:10px;flex:none;margin-top:4px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent);animation:glowPulse 2s ease-in-out infinite}
-.contact-invite-text{display:block;line-height:1.45;text-wrap:balance}
 @media (max-width: 740px){
   .fc-stage{grid-template-columns:1fr;gap:12px;padding:22px 18px}
   .fc-week{padding-left:14px;font-size:14px;letter-spacing:.16em}
   .fc-name{font-size:1.75rem}
   .fc-body{font-size:15px;margin-bottom:14px}
-  .contact-invite{align-items:center;font-size:clamp(8.5px,2.65vw,11.5px);letter-spacing:.075em;gap:9px}
-  .contact-invite-dot{margin-top:0}
-  .contact-invite-text{max-width:none;white-space:nowrap;line-height:1.2}
 }
 </style>
-<link rel="stylesheet" href="./rain-flow.css?v=3">
+<link rel="stylesheet" href="./rain-flow.css?v=4">
 <script src="./image-slot.js"></script>
 <script src="./rainfall.js" defer></script>
 <script src="./rain-flow.js" defer></script>
@@ -529,14 +523,29 @@ html{-webkit-tap-highlight-color:transparent}
 </section>
 
 <section class="flow-zone flow-zone--contact" ref="{{ contactRef }}" data-screen-label="Contact">
-  <div class="flow-wrap flow-contact-grid">
-    <div data-reveal="">
-      <p class="flow-eyebrow" data-rf-post="contact.label">Storm dispatch</p>
-      <h2 class="flow-title" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word" style="color:var(--accent);font-style:italic;">pour.</em></h2>
-      <p class="flow-lede" data-rf="contact.intro">Tell us what you're building. No sales team. You talk to the studio that ships it.</p>
-      <p class="contact-invite" data-rf-post="contact.invite" style="margin-top:32px;"><span class="contact-invite-dot" aria-hidden="true"></span><span class="contact-invite-text">Accepting clients by invitation only</span></p>
-    </div>
-    <div class="flow-form-card" data-reveal="">
+  <div class="lastcall-rain" aria-hidden="true"></div>
+  <span class="lastcall-mark" aria-hidden="true">pour.</span>
+  <div class="flow-wrap">
+    <header class="lastcall-head" data-reveal="">
+      <p class="lastcall-eyebrow" data-rf-post="contact.label">Last call</p>
+      <h2 class="flow-title lastcall-title" data-rf-pre="contact.title.pre">Let it <em data-rf="contact.word">pour.</em></h2>
+      <p class="lastcall-echo"><span class="lastcall-echo__text" data-rf="contact.intro">Let it <em>rain</em></span></p>
+    </header>
+    <div class="lastcall-grid">
+      <aside class="lastcall-window" data-reveal="">
+        <div class="lastcall-window__head">
+          <span class="lastcall-window__dot" aria-hidden="true"></span>
+          <span class="lastcall-window__status" data-rf="contact.window">Open window</span>
+        </div>
+        <p class="lastcall-window__title" data-rf-post="contact.invite">Invitation only</p>
+        <p class="lastcall-window__sub" data-rf="contact.invite.sub">Rain takes a handful of projects at a time, each run by the founder from first call to launch. Tell us what you're building — if it's a fit, your invitation lands within a day.</p>
+        <ul class="lastcall-window__rows">
+          <li><span class="lastcall-row__k" data-rf="contact.row.1.k">Response</span><span class="lastcall-row__leader" aria-hidden="true"></span><span class="lastcall-row__v" data-rf="contact.row.1.v">Within 24 hours</span></li>
+          <li><span class="lastcall-row__k" data-rf="contact.row.2.k">Sales team</span><span class="lastcall-row__leader" aria-hidden="true"></span><span class="lastcall-row__v" data-rf="contact.row.2.v">None</span></li>
+          <li><span class="lastcall-row__k" data-rf="contact.row.3.k">Run by</span><span class="lastcall-row__leader" aria-hidden="true"></span><span class="lastcall-row__v" data-rf="contact.row.3.v">The founder</span></li>
+        </ul>
+      </aside>
+      <div class="flow-form-card" data-reveal="">
       <div ref="{{ formFlash }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(130% 85% at 50% -5%, rgba(205,228,255,.6), rgba(120,170,255,.14) 55%, transparent 82%);mix-blend-mode:screen;"></div>
       <canvas ref="{{ formFxCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"></canvas>
       <div class="flow-form-head">
@@ -566,6 +575,7 @@ html{-webkit-tap-highlight-color:transparent}
           <span ref="{{ btnCond }}" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:1;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.22em;color:rgba(4,16,28,.62);">DRY</span>
         </a>
         <p style="margin:0;text-align:center;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#5d7ca6;" data-rf="contact.form.ip">Your IP address is recorded for security purposes</p>
+      </div>
       </div>
     </div>
   </div>
